@@ -1,12 +1,13 @@
-image:https://github.com/HOME-programming-lab/kickstart/actions/workflows/build.yml/badge.svg["CI Build", link="https://github.com/HOME-programming-lab/kickstart/actions"]
+image:https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions/workflows/build.yml/badge.svg["CI Build", link="https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions"]
 
-= Kickstart (hier sollte Ihr Projektname stehen)
+= SP2024-G4-Kinobetreiber (hier sollte Ihr Projektname stehen)
 
-Dies ist das initiale Template für alle Software-Projekte die Java, Salespoint und Sprint verwenden.
+Dies ist das initiale Template für alle Software-Projekte die Java, Salespoint und Spring verwenden.
 
 Bitte passen Sie das Template an Ihre team- und aufgabenspezifischen Erfordernisse anpassen. Als erstes sollen Sie Ihre Aufgabenstellung einpflegen!
 
 Folgendes ist enthalten:
+
 * eine minimale Java 17 Webanwendung auf der Basis von Spring Boot und dem Salespoint-Framework von der TU-Dresden (siehe die Ordner `src/main/java` und `src/test/java`)
 * vorbereitete Asciidoc-Templates für die zu erstellende Dokumentation `src/main/asciidoc`
 ** Informationen über Asciidoc finden Sie link:https://asciidoctor.org/docs/asciidoc-writers-guide/[hier]!

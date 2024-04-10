@@ -9,6 +9,10 @@ Teilnehmer: alle
 Protokollführer: Lukas Philipp Diettrich
 
 
+'''
+
++
++
 
 .Anforderungen
 - Kartenverkauf, Reservierung, Teilung
@@ -20,11 +24,17 @@ Protokollführer: Lukas Philipp Diettrich
 - Säle verwalten
 - Wartbarkeit
 
+
+'''
++
++
+
 .Kannkriterien
 - Saalvermietung
 - Snacks (kann in Zentrallagerverwaltung)
 
 
+''''
 
 
 |===
@@ -44,13 +54,19 @@ Protokollführer: Lukas Philipp Diettrich
 | Verwaltungssystem        | Autorisierte Mitarbeiter/ Chef      | Filmbesuchsstatistik
 |===
 
++
++
 
-.Fragen an Prof. Karol
-- Unterteilung Mitarbeiter
-- Zugriffsrechte
-- Autorisierte Mitarbeiter
+
+
+[IMPORTANT:]
+--
+.Fragen an Prof. Karol +
+- Unterteilung Mitarbeiter +
+- Zugriffsrechte +
+- Autorisierte Mitarbeiter +
 - Sicherheitsbedenken (nicht bezahlen bei Reservierungen per Anruf)
-
+--
 
 
 .Software

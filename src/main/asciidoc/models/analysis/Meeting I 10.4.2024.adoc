@@ -14,27 +14,8 @@ Protokollführer: Lukas Philipp Diettrich
 +
 +
 
-.Anforderungen
-- Kartenverkauf, Reservierung, Teilung
-- Kartenrücknahme/ Stornierung
-- Programmzusammenstellung/ -anpassung, Ansehen
-- Anbietervergleich
-- Wirtschaftsdaten
-- Preisgestaltung
-- Säle verwalten
-- Wartbarkeit
-
 
 '''
-+
-+
-
-.Kannkriterien
-- Saalvermietung
-- Snacks (kann in Zentrallagerverwaltung)
-
-
-''''
 
 
 |===

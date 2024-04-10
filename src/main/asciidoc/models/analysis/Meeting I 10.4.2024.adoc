@@ -9,13 +9,8 @@ Teilnehmer: alle
 Protokollführer: Lukas Philipp Diettrich
 
 
-'''
-
 +
 +
-
-
-'''
 
 
 |===
@@ -50,8 +45,13 @@ Protokollführer: Lukas Philipp Diettrich
 --
 
 
+'''
+
+
 .Software
 - UML: Draw.io
+
+
 
 .Verteilung
 - Tobias: Use-Case-Diagramme, Kontextdiagramm, Top-Level Architektur

@@ -83,10 +83,26 @@ following information:
 
 |===
 
-- Kartenverkauf
-- Kunden Daten erfassen
-- Reservieren
-- 
+- Karten verkaufen
+- Snacks verkaufen
+- vor Ort/ telefonisch reservieren
+- vor Ort/ telefonisch stornieren
+- Online stornieren
+- Online reservieren
+- Programm anzeigen
+- Programm anpassen
+- Anbieter vergleichen
+- Zentrallager verwalten
+- Filmbesucherstatistik einsehen
+- Saal vermieten
+- Personal verwalten
+- Saal verwalten
+- Preis anpassen
+- Tageseinnahmen-Statistik einsehen
+- Umsatzdiagramme einsehen
+- Anmelden/Abmelden
+- Registrieren
+
 
 === Kann-Kriterien
 Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.

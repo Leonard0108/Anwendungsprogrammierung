@@ -61,32 +61,7 @@ Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem ein
 == Funktionale Anforderungen
 
 === Muss-Kriterien
-[options="header", cols="2h, 1, 3, 12"]
-|===
-|ID
-|Version
-|Name
-|Beschreibung
-
-|[[F0010]]<<F0010>>
-|v0.1
-|Authentication
-a|
-The system shall be able to be separated into publicly accessible parts, and parts which
-require authentication to be accessed. If a User is existent in the system (<<registered_user, registered user>>), he or she shall be able to authenticate by providing the
-following information:
-
-* Username
-* Password
-
-
-
-|===
-
-- Kartenverkauf
-- Kunden Daten erfassen
-- Reservieren
-- 
+Was das zu erstellende Programm auf alle Fälle leisten muss.
 
 === Kann-Kriterien
 Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.

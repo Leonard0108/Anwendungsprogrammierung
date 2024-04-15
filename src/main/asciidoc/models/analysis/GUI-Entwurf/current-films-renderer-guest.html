@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de" class="client-nojs">
+  <head>
+    <meta charset="utf-8">
+    <title>Programm | UFO Kinos</title>
+    <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
+    <meta name="keywords" content="lorem, ipsum">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark">
+    <meta name="robots" content="index,follow">
+    <!-- <meta name="rating" content="adult"> -->
+
+    <link rel="stylesheet" href="/css/common.css">
+
+    <link rel="icon" href="/assets/branding/icon-48.png">
+
+    <script src="/js/lib/jquery.js?ver=202404"></script>
+    <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
+  </head>
+  <body>
+    <!-- todo:background asset? -->
+    <div class="background"></div>
+    <div class="css-hack">
+      <nav class="main-nav">
+          <ul class="nav-section-content">
+            <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
+            <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
+            <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
+          </ul>
+
+      </nav>
+      <div class="main-outer">
+        <div class="head">
+          <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
+        </div>
+        <div class="main-wrapper" role="main">
+          <h1>Programm</h1>
+          <div class="week-navigator">
+            <div class="prev">&nbsp;</div>
+            <div class="current">11.04.2024 - 17.04.2024</div>
+            <div class="next">
+              <a href="/current-films?week=202415" title="Filmplan | UFO Kinos">18.04.2024 - 24.04.2024</a>
+            </div>
+          </div>
+          <div class="current-films-tile-sections">
+            <h2>Montag, 15.04.2024</h2>
+            <div class="current-film-tile-sections-day">
+              <div class="film-card">
+                <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" alt="Bell im Märchenland">
+                <div class="film-card-main-section">
+                  <a class="film-card-film-link" href="/film/info?id=fg4g54g4f54g5454" title="Bell im Märchenland | UFO Kinos">Bell im Märchenland</a>
+                  <p>09:30 Uhr, 15.04.2024 - Saal 2 - <span class="fsk-label fsk-12">FSK 12</span> 95min</p>
+                  <p class="reserve-error">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
+                </div>
+                <div class="film-card-reserve-section">
+                  Plätze reservieren
+                </div>
+              </div>
+              <div class="film-card">
+                <img class="film-poster" src="/assets/film-posters/d4dd465trvg4r18g.jpg" alt="Parry Hotter und die Hochschule Merseburg">
+                <div class="film-card-main-section">
+                  <a class="film-card-film-link" href="/film/info?id=d4dd465trvg4r18g" title="Parry Hotter und die Hochschule Merseburg | UFO Kinos">Parry Hotter und die Hochschule Merseburg</a>
+                  <p>09:30 Uhr, 15.04.2024 - Saal 1 - <span class="fsk-label fsk-12">FSK 12</span> 138 min</p>
+                  <p class="reserve-error">Zu diesem Film wurden alle Plätze reserviert. Rückläufer gibt es nur vor Ort an der Kinokasse.</p>
+                </div>
+                <div class="film-card-reserve-section">
+                  Plätze reservieren
+                </div>
+              </div>
+              <div class="film-card">
+                <img class="film-poster" src="/assets/film-posters/4g5e4e54r5gr5eg4er5g4e56.jpg" alt="Extra 4's Jannes Müller: Im Kino">
+                <div class="film-card-main-section">
+                  <a class="film-card-film-link" href="/film/info?id=4g5e4e54r5gr5eg4er5g4e56" title="Extra 4's Jannes Müller: Im Kino | UFO Kinos">Extra 4's Jannes Müller: Im Kino</a>
+                  <p>11 Uhr, 15.04.2024 - Saal 3 - <span class="fsk-label fsk-6">FSK 6</span> 105min</p>
+                </div>
+                <div class="film-card-reserve-section">
+                  <a href="/reserve-spots/reserve?id=20240415_4g5e4e54r5gr5eg4er5g4e56" title="Extra 4's Jannes Müller: Im Kino | Plätze reservieren">Plätze reservieren</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="copyright">&copy; UFO-Kinos</span>
+          <ul class="links">
+            <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+            <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+            <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+            <li><a href="/login" title="Admin-Bereich | UFO Kinos">Admin-Bereich</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <style>
+nav{
+  float: left;
+  padding-right:0.5em;
+}
+nav li,.footer li{
+  list-style:none;
+}
+.css-hack{
+  display: flex;
+}
+.main-outer{
+  flex-grow:1;
+}
+.main-wrapper{
+  margin-top: 1em;
+}
+.footer li{
+  display: inline-block;
+  padding: 0em 1em;
+}
+
+.client-nojs .nojs-hide{
+  display: none;
+  padding: 0;
+  margin: 0;
+}
+
+.week-navigator{
+  display: flex;
+}
+
+.week-navigator *{
+  flex-grow:1;
+  text-align: center;
+}
+
+.film-card{
+  display: flex;
+}
+.film-card-main-section{
+  flex-grow:1;
+  padding: 0em 2em;
+}
+.film-card p{
+  margin: 0;
+}
+.film-card .reserve-error{
+  color:red;
+}
+.fsk-label.fsk-12{
+  color:#01d501;
+}
+.film-card img{
+  margin-left: 2em;
+  max-width: 100px;
+}
+.film-card-reserve-section{
+  margin-right: 2em;
+}
+    </style>
+    <script></script>
+  </body>
+</html>

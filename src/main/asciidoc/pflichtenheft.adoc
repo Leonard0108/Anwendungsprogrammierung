@@ -58,31 +58,6 @@ Für komplexere Anwendungsfälle ein UML-Sequenzdiagramm ergänzen.
 Einfache Anwendungsfälle mit einem Absatz beschreiben.
 Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem einzigen zusammengefasst werden.
 
-== Funktionale Anforderungen
-
-=== Muss-Kriterien
-[options="header", cols="2h, 1, 3, 12"]
-|===
-|ID
-|Version
-|Name
-|Beschreibung
-
-|[[F0010]]<<F0010>>
-|v0.1
-|Authentication
-a|
-The system shall be able to be separated into publicly accessible parts, and parts which
-require authentication to be accessed. If a User is existent in the system (<<registered_user, registered user>>), he or she shall be able to authenticate by providing the
-following information:
-
-* Username
-* Password
-
-
-
-|===
-
 - Karten verkaufen
 - Snacks verkaufen
 - vor Ort/ telefonisch reservieren
@@ -102,6 +77,76 @@ following information:
 - Umsatzdiagramme einsehen
 - Anmelden/Abmelden
 - Registrieren
+
+== Funktionale Anforderungen
+
+=== Muss-Kriterien
+[options="header", cols="2h, 1, 3, 12"]
+|===
+|ID
+|Version
+|Name
+|Beschreibung
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Registrierung
+a|
+Neue Nutzer können sich registrieren.
+mit folgenden Informationen:
+
+* Nutzername
+* E-Mail
+* Password
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Überprüfung der Registrierung
+a|
+Überprüft Registrierung (E-Mail ...)
+|[[F0010]]<<F0010>>
+|v0.1
+|Anmeldung
+a|
+Neue Nutzer können sich anmelden.
+mit folgenden Informationen:
+
+* Nutzername oder E-Mail
+* Password
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Warenkorb
+a|
+Enthält Snacks und Film Tickets die der Kunde bislang ausgewählt hat.
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Hinzufügen zum Warenkorb
+a|
+Nutzer kann Snacks oder Film Tickets zum Warenkorb hinzufügen.
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Anzeigen zum Warenkorb
+a|
+Nutzer kann sich den Warenkorb anzeigen.
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Überprüfung der Reservierung
+a|
+Platz frei?
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Suche nach Reservierung
+a|
+Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mail des Kundens(KANN)) nach seiner Reservierung
+
+|===
+
+
 
 
 === Kann-Kriterien

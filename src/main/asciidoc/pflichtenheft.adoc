@@ -58,12 +58,12 @@ Für komplexere Anwendungsfälle ein UML-Sequenzdiagramm ergänzen.
 Einfache Anwendungsfälle mit einem Absatz beschreiben.
 Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem einzigen zusammengefasst werden.
 
-- Karten verkaufen
+- Karten verkaufen          AT
 - Snacks verkaufen
 - vor Ort/ telefonisch reservieren
 - vor Ort/ telefonisch stornieren
 - Online stornieren
-- Online reservieren
+- Online reservieren        AT
 - Programm anzeigen
 - Programm anpassen
 - Anbieter vergleichen
@@ -75,8 +75,8 @@ Die typischen Anwendungsfälle (Anlegen, Ändern, Löschen) können zu einem ein
 - Preis anpassen
 - Tageseinnahmen-Statistik einsehen
 - Umsatzdiagramme einsehen
-- Anmelden/Abmelden
-- Registrieren
+- Anmelden/Abmelden         AT
+- Registrieren              AT
 
 == Funktionale Anforderungen
 
@@ -163,6 +163,7 @@ Dokumentieren Sie in einer Tabelle die Qualitätsziele, welche das System erreic
 Beschreiben Sie Nicht-Funktionale Anforderungen, welche dazu dienen, die zuvor definierten Qualitätsziele zu erreichen.
 Achten Sie darauf, dass deren Erfüllung (mindestens theoretisch) messbar sein muss.
 
+
 == GUI Prototyp
 
 In diesem Kapitel soll ein Entwurf der Navigationsmöglichkeiten und Dialoge des Systems erstellt werden.
@@ -197,8 +198,89 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 |===
 
 == Akzeptanztestfälle
-Mithilfe von Akzeptanztests wird geprüft, ob die Software die funktionalen Erwartungen und Anforderungen im Gebrauch erfüllt. Diese sollen und können aus den Anwendungsfallbeschreibungen und den UML-Sequenzdiagrammen abgeleitet werden. D.h., pro (komplexen) Anwendungsfall gibt es typischerweise mindestens ein Sequenzdiagramm (welches ein Szenarium beschreibt). Für jedes Szenarium sollte es einen Akzeptanztestfall geben. Listen Sie alle Akzeptanztestfälle in tabellarischer Form auf.
-Jeder Testfall soll mit einer ID versehen werde, um später zwischen den Dokumenten (z.B. im Test-Plan) referenzieren zu können.
+
+[cols="1h, 4"]
+|===
+|ID            |<<AT0010>> Neukunde registriert sich
+|Use Case      |<<UC0010>> Registrieren
+|Vorbedingung(en)      a|Ein unregistrierter Nutzer benutzt die Webseite.
+|Ablauf      a|
+Der unregistrierte Nutzer drückt auf "Registrieren" in der Webseiten Oberfläsche und trägt folgende Informationen in das Registrierungsformular ein:
+
+- *Nutzername:* hans
+- *Passwort:* passwort123
+- *E-Mail:* hans_paswort123@mail.com
+
+Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und senden damit die Informationen an das Loginsystem.
+|Ergebniss(e)     a|
+- Die Daten werden an das Loginsystem gesendet und geprüft ob die E-Mail bereits verwendet wurden ist
+- Es wurde ein neuer Nutzer aus den übergebenen Daten erstellt und in der Datenbank des Logisystems hinterlegt
+- Die Rolle des neuen Nutzerkontos ist: "Kunde"
+- Dem Nutzer ist es nun möglich sich mit seinen Login Daten auf der Webseite anzumelden
+- Der Nutzer ist immer noch unangemeldet und wird auf die Login Seite weitergeleitet
+|===
+
+
+[cols="1h, 4"]
+|===
+|ID            |<<AT0010>> Kunde meldet sich an
+|Use Case      |<<UC0010>> Anmelden
+|Vorbedingung(en)      a|Das Loginsystem hat existierende Nutzer.
+|Ablauf      a|
+Der Nutzer drückt auf "Login" in der Webseiten Oberfläsche und trägt folgende Informationen in das Login formular ein:
+
+- *Nutzername:* hans
+- *Passwort:* passwort123
+
+Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit die Informationen an das Loginsystem.
+|Ergebniss(e)     a|
+- Der Nutzer wird als "hans" angemeldet
+- Der Nutzer erhält alle Berechtigungen die der Rolle des Nutzerkontos zugeordnet sind (in diesem Fall: "Kunde")
+- Der Nutzer wird auf die Startseite weitergeleitet
+|===
+
+[cols="1h, 4"]
+|===
+|ID            |<<AT0010>> Kunde Reserviert Sitzplätze
+|Use Case      |<<UC0010>> Online reservieren
+|Vorbedingung(en)      a|Ein angemeldeter Nutzer nutzt die Webseite.
+|Ablauf      a|
+Der Kunde drückt auf "Plätze Reservieren" in der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. Im Resrvierungsformular wählt er zunächst die Vorführung un die Personen Anzahl aus
+Anschließend __werden ihm passende Sitzplätze zugewiesen, die er allerdings ändern kann, indem er bestimmte Sitzplatznummern die er im darunter zu findenden Sitzplan sehen kann und in ein Textfeld kommasepariert eingeben muss (z.B: B2, B3, B4)__
+Dann drückt der Nutzer auf "Senden"(__Im Sequenzdiagramm: "Speichern"__) unter dem Formular und senden damit die Informationen an das System.
+|Ergebniss(e)     a|
+- Es wird überprüft ob die Plätze noch verfügbar sind
+- Da die Plätze verfügbar sind werden sie geschlossen als Reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
+- Der Kunde wird auf eine Reservierungsbestätigung-Seite weitergeleitet, auf der er deutlich seine Reservierungsnummer sehen kann
+- __Mit der Reservierungsnummer kann der Mitarbeiter an der Kasse die reservierten Tickets aufrufen und nach Bezahlung dem Kunden ausstellen__
+|===
+
+[cols="1h, 4"]
+|===
+|ID            |<<AT0010>> Kunde möchte an der Kasse Karten kaufen ohne vorher Plätze reserviert zu haben
+|Use Case      |<<UC0010>> Karten kaufen
+|Vorbedingung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
+|Ablauf      a|
+Der Mitarbeiter drückt auf __"neue Bestellung"__ und wählt zuerst eine der heutigen Vorstellungen, die der Kunde besuchen möchte. Danach wird die Platzart ausgewählt und die Anzahl der Personen angegeben.
+|Ergebniss(e)     a|
+- Wenn noch genug Plätze verfügbar sind werden die Tickets im Warenkorb abgelegt
+- Anschließend wird man auf die __"Snackauswahl Seite"__ weitergeleitet. __Diese zeigt alle verfügbaren Menüs an__
+|===
+
+[cols="1h, 4"]
+|===
+|ID            |<<AT0010>> Kunde möchte an der Kasse Snacks während des Ticket kaufs
+|Use Case      |<<UC0010>> Snacks kaufen
+|Vorbedingung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
+|Ablauf      a|
+Mitarbeiter wurde zur __"Snackauswahl Seite"__ weitergeleitet. Der Kunde möchte Menü 1 und Menü 2. Diese wählt der Mitarbeiter aus indem er auf das "+" unter den jeweiligen Menüs drückt. Anschließend drückt er auf "Bezahlen".
+|Ergebniss(e)     a|
+- Menü 1 und 2 wurden den Warenkorb hinzugefügt
+- Es öffnet sich die Seite für den Warenkorb in dem die Bestellung in Rechnungsform zusammengefasst ist. Hier muss der Kunde bezahlen
+- Nach kurzer Zubereitungszeit erhällt der Kunde die bestellten Snacks nach seinen Wünschen
+|===
+
+
 
 == Glossar
 Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.

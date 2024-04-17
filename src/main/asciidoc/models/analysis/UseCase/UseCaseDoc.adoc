@@ -1,0 +1,59 @@
+[cols="1h, 3"]
+[[UC0010]]
+|===
+|ID                         |**<<UC0010>>**
+|Name                       |Registrieren
+|Beschreibung               |Ein unregistrierter Nutzer kann sich seinen eigenen Nutzer Account erstellen. Er wird dann zum unangemeldeten Nutzer und kann sich einloggen.
+|Rollen                     |Unregistrierter Nutzer, unangemeldeter Nutzer
+|Auslöser                   |Unregistrierter Nutzer will einen Account beim Drücken auf den "Registrieren"-Button auf der Website erstellen.
+|Voraussetzungen           a|Der Nutzer ist nach dem Login noch unangemeldet.
+|grundlegende Schritte     a|
+1.  Unregistrierte Nutzer drückt "Registrieren"-Button auf der Website.
+2.  Der Nutzer gibt E-Mail, Passwort und Benutzernamen im Formular auf der Website ein.
+3.  System prüft, ob Benutzername bereits vergeben.
+. wenn noch nicht vergeben: gehe zu Schritt 4.
+. sonst: Zeige ein Fehler an.
+4. System prüft ob E-Mail-Adresse valide ist.
+. wenn valide: erstelle neuen Nutzeraccount und leite Nutzer zur Startseite zurück.
+. sonst: Zeige ein Fehler an.
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0020]]
+|===
+|ID                         |**<<UC0020>>**
+|Name                       |Login/Logout
+|Beschreibung               |Ein unangemeldeter Nutzer soll die Möglichkeit haben sich auf der Website anzumelden, um auf weitere Funktionalitäten Zugriff zu erhalten. Je nach vergebener Rolle kann der Nutzer nach dem Login entweder Kunde, Mitarbeiter, autorisierter Mitarbeiter oder Boss sein.
+Nur der Boss hat die Möglichkeit explizit die Rollen Mitarbeiter und autorisierter Mitarbeiter einzelnen Nutzer-Accounts zuzuordnen.
+Die erweiterte Funktionalität hängt von der vergebenen Rolle ab. Dabei hat jede höhere Rolle Zugriff auf alle Funktionen der niedrigeren Rolle.
+Boss > autorisierter Mitarbeiter > Mitarbeiter.
+Der Vorgang wird durch das Abmelden, das Schließen der Session oder nach einer gewissen verstrichenen Zeit rückgängig gemacht, sodass der Nutzer wieder die Rolle des unangemeldeten Nutzers erhällt.
+|Rollen                     |unangemeldeter Nutzer, Kunde, Mitarbeiter, autorisierter Mitarbeiter, Boss
+|Auslöser                   |
+_Login_: Unangemeldete Nutzer will sich einlogen, beim Drücken auf den "Login"-Button, um eine erweiterte Funktionalität zu erhalten.
+
+_Logout_: "Angemeldete Nutzer" will sich abmelden, beim Drücken auf den "Logout"-Button.
+|Voraussetzungen           a|
+_Login_: Nutzer ist noch nicht angemeldet.
+
+_Logout_: Nutzer ist noch nicht abgemeldet.
+|grundlegende Schritte     a|
+_Login_:
+
+1. Unangemeldete Nutzer drückt auf den "Login"-Button auf der Website.
+2. Unangemeldete Nutzer gibt seine Benutzerdaten ein. (Entweder E-Mail und Passwort oder Benutzername und Passwort)
+3. Unangemeldete drückt den "Login"-Button.
+4. System prüft Benutzerdaten.
+. Wenn korrekt: Nutzer wird auf Startseite nun angemeldet weitergeleitet mit der Rolle: Kunde, Mitarbeiter, autorisierter Mitarbeiter oder Boss.
+. Otherwise: Den Nutzer wird ein Fehler angezeigt.
+
+_Logout_:
+
+1. "Angemeldeter Nutzer" drückt auf den "Logout"-Button auf der Website.
+2. Nutzer ist nun abgemeldet und erhällt die Rolle des unangemeldeten Nutzers.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===

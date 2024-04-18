@@ -16,15 +16,87 @@ Dieses Dokument benötigt ein Inhaltsverzeichnis. Es existieren mehrere Einbindu
 Eine kurze Beschreibung des Dokuments. Wenige Absätze.
 
 == Aufgabenstellung und Zielsetzung
-Text aus Aufgabenstellung kopieren und ggfs. präzisieren.
-Insbesondere ergänzen, welche Ziele mit dem Abschluss des Projektes erreicht werden sollen.
+Die Kinobetreibergesellschaft UFO möchte zukünftig aus personalpolitischen Gründen in
+allen Kinos eine einheitliche Software für den Kartenverkauf und für Verwaltungsaufgaben
+einsetzen. Die Gesellschaft wendet sich an Sie mit der Bitte, eine moderne und
+erweiterungsfähige Software zu entwickeln, die mindestens die nachfolgenden
+Anforderungen erfüllen muss.
+Im Verkaufsbereich der Kinos können die Kunden Kinokarten kaufen, reservieren und
+tauschen. Ein Rückkauf von Karten soll bis zu 30 Minuten vor Beginn des jeweiligen Filmes
+ebenfalls möglich sein. Karten können vor Ort, telefonisch oder online reserviert werden und
+sind bei Abholung zu bezahlen. Reservierungen werden 30 Minuten vor Beginn der Vorstellung
+ungültig. Die Kinokarten sind an einen bestimmten Tag, eine Uhrzeit, einen Film, einen
+Kinosaal (Raum), eine Platzgruppe sowie an die Preiskategorie des Kunden (Erwachsener,
+Kind, Schwerbehinderter usw.) gebunden und entsprechend preislich ausgewiesen.
+Neben dem Verkauf der Kinokarten soll mit der neuen Software das Kinoprogramm durch
+autorisierte Personen verwaltet werden. Das beinhaltet die Zusammenstellung des
+wöchentlichen Programms, Programmänderungen sowie das Ausleihen der Filme. Dazu kann
+UFO aus den Listen verschiedener Verleihfirmen, die für jeden angebotenen Film den Titel,
+eine Kurzbeschreibung, die FSK-Freigabe, den Kinostart und die Gesamtlänge enthalten, die
+gewünschten Filme auswählen. Die Leihgebühren werden wochenweise berechnet und
+betragen derzeit 30% der Einnahmen durch den Film plus einer Grundgebühr, die sowohl von
+der Art des Films als auch von seiner Aktualität abhängt.
+Am Ende jeden Tages wird eine Statistik der Tageseinnahmen aufgestellt, eine monatliche
+Umsatzermittlung stellt den Einnahmen aus dem Kartenverkauf die Ausgaben für geliehene
+Filme und Personalkosten gegenüber. Es sollte auch möglich sein, die Auslastung der
+Kinosäle bezogen auf die Filme einzusehen, um die Laufzeit eines Filmes an das Interesse der
+Kinobesucher aktuell anzupassen. Wünschenswert wäre auch eine Unterstützung durch die
+Software bei der Vermietung der Kinosäle für andere Veranstaltungen. Außerdem möchte der
+UFO-Chef zukünftig auch die Personal- und Saalverwaltung sowie die Preisgestaltung mit der
+neuen Software erledigen.
+Neben dem Geschäft mit Filmen und Veranstaltungen, ist der Verkauf leckerster Snacks eine
+sehr wichtige Einnahmequelle der Kinos. Sie Software soll daher, nach Möglichkeit, den
+Bestand und Verkauf in den Kinos, und das Zentrallager unterstützen.
+
+- (__unspezifiziert__: muss noch gemacht werden)
 
 == Produktnutzung
-In welchem Kontext soll das System später genutzt werden? Welche Rahmenbedingungen gelten?
-Zusätzlich kurze Einleitung für fachfremde Personen
+Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie eine Webseite für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
+
+Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
+
+Mozilla Firefox, Version 92.0.1+
+
+Google Chrome, Version 94.0.4606+
+
+Die Webseite kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
+Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv bedienbar sein, wodurch sich die Mitarbeiter und der Chef schnell daran gewöhnen können.
+
+Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die Anwendung zugänglich sein (z.B. sollten Mitarbeiter  keine SQL-Anfragen formulieren müssen)
 
 == Interessensgruppen (Stakeholder)
-Welche realen und juristischen Personen(-gruppen) haben Einfluss auf die Anforderungen im Projekt?
+
+
+[options="header", cols="2, ^1, 4, 4"]
+|===
+|Name
+|Priorität (1..5)
+|Beschreibung
+|Ziele
+
+|Kinobetreibergesellschaft UFO
+|5
+|Der Hauptkunde dieses Projekts und Nutzer der Verwaltungssysteme und des Kassensystems.
+a|
+- Einheitliche Systeme für alle Standorte
+- Erleichterung bei der Verwaltung und Kartenverkauf
+- Zentrales Verwaltungssystem
+
+|Kunden
+|4
+|Hauptsächliche Nutzer der Webseite.
+a|
+- Angenehme Nutzererfahrung
+- Schneller Reservier- und Kaufprozess
+
+|Entwickler
+|3
+|Personen die das System entwickeln, verantwortlich für die Wartung sind, oder später neue Funktionen implementieren sollen.
+a|
+- Einfach erweiterbare Anwendung
+- geringer Wartungsaufwand
+
+|===
 
 == Systemgrenze und Top-Level-Architektur
 
@@ -201,7 +273,7 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 
 [cols="1h, 4"]
 |===
-|ID            |<<AT0010>> Neukunde registriert sich
+|ID            |[[AT0010]]<<AT0010>> Neukunde registriert sich
 |Use Case      |<<UC0010>> Registrieren
 |Vorbedingung(en)      a|Ein unregistrierter Nutzer benutzt die Webseite.
 |Ablauf      a|
@@ -223,7 +295,7 @@ Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und sende
 
 [cols="1h, 4"]
 |===
-|ID            |<<AT0010>> Kunde meldet sich an
+|ID            |[[AT0020]]<<AT0020>> Kunde meldet sich an
 |Use Case      |<<UC0010>> Anmelden
 |Vorbedingung(en)      a|Das Loginsystem hat existierende Nutzer.
 |Ablauf      a|

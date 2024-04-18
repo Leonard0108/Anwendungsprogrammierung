@@ -3,7 +3,7 @@
 |===
 |ID                         |**<<UC0010>>**
 |Name                       |Registrieren
-|Beschreibung               |Ein unregistrierter Nutzer kann sich seinen eigenen Nutzer Account erstellen. Er wird dann zum unangemeldeten Nutzer und kann sich einloggen.
+|Beschreibung               |Ein unregistrierter Nutzer erstellt sich seinen eigenen Nutzer Account. Er wird dann zum unangemeldeten Nutzer und kann sich einloggen.
 |Rollen                     |Unregistrierter Nutzer, unangemeldeter Nutzer
 |Auslöser                   |Unregistrierter Nutzer will einen Account beim Drücken auf den "Registrieren"-Button auf der Website erstellen.
 |Voraussetzungen           a|Der Nutzer ist nach dem Login noch unangemeldet.
@@ -59,9 +59,9 @@ _Logout_:
 |===
 
 [cols="1h, 3"]
-[[UC0020]]
+[[UC0110]]
 |===
-|ID                         |**<<UC0020>>**
+|ID                         |**<<UC0110>>**
 |Name                       |Programm anzeigen
 |Beschreibung               |Nutzer lässt sich auf der Website das Aktuelle (in naher Zukunft) laufende Kinoprogramm anzeigen.
 |Rollen                     |unregistrierter Nutzer, unangemeldeter Nutzer, Kunde, Mitarbeiter, autorisierter Mitarbeiter, Boss
@@ -78,9 +78,9 @@ _Logout_:
 |===
 
 [cols="1h, 3"]
-[[UC0020]]
+[[UC0120]]
 |===
-|ID                         |**<<UC0020>>**
+|ID                         |**<<UC0120>>**
 |Name                       |Online reservieren
 |Beschreibung               |Ein Kunde reserviert, bearbeitet Online Tickets für eine Veranstaltung und lässt sich diese anzeigen.
 |Rollen                     |Kunde
@@ -118,19 +118,14 @@ _Reservierungen bearbeiten im Reservierungs-Eintrag-Menü_:
 . Wenn maximale Ticketanzahl noch nicht erreicht und mindestens ein Ticket noch vorhanden ist: System reserviert Tickets oder löscht diese, mit entsprechender wieder Freigabe.
 . Sonst: Kunde erhällt eine Information und es werden keine Änderungen vorgenommen.
 
-_Reservierungen löschen im Reservierungs-Eintrag-Menü_:
-
-1. Der Kunde löscht eine Reservierung beim Klicken auf den "Reservierung-Löschen"-Button.
-2. Der Kunde bestätigt vor dem endgültigen Löschen den Vorgang in einem Pop-up-Fenster.
-
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0010>>
 |===
 
 [cols="1h, 3"]
-[[UC0010]]
+[[UC0130]]
 |===
-|ID                         |**<<UC0010>>**
+|ID                         |**<<UC0130>>**
 |Name                       |Online Stornieren
 |Beschreibung               |Ein Kunde storniert eine bereits erstellte Reservierung.
 |Rollen                     |Kunde
@@ -141,6 +136,101 @@ _Reservierungen löschen im Reservierungs-Eintrag-Menü_:
 2. Der Kunde klickt eine ausgewählte Reservierung an und gelangt in das Reservierungs-Eintrag-Menü der Reservierung.
 3. Der Kunde klickt auf den "Reservierung-Stornieren"-Button im Menü, das System öffnet ein Stornieren Bestätigung-Pop-up-Fenster.
 4. Der Kunde bestätigt den Vorgang des Stornierens, durch das Klicken auf den "Fortfahren"-Button. Der Kunde gelangt nun wieder zurück in die allgemeine Reservierungs-Übersicht. Das System löscht die Reservierung und gibt alle Tickets der jeweiligen Veranstaltung wieder frei.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0210]]
+|===
+|ID                         |**<<UC0210>>**
+|Name                       |vor Ort/telefonisch reservieren
+|Beschreibung               |Ein Mitarbeiter legt für eine Person eine Reservierung an.
+|Rollen                     |Mitarbeiter, Person
+|Auslöser                   |Die Person will den Mitarbeiter persönlich nach einer Reservierung fragen. Der Mitarbeiter muss dann auf "Mitarbeiter reserviert für Kunde"-Button klicken.
+|Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Person fragt den Mitarbeiter (vor Ort oder telefonisch) nach einer Reservierung. Der Mitarbeiter klickt auf den "Mitarbeiter reserviert für Kunde"-Button. Das System öffnet ein Untermenü, welches ein Formular für eine neue Reservierung bereitstellt.
+2. Der Mitarbeiter sucht im aktuellen Kinoprogramm nach der gewünschten Vorführung (Film, Datum und/oder Uhrzeit) und wählt die gewünschte Vorführung der Person aus.
+3. Der Mitarbeiter gibt den Kundennamen ein.
+4. Der Mitarbeiter fügt Tickets hinzu, durch das Klicken auf den Button "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Durch das Drücken auf den "Ticket hinzufügen"-Button:
+. wenn Ticketplatz noch nicht vergeben: füge Ticket der Reservierung hinzu.
+. sonst: Zeige Information an und Mitarbeiter wählt einen neuen Platz aus.
+5. Mitarbeiter speichert nach Zufriedenheit der Person die Reservierung durch das klicken auf den "Reservierung speichern"-Button.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0220]]
+|===
+|ID                         |**<<UC0220>>**
+|Name                       |vor Ort/telefonisch stornieren
+|Beschreibung               |Ein Mitarbeiter storniert für eine Person eine Reservierung.
+|Rollen                     |Mitarbeiter, Person
+|Auslöser                   |Die Person will das der Mitarbeiter persönlich eine getätigte Reservierung storniert. Der Mitarbeiter muss dann auf "Mitarbeiter storniert für Kunde"-Button klicken.
+|Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Und es muss eine passende Reservierung bereits vorliegen.
+|grundlegende Schritte     a|
+1. Person gibt den Auftrag an den Mitarbeiter (vor Ort oder telefonisch) eine Reservierung zu stornieren. Der Mitarbeiter klickt auf den "Mitarbeiter storniert für Kunde"-Button. Das System öffnet ein Untermenü, in welchem der Mitarbeiter eine Reservierung suchen kann.
+2. Der Mitarbeiter sucht nach einer passenden Reservierung (Name des Kundes, Reservierungsnummer oder Nutzeraccount (Benutzername, E-Mail)).
+. Wenn Mitarbeiter die Reservierung findet: Mitarbeiter klickt auf diese. Das System öffnet den Reservierungs-Eintrag.
+. sonst: Fehlermeldung
+3. Der Mitarbeiter klickt auf den "Reservierung-Stornieren"-Button im Menü, das System öffnet ein Stornieren Bestätigung-Pop-up-Fenster.
+4. Der Mitarbeiter bestätigt den Vorgang des Stornierens, nach Vergewisserung beim Kunden, durch das Klicken auf den "Fortfahren"-Button. Das System löscht die Reservierung und gibt die Plätze der Vorführung wieder frei.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0230]]
+|===
+|ID                         |**<<UC0230>>**
+|Name                       |Karten verkaufen
+|Beschreibung               |Eine Person kauft beim Mitarbeiter Tickets.
+|Rollen                     |Mitarbeiter, Person
+|Auslöser                   |Person will Karten kaufen. Der Mitarbeiter drückt folglich auf den "Karten verkaufen" Button.
+|Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Ein BestellProzess mit einem Warenkorb muss bereits existieren und der Mitarbeiter befindet sich in dem Menü.
+|grundlegende Schritte     a|
+1. Mitarbeiter drückt auf "Karten verkaufen"-Button im Bestellprozess-Menü. Ein Untermenü mit zwei Buttons wird geöffnet. Der Mitarbeiter drückt je nach Vorgehensweise entweder auf den Button "Tickets vor Ort auswählen" oder "Reservierung laden".
+
+_Tickets und Veranstaltung vor Ort auswählen_:
+
+1. Der Mitarbeiter sucht im aktuellen Kinoprogramm nach der gewünschten Vorführung (Film, Datum und/oder Uhrzeit) und wählt die gewünschte Vorführung der Person aus.
+2. Der Mitarbeiter fügt Tickets hinzu, durch das Klicken auf den Button "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Durch das Drücken auf den "Ticket hinzufügen"-Button:
+. wenn Ticketplatz noch nicht vergeben: füge Ticket dem Kaufvorgang hinzu und blocke diese im System.
+. sonst: Zeige Information an und Mitarbeiter wählt einen neuen Platz aus.
+3. Mitarbeiter speichert nach Zufriedenheit der Person den Ticket-Kaufvorgang durch das klicken auf den "Ticket-Kaufvorgang speichern"-Button.
+
+_Reservierung laden_:
+
+1. Der Mitarbeiter sucht nach einer passenden Reservierung (Name des Kundes, Reservierungsnummer oder Nutzeraccount (Benutzername, E-Mail)).
+. Wenn Mitarbeiter die Reservierung findet: Mitarbeiter klickt auf diese. Das System öffnet den Reservierungs-Eintrag.
+. sonst: Fehlermeldung
+2. Mitarbeiter klickt auf den Button "Reservierungskauf bestätigen". Das System bucht die Plätze der Tickets nun final aus.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Snacks verkaufen
+|Beschreibung               |Eine Person kauft beim Mitarbeiter Snacks zusätzlich zu den Kinokarten.
+|Rollen                     |Mitarbeiter, Person
+|Auslöser                   |Person will noch Snacks kaufen. Der Mitarbeiter drückt folglich auf den Button "Snacks hinzufügen" im Bestell-Prozess.
+|Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Ein BestellProzess mit einem Warenkorb muss bereits existieren und der Mitarbeiter befindet sich in dem Menü.
+|grundlegende Schritte     a|
+1. Mitarbeiter drückt auf "Snacks hinzufügen"-Button im Bestellprozess-Menü. Das System öffnet ein Menü mit allen vorhandenen Snacks, nachdem der Lagerbestand geprüft wurde.
+2. Die Person wählt Snacks aus und der Mitarbeiter fügt diese durch das Klicken auf die gewählten Snack-Einträge und die Eingabe der Anzahl in einem Popup-Menü hinzu.
+3. Der Mitarbeiter speichert die Snacks im Warenkorb durch das Drücken auf den Button "Snacks fertig ausgewählt". Der Mitarbeiter gelangt nun wieder in das BestellVorgangsMenü.
+
+Anmerkung:
+Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0010>>

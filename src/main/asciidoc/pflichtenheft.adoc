@@ -51,7 +51,7 @@ Bestand und Verkauf in den Kinos, und das Zentrallager unterstützen.
 - (__unspezifiziert__: muss noch gemacht werden)
 
 == Produktnutzung
-Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie eine Webseite für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
+Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
 
 Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
 
@@ -59,7 +59,7 @@ Mozilla Firefox, Version 92.0.1+
 
 Google Chrome, Version 94.0.4606+
 
-Die Webseite kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
+Das Kundenportal kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
 Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv bedienbar sein, wodurch sich die Mitarbeiter und der Chef schnell daran gewöhnen können.
 
 Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die Anwendung zugänglich sein (z.B. sollten Mitarbeiter  keine SQL-Anfragen formulieren müssen)
@@ -84,7 +84,7 @@ a|
 
 |Kunden
 |4
-|Hauptsächliche Nutzer der Webseite.
+|Hauptsächliche Nutzer des Kundenportals.
 a|
 - Angenehme Nutzererfahrung
 - Schneller Reservier- und Kaufprozess
@@ -284,19 +284,19 @@ Der unregistrierte Nutzer drückt auf "Registrieren" in der Webseiten Oberfläsc
 - *E-Mail:* hans_paswort123@mail.com
 
 Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und senden damit die Informationen an das Loginsystem.
-|Ergebniss(e)     a|
+|Ergebnis(se)     a|
 - Die Daten werden an das Loginsystem gesendet und geprüft ob die E-Mail bereits verwendet wurden ist
 - Es wurde ein neuer Nutzer aus den übergebenen Daten erstellt und in der Datenbank des Logisystems hinterlegt
 - Die Rolle des neuen Nutzerkontos ist: "Kunde"
 - Dem Nutzer ist es nun möglich sich mit seinen Login Daten auf der Webseite anzumelden
-- Der Nutzer ist immer noch unangemeldet und wird auf die Login Seite weitergeleitet
+- Der Nutzer ist immer noch unangemeldet und wird auf __die Login Seite__ weitergeleitet
 |===
 
 
 [cols="1h, 4"]
 |===
 |ID            |[[AT0020]]<<AT0020>> Kunde meldet sich an
-|Use Case      |<<UC0010>> Anmelden
+|Use Case      |<<UC0020>> Anmelden
 |Vorbedingung(en)      a|Das Loginsystem hat existierende Nutzer.
 |Ablauf      a|
 Der Nutzer drückt auf "Login" in der Webseiten Oberfläsche und trägt folgende Informationen in das Login formular ein:
@@ -305,7 +305,7 @@ Der Nutzer drückt auf "Login" in der Webseiten Oberfläsche und trägt folgende
 - *Passwort:* passwort123
 
 Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit die Informationen an das Loginsystem.
-|Ergebniss(e)     a|
+|Ergebnis(se)     a|
 - Der Nutzer wird als "hans" angemeldet
 - Der Nutzer erhält alle Berechtigungen die der Rolle des Nutzerkontos zugeordnet sind (in diesem Fall: "Kunde")
 - Der Nutzer wird auf die Startseite weitergeleitet
@@ -313,14 +313,15 @@ Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit
 
 [cols="1h, 4"]
 |===
-|ID            |<<AT0010>> Kunde Reserviert Sitzplätze
-|Use Case      |<<UC0010>> Online reservieren
-|Vorbedingung(en)      a|Ein angemeldeter Nutzer nutzt die Webseite.
+|ID            |[[AT0120]]<<AT0120>> Kunde Reserviert Sitzplätze
+|Use Case      |<<UC0120>> Online reservieren
+|Voraussetzung(en)      a|Ein angemeldeter Nutzer nutzt das Kundenportal.
 |Ablauf      a|
-Der Kunde drückt auf "Plätze Reservieren" in der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. Im Resrvierungsformular wählt er zunächst die Vorführung un die Personen Anzahl aus
-Anschließend __werden ihm passende Sitzplätze zugewiesen, die er allerdings ändern kann, indem er bestimmte Sitzplatznummern die er im darunter zu findenden Sitzplan sehen kann und in ein Textfeld kommasepariert eingeben muss (z.B: B2, B3, B4)__
-Dann drückt der Nutzer auf "Senden"(__Im Sequenzdiagramm: "Speichern"__) unter dem Formular und senden damit die Informationen an das System.
-|Ergebniss(e)     a|
+Der Kunde drückt auf "Plätze Reservieren" in der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. +
+Im Reservierungsformular wählt er zunächst die Vorführung aus. Daraufhin drückt der Kunde 2 mal auf  "Ticket hinzufügen" und 2 Ticket Auswahlfelder erscheinen. +
+In der TicketTyp Auswahl wählt er einmal "Erwachsen" und einmal "Kind". Auf dem darunter befindlichen Sitzplan sieht er alle noch freien Plätze. +
+__Er trägt nun jeweils "B4" und "B5" in die Platzfelder der Tickets ein__ und drückt auf "Reservierung speichern" und senden damit die Informationen an das System.
+|Ergebnis(se)     a|
 - Es wird überprüft ob die Plätze noch verfügbar sind
 - Da die Plätze verfügbar sind werden sie geschlossen als Reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
 - Der Kunde wird auf eine Reservierungsbestätigung-Seite weitergeleitet, auf der er deutlich seine Reservierungsnummer sehen kann
@@ -329,24 +330,25 @@ Dann drückt der Nutzer auf "Senden"(__Im Sequenzdiagramm: "Speichern"__) unter 
 
 [cols="1h, 4"]
 |===
-|ID            |<<AT0010>> Kunde möchte an der Kasse Karten kaufen ohne vorher Plätze reserviert zu haben
-|Use Case      |<<UC0010>> Karten kaufen
-|Vorbedingung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
+|ID            |[[AT0230]]<<AT0230>> Mitarbeiter verkauft Karten an Kunde ohne Reservierung
+|Use Case      |<<UC0230>> Karten verkaufen
+|Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Der Mitarbeiter drückt auf __"neue Bestellung"__ und wählt zuerst eine der heutigen Vorstellungen, die der Kunde besuchen möchte. Danach wird die Platzart ausgewählt und die Anzahl der Personen angegeben.
-|Ergebniss(e)     a|
+Der Mitarbeiter drückt auf "Karten verkaufen" im Bestellprozess-Menü und drückt auf das Feld "Tickets vor Ort auswählen".Der Mitarbeiter wählt nun eine der heutigen Vorstellungen, die der Kunde besuchen möchte.
+Danach fügt der Mitarbeiter  Tickets hinzu, durch das Klicken auf "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Nun drückt der Mitarbeiter auf "Ticket-Kaufvorgang speichern".
+|Ergebnis(se)     a|
 - Wenn noch genug Plätze verfügbar sind werden die Tickets im Warenkorb abgelegt
-- Anschließend wird man auf die __"Snackauswahl Seite"__ weitergeleitet. __Diese zeigt alle verfügbaren Menüs an__
+- Anschließend wird man auf die __"Snackauswahl Seite"__ weitergeleitet. __Diese zeigt alle noch verfügbaren Menüs an__
 |===
 
 [cols="1h, 4"]
 |===
-|ID            |<<AT0010>> Kunde möchte an der Kasse Snacks während des Ticket kaufs
-|Use Case      |<<UC0010>> Snacks kaufen
-|Vorbedingung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
+|ID            |[[AT0240]]<<AT0240>> Mitarbeiter verkauft Snacks an Kunden der gerade Karten kauft
+|Use Case      |<<UC0240>> Snacks verkaufen
+|Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Mitarbeiter wurde zur __"Snackauswahl Seite"__ weitergeleitet. Der Kunde möchte Menü 1 und Menü 2. Diese wählt der Mitarbeiter aus indem er auf das "+" unter den jeweiligen Menüs drückt. Anschließend drückt er auf "Bezahlen".
-|Ergebniss(e)     a|
+Mitarbeiter wurde zur __"Snackauswahl Seite"__ weitergeleitet. Der Kunde möchte Menü 1 und Menü 2. __Diese wählt der Mitarbeiter aus indem er auf das "+" unter den jeweiligen Menüs drückt__. __Anschließend drückt er auf "Bezahlen"__.
+|Ergebnis(se)     a|
 - Menü 1 und 2 wurden den Warenkorb hinzugefügt
 - Es öffnet sich die Seite für den Warenkorb in dem die Bestellung in Rechnungsform zusammengefasst ist. Hier muss der Kunde bezahlen
 - Nach kurzer Zubereitungszeit erhällt der Kunde die bestellten Snacks nach seinen Wünschen

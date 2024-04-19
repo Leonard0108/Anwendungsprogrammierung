@@ -26,3 +26,8 @@ Anwesenheit:  alle
 - Funktionale Anforderungen (Lukas)
 - Nichtfunktionale Anforderungen (Jannik)
 - Use-Cases ausformulieren
+
+
+== Fragen
+- Karten tauschen
+- Saalverwaltung

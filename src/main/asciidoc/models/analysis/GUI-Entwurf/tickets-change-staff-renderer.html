@@ -2,7 +2,7 @@
 <html lang="de" class="client-nojs">
     <head>
         <meta charset="utf-8">
-        <title>Startseite | UFO Kinos</title>
+        <title>Kartentausch | UFO Kinos</title>
         <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
         <meta name="keywords" content="lorem, ipsum">
         <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -41,38 +41,51 @@
                         <li><a href="/sell#snacks" title="Snackverkauf | UFO Kinos">Snackverkauf</a></li>
                     </ul>
                 </div>
-                <div id="management-stuff" class="nav-section">
-                    <span class="nav-section-title">Management</span>
-                    <ul class="nav-section-content">
-                        <li><a href="/current-films" title="Programmverwaltung | UFO Kinos">Programmverwaltung</a></li>
-                        <li><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
-                        <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
-                    </ul>
-                </div>
             </nav>
             <div class="main-outer">
                 <div class="head">
                     <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
                 </div>
                 <div class="main-wrapper" role="main">
-                    <h1 style="visibility:hidden">Startseite</h1>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                    <div class="mainpage-tile-sections">
-                        <div id="current-films" class="tile-section">
-                            <h2 class="tile-section-title"><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></h2>
-                            <ul>
-                                <li>Belle im Märchenland</li>
-                                <li>Parry Hotter und die Hochschule Merseburg</li>
-                                <li>Extra 4's Jannes Müller: Im Kino</li>
-                                <li>... und <a href="/current-films" title="Filmplan | UFO Kinos">weitere</a></li>
-                            </ul>
-                        </div>
-                        <div id="reserve-spots" class="tile-section">
-                            <h2 class="tile-section-title"><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></h2>
-                            <p>Hier reservierte Plätze müssen 30min vor der Vorlesung abgeholt und bezahlt werden, sonst verfallen sie.</p>
-                            <p>Alternativ können sie Karten auch vor Ort oder telefonisch unter +49 12345 6789 reservierenn.</p>
-                        </div>
-                    </div>
+                    <h1>Kartentausch</h1>
+                    <form action="/tickets/change" method="post">
+                        <p>Tausche</p>
+                        <p><label for="htmlUniqueID1">Film:</label></p>
+                        <select id="htmlUniqueID1" name="event1">
+                            <optgroup label="Montag, 22. 04. 204">
+                                <option value="932080493289489320">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="890385990583995809">10 Uhr, Saal 1: Parry Hotter und die Hochschule Merseburg (FSK 12)</option>
+                            </optgroup>
+                            <optgroup label="Dienstag, 23. 04. 2024">
+                                <option value="4382943280948329028">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="3298409328904328904">10 Uhr, Saal 3: Extra 4's Jannes Müller: Im Kino (FSK 6)</option>
+                            </optgroup>
+                        </select>
+                        <img src="spots-view-2.png" alt="Saalansicht"/><br>
+                        <p>(<button name="loadType">Tickettyp aus Datenbank Laden</button>)</p>
+                        <p>gegen</p>
+                        <select id="htmlUniqueID2" name="event2">
+                            <optgroup label="Montag, 22. 04. 204">
+                                <option value="932080493289489320">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="890385990583995809">10 Uhr, Saal 1: Parry Hotter und die Hochschule Merseburg (FSK 12)</option>
+                            </optgroup>
+                            <optgroup label="Dienstag, 23. 04. 2024">
+                                <option value="4382943280948329028">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="3298409328904328904">10 Uhr, Saal 3: Extra 4's Jannes Müller: Im Kino (FSK 6)</option>
+                            </optgroup>
+                        </select>
+                        <img src="spots-view-2.png" alt="Saalansicht"/><br>
+                        <p> <label for="htmlUniqueID3">Tickettyp: </label> <select id="htmlUniqueID3" name="ticketType">
+                                <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                                <option value="adult">Erwachsender</option>
+                                <option value="child">Kind (Bis 14 Jahre)</option>
+                                <option value="disabled">Schwerbehinderter</option>
+                            </select> </p>
+                        <hr>
+                        <button name="calculatePricingChange">Preisänderung Berechnen</button>
+                        <p class="flex">Kunde bezahlt: <span class="grow"></span>4€</p>
+                        <button name="changeTickets">Tickets umbuchen</button>
+                    </form>
                 </div>
                 <div class="footer">
                     <span class="copyright">&copy; UFO-Kinos</span>
@@ -113,6 +126,12 @@
                 margin: 0;
             }
 
+            .flex{
+                display: flex;
+            }
+            .grow{
+                flex-grow: 1;
+            }
         </style>
         <script></script>
     </body>

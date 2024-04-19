@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de" class="client-nojs">
+    <head>
+        <meta charset="utf-8">
+        <title>Plätze reservieren | UFO Kinos</title>
+        <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
+        <meta name="keywords" content="lorem, ipsum">
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+        <meta name="theme-color" content="#000000">
+        <meta name="color-scheme" content="dark">
+        <meta name="robots" content="index,follow">
+        <!-- <meta name="rating" content="adult"> -->
+
+        <link rel="stylesheet" href="/css/common.css">
+
+        <link rel="icon" href="/assets/branding/icon-48.png">
+
+        <script src="/js/lib/jquery.js?ver=202404"></script>
+        <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
+    </head>
+    <body>
+        <!-- todo:background asset? -->
+        <div class="background"></div>
+        <div class="css-hack">
+            <nav class="main-nav">
+                <ul class="nav-section-content">
+                    <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
+                    <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
+                    <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
+                    <li><a href="/logout" title="Abmelden | UFO Kinos">Abmelden</a></li>
+                </ul>
+
+            </nav>
+            <div class="main-outer">
+                <div class="head">
+                    <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
+                </div>
+                <div class="main-wrapper" role="main">
+                    <h1>Plätze reservieren</h1>
+                    <p>"Bell im Märchenland", Montag 22.04.2024, 10 Uhr, Saal 2. <a href="/current-films" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label fsk-12">FSK 12</span></p>
+                    <form id="reserve-spots-form" action="/reserve-spots/reserve" method="post">
+                        <input type="hidden" name="token" value="rgeoirjer+\\">
+                        <input type="hidden" name="prevState" value="ijg348j934j89j3g9g4j89">
+                        <div class="already-in-cart">
+                            <div class="ticket">
+                                <p>1 Erwachsener, Reihe 06, Platz 5</p>
+                                <p class="flex">Platzgruppe 2 <span class="grow"></span> 19.99€</p>
+                                <button class="deleteButton" type="submit" name="deleteCartEntry[]" value="0" formnovalidate="">Löschen</button>
+                            </div>
+                        </div>
+                        <p class="flex">Derzeitige Zwischensumme: <span class="grow"></span>19.99€</p>
+                        <h2>Ticket hinzufügen</h2>
+                        <p>Preisliste:</p>
+                        <ul>
+                                <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
+                                <li>Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
+                                <li>Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
+                        </ul>
+
+                        <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType">
+                                <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                                <option value="adult">Erwachsender</option>
+                                <option value="child">Kind (Bis 14 Jahre)</option>
+                                <option value="disabled">Schwerbehinderter</option>
+                            </select> </p>
+                            <img src="spots-view-2.png" alt="Saalansicht"/><br>
+                        <button name="addTicket" value="1">Ticket hinzufügen</button>
+                        <hr>
+                        <p class="flex">Gesamtsumme: <span class="grow"></span> 19.99€</p>
+                        <p style="color:red">Hier reservierte Plätze müssen 30min vor der Vorlesung abgeholt und bezahlt werden, sonst verfallen sie.</p>
+                        <button name="doReserve" value="1">Jetzt reservieren</button>
+                    </form>
+                </div>
+                <div class="footer">
+                    <span class="copyright">&copy; UFO-Kinos</span>
+                    <ul class="links">
+                        <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+                        <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+                        <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <style>
+            nav{
+                float: left;
+                padding-right:0.5em;
+            }
+            nav li,.footer li{
+                list-style:none;
+            }
+            .css-hack{
+                display: flex;
+            }
+            .main-outer{
+                flex-grow:1;
+            }
+            .main-wrapper{
+                margin-top: 1em;
+            }
+            .footer li{
+                display: inline-block;
+                padding: 0em 1em;
+            }
+
+            .client-nojs .nojs-hide{
+                display: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .week-navigator{
+                display: flex;
+            }
+
+            .week-navigator *{
+                flex-grow:1;
+                text-align: center;
+            }
+
+            .film-card{
+                display: flex;
+            }
+            .film-card-main-section{
+                flex-grow:1;
+                padding: 0em 2em;
+            }
+            .film-card p{
+                margin: 0;
+            }
+            .film-card .reserve-error{
+                color:red;
+            }
+            .fsk-label.fsk-12{
+                color:#01d501;
+            }
+            .film-card img{
+                margin-left: 2em;
+                max-width: 100px;
+            }
+            .film-card-reserve-section{
+                margin-right: 2em;
+            }
+            .flex{
+                display: flex;
+            }
+            .grow{
+                flex-grow: 1;
+            }
+            .already-in-cart .ticket{
+                border-top:1px solid white;
+                border-bottom:1px solid white;
+            }
+            .deleteButton{
+                color:white;
+                border:1px solid red;
+                background-color: red;
+                padding: 2px 4px;
+            }
+        </style>
+        <script></script>
+    </body>
+</html>

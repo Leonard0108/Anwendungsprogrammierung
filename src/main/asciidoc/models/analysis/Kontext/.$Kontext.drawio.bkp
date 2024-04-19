@@ -1,11 +1,11 @@
-<mxfile host="Electron" modified="2024-04-16T16:14:38.050Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="CT1YHXhwRfBdWX1E_FfZ" version="24.2.5" type="device">
+<mxfile host="Electron" modified="2024-04-16T16:16:19.581Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="dt3zFtSfqlNCFDKrs_E_" version="24.2.5" type="device">
   <diagram name="Page-1" id="58cdce13-f638-feb5-8d6f-7d28b1aa9fa0">
     <mxGraphModel dx="1050" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="spy-1TlKtiLTEOFrjTHa-1" value="Kino System" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;" parent="1" vertex="1">
-          <mxGeometry x="210" y="180" width="700" height="440" as="geometry" />
+          <mxGeometry x="220" y="180" width="680" height="440" as="geometry" />
         </mxCell>
         <mxCell id="spy-1TlKtiLTEOFrjTHa-8" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="590" y="210" width="290" height="110" as="geometry" />
@@ -25,7 +25,7 @@
           <mxGeometry x="200" y="75" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="spy-1TlKtiLTEOFrjTHa-6" value="Autorisierter Mitarbeiter" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="spy-1TlKtiLTEOFrjTHa-8" vertex="1">
-          <mxGeometry x="240" y="35" width="60" height="30" as="geometry" />
+          <mxGeometry x="230" y="35" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="spy-1TlKtiLTEOFrjTHa-7" value="Chef" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="spy-1TlKtiLTEOFrjTHa-8" vertex="1">
           <mxGeometry x="220" y="70" width="60" height="30" as="geometry" />
@@ -141,7 +141,7 @@
           <mxGeometry x="200" y="80" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="cDygoE3Ch2edbj10DY95-121" value="Autorisierter Mitarbeiter" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="cDygoE3Ch2edbj10DY95-125" vertex="1">
-          <mxGeometry x="240" y="80" width="60" height="30" as="geometry" />
+          <mxGeometry x="230" y="80" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="cDygoE3Ch2edbj10DY95-122" value="Chef" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="cDygoE3Ch2edbj10DY95-125" vertex="1">
           <mxGeometry x="220" y="50" width="60" height="30" as="geometry" />

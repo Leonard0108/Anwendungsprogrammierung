@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de" class="client-nojs">
+    <head>
+        <meta charset="utf-8">
+        <title>Kartenrückgabe | UFO Kinos</title>
+        <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
+        <meta name="keywords" content="lorem, ipsum">
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+        <meta name="theme-color" content="#000000">
+        <meta name="color-scheme" content="dark">
+        <meta name="robots" content="index,follow">
+        <!-- <meta name="rating" content="adult"> -->
+
+        <link rel="stylesheet" href="/css/common.css">
+
+        <link rel="icon" href="/assets/branding/icon-48.png">
+
+        <script src="/js/lib/jquery.js?ver=202404"></script>
+        <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
+    </head>
+    <body>
+        <!-- todo:background asset? -->
+        <div class="background"></div>
+        <div class="css-hack">
+            <nav class="main-nav">
+                <div id="custumer-stuff" class="nav-section">
+                    <span class="nav-section-title">Kundenorientiert</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
+                        <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
+                        <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
+                        <li><a href="/logout" title="Abmelden | UFO Kinos">Abmelden</a></li>
+                    </ul>
+                </div>
+                <div id="checkout-stuff" class="nav-section">
+                    <span class="nav-section-title">Kassensystem</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/sell#tickets" title="Kartenverkauf | UFO Kinos">Kartenverkauf</a></li>
+                        <li><a href="/tickets/change" title="Kartentausch | UFO Kinos">Kartentausch</a></li>
+                        <li><a href="/tickets/return" title="Kartenrückgabe | UFO Kinos">Kartenrückgabe</a></li>
+                        <li><a href="/sell#snacks" title="Snackverkauf | UFO Kinos">Snackverkauf</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="main-outer">
+                <div class="head">
+                    <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
+                </div>
+                <div class="main-wrapper" role="main">
+                    <h1>Kartenrückgabe</h1>
+                    <form action="/tickets/return" method="post">
+                        <p>Gebe zurück</p>
+                        <p><label for="htmlUniqueID1">Film:</label></p>
+                        <select id="htmlUniqueID1" name="event1">
+                            <optgroup label="Montag, 22. 04. 204">
+                                <option value="932080493289489320">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="890385990583995809">10 Uhr, Saal 1: Parry Hotter und die Hochschule Merseburg (FSK 12)</option>
+                            </optgroup>
+                            <optgroup label="Dienstag, 23. 04. 2024">
+                                <option value="4382943280948329028">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="3298409328904328904">10 Uhr, Saal 3: Extra 4's Jannes Müller: Im Kino (FSK 6)</option>
+                            </optgroup>
+                        </select>
+                        <img src="spots-view-2.png" alt="Saalansicht"/><br>
+                        <p>(<button name="loadType">Tickettyp aus Datenbank Laden</button>)</p>
+
+                        <button name="changeTickets">Ticket zurückgeben</button>
+                    </form>
+                </div>
+                <div class="footer">
+                    <span class="copyright">&copy; UFO-Kinos</span>
+                    <ul class="links">
+                        <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+                        <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+                        <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <style>
+
+            nav{
+                float: left;
+                padding-right:0.5em;
+            }
+            nav li,.footer li{
+                list-style:none;
+            }
+            .css-hack{
+                display: flex;
+            }
+            .main-outer{
+                flex-grow:1;
+            }
+            .main-wrapper{
+                margin-top: 1em;
+            }
+            .footer li{
+                display: inline-block;
+                padding: 0em 1em;
+            }
+
+            .client-nojs .nojs-hide{
+                display: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .flex{
+                display: flex;
+            }
+            .grow{
+                flex-grow: 1;
+            }
+        </style>
+        <script></script>
+    </body>
+</html>

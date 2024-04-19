@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de" class="client-nojs">
+    <head>
+        <meta charset="utf-8">
+        <title>Personalverwaltung | UFO Kinos</title>
+        <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
+        <meta name="keywords" content="lorem, ipsum">
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+        <meta name="theme-color" content="#000000">
+        <meta name="color-scheme" content="dark">
+        <meta name="robots" content="index,follow">
+        <!-- <meta name="rating" content="adult"> -->
+
+        <link rel="stylesheet" href="/css/common.css">
+
+        <link rel="icon" href="/assets/branding/icon-48.png">
+
+        <script src="/js/lib/jquery.js?ver=202404"></script>
+        <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
+    </head>
+    <body>
+        <!-- todo:background asset? -->
+        <div class="background"></div>
+        <div class="css-hack">
+            <nav class="main-nav">
+                <div id="custumer-stuff" class="nav-section">
+                    <span class="nav-section-title">Kundenorientiert</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
+                        <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
+                        <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
+                        <li><a href="/logout" title="Abmelden | UFO Kinos">Abmelden</a></li>
+                    </ul>
+                </div>
+                <div id="checkout-stuff" class="nav-section">
+                    <span class="nav-section-title">Kassensystem</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/sell#tickets" title="Kartenverkauf | UFO Kinos">Kartenverkauf</a></li>
+                        <li><a href="/tickets/change" title="Kartentausch | UFO Kinos">Kartentausch</a></li>
+                        <li><a href="/tickets/return" title="Kartenrückgabe | UFO Kinos">Kartenrückgabe</a></li>
+                        <li><a href="/sell#snacks" title="Snackverkauf | UFO Kinos">Snackverkauf</a></li>
+                    </ul>
+                </div>
+                <div id="management-stuff" class="nav-section">
+                    <span class="nav-section-title">Management</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/current-films" title="Programmverwaltung | UFO Kinos">Programmverwaltung</a></li>
+                        <li><a href="/statistics" title="Statistiken | UFO Kinos">Wirtschaftsstatistiken</a></li>
+                        <li><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
+                        <li><a href="/manage/pricing" title="Preisgestaltung | UFO Kinos">Preisgestaltung</a></li>
+                        <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
+                        <li><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="main-outer">
+                <div class="head">
+                    <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
+                </div>
+                <div class="main-wrapper" role="main">
+                    <h1>Personalverwaltung</h1>
+                    <h2>Mitarbeiter</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>E-Mail</th>
+                                <th>Name</th>
+                                <th>Job</th>
+                                <th>Monatsgehalt</th>
+                                <th>Wochenstunden</th>
+                                <th>Zugang</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>boss@ufo-kinos.de</td>
+                                <td>Boss, Der</td>
+                                <td>Big Boss</td>
+                                <td>5000€</td>
+                                <td>Zu viele :p</td>
+                                <td>Boss</td>
+                                <th>
+                                    <a href="/manage/staff?change=1&AMP;id=78324748324732844" style="display: block">bearbeiten</a>
+                                    <a href="/manage/staff?delete=1&AMP;id=78324748324732844" style="display: block">entlassen</a>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>Mitarbeiter einstellen</h2>
+                    <form action="/manage/staff">
+                        <input type="hidden" name="action" value="enroll">
+                        <p>E-Mail: <input type="email" name="email" required="" placeholder="john.doe@example.com"></p>
+                        <p>Name: <input type="text" placeholder="Doe, John" name="name"></p>
+                        <p>Jobbezeichnung: <input type="text" name="job" required=""></p>
+                        <p>Monatsgehalt: <input type="number" min="1" required="" name="monthlyWage"></p>
+                        <p>Wochenstunden: <input type="number" min="1" required="" name="weekHours"></p>
+                        <p>Zugang: <select name="accessLevel">
+                                <option value="staff">Mitarbeiter</option>
+                                <option value="authorised-staff">Autorisierter Mitarbeiter</option>
+                                <option value="boss">Boss</option>
+                            </select></p>
+                        <button>Einstellen</button>
+                    </form>
+                    <h2>Schichten</h2>
+                    <form action="/manage/staff" method="get">
+                        <p>am <input type="date" name="date" placeholder="19.04.2024"></p>
+                        <button>Anzeigen</button>
+                    </form>
+                    <table>
+                        <tr>
+                            <th>Wer?</th>
+                            <th>Von</th>
+                            <th>Bis</th>
+                        </tr>
+                    </table>
+                    <h2>Mitarbeiter einteilen</h2>
+                    <form action="/manage/staff">
+                        <input type="hidden" name="action" value="enrollToShift">
+                        <p>E-Mail: <input type="email" name="email" required="" placeholder="john.doe@example.com"></p>
+                        <p>Von: <input type="datetime-local" required="" name="from"></p>
+                        <p>Bis: <input type="datetime-local" required="" name="until"></p>
+                        <button>Einteilen</button>
+                    </form>
+                </div>
+                <div class="footer">
+                    <span class="copyright">&copy; UFO-Kinos</span>
+                    <ul class="links">
+                        <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+                        <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+                        <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <style>
+
+            nav{
+                float: left;
+                padding-right:0.5em;
+            }
+            nav li,.footer li{
+                list-style:none;
+            }
+            .css-hack{
+                display: flex;
+            }
+            .main-outer{
+                flex-grow:1;
+            }
+            .main-wrapper{
+                margin-top: 1em;
+            }
+            .footer li{
+                display: inline-block;
+                padding: 0em 1em;
+            }
+
+            .client-nojs .nojs-hide{
+                display: none;
+                padding: 0;
+                margin: 0;
+            }
+
+        </style>
+        <script></script>
+    </body>
+</html>

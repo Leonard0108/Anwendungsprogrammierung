@@ -1,0 +1,28 @@
+= Meeting II 16.4.2024
+
+Datum         16.4.2024
+
+Start:        15:15 Uhr
+
+Ende:         1700
+
+Anwesenheit:  alle
+
+
++
++
+
+
+== ToDo
+=== Use-Case-Diagramm
+- Login
+- Anmelden
+- Snacks verkaufen
+
+=== Weiterarbeiten
+- Überarbeiten Aktivitätsdiagramme (Lukas)
+- Verbesserungen GUI (Jannik)
+- Klassendiagramme (Simon)
+- Funktionale Anforderungen (Lukas)
+- Nichtfunktionale Anforderungen (Jannik)
+- Use-Cases ausformulieren

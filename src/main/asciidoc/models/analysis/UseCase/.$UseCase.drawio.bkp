@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-04-16T16:24:55.392Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="zbG2yEtdL6CPrmQHGK1c" version="24.2.5" type="device">
+<mxfile host="Electron" modified="2024-04-16T16:27:46.591Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="1lEfhiwG2Hiw5cGZkXq9" version="24.2.5" type="device">
   <diagram name="Page-1" id="mcp1PJNOSqDEv91YHYnR">
     <mxGraphModel dx="1050" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -33,9 +33,6 @@
         </mxCell>
         <mxCell id="X8HMs5meieHF2P_SXbaM-52" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=none;endFill=0;" parent="1" source="X8HMs5meieHF2P_SXbaM-26" target="X8HMs5meieHF2P_SXbaM-51" edge="1">
           <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="X8HMs5meieHF2P_SXbaM-26" value="Autorisierter Mitarbeiter" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" parent="1" vertex="1">
-          <mxGeometry x="760" y="300" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="X8HMs5meieHF2P_SXbaM-47" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=none;endFill=0;" parent="1" source="X8HMs5meieHF2P_SXbaM-3" target="X8HMs5meieHF2P_SXbaM-45" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -265,6 +262,9 @@
         </mxCell>
         <mxCell id="LIQOnRve1jrSHosx-wEA-16" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;endArrow=none;endFill=0;" parent="1" source="LIQOnRve1jrSHosx-wEA-11" target="LIQOnRve1jrSHosx-wEA-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X8HMs5meieHF2P_SXbaM-26" value="Autorisierter Mitarbeiter" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" parent="1" vertex="1">
+          <mxGeometry x="760" y="300" width="30" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

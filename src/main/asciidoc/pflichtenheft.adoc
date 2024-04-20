@@ -260,7 +260,7 @@ _Reservierungen bearbeiten im Reservierungs-Eintrag-Menü_:
 |Funktionale Anforderungen  |<<F0010>>
 |===
 
-image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Anwendungsfalldiagramm des {project_name}", align=center]
+image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm reservieren", align=center]
 
 [cols="1h, 3"]
 [[UC0130]]
@@ -376,7 +376,7 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |Funktionale Anforderungen  |<<F0010>>
 |===
 
-image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Anwendungsfalldiagramm des {project_name}", align=center]
+image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm kaufen ohne Reservierung", align=center]
 
 [cols="1h, 3"]
 [[UC0310]]

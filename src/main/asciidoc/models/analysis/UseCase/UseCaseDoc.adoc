@@ -326,3 +326,109 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0010>>
 |===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Säle verwalten
+|Beschreibung               |Boss ordnet Mitarbeiter Sälen zu, um anstehende Aufgaben zu erledigen.
+|Rollen                     |Boss, Mitarbeiter
+|Auslöser                   |Boss will neue Tätigkeit in einem Saal Mitarbeitern zuordnen. Der Boss klickt auf den Button "Säle verwalten".
+|Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Boss drückt auf den "Säle verwalten"-Button. Das System öffnet eine Unteransicht.
+2. Der Boss wählt einen Kinosaal aus und wählt dann Mitarbeiter, Tätigkeit, Uhrzeit und Tag aus.
+3. Der Boss bestätigt die Tätigkeit im Saal, mit dem Button "Tätigkeit speichern".
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Personal verwalten
+|Beschreibung               |Der Boss verwaltet seine Mitarbeiter in einem Kino.
+|Rollen                     |Boss, Mitarbeiter, autorisierter Mitarbeiter
+|Auslöser                   |Der Boss will Mitarbeiter einstellen oder entlassen, Schichten vergeben oder Schichten einsehen. Der Boss klickt den Button "Personalverwaltung".
+|Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Boss drückt auf den "Personalverwaltung"-Button. Das System öffnet eine Unteransicht.
+2. Der Boss führt eine Mitarbeiter-Aktion durch.
+
+_Mitarbeiter einstellen_:
+1. Der Boss trägt eine Arbeits-E-Mail, einen Benutzernamen, den Namen des Mitarbeiters, die Jobbezeichnung, das Monatsgehalt, die Wochenstunden, den Zugang (Rolle) in da das Formular "Mitarbeiter einstellen" ein.
+2. Der Boss klickt auf den Button "einstellen". Das System legt den neuen Mitarbeiter an.
+
+_Mitarbeiter in Schichten einteilen_:
+1. Der Boss teilt Mitarbeiter in einzelne Schichten ein, indem er die E-Mail, Startdatum- und Startuhrzeit, sowie Enddatum- und Enduhrzeit eingibt.
+2. Der Boss klickt auf "Einteilen".
+
+_Mitarbeiter-Schichten einsehen_:
+1. Der Boss trägt ein Datum ein.
+2. Der Boss klickt auf "Anzeigen". Dem Boss werden nun alle Mitarbeiter-Schichten des Tages angezeigt.
+
+_Mitarbeiter_
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Preisgestaltung
+|Beschreibung               |Der Boss ordnet einer Veranstaltung einen Preis zu.
+|Rollen                     |Boss
+|Auslöser                   |Boss will Vorführung-Ticket-Preise festlegen oder bearbeiten.
+|Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Es existieren bereits Vorführungen.
+|grundlegende Schritte     a|
+Boss drückt auf den "Preisgestaltung"-Button. Das System öffnet eine Unteransicht.
+1. Der Boss wählt eine Veranstaltung und einen Kinosaal
+2. Der Boss legt alle Preiskategorien preislich fest.
+3. Der Boss bestätigt die Eingabe durch den "Preise ändern"-Button.
+. Wenn Preiszuordnung bereits vorhanden: System überschreibt aktuelle Preise.
+. Sonst: System legt neue Preiszuordnung an.
+
+Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Tageseinnahmen Dashboard einsehen
+|Beschreibung               |Der Boss sieht die Tageseinnahmen der letzten Tage.
+|Rollen                     |Boss
+|Auslöser                   |Der Boss will die aktuellen Tageseinnahmen der letzten Zeit einsehen. Er klickt auf "Statistik einsehen".
+|Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Der Boss klickt auf "Statistik einsehen". Das System öffnet eine Unteransicht.
+2. Das System zeigt oben die aktuellen Tageseinnahmen an und listet darunter vergangene Tage auf.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Umsatzdiagramme einsehen
+|Beschreibung               |Der Boss sieht den Umsatz des aktuellen Monats in einem Diagramm angezeigt.
+|Rollen                     |Boss
+|Auslöser                   |Der Boss den Umsatz des aktuellen Monats einsehen. Er klickt auf "Statistik einsehen"
+|Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Der Boss klickt auf "Statistik einsehen". Das System öffnet eine Unteransicht.
+2. Das System zeigt weiter unten das Umsatzdiagramm des aktuellen Monats an.
+
+|Erweiterungen              |Der Boss kann sich Umsatzdiagramme von vergangenen Monaten anschauen.
+|Funktionale Anforderungen  |<<F0010>>
+|===

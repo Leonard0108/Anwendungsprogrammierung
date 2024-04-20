@@ -1,0 +1,32 @@
+= 3. Analyse Meeting - Konsistenz schaffen
+
+Treffen am 19.04.2024
+
+Beginn:   16:00 Uhr +
+Ende:     18:30 Uhr
+
+
+__Teilnehmer:__
+- Lukas
+- Jannik
+- Yannick
+- Simon
+- Tobias
+
+
+== Besprochen
+- Webseite (für Kunde) umbenannt in Kundeportal
+- UI: hinzufügen von Reservierungsdashboard, Platzauswahl über Textfeld
+- Klassendiagramm: Event Klasse (Saal während gebuchtem Event blockiert (kein Kinoprogramm)), Saalauslastung in Klasse Vorführung
+- funktionale Anforderungen: ID an UseCases orientieren
+- Use Case Beschreibungen und AT an UI anpassen
+- nach Reservierung: Reservierungsnummer in Reservierungsdashboard einsehbar (wenn möglich per E-Mail) (und Reservierungsnummer drucken?)
+- Snack Auswahl auf Ticket Verkaufsseite
+
+
+== Fragen
+- Karten Tauschen unter Kunden ?
+- Was genau soll bei der Saalverwaltung passieren?
+- flache Veerbung oder tiefe ?
+- Top-Level Architektur: kommunizieren Komonenten untereinander ?
+- Mobile friendly UI ?

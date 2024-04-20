@@ -9,13 +9,18 @@
 |Voraussetzungen           a|Der Nutzer ist nach dem Login noch unangemeldet.
 |grundlegende Schritte     a|
 1. Unregistrierte Nutzer drückt "Registrieren"-Button auf der Website.
-2. Der Nutzer gibt E-Mail, Passwort und Benutzernamen im Formular auf der Website ein.
-3. System prüft, ob Benutzername bereits vergeben.
-. wenn noch nicht vergeben: gehe zu Schritt 4.
+2. Der Nutzer gibt E-Mail, Passwort, Passwort-Bestätigung und Benutzernamen im Formular auf der Website ein.
+3. Der Nutzer klickt auf "Registrieren".
+4. System prüft, ob Passwort gleich Passwort-Bestätigung.
+. wenn gleich: gehe zu Schritt 4.
 . sonst: Zeige ein Fehler an.
-4. System prüft ob E-Mail-Adresse valide ist.
+5. System prüft, ob Benutzername bereits vergeben.
+. wenn noch nicht vergeben: gehe zu Schritt 5.
+. sonst: Zeige ein Fehler an.
+6. System prüft, ob E-Mail-Adresse valide ist.
 . wenn valide: erstelle neuen Nutzeraccount und leite Nutzer zur Startseite zurück.
 . sonst: Zeige ein Fehler an.
+
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0010>>
 |===
@@ -69,7 +74,7 @@ _Logout_:
 |Voraussetzungen           a|-
 |grundlegende Schritte     a|
 1. Der Nutzer klickt auf den "Programm-Ansicht"-Button auf der Website
-2. Es öffnet sich eine Unteransicht, in welcher alle zukünftigen Kino-Vorführungen (von oben nach unten, von links nach rechts) angezeigt werden, sortiert nach frühstem Starttermin und frühster Startzeit. Dabei enthält jeder Kino-Vorführungseintrag die nur die wichtigsten Informationen (Filmtitel, Kinosaal, Vorführung-Startdatum- und Zeit)
+2. Es öffnet sich eine Unteransicht, in welcher alle zukünftigen Kino-Vorführungen (von oben nach unten, von links nach rechts) angezeigt werden, sortiert nach frühstem Starttermin und frühster Startzeit. Dabei enthält jeder Kino-Vorführungseintrag die nur die wichtigsten Informationen (Filmtitel, Kinosaal, Vorführung-Startdatum- und Zeit, Filmdauer, FSK-Freigabe)
 3. Der Nutzer drückt Optional einen Vorführungseintrag an, sodass in einer weiteren Unteransicht noch detailliertere Informationen zur jeweiligen Vorführung angezeigt werden.
 4. Der Nutzer klickt den "Zurück"-Button, um von den Unteransichten wieder in die Überansichten zu gelangen.
 
@@ -84,10 +89,10 @@ _Logout_:
 |Name                       |Online reservieren
 |Beschreibung               |Ein Kunde reserviert, bearbeitet Online Tickets für eine Veranstaltung und lässt sich diese anzeigen.
 |Rollen                     |Kunde
-|Auslöser                   |Kunde will reservieren und klickt auf "Reservieren"-Button auf der Website.
+|Auslöser                   |Kunde will reservieren und klickt auf "Plätze Reservieren"-Button auf der Website.
 |Voraussetzungen           a|Der Nutzer muss als Kunde eingeloggt sein.
 |grundlegende Schritte     a|
-1. Der Kunde klickt auf den "Reservierungen"-Button auf der Website.
+1. Der Kunde klickt auf den "Plätze Reservieren"-Button auf der Website.
 2. Es öffnet sich eine Unteransicht, in welcher alle bereits vorhandenen Reservierungen angezeigt werden. Der Kunde lässt sich Reservierungen anzeigen, bearbeitet diese und legt neue Reservierungen an.
 3. Der Nutzer drückt "Zurück"-Buttons und gelangt in die vorherigen Überansichten zurück.
 
@@ -102,11 +107,11 @@ _Reservierung hinzufügen_:
 . Wenn die maximal Anzahl an Reservierungen noch nicht erreicht ist: öffnet sich ein "Reservierung hinzufügen"-Untermenü.
 . sonst: wird eine Fehlermeldung angezeigt.
 2. Der Kunde wählt nun aus dem aktuellen Kinoprogramm eine Vorführung aus.
-3. Der Kunde erstellt nun eins oder mehrere neue Tickets über einen "Ticket hinzufügen"-Button. Für jedes Ticket wählt der Kunde einen noch nicht belegten Platz in der Veranstaltung und legt die Art des Tickets fest (je nach Person).
+3. Der Kunde erstellt nun eins oder mehrere neue Tickets aus. Für jedes Ticket wählt der Kunde einen noch nicht belegten Platz in der Veranstaltung und legt die Art des Tickets fest (je nach Person). Er speichert das Ticket über einen "Ticket hinzufügen"-Button.
 Für jedes Ticket prüfen:
 . Wenn maximale Ticketanzahl noch nicht erreicht: System reserviert Ticket
 . Sonst: Kunde erhällt eine Information und es werden keine Änderungen vorgenommen.
-4. Der Kunde drückt den "Reservierung speichern"-Button. Das System speichert die Reservierung und der Kunde gelangt wieder in die allgemeine Reservierung-Ansicht.
+4. Der Kunde drückt den "Jetzt reservieren"-Button. Das System speichert die Reservierung und der Kunde gelangt wieder in die allgemeine Reservierung-Ansicht.
 
 _Reservierungen bearbeiten im Reservierungs-Eintrag-Menü_:
 
@@ -191,25 +196,25 @@ _Reservierungen bearbeiten im Reservierungs-Eintrag-Menü_:
 |Name                       |Karten verkaufen
 |Beschreibung               |Eine Person kauft beim Mitarbeiter Tickets.
 |Rollen                     |Mitarbeiter, Person
-|Auslöser                   |Person will Karten kaufen. Der Mitarbeiter drückt folglich auf den "Karten verkaufen" Button.
-|Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Ein BestellProzess mit einem Warenkorb muss bereits existieren und der Mitarbeiter befindet sich in dem Menü.
+|Auslöser                   |Person will Karten kaufen. Der Mitarbeiter drückt folglich auf den "Kartenverkauf" Button.
+|Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
 |grundlegende Schritte     a|
-1. Mitarbeiter drückt auf "Karten verkaufen"-Button im Bestellprozess-Menü. Ein Untermenü mit zwei Buttons wird geöffnet. Der Mitarbeiter drückt je nach Vorgehensweise entweder auf den Button "Tickets vor Ort auswählen" oder "Reservierung laden".
+1. Mitarbeiter drückt auf "Kartenverkauf". Das System öffnet eine Unteransicht.
+2. Optional: Laden einer Reservierung:
+. Der Mitarbeiter gibt die Reservierungs-Nummer oben ein.
+. Der Mitarbeiter drückt auf "Reservierung Laden". Wenn Reservierungsnummer vorhanden, so lädt das System die Reservierung und zeigt dies dem Mitarbeiter an. Wenn nicht wird ein Fehler ausgegeben.
+3. Der Mitarbeiter kann nun die Kaufvorgangsdaten auswählen oder anpassen (siehe Tickets und Veranstaltung vor Ort auswählen)
+4. Der Mitarbeiter kann Optional noch Snacks hinzufügen. (siehe UseCase <<UC0240>>)
+5. Mitarbeiter schließt nach Zufriedenheit der Person den Kaufvorgang ab, durch das Klicken auf den "Kaufvorgang abschließen"-Button. Das System öffnet nun eine finale Ansicht, wo noch mal alle Kaufinformationen und der Preis angezeigt wird.
+6. Die Person bezahlt und der Mitarbeiter klickt auf "Zahlungsvorgang abschließen". Das System blockt nun die Plätze endgültig, aktualisiert den Lagerbestand, die Umsatzstatistiken und die Filmstatistiken.
 
 _Tickets und Veranstaltung vor Ort auswählen_:
 
 1. Der Mitarbeiter sucht im aktuellen Kinoprogramm nach der gewünschten Vorführung (Film, Datum und/oder Uhrzeit) und wählt die gewünschte Vorführung der Person aus.
-2. Der Mitarbeiter fügt Tickets hinzu, durch das Klicken auf den Button "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Durch das Drücken auf den "Ticket hinzufügen"-Button:
-. wenn Ticketplatz noch nicht vergeben: füge Ticket dem Kaufvorgang hinzu und blocke diese im System.
+2. Der Mitarbeiter drückt auf "Plätze Laden". Das System lädt die aktuelle Ticket-Ansicht der Vorführung.
+3. Der Mitarbeiter fügt Tickets hinzu, durch das Klicken auf den Button "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Durch das Drücken auf den "Ticket hinzufügen"-Button:
+. wenn Ticketplatz noch nicht vergeben: füge Ticket der Reservierung hinzu.
 . sonst: Zeige Information an und Mitarbeiter wählt einen neuen Platz aus.
-3. Mitarbeiter speichert nach Zufriedenheit der Person den Ticket-Kaufvorgang durch das klicken auf den "Ticket-Kaufvorgang speichern"-Button.
-
-_Reservierung laden_:
-
-1. Der Mitarbeiter sucht nach einer passenden Reservierung (Name des Kundes, Reservierungsnummer oder Nutzeraccount (Benutzername, E-Mail)).
-. Wenn Mitarbeiter die Reservierung findet: Mitarbeiter klickt auf diese. Das System öffnet den Reservierungs-Eintrag.
-. sonst: Fehlermeldung
-2. Mitarbeiter klickt auf den Button "Reservierungskauf bestätigen". Das System bucht die Plätze der Tickets nun final aus.
 
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0010>>
@@ -237,9 +242,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0310]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0310>>**
 |Name                       |Säle vermieten
 |Beschreibung               |Autorisierte Mitarbeiter vermietet Saal an Veranstalter.
 |Rollen                     |Autorisierter Mitarbeiter, Veranstalter(Kunde)
@@ -258,9 +263,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0320]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0320>>**
 |Name                       |Programm anpassen
 |Beschreibung               |Autorisierter Mitarbeiter passt aktuelles Kinoprogramm an, indem er neue Vorführungen zu einem Kinosaal hinzufügt.
 |Rollen                     |Autorisierter Mitarbeiter
@@ -278,9 +283,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0330]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0330>>**
 |Name                       |Zentrallager verwalten
 |Beschreibung               |Autorisierter Mitarbeiter sieht aktuellen Bestand des Zentrallagers ein und verwaltet dieses.
 |Rollen                     |Autorisierter Mitarbeiter
@@ -296,9 +301,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0340]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0340>>**
 |Name                       |Anbieter vergleichen
 |Beschreibung               |Autorisierter Mitarbeiter kann verschiedene Filmanbieter vergleichen und deren aktuell angebotenen Filme vergleichen.
 |Rollen                     |Autorisierter Mitarbeiter
@@ -312,9 +317,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0350]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0350>>**
 |Name                       |Filmstatistik einsehen
 |Beschreibung               |Autorisierter Mitarbeiter kann einsehen, wie viele Besucher die aktuellen Filme haben.
 |Rollen                     |Autorisierter Mitarbeiter
@@ -328,9 +333,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0410]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0410>>**
 |Name                       |Säle verwalten
 |Beschreibung               |Boss ordnet Mitarbeiter Sälen zu, um anstehende Aufgaben zu erledigen.
 |Rollen                     |Boss, Mitarbeiter
@@ -346,9 +351,9 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0420]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0420>>**
 |Name                       |Personal verwalten
 |Beschreibung               |Der Boss verwaltet seine Mitarbeiter in einem Kino.
 |Rollen                     |Boss, Mitarbeiter, autorisierter Mitarbeiter
@@ -377,9 +382,9 @@ _Mitarbeiter_
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0430]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0430>>**
 |Name                       |Preisgestaltung
 |Beschreibung               |Der Boss ordnet einer Veranstaltung einen Preis zu.
 |Rollen                     |Boss
@@ -400,9 +405,9 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0440]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0440>>**
 |Name                       |Tageseinnahmen Dashboard einsehen
 |Beschreibung               |Der Boss sieht die Tageseinnahmen der letzten Tage.
 |Rollen                     |Boss
@@ -417,9 +422,9 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 |===
 
 [cols="1h, 3"]
-[[UC0240]]
+[[UC0450]]
 |===
-|ID                         |**<<UC0240>>**
+|ID                         |**<<UC0450>>**
 |Name                       |Umsatzdiagramme einsehen
 |Beschreibung               |Der Boss sieht den Umsatz des aktuellen Monats in einem Diagramm angezeigt.
 |Rollen                     |Boss

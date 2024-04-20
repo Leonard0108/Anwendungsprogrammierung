@@ -235,3 +235,94 @@ Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0010>>
 |===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Säle vermieten
+|Beschreibung               |Autorisierte Mitarbeiter vermietet Saal an Veranstalter.
+|Rollen                     |Autorisierter Mitarbeiter, Veranstalter(Kunde)
+|Auslöser                   |Autorisierter Mitarbeiter will Saal an Veranstalter vermieten und klickt auf "Saalverwaltung".
+|Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Autorisierter Mitarbeiter klickt auf "Saalverwaltung". Das System öffnet eine Unteransicht.
+2. Autorisierter Mitarbeiter fügt neue Veranstaltung ins System ein, indem er den Saal, den Startdatum- und Zeitpunkt, Enddatum- und Zeitpunkt, sowie den Eventnamen und einen Ansprechpartner auswählt.
+3. Der autorisierte Mitarbeiter klickt auf "Preis berechnen", um sich den Buchungspreis für die Veranstaltung anzeigen zu lassen und dem Veranstalter mitzuteilen.
+4. Der autorisierte Mitarbeiter klickt auf "Event buchen".
+. Wenn sich im Saal kein Event und keine Vorführung in der angegebenen Zeitspanne überlappt: System legt neues Event an
+. sonst: System gibt eine Fehlermeldung aus, das der Saal zu der Zeit belegt ist.
+
+|Erweiterungen              |Der autorisierte Mitarbeiter kann in der gleichen Ansicht (unter "Saalverwaltung") für einen bestimmten Tag und einen bestimmten Saal sich die aktuellen Events und Vorführungen anzeigen lassen, um den Veranstalter mögliche freie Termine für einen Saal möglichst einfach anbieten zu können.
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Programm anpassen
+|Beschreibung               |Autorisierter Mitarbeiter passt aktuelles Kinoprogramm an, indem er neue Vorführungen zu einem Kinosaal hinzufügt.
+|Rollen                     |Autorisierter Mitarbeiter
+|Auslöser                   |Autorisierter Mitarbeiter will neue Vorführung zu einem Kinosaal hinzufügen.
+|Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Autorisierter Mitarbeiter drückt auf den "Programmverwaltung"-Button. Das System öffnet eine Unteransicht.
+2. Autorisierter Mitarbeiter fügt neue Vorführung ins System ein, indem er den Saal, das Startdatum- und den Start-Zeitpunkt, sowie den Film (aus der Liste vom Kino aktuell gemieteter Filme) auswählt.
+3. Der autorisierte Mitarbeiter klickt auf "Hinzufügen".
+. Wenn sich im Saal kein Event und keine Vorführung in Zeitraum vom Beginn bis Ende des Filmes befindet: System legt neues Event an
+. sonst: System gibt eine Fehlermeldung aus, das der Saal zu der Zeit belegt ist.
+
+|Erweiterungen              |Der autorisierte Mitarbeiter kann in der gleichen Ansicht (unter "Saalverwaltung") für einen bestimmten Tag und einen bestimmten Saal sich die aktuellen Events und Vorführungen anzeigen lassen, um den Veranstalter mögliche freie Termine für einen Saal möglichst einfach anbieten zu können.
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Zentrallager verwalten
+|Beschreibung               |Autorisierter Mitarbeiter sieht aktuellen Bestand des Zentrallagers ein und verwaltet dieses.
+|Rollen                     |Autorisierter Mitarbeiter
+|Auslöser                   |Autorisierter Mitarbeiter will sich den aktuellen Lagerbestand anzeigen lassen und/oder neue erhaltene Waren ins System einpflegen oder verbrauchte Waren löschen. Dazu klickt dieser auf den "Lagerveraltung"-Button.
+|Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Autorisierter Mitarbeiter drückt auf den "Lagerverwaltung"-Button. Das System öffnet eine Unteransicht.
+2. Autorisierter Mitarbeiter fügt zum Bestand einer bereits vorhandenen Ware eine gewisse Anzahl hinzu oder löscht eine gewisse Anzahl, oder flegt eine neue Ware ins System ein.
+3. Der autorisierte Mitarbeiter klickt auf "Hinzufügen", um eine der Drei Aktionen auf 2. durchzuführen. Das System passt den Lagerbestand dementsprechend an.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Anbieter vergleichen
+|Beschreibung               |Autorisierter Mitarbeiter kann verschiedene Filmanbieter vergleichen und deren aktuell angebotenen Filme vergleichen.
+|Rollen                     |Autorisierter Mitarbeiter
+|Auslöser                   |Autorisierter Mitarbeiter sucht nach neuen Filmen für das Kino, da sich z.B. einige Filme bereits in den letzten Spielwochen befinden. Er klickt dann auf den "Anbieter vergleichen"-Button.
+|Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Autorisierter Mitarbeiter drückt auf den "Anbieter vergleichen"-Button. Das System öffnet eine Unteransicht. Das System zeigt alle verfügbaren Filme und die dazugehörigen Anbieter und den Preis des Ausleihens des Filmes pro Woche an.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===
+
+[cols="1h, 3"]
+[[UC0240]]
+|===
+|ID                         |**<<UC0240>>**
+|Name                       |Filmstatistik einsehen
+|Beschreibung               |Autorisierter Mitarbeiter kann einsehen, wie viele Besucher die aktuellen Filme haben.
+|Rollen                     |Autorisierter Mitarbeiter
+|Auslöser                   |Autorisierter Mitarbeiter will aktuelle Filmstatistik einsehen. Er drückt auf den "Filmstatistik einsehen"-Button.
+|Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
+|grundlegende Schritte     a|
+1. Autorisierter Mitarbeiter drückt auf den "Filmstatistik einsehen"-Button. Das System öffnet eine Unteransicht. Das System zeigt aktuell laufenden Filme an. Dabei wird für jeden Film die Gesamtauslastung der Kinosäle angezeigt.
+
+|Erweiterungen              |-
+|Funktionale Anforderungen  |<<F0010>>
+|===

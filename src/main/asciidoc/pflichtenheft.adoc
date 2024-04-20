@@ -108,17 +108,22 @@ Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm
 
 == Anwendungsfälle
 
+In diesem Abschnitt werden die meisten UseCases aufgelistet. Je nach Relevanz der UseCases existieren ausführlichere- und weniger ausführlichere Use-Case-Beschreibungen.
+
 === Akteure
 
-Akteure sind die Benutzer des Software-Systems oder Nachbarsysteme, welche darauf zugreifen. Dokumentieren Sie die Akteure in einer Tabelle. Diese Tabelle gibt einen Überblick über die Akteure und beschreibt sie kurz. Die Tabelle hat also mindestens zwei Spalten (Akteur Name und Kommentar).
-Weitere relevante Spalten können bei Bedarf ergänzt werden.
+In der nachfolgenden Tabelle werden alle Akteure aufgelistet und beschrieben, welche direkt auf das System zugreifen. Nutzer welche weitere UseCases an andere Akteure vererben, werden kursiv dargestellt.
 
-// See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 [cols="1,4"]
 |===
 |Name |Beschreibung
-|...  |...
+|_unregistrierter Nutzer_  | Repräsentiert jede Person, welche sich auf der Website des Kinos befindet und mit dem System interagiert, ohne einen Nutzer-Account zu besitzen. Diese Person kann die Kinovorschau einsehen und sich registrieren.
+|_Nutzer_                  | Repräsentiert jede Person, welche sich auf der Website des Kinos befindet und mit dem System interagiert, schon einen Nutzer-Account zu besitzt und sich jederzeit anmelden kann.
+|Kunde                     | Repräsentiert jede registrierte (authentifizierte) Person, welche sich auf der Website des Kinos befindet und mit dem System interagiert und als normale Person (ohne Rechtezuweisung durch den Chef) eingeloggt Reservierungen tätigen kann.
+|_Mitarbeiter_               | Repräsentiert vom Chef als Mitarbeiter registrierte (authentifizierte) Personen, welche das Kassensystem des Kinos bedienten können.
+|_autorisierter Mitarbeiter_ | Repräsentiert vom Chef als autorisierter Mitarbeiter registrierte (authentifizierte) Personen, welche zusätzlich zum Kassensystem des Kinos auch das Verwaltungssystem bedienen kann.
+|Chef                        | Repräsentiert eine einzelne registrierte (authentifizierte) Person, welche neben dem Kassensystem und dem Verwaltungssystem auch das operative System (administrative System) bedienen und steuern kann.
 |===
 
 === Überblick Anwendungsfalldiagramm

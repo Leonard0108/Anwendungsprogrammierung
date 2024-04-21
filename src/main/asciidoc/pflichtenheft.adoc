@@ -578,12 +578,13 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 == Funktionale Anforderungen
 
 === Muss-Kriterien
-[options="header", cols="2h, 1, 3, 12"]
+[options="header", cols="3h, 1, 3, 12, 4"]
 |===
 |ID
 |Version
 |Name
 |Beschreibung
+|Hinweise
 
 |[[F0010]]<<F0010>>
 |v0.1
@@ -595,51 +596,76 @@ mit folgenden Informationen:
 * Nutzername
 * E-Mail
 * Password
+| Passwörter sollten gehasht werden.
 
 |[[F0010]]<<F0010>>
 |v0.1
 |Überprüfung der Registrierung
 a|
 Überprüft Registrierung (E-Mail ...)
+|Könnte über Tests geregelt werden.
+
 |[[F0010]]<<F0010>>
 |v0.1
 |Anmeldung
 a|
-Neue Nutzer können sich anmelden.
+Nutzer können sich anmelden.
 mit folgenden Informationen:
 
 * Nutzername oder E-Mail
 * Password
+|
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Logout
+a|Sicheres beenden der Verbindung.
+|Im Falle eines unerwarteten Verbindungs-
+ abbruchs sollten nach maximal 20s die Ver-
+ bindun geschlossen werden.
 
 |[[F0010]]<<F0010>>
 |v0.1
 |Warenkorb
 a|
-Enthält Snacks und Film Tickets die der Kunde bislang ausgewählt hat.
+Enthält Snacks und Filmtickets die der Kunde bislang ausgewählt hat.
+|
 
 |[[F0010]]<<F0010>>
 |v0.1
 |Hinzufügen zum Warenkorb
 a|
 Nutzer kann Snacks oder Film Tickets zum Warenkorb hinzufügen.
+|
 
 |[[F0010]]<<F0010>>
 |v0.1
 |Anzeigen zum Warenkorb
 a|
 Nutzer kann sich den Warenkorb anzeigen.
+|
 
 |[[F0010]]<<F0010>>
 |v0.1
 |Überprüfung der Reservierung
 a|
 Platz frei?
+|
 
 |[[F0010]]<<F0010>>
 |v0.1
 |Suche nach Reservierung
 a|
 Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mail des Kundens(KANN)) nach seiner Reservierung
+|
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Programm anzeigen
+a|
+Kunden können auf Website das aktuelle Programm anschauen
+|
+
 
 |===
 

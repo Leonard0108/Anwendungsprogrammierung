@@ -42,7 +42,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="main-outer">
+            <div class="main-outer" style="padding-right: 2em">
                 <div class="head">
                     <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
                 </div>
@@ -80,6 +80,7 @@
                                 <option value="child">Kind (Bis 14 Jahre)</option>
                                 <option value="disabled">Schwerbehinderter</option>
                             </select> </p>
+                        <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
                             <img src="spots-view-2.png" alt="Saalansicht"/><br>
                         <button name="addTicket" value="1">Ticket hinzufügen</button>
                         <h2>Snacks Hinzufügen</h2>
@@ -92,7 +93,6 @@
                             <button name="addSnack">Snack hinzufügen</button>
                         <hr>
                         <p class="flex">Gesamtsumme: <span class="grow"></span> 0.00€</p>
-                        <p style="color:red">Hier reservierte Plätze müssen 30min vor der Vorlesung abgeholt und bezahlt werden, sonst verfallen sie.</p>
                         <button name="doReserve" value="1">Jetzt reservieren</button>
                     </form>
                 </div>

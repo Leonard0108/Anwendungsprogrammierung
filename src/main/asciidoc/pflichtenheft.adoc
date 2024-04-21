@@ -152,7 +152,7 @@ image::./models/analysis/UseCase/UseCase.svg[Use Case diagram, 100%, 100%, pdfwi
 . sonst: Zeige ein Fehler an.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0011>>, <<F0012>>
 |===
 
 [cols="1h, 3"]
@@ -190,7 +190,7 @@ _Logout_:
 2. Nutzer ist nun abgemeldet und erhällt die Rolle des unangemeldeten Nutzers.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0021>>, <<F0022>>
 |===
 
 [cols="1h, 3"]
@@ -209,7 +209,7 @@ _Logout_:
 4. Der Nutzer klickt den "Zurück"-Button, um von den Unteransichten wieder in die Überansichten zu gelangen.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0111>>
 |===
 
 [cols="1h, 3"]
@@ -254,7 +254,7 @@ _Reservierungen bearbeiten im Reservierungs-Eintrag-Menü_:
 . Sonst: Kunde erhällt eine Information und es werden keine Änderungen vorgenommen.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0121>>
 |===
 
 image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm reservieren", align=center]
@@ -275,7 +275,7 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 4. Der Kunde bestätigt den Vorgang des Stornierens, durch das Klicken auf den "Fortfahren"-Button. Der Kunde gelangt nun wieder zurück in die allgemeine Reservierungs-Übersicht. Das System löscht die Reservierung und gibt alle Tickets der jeweiligen Veranstaltung wieder frei.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |-
 |===
 
 [cols="1h, 3"]
@@ -297,7 +297,7 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 5. Mitarbeiter speichert nach Zufriedenheit der Person die Reservierung durch das klicken auf den "Reservierung speichern"-Button.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |-
 |===
 
 [cols="1h, 3"]
@@ -318,7 +318,7 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 4. Der Mitarbeiter bestätigt den Vorgang des Stornierens, nach Vergewisserung beim Kunden, durch das Klicken auf den "Fortfahren"-Button. Das System löscht die Reservierung und gibt die Plätze der Vorführung wieder frei.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |-
 |===
 
 [cols="1h, 3"]
@@ -349,7 +349,7 @@ _Tickets und Veranstaltung vor Ort auswählen_:
 . sonst: Zeige Information an und Mitarbeiter wählt einen neuen Platz aus.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0231>>, <<F0232>>, <<F0233>>, <<F0234>>, <<F0235>>
 |===
 
 [cols="1h, 3"]
@@ -370,7 +370,7 @@ Anmerkung:
 Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |-
 |===
 
 image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm kaufen ohne Reservierung", align=center]
@@ -393,7 +393,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 . sonst: System gibt eine Fehlermeldung aus, das der Saal zu der Zeit belegt ist.
 
 |Erweiterungen              |Der autorisierte Mitarbeiter kann in der gleichen Ansicht (unter "Saalverwaltung") für einen bestimmten Tag und einen bestimmten Saal sich die aktuellen Events und Vorführungen anzeigen lassen, um den Veranstalter mögliche freie Termine für einen Saal möglichst einfach anbieten zu können.
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0311>>
 |===
 
 [cols="1h, 3"]
@@ -413,7 +413,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 . sonst: System gibt eine Fehlermeldung aus, das der Saal zu der Zeit belegt ist.
 
 |Erweiterungen              |Der autorisierte Mitarbeiter kann in der gleichen Ansicht (unter "Saalverwaltung") für einen bestimmten Tag und einen bestimmten Saal sich die aktuellen Events und Vorführungen anzeigen lassen, um den Veranstalter mögliche freie Termine für einen Saal möglichst einfach anbieten zu können.
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0321>>
 |===
 
 [cols="1h, 3"]
@@ -431,7 +431,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 3. Der autorisierte Mitarbeiter klickt auf "Hinzufügen", um eine der Drei Aktionen auf 2. durchzuführen. Das System passt den Lagerbestand dementsprechend an.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0331>>
 |===
 
 [cols="1h, 3"]
@@ -447,7 +447,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 1. Autorisierter Mitarbeiter drückt auf den "Anbieter vergleichen"-Button. Das System öffnet eine Unteransicht. Das System zeigt alle verfügbaren Filme und die dazugehörigen Anbieter und den Preis des Ausleihens des Filmes pro Woche an.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0341>>
 |===
 
 [cols="1h, 3"]
@@ -463,7 +463,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 1. Autorisierter Mitarbeiter drückt auf den "Filmstatistik einsehen"-Button. Das System öffnet eine Unteransicht. Das System zeigt aktuell laufenden Filme an. Dabei wird für jeden Film die Gesamtauslastung der Kinosäle angezeigt.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0351>>
 |===
 
 [cols="1h, 3"]
@@ -481,7 +481,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 3. Der Boss bestätigt die Tätigkeit im Saal, mit dem Button "Tätigkeit speichern".
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |-
 |===
 
 [cols="1h, 3"]
@@ -512,7 +512,7 @@ _Mitarbeiter-Schichten einsehen_:
 _Mitarbeiter_
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0421>>
 |===
 
 [cols="1h, 3"]
@@ -535,7 +535,7 @@ Boss drückt auf den "Preisgestaltung"-Button. Das System öffnet eine Unteransi
 Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0431>>
 |===
 
 [cols="1h, 3"]
@@ -552,7 +552,7 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 2. Das System zeigt oben die aktuellen Tageseinnahmen an und listet darunter vergangene Tage auf.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0451>>
 |===
 
 [cols="1h, 3"]
@@ -569,7 +569,7 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 2. Das System zeigt weiter unten das Umsatzdiagramm des aktuellen Monats an.
 
 |Erweiterungen              |Der Boss kann sich Umsatzdiagramme von vergangenen Monaten anschauen.
-|Funktionale Anforderungen  |<<F0010>>
+|Funktionale Anforderungen  |<<F0451>>
 |===
 
 == Funktionale Anforderungen
@@ -583,7 +583,7 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 |Beschreibung
 |Hinweise
 
-|[[F0010]]<<F0010>>
+|[[F0011]]<<F0011>>
 |v0.1
 |Registrierung
 a|
@@ -595,14 +595,14 @@ mit folgenden Informationen:
 * Password
 | Passwörter sollten gehasht werden.
 
-|[[F0010]]<<F0010>>
+|[[F0012]]<<F0012>>
 |v0.1
 |Überprüfung der Registrierung
 a|
 Überprüft Registrierung (E-Mail ...)
 |Könnte über Tests geregelt werden.
 
-|[[F0010]]<<F0010>>
+|[[F0021]]<<F0021>>
 |v0.1
 |Anmeldung
 a|
@@ -613,7 +613,7 @@ mit folgenden Informationen:
 * Password
 |
 
-|[[F0010]]<<F0010>>
+|[[F0022]]<<F0022>>
 |v0.1
 |Logout
 a|Sicheres beenden der Verbindung.
@@ -621,82 +621,82 @@ a|Sicheres beenden der Verbindung.
  abbruchs sollten nach maximal 20s die Ver-
  bindun geschlossen werden.
 
-|[[F0010]]<<F0010>>
+|[[F0231]]<<F0231>>
 |v0.1
 |Warenkorb
 a|
 Enthält Snacks und Filmtickets die der Kunde bislang ausgewählt hat.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0232]]<<F0232>>
 |v0.1
 |Hinzufügen zum Warenkorb
 a|
 Nutzer kann Snacks oder Film Tickets zum Warenkorb hinzufügen.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0233]]<<F0233>>
 |v0.1
 |Anzeigen zum Warenkorb
 a|
 Nutzer kann sich den Warenkorb anzeigen.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0121]]<<F0121>>
 |v0.1
 |Überprüfung der Reservierung
 a|
 Platz frei?
 |
 
-|[[F0010]]<<F0010>>
+|[[F0234]]<<F0234>>
 |v0.1
 |Suche nach Reservierung
 a|
 Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mail des Kundens(KANN)) nach seiner Reservierung
 |
 
-|[[F0010]]<<F0010>>
+|[[F0111]]<<F0111>>
 |v0.1
 |Programm anzeigen
 a|
 Kunden können auf Website das aktuelle Programm anschauen
 |
 
-|[[F0010]]<<F0010>>
+|[[F0235]]<<F0235>>
 |v0.1
 |Kauf von Karten und Snacks
 a|
 Kunden können die Karte (-n) und Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0311]]<<F0311>>
 |v0.1
 |Säle vermieten
 a| Der Chef sollte die Möglichkeit haben Säle vermieten zu können.
 |Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
 
-|[[F0010]]<<F0010>>
+|[[F0321]]<<F0321>>
 |v0.1
 |Programm anpassen.
 a|Mit der Zeit sollten neue Filme hinzugefügt und alte entfernt werden können.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0341]]<<F0341>>
 |v0.1
 |Anbieter vergleichen
 a|Autorisierte Mitarbeiter sollten in der Lage sein Mehrere Vergleichen zu können und dort
   entsprechend
 |
 
-|[[F0010]]<<F0010>>
+|[[F0331]]<<F0331>>
 |v0.1
 |Zentrallagerverwaltung
 a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
   So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0351]]<<F0351>>
 |v0.1
 |Filmstatistik einsehen
 a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Staistik
@@ -705,14 +705,14 @@ a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Sta
 |Wie schon in Beschreibung erwähnt nur zu operativen Zwecken gedacht. Für strategische Planung
  wird anderes Tool verwendet.
 
-|[[F0010]]<<F0010>>
+|[[F0421]]<<F0421>>
 |v0.1
 |Personal verwalten
 a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
   Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0431]]<<F0431>>
 |v0.1
 |Preisverwaltung
 a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Staistik
@@ -720,7 +720,7 @@ notwendig, die einem die aktuellen Tagesergebnisse des Kinos, bzw. aller Filme u
 Snacks, anzeigt. So ist eine bessere operative Steuerung möglich.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0451]]<<F0451>>
 |v0.1
 |Filmstatistik einsehen
 a|Strategisches Pendant zum Einsehen der Filmstatistik. Dient dem Erfassen von Statistiken mehrerer Filme
@@ -728,13 +728,13 @@ a|Strategisches Pendant zum Einsehen der Filmstatistik. Dient dem Erfassen von S
   genutzt werden
 |
 
-|[[F0010]]<<F0010>>
+|[[F0001]]<<F0001>>
 |v0.1
 |Kartentausch
 a|Dient dem Tausch on Karten, wenn Termin oder Film nicht passen.
 |
 
-|[[F0010]]<<F0010>>
+|[[F0002]]<<F0002>>
 |v0.1
 |Gute Erweiterbarkeit
 a| Software sollte gut Wart- und erweiterbar sein um künftige leicht Updates zu ermöglichen.

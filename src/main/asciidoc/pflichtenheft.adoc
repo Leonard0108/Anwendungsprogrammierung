@@ -711,9 +711,25 @@ a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Sta
 |[[F0010]]<<F0010>>
 |v0.1
 |Personal verwalten
-a|
+a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
+  Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
 |
 
+|[[F0010]]<<F0010>>
+|v0.1
+|Preisverwaltung
+a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Staistik
+notwendig, die einem die aktuellen Tagesergebnisse des Kinos, bzw. aller Filme und ggf.
+Snacks, anzeigt. So ist eine bessere operative Steuerung möglich.
+|
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Filmstatistik einsehen
+a|Strategisches Pendant zum Einsehen der Filmstatistik. Dient dem Erfassen von Statistiken mehrerer Filme
+  und sonstiger Einnahmen/ Ausgaben. Kann ggf auch als Hilfe für die Erstellung des Jahresabschlusses
+  genutzt werden
+|
 |===
 
 

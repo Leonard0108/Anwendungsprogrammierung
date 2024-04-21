@@ -730,6 +730,18 @@ a|Strategisches Pendant zum Einsehen der Filmstatistik. Dient dem Erfassen von S
   und sonstiger Einnahmen/ Ausgaben. Kann ggf auch als Hilfe für die Erstellung des Jahresabschlusses
   genutzt werden
 |
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Kartentausch
+a|Dient dem Tausch on Karten, wenn Termin oder Film nicht passen.
+|
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Gute Erweiterbarkeit
+a| Software sollte gut Wart- und erweiterbar sein um künftige leicht Updates zu ermöglichen.
+|
 |===
 
 

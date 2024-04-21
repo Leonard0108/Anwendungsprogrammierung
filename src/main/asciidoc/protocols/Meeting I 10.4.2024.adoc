@@ -24,7 +24,7 @@ Protokollführer: Lukas Philipp Diettrich
 | Verwaltungssystem        | Chef                                | Wirtschaftsdaten
 | Verwaltungssystem        | Chef                                | Säle verwalten
 | Verwaltungssystem        | Chef                                | Preisgestaltung
-| Verwaltungssystem        | Chef/ autorisierte Mitarbeiter     | Saalvermietung
+| Verwaltungssystem        | Chef/ autorisierte Mitarbeiter      | Saalvermietung
 | Kassensystem             | Mitarbeiter                         | Snack
 | Verwaltungssystem        | Autorisierte Mitarbeiter/ Chef      | Zentrallager
 | Verwaltungssystem        | Autorisierte Mitarbeiter/ Chef      | Filmbesuchsstatistik

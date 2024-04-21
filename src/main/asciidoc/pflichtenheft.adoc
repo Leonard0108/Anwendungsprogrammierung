@@ -7,6 +7,7 @@
 |===
 |Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
 |0.1     | In Arbeit   | 01.04.2023          | Autor       | Initiale Version
+|0.3     | In Arbeit   | 21.04.2024          | diverse     | Nachtrag Versionierung
 |===
 
 == Inhaltsverzeichnis
@@ -761,21 +762,79 @@ Achten Sie darauf, dass deren Erfüllung (mindestens theoretisch) messbar sein m
 
 == GUI Prototyp
 
-In diesem Kapitel soll ein Entwurf der Navigationsmöglichkeiten und Dialoge des Systems erstellt werden.
-Idealerweise entsteht auch ein grafischer Prototyp, welcher dem Kunden zeigt, wie sein System visuell umgesetzt werden soll.
-Konkrete Absprachen - beispielsweise ob der grafische Prototyp oder die Dialoglandkarte höhere Priorität hat - sind mit dem Kunden zu treffen.
+Die nachfolgenden GUI-Renderer sollen zeigen, wie das fertige System aussehen könnte. 
 
-=== Überblick: Dialoglandkarte
-Erstellen Sie ein Übersichtsdiagramm, das das Zusammenspiel Ihrer Masken zur Laufzeit darstellt. Also mit welchen Aktionen zwischen den Masken navigiert wird.
-//Die nachfolgende Abbildung zeigt eine an die Pinnwand gezeichnete Dialoglandkarte. Ihre Karte sollte zusätzlich die Buttons/Funktionen darstellen, mit deren Hilfe Sie zwischen den Masken navigieren.
+=== Startseite
 
-=== Dialogbeschreibung
-Für jeden Dialog:
+Ansicht, wie sie ein unangemeldeter Benutzer sieht. 
+image::./models/analysis/GUI-Entwurf/index-renderer-guest.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (Gast)", align=center]
 
-1. Kurze textuelle Dialogbeschreibung eingefügt: Was soll der jeweilige Dialog? Was kann man damit tun? Überblick?
-2. Maskenentwürfe (Screenshot, Mockup)
-3. Maskenelemente (Ein/Ausgabefelder, Aktionen wie Buttons, Listen, …)
-4. Evtl. Maskendetails, spezielle Widgets
+Ansicht, wie sie ein angemeldeter Benutzer sieht. 
+image::./models/analysis/GUI-Entwurf/inex-renderer-user.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (angemeldeter Benutzer)", align=center]
+
+Ansicht, wie sie ein Mitarbeiter sieht. 
+image::./models/analysis/GUI-Entwurf/index-renderer-staff.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (Mitarbeiter)", align=center]
+
+Ansicht, wie sie ein autorisierter Mitarbeiter sieht. 
+image::./models/analysis/GUI-Entwurf/index-renderer-authorised-staff.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (autorisierter Mitarbeiter)", align=center]
+
+Ansicht, wie sie der Boss sieht. 
+image::./models/analysis/GUI-Entwurf/index-renderer-boss.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (Boss)", align=center]
+
+=== Registrieren
+image::./models/analysis/GUI-Entwurf/register-renderer-guest.png[Registrieren, 100%, 100%, pdfwidth=100%, title= "Registrierungsmaske", align=center]
+
+=== Anmelden
+image::./models/analysis/GUI-Entwurf/login-renderer-guest.png[Anmelden, 100%, 100%, pdfwidth=100%, title= "Anmeldemaske", align=center]
+
+=== Programm
+Programmaske, wie sie angemeldete Nutzer sehen. Für unangemeldeter Benutzer fehlen die Reservierungslinks. 
+image::./models/analysis/GUI-Entwurf/current-films-renderer-user.png[Programm, 100%, 100%, pdfwidth=100%, title= "Programmmaske", align=center]
+
+Programmaske, wie sie autorisierter Mitarbeiter sehen. Das Programm-hinzufügen-Formular wird bei Bedarf durch ein Bearbeitungs- oder löschformular ersetzt.
+image::./models/analysis/GUI-Entwurf/current-films-renderer-authorized-staff.png[Programm, 100%, 100%, pdfwidth=100%, title= "Programmmaske", align=center]
+
+=== Tickets reservieren
+Initiale Ansicht der Reservierungsmaske, wenn man "Plätze reservieren" in der Navigation anklickt.
+image::./models/analysis/GUI-Entwurf/reserve-tickets-1-renderer-user.png[Reservierungsmaske, 100%, 100%, pdfwidth=100%, title= "Reservierungsmaske", align=center]
+
+Zweite Version der Reservierungsmaske, wenn ein Film entweder auf der ersten Reservierungsmaske oder in der Programmansicht ausgewählt wurde.
+image::./models/analysis/GUI-Entwurf/reserve-tickets-2-renderer-user.png[Reservierungsmaske, 100%, 100%, pdfwidth=100%, title= "Reservierungsmaske", align=center]
+=== Reservierung stornieren
+Initiale Version der Stornierungsmaske, wenn der Link "Reservierung stornieren" in der Navigation geklickt wurde.
+image::./models/analysis/GUI-Entwurf/cancel-reservation-user-renderer.png[Stornomaske, 100%, 100%, pdfwidth=100%, title= "Stornomaske", align=center]
+
+Bestätigungsabfrage beim Löschen einer Reservierung.
+image::./models/analysis/GUI-Entwurf/cancel-reservation-user-renderer-2.png[Stornomaske, 100%, 100%, pdfwidth=100%, title= "Stornomaske", align=center]
+
+=== Verkauf
+Initiale Version der Verkaufsmaske, wenn noch nichts im Warenkorb liegt. Diese wird über "Kartenverkauf" in der Navigation erreicht.
+image::./models/analysis/GUI-Entwurf/sell-items-1-staff-renderer.png[Verkaufsmaske, 100%, 100%, pdfwidth=100%, title= "Verkaufsmaske", align=center]
+
+Zweite Version der Verkausmaske, wenn entweder eine Reservierung geladen oder manuell Items dem Warenkorb hinzugefügt wurden.
+image::./models/analysis/GUI-Entwurf/sell-items-2-staff-renderer.png[Verkaufsmaske, 100%, 100%, pdfwidth=100%, title= "Verkaufsmaske", align=center]
+
+=== Tickets umtauschen
+Ansicht der Kartentauschmaske. Diese wird über "Kartentausch" in der Navigation erreicht.
+image::./models/analysis/GUI-Entwurf/tickets-change-staff-renderer.png[Kartentauschmaske, 100%, 100%, pdfwidth=100%, title= "Kartentauschmaske", align=center]
+
+=== Tickets zurückgeben
+Ansicht der Ticketrückgabemaske. Erreichbar über "Kartenrückgabe" in der Navigation.
+image::./models/analysis/GUI-Entwurf/tickets-return-staff-renderer.png[Kartenrückgabe, 100%, 100%, pdfwidth=100%, title= "Kartenrückgabe", align=center]
+
+=== Saalverwaltung
+Ansicht der Saalverwaltung für autorisierte Mitarbeiter. Erreichbar über "Saalverwaltung" in der Navigation. Für Kinofilme führen die Ändern- und Löschlinks zur 
+Vermeidung von doppeltem Code zur Programmverwaltung.
+image::./models/analysis/GUI-Entwurf/manage-rooms-boss-renderer.png[Saalverwaltung, 100%, 100%, pdfwidth=100%, title= "Saalverwaltung", align=center]
+
+=== Personalverwaltung
+image::./models/analysis/GUI-Entwurf/manage-staff-renderer-boss.png[Personalverwaltung, 100%, 100%, pdfwidth=100%, title= "Personalverwaltung", align=center]
+
+=== Lagerverwaltung
+image::./models/analysis/GUI-Entwurf/manage-storage-authorized-staff.png[Lagerverwaltung, 100%, 100%, pdfwidth=100%, title= "Lagerverwaltung", align=center]
+
+=== Preisgestaltung
+image::./models/analysis/GUI-Entwurf/adjust-pricing-boss-renderer.png[Preisgestaltung, 100%, 100%, pdfwidth=100%, title= "Preisgestaltung", align=center]
 
 == Datenmodell
 

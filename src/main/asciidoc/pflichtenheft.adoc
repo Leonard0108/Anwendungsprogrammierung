@@ -687,9 +687,9 @@ a|Mit der Zeit sollten neue Filme hinzugefügt und alte entfernt werden können.
 
 |[[F0010]]<<F0010>>
 |v0.1
-|Suche nach Reservierung
-a|
-Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mail des Kundens(KANN)) nach seiner Reservierung
+|Anbieter vergleichen
+a|Autorisierte Mitarbeiter sollten in der Lage sein Mehrere Vergleichen zu können und dort
+  entsprechend
 |
 
 |[[F0010]]<<F0010>>
@@ -698,13 +698,29 @@ Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mai
 a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
   So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
 |
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Filmstatistik einsehen
+a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Staistik
+  notwendig, die einem die aktuellen Tagesergebnisse des Kinos, bzw. aller Filme und ggf.
+  Snacks, anzeigt. So ist eine bessere operative Steuerung möglich.
+|Wie schon in Beschreibung erwähnt nur zu operativen Zwecken gedacht. Für strategische Planung
+ wird anderes Tool verwendet.
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Personal verwalten
+a|
+|
+
 |===
 
 
 
 
 === Kann-Kriterien
-Anforderungen die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
+Anforderungen, die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
 
 == Nicht-Funktionale Anforderungen
 

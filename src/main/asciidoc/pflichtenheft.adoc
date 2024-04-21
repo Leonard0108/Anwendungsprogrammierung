@@ -20,7 +20,7 @@ Die Kinobetreibergesellschaft UFO möchte zukünftig aus personalpolitischen Gr�
 allen Kinos eine einheitliche Software für den Kartenverkauf und für Verwaltungsaufgaben
 einsetzen. Die Gesellschaft wendet sich an Sie mit der Bitte, eine moderne und
 erweiterungsfähige Software zu entwickeln, die mindestens die nachfolgenden
-Anforderungen erfüllen muss.
+Anforderungen erfüllen muss. +
 Im Verkaufsbereich der Kinos können die Kunden Kinokarten kaufen, reservieren und
 tauschen. Ein Rückkauf von Karten soll bis zu 30 Minuten vor Beginn des jeweiligen Filmes
 ebenfalls möglich sein. Karten können vor Ort, telefonisch oder online reserviert werden und
@@ -35,7 +35,7 @@ UFO aus den Listen verschiedener Verleihfirmen, die für jeden angebotenen Film 
 eine Kurzbeschreibung, die FSK-Freigabe, den Kinostart und die Gesamtlänge enthalten, die
 gewünschten Filme auswählen. Die Leihgebühren werden wochenweise berechnet und
 betragen derzeit 30% der Einnahmen durch den Film plus einer Grundgebühr, die sowohl von
-der Art des Films als auch von seiner Aktualität abhängt.
+der Art des Films als auch von seiner Aktualität abhängt. +
 Am Ende jeden Tages wird eine Statistik der Tageseinnahmen aufgestellt, eine monatliche
 Umsatzermittlung stellt den Einnahmen aus dem Kartenverkauf die Ausgaben für geliehene
 Filme und Personalkosten gegenüber. Es sollte auch möglich sein, die Auslastung der
@@ -43,12 +43,10 @@ Kinosäle bezogen auf die Filme einzusehen, um die Laufzeit eines Filmes an das 
 Kinobesucher aktuell anzupassen. Wünschenswert wäre auch eine Unterstützung durch die
 Software bei der Vermietung der Kinosäle für andere Veranstaltungen. Außerdem möchte der
 UFO-Chef zukünftig auch die Personal- und Saalverwaltung sowie die Preisgestaltung mit der
-neuen Software erledigen.
+neuen Software erledigen. +
 Neben dem Geschäft mit Filmen und Veranstaltungen, ist der Verkauf leckerster Snacks eine
 sehr wichtige Einnahmequelle der Kinos. Sie Software soll daher, nach Möglichkeit, den
 Bestand und Verkauf in den Kinos, und das Zentrallager unterstützen.
-
-- (__unspezifiziert__: muss noch gemacht werden)
 
 == Produktnutzung
 Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
@@ -799,11 +797,12 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 
 [cols="1h, 4"]
 |===
-|ID            |[[AT0010]]<<AT0010>> Neukunde registriert sich
+|ID            |[[AT0010]]<<AT0010>>
+|Name          |Neukunde registriert sich
 |Use Case      |<<UC0010>> Registrieren
 |Vorbedingung(en)      a|Ein unregistrierter Nutzer benutzt die Webseite.
 |Ablauf      a|
-Der unregistrierte Nutzer drückt auf "Registrieren" in der Webseiten Oberfläsche und trägt folgende Informationen in das Registrierungsformular ein:
+Der unregistrierte Nutzer drückt auf "Registrieren" auf der Webseiten Oberfläsche und trägt folgende Informationen in das Registrierungsformular ein:
 
 - *Nutzername:* hans
 - *Passwort:* passwort123
@@ -811,8 +810,8 @@ Der unregistrierte Nutzer drückt auf "Registrieren" in der Webseiten Oberfläsc
 
 Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und senden damit die Informationen an das Loginsystem.
 |Ergebnis(se)     a|
-- Die Daten werden an das Loginsystem gesendet und geprüft ob die E-Mail bereits verwendet wurden ist
-- Es wurde ein neuer Nutzer aus den übergebenen Daten erstellt und in der Datenbank des Logisystems hinterlegt
+- Die Daten werden an das Loginsystem gesendet und geprüft ob die E-Mail oder der Nutzername bereits verwendet wurden ist
+- Es wurde ein neuer Nutzer aus den übergebenen Daten erstellt und in der Datenbank des Loginsystems hinterlegt
 - Die Rolle des neuen Nutzerkontos ist: "Kunde"
 - Dem Nutzer ist es nun möglich sich mit seinen Login Daten auf der Webseite anzumelden
 - Der Nutzer ist immer noch unangemeldet und wird auf __die Login Seite__ weitergeleitet
@@ -821,11 +820,12 @@ Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und sende
 
 [cols="1h, 4"]
 |===
-|ID            |[[AT0020]]<<AT0020>> Kunde meldet sich an
+|ID            |[[AT0020]]<<AT0020>>
+|Name          |Kunde meldet sich an
 |Use Case      |<<UC0020>> Anmelden
 |Vorbedingung(en)      a|Das Loginsystem hat existierende Nutzer.
 |Ablauf      a|
-Der Nutzer drückt auf "Login" in der Webseiten Oberfläsche und trägt folgende Informationen in das Login formular ein:
+Der Nutzer drückt auf "Login" auf der Webseiten Oberfläsche und trägt folgende Informationen in das Login formular ein:
 
 - *Nutzername:* hans
 - *Passwort:* passwort123
@@ -839,53 +839,60 @@ Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit
 
 [cols="1h, 4"]
 |===
-|ID            |[[AT0120]]<<AT0120>> Kunde Reserviert Sitzplätze
+|ID            |[[AT0120]]<<AT0120>>
+|Name          |Kunde Reserviert Sitzplätze
 |Use Case      |<<UC0120>> Online reservieren
 |Voraussetzung(en)      a|Ein angemeldeter Nutzer nutzt das Kundenportal.
 |Ablauf      a|
-Der Kunde drückt auf "Plätze Reservieren" in der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. +
-Im Reservierungsformular wählt er zunächst die Vorführung aus. Daraufhin drückt der Kunde 2 mal auf  "Ticket hinzufügen" und 2 Ticket Auswahlfelder erscheinen. +
-In der TicketTyp Auswahl wählt er einmal "Erwachsen" und einmal "Kind". Auf dem darunter befindlichen Sitzplan sieht er alle noch freien Plätze. +
-__Er trägt nun jeweils "B4" und "B5" in die Platzfelder der Tickets ein__ und drückt auf "Reservierung speichern" und senden damit die Informationen an das System.
+Der Kunde drückt auf "Plätze Reservieren" auf der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. +
+Im Reservierungsformular wählt er zunächst die Vorführung aus. Unter dem Reiter "Ticket hinzufügen" wählt der Kunde "Erwachsener" als Ticketart aus. Auf dem Sitzplan sieht er wo noch freie Plätze sind und trägt die Platznummer "B4" in das Platz Feld ein. Dann drückt er auf Ticket hinzufügen. +
+Dies wiederholt er für eine Ticketreservierung mit der Ticketart "Kind" und Platz "B5". +
+Um die Reservierung abzuschließen drückt der Kunde zum Schluss auf "Jetzt reservieren".
 |Ergebnis(se)     a|
 - Es wird überprüft ob die Plätze noch verfügbar sind
-- Da die Plätze verfügbar sind werden sie geschlossen als Reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
+- Da die Plätze verfügbar sind werden sie geschlossen als reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
 - Der Kunde wird auf eine Reservierungsbestätigung-Seite weitergeleitet, auf der er deutlich seine Reservierungsnummer sehen kann
-- __Mit der Reservierungsnummer kann der Mitarbeiter an der Kasse die reservierten Tickets aufrufen und nach Bezahlung dem Kunden ausstellen__
+- Mit der Reservierungsnummer kann der Mitarbeiter an der Kasse die reservierten Tickets aufrufen und nach Bezahlung dem Kunden ausstellen
 |===
 
 [cols="1h, 4"]
 |===
-|ID            |[[AT0230]]<<AT0230>> Mitarbeiter verkauft Karten an Kunde ohne Reservierung
+|ID            |[[AT0230]]<<AT0230>>
+|Name          |Mitarbeiter verkauft Karten an Kunde ohne Reservierung
 |Use Case      |<<UC0230>> Karten verkaufen
 |Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Der Mitarbeiter drückt auf "Karten verkaufen" im Bestellprozess-Menü und drückt auf das Feld "Tickets vor Ort auswählen".Der Mitarbeiter wählt nun eine der heutigen Vorstellungen, die der Kunde besuchen möchte.
-Danach fügt der Mitarbeiter  Tickets hinzu, durch das Klicken auf "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Nun drückt der Mitarbeiter auf "Ticket-Kaufvorgang speichern".
+Der Mitarbeiter drückt auf "Kartenverkauf" auf der Webseiten Oberfläche. Der Mitarbeiter wählt nun unter "Ticket hinzufügen" eine der heutigen Vorstellungen, die der Kunde besuchen möchte. +
+Um nun den Sitzplan der Vorstellung angezeigt zu bekommen, drückt der Mitarbeiter auf "Plätze laden" Der Mitarbeiter wählt "Erwachsener" unter Ticketart und trägt "B4" unter Platz ein. Anschließend drückt der Mitarbeiter auf Ticket hinzufügen. +
+Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
+Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt wird. +
+Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Zahlungsvorgang abschließen".
 |Ergebnis(se)     a|
-- Wenn noch genug Plätze verfügbar sind werden die Tickets im Warenkorb abgelegt
-- Anschließend wird man auf die __"Snackauswahl Seite"__ weitergeleitet. __Diese zeigt alle noch verfügbaren Menüs an__
+- Da die Plätze verfügbar sind werden sie geschlossen als reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
+- Es werden die Daten im System für die Filmstatistik und Umsatzstatistiken aktualisiert
+- Der Kunde erhält sein Ticket vom Mitarbeiter und kann damit die Vorstellung besuchen
 |===
 
 [cols="1h, 4"]
 |===
-|ID            |[[AT0240]]<<AT0240>> Mitarbeiter verkauft Snacks an Kunden der gerade Karten kauft
+|ID            |[[AT0240]]<<AT0240>>
+|Name          |Mitarbeiter verkauft Snacks an Kunden
 |Use Case      |<<UC0240>> Snacks verkaufen
 |Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Mitarbeiter wurde zur __"Snackauswahl Seite"__ weitergeleitet. Der Kunde möchte Menü 1 und Menü 2. __Diese wählt der Mitarbeiter aus indem er auf das "+" unter den jeweiligen Menüs drückt__. __Anschließend drückt er auf "Bezahlen"__.
+Der Mitarbeiter drückt auf "Kartenverkauf" auf der Webseiten Oberfläche. Unter dem Sitzplan drückt der Mitarbeiter auf "Snacks hinzufügen". Dann wählt der Mitarbeiter aus dem Lagerbestand "Popcorn Groß", im Popup-Menü für die Anzahl wählt er "1". Dazu wählt der Mitarbeiter "Cola Groß" aus und drückt erneut "1". +
+Der Mitarbeiter speichert die Snacks im Warenkorb durch das Drücken auf den Button "Snacks fertig ausgewählt". Die ausgewählten Snacks sind jetzt darunter aufgelistet. Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
+Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt wird.
+Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Zahlungsvorgang abschließen".
 |Ergebnis(se)     a|
-- Menü 1 und 2 wurden den Warenkorb hinzugefügt
-- Es öffnet sich die Seite für den Warenkorb in dem die Bestellung in Rechnungsform zusammengefasst ist. Hier muss der Kunde bezahlen
-- Nach kurzer Zubereitungszeit erhällt der Kunde die bestellten Snacks nach seinen Wünschen
+- Es werden die Daten im System für den Lagerbestand und Umsatzstatistiken aktualisiert
+- Nach kurzer Zubereitungszeit erhält der Kunde seine Snacks
 |===
 
 
 
-== Glossar
-Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
-Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
-Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes (Auftraggeber)?
+//== Glossar
+//Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
+//Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
+//Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes (Auftraggeber)?
 
-== Offene Punkte
-Offene Punkte werden entweder direkt in der Spezifikation notiert. Wenn das Pflichtenheft zum finalen Review vorgelegt wird, sollte es keine offenen Punkte mehr geben.

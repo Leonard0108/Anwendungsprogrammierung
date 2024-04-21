@@ -666,7 +666,38 @@ a|
 Kunden können auf Website das aktuelle Programm anschauen
 |
 
+|[[F0010]]<<F0010>>
+|v0.1
+|Kauf von Karten und Snacks
+a|
+Kunden können die Karte (-n) und Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
+|
 
+|[[F0010]]<<F0010>>
+|v0.1
+|Säle vermieten
+a| Der Chef sollte die Möglichkeit haben Säle vermieten zu können.
+|Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Programm anpassen.
+a|Mit der Zeit sollten neue Filme hinzugefügt und alte entfernt werden können.
+|
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Suche nach Reservierung
+a|
+Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mail des Kundens(KANN)) nach seiner Reservierung
+|
+
+|[[F0010]]<<F0010>>
+|v0.1
+|Zentrallagerverwaltung
+a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
+  So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
+|
 |===
 
 

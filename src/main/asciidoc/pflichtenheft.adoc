@@ -12,17 +12,7 @@
 
 == Inhaltsverzeichnis
 
-. Zusammenfassung
-. Zielsetzung
-. Produktnutzung
-. Interessengruppen
-. Systemgrenze und Top-Level-Architektur
-. Anwendungsfälle
-. Funktionale Anforderungen
-. Nicht-Funktionale Anforderungen
-. GUI Prototyp
-. Datenmodell
-. Akzeptanztestfälle
+:toc: preamble
 
 
 == 1. Zusammenfassung

@@ -12,8 +12,6 @@
 
 == Inhaltsverzeichnis
 
-**<<UC0010>>**
-
 . Zusammenfassung
 . Zielsetzung
 . Produktnutzung

@@ -12,7 +12,9 @@
 
 == Inhaltsverzeichnis
 
-:toc: preamble
+:toc:
+:toc-placement!:
+toc::[]
 
 
 == 1. Zusammenfassung

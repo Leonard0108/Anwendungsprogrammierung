@@ -931,21 +931,21 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
-|Klasse/Enumeration |Beschreibung |
-|Unregistered User|Repräsentation eines Menschen im Kinokontext|
-|User                  |Registrierte Person            |
-|Mitarbeiter       |Registrierte Person, die im Kino arbeitet und Verkäufe tätigt            |
-|Autorisierter Mitarbeiter                  |Registrierte Person, die im Kino arbeitet, Verkäufe tätigt undVorstellungen udn Lager verwalten kann              |
-|Chef                  |Registrierte Person, die das Kinosystem verwalten kann/Leitende Person des Kinos            |
-|Bestellung                  |Der Warenkorb des Kunden vor Ort im Kino            |
-|Snacks                  |Inventar der Snacks im Kino             |
-|Ticket                  |Eine Instanz zu einer Vorführung für einen variablen Preis            |
-|Vorführung                  |Ein Termin, an dem ein Film in einem Saal vergeführt wird            |
-|Saal                  |Ein Saal des Kinos in dem Vorführungen stattfinden            |
-|Platz                  |Ein Platz in einem Saal            |
-|Film                  | Ein Film, der in einem Saal angezeigt werden kann und für den es Tickets gibt            |
-|Event                  |Ein Sondertermin, der einen Saal für Vorführungen blockiert            |
-|Umsätze|Kummulierte Werte de Tagesumsätze|
+|Klasse/Enumeration |Beschreibung 
+|Unregistered User|Repräsentation eines Menschen im Kinokontext
+|User                  |Registrierte Person
+|Mitarbeiter       |Registrierte Person, die im Kino arbeitet und Verkäufe tätigt
+|Autorisierter Mitarbeiter                  |Registrierte Person, die im Kino arbeitet, Verkäufe tätigt undVorstellungen udn Lager verwalten kann
+|Chef                  |Registrierte Person, die das Kinosystem verwalten kann/Leitende Person des Kinos
+|Bestellung                  |Der Warenkorb des Kunden vor Ort im Kino
+|Snacks                  |Inventar der Snacks im Kino
+|Ticket                  |Eine Instanz zu einer Vorführung für einen variablen Preis
+|Vorführung                  |Ein Termin, an dem ein Film in einem Saal vergeführt wird
+|Saal                  |Ein Saal des Kinos in dem Vorführungen stattfinden
+|Platz                  |Ein Platz in einem Saal
+|Film                  |Ein Film, der in einem Saal angezeigt werden kann und für den es Tickets gibt
+|Event                  |Ein Sondertermin, der einen Saal für Vorführungen blockiert
+|Umsätze|Kummulierte Werte de Tagesumsätze
 |===
 
 == 11. Akzeptanztestfälle

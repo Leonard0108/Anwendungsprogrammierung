@@ -631,9 +631,13 @@ mit folgenden Informationen:
 |v0.1
 |Logout
 a|Sicheres beenden der Verbindung.
-|Im Falle eines unerwarteten Verbindungs-
- abbruchs sollten nach maximal 20s die Ver-
- bindun geschlossen werden.
+|
+
+|[[F0022]]<<F0022>>
+|v0.1
+|Verbindungsterminierung
+a|Sicheres beenden der Verbindung im Falle eines unerwarteten Verbindungsabbruchs
+|
 
 |[[F0231]]<<F0231>>
 |v0.1
@@ -719,13 +723,6 @@ a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Sta
 |Wie schon in Beschreibung erwähnt nur zu operativen Zwecken gedacht. Für strategische Planung
  wird anderes Tool verwendet.
 
-|[[F0421]]<<F0421>>
-|v0.1
-|Personal verwalten
-a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
-  Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
-|
-
 |[[F0431]]<<F0431>>
 |v0.1
 |Preisverwaltung
@@ -760,6 +757,23 @@ a| Software sollte gut Wart- und erweiterbar sein um künftige leicht Updates zu
 
 === Kann-Kriterien
 Anforderungen, die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
+
+[options="header", cols="3h, 1, 3, 12, 4"]
+|===
+|ID
+|Version
+|Name
+|Beschreibung
+|Hinweise
+
+|[[F0421]]<<F0421>>
+|v0.1
+|Personal verwalten
+a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
+Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
+|
+
+|===
 
 == 8. Nicht-Funktionale Anforderungen
 

@@ -122,11 +122,8 @@ a|
 === Kontextdiagramm
 image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
 === Top-Level-Architektur
-Top-Level-Architektur:
 
-image::./models/analysis/Top-Level-Architektur/Top-Level-Architecture.svg[Top-Level-Architektur, 100%, 100%, pdfwidth=100%, title= "Top-Level-Architektur", align=center]
-
-C4 Model:
+Top-Level-Architektur C4 Model:
 
 image::./models/analysis/Top-Level-Architektur/Top-Level-Architecture_C4_3.svg[Top-Level-Architektur_C4, 100%, 100%, pdfwidth=100%, title= "Top-Level-Architektur C4", align=center]
 

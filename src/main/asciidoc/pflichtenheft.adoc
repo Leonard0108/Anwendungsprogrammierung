@@ -11,12 +11,19 @@
 |===
 
 == Inhaltsverzeichnis
-Dieses Dokument benötigt ein Inhaltsverzeichnis. Es existieren mehrere Einbindungsmöglichkeiten.
 
-== Zusammenfassung
-Eine kurze Beschreibung des Dokuments. Wenige Absätze.
+:toc:
+:toc-placement!:
+toc::[]
 
-== Aufgabenstellung und Zielsetzung
+
+== 1. Zusammenfassung
+Dieses Dokument dient dazu die Grenzen und Parameter des angestrebten Produktes festzustellen und 
+die Bedürfnisse an die Software zu fassen. Dazu werden sowohl die Wünsche des Kunden formuliert, als auch die technischen Rahmenbedingen.
+Wir unterteilen also in Beschreibungen und Systementwurf. Weiterhin wird aufgegliedert, welche Anwendungsfälle und Funktionen das Zielsystem bedienen soll und wie eine mögliche Ansicht des Systems aussehen kann.
+
+  
+== 2. Aufgabenstellung und Zielsetzung
 Die Kinobetreibergesellschaft UFO möchte zukünftig aus personalpolitischen Gründen in
 allen Kinos eine einheitliche Software für den Kartenverkauf und für Verwaltungsaufgaben
 einsetzen. Die Gesellschaft wendet sich an Sie mit der Bitte, eine moderne und
@@ -49,7 +56,7 @@ Neben dem Geschäft mit Filmen und Veranstaltungen, ist der Verkauf leckerster S
 sehr wichtige Einnahmequelle der Kinos. Sie Software soll daher, nach Möglichkeit, den
 Bestand und Verkauf in den Kinos, und das Zentrallager unterstützen.
 
-== Produktnutzung
+== 3. Produktnutzung
 Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
 
 Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
@@ -63,7 +70,7 @@ Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv be
 
 Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die Anwendung zugänglich sein (z.B. sollten Mitarbeiter  keine SQL-Anfragen formulieren müssen)
 
-== Interessensgruppen (Stakeholder)
+== 4. Interessensgruppen (Stakeholder)
 
 
 [options="header", cols="2, ^1, 4, 4"]
@@ -73,13 +80,27 @@ Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die
 |Beschreibung
 |Ziele
 
-|Kinobetreibergesellschaft UFO
+|Chef
 |5
-|Der Hauptkunde dieses Projekts und Nutzer der Verwaltungssysteme und des Kassensystems.
+|Der Hauptkunde dieses Projekts und Nutzer des Verwaltungssystems und des Operativsystems.
 a|
-- Einheitliche Systeme für alle Standorte
-- Erleichterung bei der Verwaltung und Kartenverkauf
-- Zentrales Verwaltungssystem
+- Einsehen aller Wichtigen Daten über den Betrieb, wie Umsatz und Lagerbestand
+- Zentrales Verwaltungssystem aller den Betrieb betreffenden Ressourcen
+- Einsetzten des Systems in allen Standorten
+
+|Mitarbeiter
+|4
+|Hauptsächliche Nutzer des Kassensubsystems.
+a|
+- Einfache Bedienung des Systems um die Bestellung der Kunden zu bearbeiten
+- Schnelles und ohne Ausfälle funktionierendes System
+
+|Autorisierte Mitarbeiter
+|4
+|Hauptsächliche Nutzer des Verwaltungssystems.
+a|
+- Einfache Bedienung des Systems um das Programm anzupassen
+- Schnelles und ohne Ausfälle funktionierendes System
 
 |Kunden
 |4
@@ -94,17 +115,22 @@ a|
 a|
 - Einfach erweiterbare Anwendung
 - geringer Wartungsaufwand
-
 |===
 
-== Systemgrenze und Top-Level-Architektur
+== 5. Systemgrenze und Top-Level-Architektur
 
 === Kontextdiagramm
 image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
 === Top-Level-Architektur
-Dokumentieren Sie ihre Top-Level-Architektur mit Hilfe eines Komponentendiagramm.
+Top-Level-Architektur:
 
-== Anwendungsfälle
+image::./models/analysis/Top-Level-Architektur/Top-Level-Architecture.svg[Top-Level-Architektur, 100%, 100%, pdfwidth=100%, title= "Top-Level-Architektur", align=center]
+
+C4 Model:
+
+image::./models/analysis/Top-Level-Architektur/Top-Level-Architecture_C4_3.svg[Top-Level-Architektur_C4, 100%, 100%, pdfwidth=100%, title= "Top-Level-Architektur C4", align=center]
+
+== 6. Anwendungsfälle
 
 In diesem Abschnitt werden die meisten UseCases aufgelistet. Je nach Relevanz der UseCases existieren ausführlichere- und weniger ausführlichere Use-Case-Beschreibungen.
 
@@ -573,7 +599,7 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 |Funktionale Anforderungen  |<<F0451>>
 |===
 
-== Funktionale Anforderungen
+== 7. Funktionale Anforderungen
 
 === Muss-Kriterien
 [options="header", cols="3h, 1, 3, 12, 4"]
@@ -618,9 +644,13 @@ mit folgenden Informationen:
 |v0.1
 |Logout
 a|Sicheres beenden der Verbindung.
-|Im Falle eines unerwarteten Verbindungs-
- abbruchs sollten nach maximal 20s die Ver-
- bindun geschlossen werden.
+|
+
+|[[F0022]]<<F0022>>
+|v0.1
+|Verbindungsterminierung
+a|Sicheres beenden der Verbindung im Falle eines unerwarteten Verbindungsabbruchs
+|
 
 |[[F0231]]<<F0231>>
 |v0.1
@@ -706,13 +736,6 @@ a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Sta
 |Wie schon in Beschreibung erwähnt nur zu operativen Zwecken gedacht. Für strategische Planung
  wird anderes Tool verwendet.
 
-|[[F0421]]<<F0421>>
-|v0.1
-|Personal verwalten
-a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
-  Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
-|
-
 |[[F0431]]<<F0431>>
 |v0.1
 |Preisverwaltung
@@ -748,7 +771,24 @@ a| Software sollte gut Wart- und erweiterbar sein um künftige leicht Updates zu
 === Kann-Kriterien
 Anforderungen, die das Programm leisten können soll, aber für den korrekten Betrieb entbehrlich sind.
 
-== Nicht-Funktionale Anforderungen
+[options="header", cols="3h, 1, 3, 12, 4"]
+|===
+|ID
+|Version
+|Name
+|Beschreibung
+|Hinweise
+
+|[[F0421]]<<F0421>>
+|v0.1
+|Personal verwalten
+a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
+Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
+|
+
+|===
+
+== 8. Nicht-Funktionale Anforderungen
 
 === Qualitätsziele
 
@@ -802,7 +842,7 @@ Nutzerpasswörter sollen nur als Hashwert einer für die Passwortspeicherung gee
 
 //[small] Adaptiert von https://github.com/HOME-programming-pub/videoshop/blob/1bf0531354ab7cd8998be1484b64dd368d48f072/src/main/asciidoc/Pflichtenheft.adoc?plain=1#L732-L775
 
-== GUI Prototyp
+== 9. GUI Prototyp
 
 Die nachfolgenden GUI-Renderer sollen zeigen, wie das fertige System aussehen könnte. 
 
@@ -895,10 +935,12 @@ image::./models/analysis/GUI-Entwurf/manage-storage-authorized-staff.png[Lagerve
 === Preisgestaltung
 image::./models/analysis/GUI-Entwurf/adjust-pricing-boss-renderer.png[Preisgestaltung, 100%, 100%, pdfwidth=100%, title= "Preisgestaltung", align=center]
 
-== Datenmodell
+== 10. Datenmodell
 
 === Überblick: Klassendiagramm
 UML-Analyseklassendiagramm
+
+image::./models/analysis/Klassendiagramm/Klassendiagramm.svg[Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Klassendiagramm", align=center]
 
 === Klassen und Enumerationen
 Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Klassen/Enumerationen dar. Jede Klasse und Enumeration wird in Form eines Glossars textuell beschrieben. Zusätzlich werden eventuellen Konsistenz- und Formatierungsregeln aufgeführt.
@@ -906,11 +948,24 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
-|Klasse/Enumeration |Beschreibung |
-|…                  |…            |
+|Klasse/Enumeration |Beschreibung 
+|Unregistered User|Repräsentation eines Menschen im Kinokontext
+|User                  |Registrierte Person
+|Mitarbeiter       |Registrierte Person, die im Kino arbeitet und Verkäufe tätigt
+|Autorisierter Mitarbeiter                  |Registrierte Person, die im Kino arbeitet, Verkäufe tätigt undVorstellungen udn Lager verwalten kann
+|Chef                  |Registrierte Person, die das Kinosystem verwalten kann/Leitende Person des Kinos
+|Bestellung                  |Der Warenkorb des Kunden vor Ort im Kino
+|Snacks                  |Inventar der Snacks im Kino
+|Ticket                  |Eine Instanz zu einer Vorführung für einen variablen Preis
+|Vorführung                  |Ein Termin, an dem ein Film in einem Saal vergeführt wird
+|Saal                  |Ein Saal des Kinos in dem Vorführungen stattfinden
+|Platz                  |Ein Platz in einem Saal
+|Film                  |Ein Film, der in einem Saal angezeigt werden kann und für den es Tickets gibt
+|Event                  |Ein Sondertermin, der einen Saal für Vorführungen blockiert
+|Umsätze|Kummulierte Werte de Tagesumsätze
 |===
 
-== Akzeptanztestfälle
+== 11. Akzeptanztestfälle
 
 [cols="1h, 4"]
 |===

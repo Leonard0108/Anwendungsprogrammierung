@@ -1,0 +1,15 @@
+= Mitschriften
+
+== Stakeholder:
+-	Mitarbeiter hinzufügen
+-	Entwickler beim nächstes Mal rauslassen.
+
+== Wartbarkeit:
+-	Gehört in nichtfunktionale Anforderungen
+
+== Funktionale Anforderungen
+-	Etwas feingliedriger
+-	Da Vertragsdokument Details wichtig
+
+== Kartentausch
+- Umbuchung auf neue(-s/ -n) Datum/ Zeit/ Platz

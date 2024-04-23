@@ -80,13 +80,27 @@ Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die
 |Beschreibung
 |Ziele
 
-|Kinobetreibergesellschaft UFO
+|Chef
 |5
-|Der Hauptkunde dieses Projekts und Nutzer der Verwaltungssysteme und des Kassensystems.
+|Der Hauptkunde dieses Projekts und Nutzer des Verwaltungssystems und des Operativsystems.
 a|
-- Einheitliche Systeme für alle Standorte
-- Erleichterung bei der Verwaltung und Kartenverkauf
-- Zentrales Verwaltungssystem
+- Einsehen aller Wichtigen Daten über den Betrieb, wie Umsatz und Lagerbestand
+- Zentrales Verwaltungssystem aller den Betrieb betreffenden Ressourcen
+- Einsetzten des Systems in allen Standorten
+
+|Mitarbeiter
+|4
+|Hauptsächliche Nutzer des Kassensubsystems.
+a|
+- Einfache Bedienung des Systems um die Bestellung der Kunden zu bearbeiten
+- Schnelles und ohne Ausfälle funktionierendes System
+
+|Autorisierte Mitarbeiter
+|4
+|Hauptsächliche Nutzer des Verwaltungssystems.
+a|
+- Einfache Bedienung des Systems um das Programm anzupassen
+- Schnelles und ohne Ausfälle funktionierendes System
 
 |Kunden
 |4
@@ -101,7 +115,6 @@ a|
 a|
 - Einfach erweiterbare Anwendung
 - geringer Wartungsaufwand
-
 |===
 
 == 5. Systemgrenze und Top-Level-Architektur

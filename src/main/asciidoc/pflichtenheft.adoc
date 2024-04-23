@@ -394,7 +394,7 @@ Anmerkung:
 Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |-
+|Funktionale Anforderungen  |<<F0236>>
 |===
 
 image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm kaufen ohne Reservierung", align=center]
@@ -693,9 +693,15 @@ Kunden können auf Website das aktuelle Programm anschauen
 
 |[[F0235]]<<F0235>>
 |v0.1
-|Kauf von Karten und Snacks
+|Kauf von Karten
 a|
-Kunden können die Karte (-n) und Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
+Kunden können die Karte (-n) im Warenkorb an den jeweiligen Kassen bezahlen.
+|
+
+|[[F0235]]<<F0236>>
+|v0.1
+|Kauf von Snacks
+a|Kunden können die Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
 |
 
 |[[F0311]]<<F0311>>
@@ -713,8 +719,8 @@ a|Mit der Zeit sollten neue Filme hinzugefügt und alte entfernt werden können.
 |[[F0341]]<<F0341>>
 |v0.1
 |Anbieter vergleichen
-a|Autorisierte Mitarbeiter sollten in der Lage sein Mehrere Vergleichen zu können und dort
-  entsprechend
+a|Autorisierte Mitarbeiter sollten in der Lage sein mehrere Anbieter vergleichen zu können und dort
+  entsprechende Leihangebote annehmen zu können
 |
 
 |[[F0331]]<<F0331>>
@@ -755,11 +761,6 @@ a|Strategisches Pendant zum Einsehen der Filmstatistik. Dient dem Erfassen von S
 a|Dient dem Tausch on Karten, wenn Termin oder Film nicht passen.
 |
 
-|[[F0002]]<<F0002>>
-|v0.1
-|Gute Erweiterbarkeit
-a| Software sollte gut Wart- und erweiterbar sein um künftige leicht Updates zu ermöglichen.
-|
 |===
 
 

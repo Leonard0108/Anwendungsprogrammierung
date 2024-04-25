@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "SEATS")
-public class Seat {
+public class Seat implements Comparable<Seat>{
 	private int raw;
 	private int number;
 
@@ -48,5 +48,14 @@ public class Seat {
 			return Objects.equals(place.getId(), this.getId());
 		}
 		return false;
+	}
+
+	@Override
+	public int compareTo(Seat seat) {
+		int compareResult = Integer.compare(this.raw, seat.raw);
+		if (compareResult == 0) {
+			return Integer.compare(this.number, seat.number);
+		}
+		return compareResult;
 	}
 }

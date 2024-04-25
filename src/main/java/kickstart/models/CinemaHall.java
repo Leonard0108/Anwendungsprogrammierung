@@ -15,15 +15,19 @@ public class CinemaHall {
 	@OneToMany(cascade = CascadeType.ALL)
 	private final SortedSet<Seat> places;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private final SortedSet<CinemaShow> cinemaShows;
 
 	public CinemaHall(String name, final Collection<Seat> places) {
 		this.name = name;
 		this.numberOfPlaces = places.size();
 		this.places = new TreeSet<>(places);
+		this.cinemaShows = new TreeSet<>();
 	}
 
 	public CinemaHall() {
 		this.places = new TreeSet<>();
+		this.cinemaShows = new TreeSet<>();
 	}
 
 	public Long getId() {
@@ -40,5 +44,15 @@ public class CinemaHall {
 
 	public Iterable<Seat> getPlaces() {
 		return this.places;
+	}
+
+	public Iterable<CinemaShow> getCinemaShows() {
+		return this.cinemaShows;
+	}
+
+	void addCinemaShow(CinemaShow newCinemaShow) {
+		if(cinemaShows.contains(newCinemaShow)) return;
+
+		this.cinemaShows.add(newCinemaShow);
 	}
 }

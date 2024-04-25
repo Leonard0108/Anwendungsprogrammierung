@@ -7,21 +7,21 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "PLACES")
-public class Platz {
+@Table(name = "SEATS")
+public class Seat {
 	private int raw;
 	private int number;
 
 	@Id
 	private Long id;
 
-	public Platz(int raw, int number) {
+	public Seat(int raw, int number) {
 		this.raw = raw;
 		this.number = number;
 		this.id = 100L * raw + number;
 	}
 
-	public Platz() {}
+	public Seat() {}
 
 	public int getRaw() {
 		return this.raw;
@@ -44,7 +44,7 @@ public class Platz {
 	public boolean equals(Object object) {
 		if(this == object) return true;
 
-		if(object instanceof Platz place) {
+		if(object instanceof Seat place) {
 			return Objects.equals(place.getId(), this.getId());
 		}
 		return false;

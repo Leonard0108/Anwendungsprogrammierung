@@ -13,10 +13,10 @@ public class CinemaHall {
 	private String name;
 	private int numberOfPlaces;
 	@OneToMany(cascade = CascadeType.ALL)
-	private final SortedSet<Platz> places;
+	private final SortedSet<Seat> places;
 
 
-	public CinemaHall(String name, final Collection<Platz> places) {
+	public CinemaHall(String name, final Collection<Seat> places) {
 		this.name = name;
 		this.numberOfPlaces = places.size();
 		this.places = new TreeSet<>(places);
@@ -38,7 +38,7 @@ public class CinemaHall {
 		return this.numberOfPlaces;
 	}
 
-	public Iterable<Platz> getPlaces() {
+	public Iterable<Seat> getPlaces() {
 		return this.places;
 	}
 }

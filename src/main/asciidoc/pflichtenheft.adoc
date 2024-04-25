@@ -214,7 +214,7 @@ _Logout_:
 2. Nutzer ist nun abgemeldet und erhällt die Rolle des unangemeldeten Nutzers.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0021>>, <<F0022>>
+|Funktionale Anforderungen  |<<F0021>>, <<F0022>>, <<F0023>>
 |===
 
 [cols="1h, 3"]
@@ -640,10 +640,10 @@ mit folgenden Informationen:
 |[[F0022]]<<F0022>>
 |v0.1
 |Logout
-a|Sicheres beenden der Verbindung.
+a|Sicheres beenden der Verbindung, freigeben des Sockets und freigabe von entsprechenden Ressourcen.
 |
 
-|[[F0022]]<<F0022>>
+|[[F0022]]<<F0023>>
 |v0.1
 |Verbindungsterminierung
 a|Sicheres beenden der Verbindung im Falle eines unerwarteten Verbindungsabbruchs

@@ -1,14 +1,15 @@
-package kickstart.UserAuthentication;
+package kickstart.UserAuthentication
 
 
 
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Repository
 
 
 
 
 @Repository
-interface UserRepository extends CrudRepository<UserEntry, String> {
+interface UserRepository//: CrudRepository<UserEntry?, String?>
+{
+    fun findByEmail(username: String): UserRepository?
 }

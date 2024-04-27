@@ -1,9 +1,6 @@
 package kickstart.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
@@ -18,15 +15,23 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	private LocalDateTime startDateTime;
 	private Money basePrice;
 
-	public CinemaShow(LocalDateTime startDateTime, Money basePrice) {
+	@OneToOne
+	private MovieStub movie;
+
+	public CinemaShow(LocalDateTime startDateTime, Money basePrice, MovieStub movie) {
 		this.startDateTime = startDateTime;
 		this.basePrice = basePrice;
+		this.movie = movie;
 	}
 
 	public CinemaShow() {}
 
 	public Long getId() {
 		return this.id;
+	}
+
+	public MovieStub getMovie() {
+		return movie;
 	}
 
 	public LocalDateTime getStartDateTime() {

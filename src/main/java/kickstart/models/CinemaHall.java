@@ -1,6 +1,7 @@
 package kickstart.models;
 
 import jakarta.persistence.*;
+import jdk.jfr.Event;
 
 import java.util.*;
 
@@ -16,18 +17,19 @@ public class CinemaHall {
 	private final SortedSet<Seat> places;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private final SortedSet<CinemaShow> cinemaShows;
+	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private final HashSet<EventStub> events = new HashSet<>();
 
 	public CinemaHall(String name, final Collection<Seat> places) {
 		this.name = name;
 		this.numberOfPlaces = places.size();
 		this.places = new TreeSet<>(places);
-		this.cinemaShows = new TreeSet<>();
 	}
 
 	public CinemaHall() {
 		this.places = new TreeSet<>();
-		this.cinemaShows = new TreeSet<>();
 	}
 
 	public Long getId() {
@@ -50,9 +52,17 @@ public class CinemaHall {
 		return this.cinemaShows;
 	}
 
+	public Iterable<EventStub> getEvents() {
+		return this.events;
+	}
+
 	void addCinemaShow(CinemaShow newCinemaShow) {
 		if(cinemaShows.contains(newCinemaShow)) return;
 
 		this.cinemaShows.add(newCinemaShow);
+	}
+
+	void addEvent(EventStub newEvent) {
+		this.events.add(newEvent);
 	}
 }

@@ -2,8 +2,11 @@ package kickstart.models;
 
 import jakarta.persistence.*;
 import jdk.jfr.Event;
+import org.springframework.data.util.StreamUtils;
+import org.springframework.data.util.Streamable;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "CINEMA_HALLS")
@@ -42,16 +45,17 @@ public class CinemaHall {
 
 	public int getNumberOfPlaces() { return this.numberOfPlaces; }
 
-	public Iterable<Seat> getSeats() {
-		return this.seats.keySet();
+	public Streamable<Map.Entry<Seat, Seat.SeatOccupancy>> getSeats() {
+		return Streamable.of(this.seats.entrySet());
 	}
 
-	public Iterable<CinemaShow> getCinemaShows() {
-		return this.cinemaShows;
+	// siehe: https://www.tabnine.com/code/java/methods/org.springframework.data.util.Streamable/of
+	public Streamable<CinemaShow> getCinemaShows() {
+		return Streamable.of(this.cinemaShows);
 	}
 
-	public Iterable<EventStub> getEvents() {
-		return this.events;
+	public Streamable<EventStub> getEvents() {
+		return Streamable.of(this.events);
 	}
 
 	void addCinemaShow(CinemaShow newCinemaShow) {

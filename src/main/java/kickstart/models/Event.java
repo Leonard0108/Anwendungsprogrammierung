@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EVENTS")
-public class Event {
+public class Event implements Comparable<Event>{
 
 	private @Id	@GeneratedValue long id;
 	private String name;
@@ -58,7 +58,7 @@ public class Event {
 		}
 		return false;
 	}
-
+	@Override
 	public int compareTo(Event event) {
 		return this.getStartDateTime().compareTo(event.getStartDateTime());
 	}

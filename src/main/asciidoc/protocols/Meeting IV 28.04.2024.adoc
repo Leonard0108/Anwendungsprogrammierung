@@ -1,0 +1,33 @@
+= 1. Prototyp Meeting - auf einheitliche Modelle einigen
+
+Treffen am 28.04.2024
+
+Beginn:   19:00 Uhr +
+Ende:     20:10 Uhr
+
+
+__Teilnehmer:__
+
+- Lukas
+- Jannik
+- Yannick
+- Simon
+- Tobias
+
+
+== Besprochen
+* Klassennamen auf Englisch
+* Programm einsehn und bearbeiten in einen Controller
+* Projektstruktur: /models /controller ohne Unterteilung in Teilsysteme
+* Status der Sitze soll in Vorführung(Sitz Status: Besetzt/Reserviert/Frei)
+* Redundantes Speichern der Plätze (in der Reservierung und in der Vorführung)
+
+
+== Zu Klären
+* Funktionieren Kotlin und Java einwandfrei gemischt?
+
+== Fragen an Karol
+* Können wir kickstart aus dem Projekt entfernen?
+
+== Nächstes Meeting
+Mittwoch Abend 01.05

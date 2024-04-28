@@ -40,9 +40,7 @@ public class CinemaHall {
 		return this.name;
 	}
 
-	public int getNumberOfPlaces() {
-		return this.numberOfPlaces;
-	}
+	public int getNumberOfPlaces() { return this.numberOfPlaces; }
 
 	public Iterable<Seat> getPlaces() {
 		return this.places;
@@ -65,4 +63,27 @@ public class CinemaHall {
 	void addEvent(EventStub newEvent) {
 		this.events.add(newEvent);
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getName(), getNumberOfPlaces(),
+			this.places, this.cinemaShows, this.events);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if(this == object) return true;
+
+		if(!(object instanceof CinemaHall cinemaHall))
+			return false;
+
+		return Objects.equals(getId(), cinemaHall.getId()) &&
+			Objects.equals(getName(), cinemaHall.getName()) &&
+			Objects.equals(getNumberOfPlaces(), cinemaHall.getNumberOfPlaces()) &&
+			Objects.equals(this.places, cinemaHall.places) &&
+			Objects.equals(this.cinemaShows, cinemaHall.cinemaShows) &&
+			Objects.equals(this.events, cinemaHall.events);
+	}
+
+
 }

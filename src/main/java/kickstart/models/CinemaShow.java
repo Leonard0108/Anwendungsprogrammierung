@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -43,17 +45,26 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	}
 
 	@Override
-	public int compareTo(CinemaShow cinemaShow) {
-		return this.getStartDateTime().compareTo(cinemaShow.getStartDateTime());
+	public int hashCode() {
+		return Objects.hash(getId(), getStartDateTime(),
+                getBasePrice(), getMovie());
 	}
 
 	@Override
 	public boolean equals(Object object) {
 		if(this == object) return true;
 
-		if(object instanceof CinemaShow cinemaShow) {
-			return Objects.equals(this.getId(), cinemaShow.getId());
-		}
-		return false;
+		if(!(object instanceof CinemaShow cinemaShow))
+			return false;
+
+		return Objects.equals(getId(), cinemaShow.getId()) &&
+				Objects.equals(getStartDateTime(), cinemaShow.getStartDateTime()) &&
+				Objects.equals(getBasePrice(), cinemaShow.getBasePrice()) &&
+				Objects.equals(getMovie(), cinemaShow.getMovie());
+	}
+
+	@Override
+	public int compareTo(CinemaShow cinemaShow) {
+		return this.getStartDateTime().compareTo(cinemaShow.getStartDateTime());
 	}
 }

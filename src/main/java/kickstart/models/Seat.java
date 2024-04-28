@@ -37,17 +37,19 @@ public class Seat implements Comparable<Seat>{
 
 	@Override
 	public int hashCode() {
-		return Math.toIntExact(this.id);
+		return Objects.hash(getId(), getRaw(), getNumber());
 	}
 
 	@Override
 	public boolean equals(Object object) {
 		if(this == object) return true;
 
-		if(object instanceof Seat place) {
-			return Objects.equals(place.getId(), this.getId());
-		}
-		return false;
+		if(!(object instanceof Seat seat))
+			return false;
+
+		return Objects.equals(getId(), seat.getId()) &&
+			Objects.equals(getRaw(), seat.getRaw()) &&
+			Objects.equals(getNumber(), seat.getNumber());
 	}
 
 	@Override

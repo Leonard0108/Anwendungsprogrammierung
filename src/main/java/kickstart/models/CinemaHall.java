@@ -12,9 +12,9 @@ public class CinemaHall {
 	@Id @GeneratedValue
 	private Long id;
 	private String name;
-	private int numberOfPlaces;
-	@OneToMany(cascade = CascadeType.ALL)
-	private final SortedSet<Seat> places;
+	private int numberOfPlaces = 0;
+	@ElementCollection
+	private final Map<Seat, Seat.SeatOccupancy> seats;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
@@ -22,14 +22,14 @@ public class CinemaHall {
 	@OneToMany(cascade = CascadeType.ALL)
 	private final HashSet<EventStub> events = new HashSet<>();
 
-	public CinemaHall(String name, final Collection<Seat> places) {
+	public CinemaHall(String name, final Map<Seat, Seat.SeatOccupancy> seats) {
 		this.name = name;
-		this.numberOfPlaces = places.size();
-		this.places = new TreeSet<>(places);
+		this.numberOfPlaces = seats.size();
+		this.seats = new TreeMap<>(seats);
 	}
 
 	public CinemaHall() {
-		this.places = new TreeSet<>();
+		this.seats = new TreeMap<>();
 	}
 
 	public Long getId() {
@@ -42,8 +42,8 @@ public class CinemaHall {
 
 	public int getNumberOfPlaces() { return this.numberOfPlaces; }
 
-	public Iterable<Seat> getPlaces() {
-		return this.places;
+	public Iterable<Seat> getSeats() {
+		return this.seats.keySet();
 	}
 
 	public Iterable<CinemaShow> getCinemaShows() {
@@ -67,7 +67,7 @@ public class CinemaHall {
 	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getName(), getNumberOfPlaces(),
-			this.places, this.cinemaShows, this.events);
+			this.seats, this.cinemaShows, this.events);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class CinemaHall {
 		return Objects.equals(getId(), cinemaHall.getId()) &&
 			Objects.equals(getName(), cinemaHall.getName()) &&
 			Objects.equals(getNumberOfPlaces(), cinemaHall.getNumberOfPlaces()) &&
-			Objects.equals(this.places, cinemaHall.places) &&
+			Objects.equals(this.seats, cinemaHall.seats) &&
 			Objects.equals(this.cinemaShows, cinemaHall.cinemaShows) &&
 			Objects.equals(this.events, cinemaHall.events);
 	}

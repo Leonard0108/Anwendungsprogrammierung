@@ -2,6 +2,7 @@ package kickstart.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.util.Objects;
@@ -14,6 +15,13 @@ public class Seat implements Comparable<Seat>{
 
 	@Id
 	private Long id;
+
+	public enum SeatOccupancy {
+		BOUGHT,
+		RESERVED,
+		FREE
+
+	}
 
 	public Seat(int raw, int number) {
 		this.raw = raw;

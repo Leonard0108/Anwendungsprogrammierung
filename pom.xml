@@ -27,7 +27,8 @@
 		<!-- <sonar.host.url>${env.STLAB_SONAR_HOST_URL}</sonar.host.url>
 		<sonar.token>${env.STLAB_SONAR_LOGIN}</sonar.token>-->
 		<argLine>-Xmx1G</argLine>
-	</properties>
+        <kotlin.version>1.9.23</kotlin.version>
+    </properties>
 
 	<dependencies>
 
@@ -77,21 +78,32 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
 
 
-		<!--
-			Additional project dependencies go here.
+        <!--
+            Additional project dependencies go here.
 
-			BUT PLEASE NOTE!
+            BUT PLEASE NOTE!
 
-			The parent pom that is referenced above already includes most libraries
-			necessary for the lab: Spring, Salespoint, Hibernate, JUnit, etc.
+            The parent pom that is referenced above already includes most libraries
+            necessary for the lab: Spring, Salespoint, Hibernate, JUnit, etc.
 
-			You can list the current dependencies and their versions using the
-			`mvn dependency:list` command.
+            You can list the current dependencies and their versions using the
+            `mvn dependency:list` command.
 
-			Use Maven Central for package search (https://search.maven.org/).
-		-->
+            Use Maven Central for package search (https://search.maven.org/).
+        -->
 
 	</dependencies>
 
@@ -103,5 +115,62 @@
 		</repository>
 
 	</repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

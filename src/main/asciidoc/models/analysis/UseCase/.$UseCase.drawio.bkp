@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-04-19T13:29:20.489Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="cY5-6s7vF6ojzkPcPQtu" version="24.2.5" type="device">
+<mxfile host="Electron" modified="2024-04-16T16:27:46.591Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="1lEfhiwG2Hiw5cGZkXq9" version="24.2.5" type="device">
   <diagram name="Page-1" id="mcp1PJNOSqDEv91YHYnR">
     <mxGraphModel dx="1050" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -7,7 +7,7 @@
         <mxCell id="X8HMs5meieHF2P_SXbaM-9" value="Kino" style="html=1;whiteSpace=wrap;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="180" y="130" width="540" height="730" as="geometry" />
         </mxCell>
-        <mxCell id="VkydoZkAK0KneWHd4pO0-1" value="Operativsystem" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;align=center;horizontal=1;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="VkydoZkAK0KneWHd4pO0-1" value="Operativsystem" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;align=center;horizontal=1;verticalAlign=top;" vertex="1" parent="1">
           <mxGeometry x="405" y="420" width="295" height="220" as="geometry" />
         </mxCell>
         <mxCell id="X8HMs5meieHF2P_SXbaM-10" value="Kassensubsystem" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;verticalAlign=top;" parent="1" vertex="1">
@@ -103,7 +103,7 @@
             <mxPoint x="330" y="430" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="X8HMs5meieHF2P_SXbaM-16" value="Kundenportal" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="X8HMs5meieHF2P_SXbaM-16" value="Webseite" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="213.75" y="640" width="236.25" height="170" as="geometry" />
         </mxCell>
         <mxCell id="X8HMs5meieHF2P_SXbaM-17" value="Online reservieren" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">

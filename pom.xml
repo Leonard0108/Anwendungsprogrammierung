@@ -24,10 +24,11 @@
 	<properties>
 		<java.version>17</java.version>
 		<salespoint.version>9.0.0</salespoint.version>
-		<sonar.host.url>${env.STLAB_SONAR_HOST_URL}</sonar.host.url>
-		<sonar.token>${env.STLAB_SONAR_LOGIN}</sonar.token>
+		<!-- <sonar.host.url>${env.STLAB_SONAR_HOST_URL}</sonar.host.url>
+		<sonar.token>${env.STLAB_SONAR_LOGIN}</sonar.token>-->
 		<argLine>-Xmx1G</argLine>
-	</properties>
+        <kotlin.version>1.9.23</kotlin.version>
+    </properties>
 
 	<dependencies>
 
@@ -37,22 +38,72 @@
 		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-ldap</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
 
-		<!--
-			Additional project dependencies go here.
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-			BUT PLEASE NOTE!
 
-			The parent pom that is referenced above already includes most libraries
-			necessary for the lab: Spring, Salespoint, Hibernate, JUnit, etc.
+        <!--
+            Additional project dependencies go here.
 
-			You can list the current dependencies and their versions using the
-			`mvn dependency:list` command.
+            BUT PLEASE NOTE!
 
-			Use Maven Central for package search (https://search.maven.org/).
-		-->
+            The parent pom that is referenced above already includes most libraries
+            necessary for the lab: Spring, Salespoint, Hibernate, JUnit, etc.
+
+            You can list the current dependencies and their versions using the
+            `mvn dependency:list` command.
+
+            Use Maven Central for package search (https://search.maven.org/).
+        -->
 
 	</dependencies>
 
@@ -64,5 +115,62 @@
 		</repository>
 
 	</repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

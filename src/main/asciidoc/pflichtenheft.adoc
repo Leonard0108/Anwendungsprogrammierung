@@ -299,7 +299,7 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 4. Der Kunde bestätigt den Vorgang des Stornierens, durch das Klicken auf den "Fortfahren"-Button. Der Kunde gelangt nun wieder zurück in die allgemeine Reservierungs-Übersicht. Das System löscht die Reservierung und gibt alle Tickets der jeweiligen Veranstaltung wieder frei.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |-
+|Funktionale Anforderungen  |<<F0123>>
 |===
 
 [cols="1h, 3"]
@@ -705,7 +705,7 @@ Kunden können auf Website zu einer ausgewählten Veranstaltung Plätze reservie
 |v0.1
 |Platzreservierung Stornieren
 a|
-Kunden können auf Website zuvor reservierte Plätze zu jeder Zeit stornieren. Damit gelten die reservierten Plätze wieder als frei.
+Nutzer können auf Website zuvor reservierte Plätze zu jeder Zeit stornieren. Damit gelten die reservierten Plätze wieder als frei.
 |
 
 |[[F0112]]<<F0112>>

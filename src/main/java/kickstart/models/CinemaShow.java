@@ -18,12 +18,12 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	private Money basePrice;
 
 	@OneToOne
-	private Film movie;
+	private Film film;
 
-	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film movie) {
+	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film film) {
 		this.startDateTime = startDateTime;
 		this.basePrice = basePrice;
-		this.movie = movie;
+		this.film = film;
 	}
 
 	public CinemaShow() {}
@@ -32,8 +32,8 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		return this.id;
 	}
 
-	public Film getMovie() {
-		return movie;
+	public Film getFilm() {
+		return film;
 	}
 
 	public LocalDateTime getStartDateTime() {
@@ -47,7 +47,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getStartDateTime(),
-                getBasePrice(), getMovie());
+                getBasePrice(), getFilm());
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		return Objects.equals(getId(), cinemaShow.getId()) &&
 				Objects.equals(getStartDateTime(), cinemaShow.getStartDateTime()) &&
 				Objects.equals(getBasePrice(), cinemaShow.getBasePrice()) &&
-				Objects.equals(getMovie(), cinemaShow.getMovie());
+				Objects.equals(getFilm(), cinemaShow.getFilm());
 	}
 
 	@Override

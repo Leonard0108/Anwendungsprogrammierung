@@ -8,7 +8,7 @@
 == __{project_name}__
 
 [options="header"]
-[cols="1, 1, 1, 1, 4"]
+[cols="1, 1, 1, 4, 4"]
 |===
 |Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
 |0.1     | In Arbeit   | 01.04.2023          | Autor       | Initiale Version
@@ -321,7 +321,7 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 5. Mitarbeiter speichert nach Zufriedenheit der Person die Reservierung durch das klicken auf den "Reservierung speichern"-Button.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |-
+|Funktionale Anforderungen  |<<F0123>>
 |===
 
 [cols="1h, 3"]
@@ -342,7 +342,7 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 4. Der Mitarbeiter bestätigt den Vorgang des Stornierens, nach Vergewisserung beim Kunden, durch das Klicken auf den "Fortfahren"-Button. Das System löscht die Reservierung und gibt die Plätze der Vorführung wieder frei.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |-
+|Funktionale Anforderungen  |<<F0123>>
 |===
 
 [cols="1h, 3"]
@@ -394,7 +394,7 @@ Anmerkung:
 Erst nachdem dem Kaufprozess abgeschlossen ist, wird der Lagerbestand angepasst.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0236>>
+|Funktionale Anforderungen  |<<F0236>>, <<F0231>>, <<F0232>>, <<F0233>>
 |===
 
 image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm kaufen ohne Reservierung", align=center]
@@ -451,7 +451,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 |Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
 |grundlegende Schritte     a|
 1. Autorisierter Mitarbeiter drückt auf den "Lagerverwaltung"-Button. Das System öffnet eine Unteransicht.
-2. Autorisierter Mitarbeiter fügt zum Bestand einer bereits vorhandenen Ware eine gewisse Anzahl hinzu oder löscht eine gewisse Anzahl, oder flegt eine neue Ware ins System ein.
+2. Autorisierter Mitarbeiter fügt zum Bestand einer bereits vorhandenen Ware eine gewisse Anzahl hinzu oder löscht eine gewisse Anzahl, oder pflegt eine neue Ware ins System ein.
 3. Der autorisierte Mitarbeiter klickt auf "Hinzufügen", um eine der Drei Aktionen auf 2. durchzuführen. Das System passt den Lagerbestand dementsprechend an.
 
 |Erweiterungen              |-
@@ -490,6 +490,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 |Funktionale Anforderungen  |<<F0351>>
 |===
 
+////
 [cols="1h, 3"]
 [[UC0410]]
 |===
@@ -507,6 +508,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 |Erweiterungen              |-
 |Funktionale Anforderungen  |-
 |===
+////
 
 [cols="1h, 3"]
 [[UC0420]]
@@ -596,7 +598,7 @@ Hinweis: Preisänderungen werden erst am nächsten Tag gültig.
 |Funktionale Anforderungen  |<<F0451>>
 |===
 
-== 7. Funktionale Anforderungen
+== Funktionale Anforderungen
 
 === Muss-Kriterien
 [options="header", cols="3h, 1, 3, 12, 4"]
@@ -811,7 +813,7 @@ a| Der Chef sollte die Möglichkeit haben Säle für externe Events vermieten zu
 
 Die nachfolgende Tabelle zeigt die Qualitätsmerkmale sowie deren Wichtigkeit.
 Die erste Spalte gibt den Namen des Qualitätsziels an, während in den Verbleibenden Spalten die Priorität durch dass
-Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, das unwichtig ist, 5 einem, dass sehr wichtig ist.
+Vorhandensein eines "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, das unwichtig ist, 5 einem, dass sehr wichtig ist.
 
 [options="header", cols="3h, ^1, ^1, ^1, ^1, ^1"]
 |===
@@ -825,12 +827,12 @@ Im folgenden werden einige Merkmale näher beleuchtet.
 
 === Wartbarkeit
 Das zu entwickelnde System muss hochgradig wartbar sein, da bei einer Kinokette der Größe der UFO Kinos davon auszugehen ist, 
-das dass System mehrere Jahre, vieleicht Jahrzehnte, in Benutzung sein wird. Hinzu kommt, dass Ausfälle im Produktiveinsatz schnell 
+das dass System mehrere Jahre, vielleicht Jahrzehnte, in Benutzung sein wird. Hinzu kommt, dass Ausfälle im Produktiveinsatz schnell
 teuer werden können, wenn die Kasse streikt und daher kein Kartenverkauf möglich ist.
 
 === Sicherheit
 Das System muss robust sein, da ein Ausfall während der Geschäftszeit Geldeinbußen für das Kino durch nicht verkaufbare Karten bedeutet.
-Zudem würde ein Ausfall die Kundschaft verärgern, die damit möglicherweise zur Konkurenz abwandern. Hinzu kommen durch die Speicherung
+Zudem würde ein Ausfall die Kundschaft verärgern, die damit möglicherweise zur Konkurrenz abwandern. Hinzu kommen durch die Speicherung
 von E-Mail-Adressen Verpflichtungen durch die Datenschutz-Grundverordnung sowie ein möglicher Imageschaden für das Kino im Falle eines 
 Datenlecks, insbesondere wenn sich die Art der Passwortspeicherung als unzulänglich herausstellen sollte.
 
@@ -847,7 +849,7 @@ Datenlecks, insbesondere wenn sich die Art der Passwortspeicherung als unzuläng
 |v0.1
 |Verfügbarkeit - Uptime
 a|
-Das System soll von 07 Uhr bis 20 Uhr mit 99%-iger Warscheinlichkeit verfügbar sein
+Das System soll von 07 Uhr bis 20 Uhr mit 99%-iger Wahrscheinlichkeit verfügbar sein
 
 |[[NF0020]]<<NF0020>>
 |v0.1
@@ -892,7 +894,7 @@ image::./models/analysis/GUI-Entwurf/register-renderer-guest.png[Registrieren, 1
 image::./models/analysis/GUI-Entwurf/login-renderer-guest.png[Anmelden, 100%, 100%, pdfwidth=100%, title= "Anmeldemaske", align=center]
 
 === Programm
-Programmaske, wie sie angemeldete Nutzer sehen. Für unangemeldeter Benutzer fehlen die Reservierungslinks. 
+Programmmaske, wie sie angemeldete Nutzer sehen. Für unangemeldeter Benutzer fehlen die Reservierungslinks.
 
 image::./models/analysis/GUI-Entwurf/current-films-renderer-user.png[Programm, 100%, 100%, pdfwidth=100%, title= "Programmmaske", align=center]
 
@@ -952,7 +954,7 @@ image::./models/analysis/GUI-Entwurf/manage-storage-authorized-staff.png[Lagerve
 === Preisgestaltung
 image::./models/analysis/GUI-Entwurf/adjust-pricing-boss-renderer.png[Preisgestaltung, 100%, 100%, pdfwidth=100%, title= "Preisgestaltung", align=center]
 
-== 10. Datenmodell
+== Datenmodell
 
 === Überblick: Klassendiagramm
 UML-Analyseklassendiagramm
@@ -974,12 +976,12 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 |Bestellung                  |Der Warenkorb des Kunden vor Ort im Kino
 |Snacks                  |Inventar der Snacks im Kino
 |Ticket                  |Eine Instanz zu einer Vorführung für einen variablen Preis
-|Vorführung                  |Ein Termin, an dem ein Film in einem Saal vergeführt wird
+|Vorführung                  |Ein Termin, an dem ein Film in einem Saal vorgeführt wird
 |Saal                  |Ein Saal des Kinos in dem Vorführungen stattfinden
 |Platz                  |Ein Platz in einem Saal
 |Film                  |Ein Film, der in einem Saal angezeigt werden kann und für den es Tickets gibt
 |Event                  |Ein Sondertermin, der einen Saal für Vorführungen blockiert
-|Umsätze|Kummulierte Werte de Tagesumsätze
+|Umsätze|Kumulierte Werte der Tagesumsätze
 |===
 
 == Akzeptanztestfälle
@@ -1077,11 +1079,3 @@ Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der M
 - Es werden die Daten im System für den Lagerbestand und Umsatzstatistiken aktualisiert
 - Nach kurzer Zubereitungszeit erhält der Kunde seine Snacks
 |===
-
-
-
-//== Glossar
-//Sämtliche Begriffe, die innerhalb des Projektes verwendet werden und deren gemeinsames Verständnis aller beteiligten Stakeholder essentiell ist, sollten hier aufgeführt werden.
-//Insbesondere Begriffe der zu implementierenden Domäne wurden bereits beschrieben, jedoch gibt es meist mehr Begriffe, die einer Beschreibung bedürfen. +
-//Beispiel: Was bedeutet "Kunde"? Ein Nutzer des Systems? Der Kunde des Projektes (Auftraggeber)?
-

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
+ * Represents a single reservation in the system
  * @author Jannik
  */
 @Entity
@@ -33,7 +33,7 @@ public class Reservation {
     private List<Object> tickets;
 
     /**
-     * create a new reservation, initially containing 0 tickets.
+     * Create a new reservation, initially containing 0 tickets.
      * @param reservingAccountID
      * @param cinemaShowID 
      */
@@ -42,19 +42,34 @@ public class Reservation {
         this.cinemaShowID = cinemaShowID;
     }
 
+    /**
+     * Get the id of this reservation
+     * @return 
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Get the account id of whoever reserved this.
+     * @return 
+     */
     public long getReservingAccountID() {
         return reservingAccountID;
     }
 
+    /**
+     * Get the CinemaShowID of the cinema show this reservation belongs to.
+     * @return 
+     */
     public long getCinemaShowID() {
         return cinemaShowID;
     }
     
-    
+    /**
+     * Add a ticket to this reservation.
+     * @param ticket 
+     */
     public void addTicket(Object ticket){
         if(this.tickets.contains(ticket)){
             return;
@@ -62,10 +77,19 @@ public class Reservation {
         this.tickets.add(ticket);
     }
     
+    /**
+     * Remove a ticket from this reservation.
+     * @param ticket 
+     */
     public void removeTicket(Object ticket){
         this.tickets.remove(ticket);
     }
 
+    
+    /**
+     * Generate a hash code for this film. Due to the equals contract, hashcode is calculated from the id only.
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -73,6 +97,12 @@ public class Reservation {
         return hash;
     }
 
+    /**
+     * Checks wether {@code this} and the passed object are identical. 
+     * Two reservations are considered identical when they have the same id.
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

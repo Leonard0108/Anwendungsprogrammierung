@@ -12,49 +12,80 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
- *
- * @author Jannik
+ * Represents a film.
+ * @author Jannik Schwaß
  */
 @Entity
 @Table(name= "FILMS")
-public class Film {
+public class Film  implements Comparable<Film>{
     
     private @Id @GeneratedValue Long id;
     private @NotNull String title;
     private @NotNull String desc;
+    private int fskAge;
     //in minutes
     private int timePlaying;
 
     /**
-     * Creates a new film object, with the specified title, (short) description &amp; timePlaying.
+     * Creates a new film object, with the specified title, (short) description, timePlaying &amp; FSK age restriction
      * @param title
      * @param desc
-     * @param timePlaying 
+     * @param timePlaying time this film plays in minutes
+     * @param fskAge
      * @throws NullPointerException if title or desc are null
-     * @throws IllegalArgumentException if timePlaying &lt;= 0
+     * @throws IllegalArgumentException if timePlaying &lt;= 0, or fskAge &lt;0
      */
-    public Film(String title, String desc, int timePlaying) {
+    public Film(String title, String desc, int timePlaying, int fskAge) {
         this.title = title;
         this.desc = desc;
         this.timePlaying = timePlaying;
+        this.fskAge = fskAge;
     }
 
+    /**
+     * Get the internal id of this film
+     * @return 
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * get the title this film represents.
+     * @return 
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Get a short description of this film
+     * @return 
+     */
     public String getDesc() {
         return desc;
     }
 
+    /**
+     * get the time this film is playing, in minutes
+     * @return 
+     */
     public int getTimePlaying() {
         return timePlaying;
     }
 
+    /**
+     * Get the FSK age restriction of this film, in years
+     * @return 
+     */
+    public int getFskAge() {
+        return fskAge;
+    }
+
+    /**
+     * Generate a hash code for this film. Due to the equals contract, hashcode is calculated from the id only.
+     * @return 
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -83,14 +114,29 @@ public class Film {
         return Objects.equals(this.id, other.id);
     }
 
+    
     /**
-     * Returns a string representation of this object
+     * Implements the {@link Comparable} interface for films. Films are sorted according to their titles with the semantics of
+     * {@link String#compareTo(java.lang.String) String#compareTo(java.lang.String)}.
+     * @param o
+     * @return 
+     */
+    @Override
+    public int compareTo(Film o) {
+        if(equals(o)){
+            return 0;
+        }
+        return this.title.compareTo(o.title);
+    }
+    
+    /**
+     * Returns a string representation of this object. This method is mainly intended for debugging purposes.
      * @return a string
      */
     @Override
     public String toString() {
         return "Film{" + "title=" + title + ", timePlaying=" + timePlaying + '}';
     }
-    
+
     
 }

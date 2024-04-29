@@ -1,7 +1,6 @@
 package kickstart.models;
 
 import jakarta.persistence.*;
-import jdk.jfr.Event;
 import org.springframework.data.util.StreamUtils;
 import org.springframework.data.util.Streamable;
 
@@ -23,7 +22,7 @@ public class CinemaHall {
 	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private final HashSet<EventStub> events = new HashSet<>();
+	private final HashSet<Event> events = new HashSet<>();
 
 	public CinemaHall(String name, final Map<Seat, Seat.SeatOccupancy> seats) {
 		this.name = name;
@@ -54,7 +53,7 @@ public class CinemaHall {
 		return Streamable.of(this.cinemaShows);
 	}
 
-	public Streamable<EventStub> getEvents() {
+	public Streamable<Event> getEvents() {
 		return Streamable.of(this.events);
 	}
 
@@ -64,7 +63,7 @@ public class CinemaHall {
 		this.cinemaShows.add(newCinemaShow);
 	}
 
-	void addEvent(EventStub newEvent) {
+	void addEvent(Event newEvent) {
 		this.events.add(newEvent);
 	}
 

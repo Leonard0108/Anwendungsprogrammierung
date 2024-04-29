@@ -18,9 +18,9 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	private Money basePrice;
 
 	@OneToOne
-	private MovieStub movie;
+	private Film movie;
 
-	public CinemaShow(LocalDateTime startDateTime, Money basePrice, MovieStub movie) {
+	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film movie) {
 		this.startDateTime = startDateTime;
 		this.basePrice = basePrice;
 		this.movie = movie;
@@ -32,7 +32,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		return this.id;
 	}
 
-	public MovieStub getMovie() {
+	public Film getMovie() {
 		return movie;
 	}
 

@@ -1010,7 +1010,7 @@ Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit
 [cols="1h, 4"]
 |===
 |ID            |[[AT0120]]<<AT0120>>
-|Name          |Kunde Reserviert Sitzplätze
+|Name          |Kunde reserviert Sitzplätze
 |Use Case      |<<UC0120>> Online reservieren
 |Voraussetzung(en)      a|Ein angemeldeter Nutzer nutzt das Kundenportal.
 |Ablauf      a|

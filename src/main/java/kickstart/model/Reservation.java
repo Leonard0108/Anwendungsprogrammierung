@@ -30,7 +30,7 @@ public class Reservation {
      * TODO: linking
      */
     @OneToMany
-    private List<Object> tickets;
+    private List<DummyEntity> tickets;
 
     /**
      * Create a new reservation, initially containing 0 tickets.
@@ -70,7 +70,7 @@ public class Reservation {
      * Add a ticket to this reservation.
      * @param ticket 
      */
-    public void addTicket(Object ticket){
+    public void addTicket(DummyEntity ticket){
         if(this.tickets.contains(ticket)){
             return;
         }
@@ -81,7 +81,7 @@ public class Reservation {
      * Remove a ticket from this reservation.
      * @param ticket 
      */
-    public void removeTicket(Object ticket){
+    public void removeTicket(DummyEntity ticket){
         this.tickets.remove(ticket);
     }
 

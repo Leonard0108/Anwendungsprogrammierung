@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package kickstart.customerPortal;
+package kickstart.controller;
 
 import kickstart.model.Reservation;
 import org.springframework.security.access.prepost.PreAuthorize;

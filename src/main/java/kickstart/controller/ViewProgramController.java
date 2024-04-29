@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package kickstart.customerPortal;
+package kickstart.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class ViewProgramController {
      * @param week
      * @param m 
      */
-    @GetMapping("/current-films/{@week}")
+    @GetMapping("/current-films/{week}")
     public void getCurrentProgram(@PathVariable String week , Model m){}
     
     

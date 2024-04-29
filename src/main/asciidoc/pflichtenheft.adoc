@@ -1,5 +1,8 @@
 = Pflichtenheft
 :project_name: Kinosystem UFO
+:toc: left
+:numbered:
+
 == __{project_name}__
 
 [options="header"]
@@ -11,11 +14,6 @@
 |===
 
 == Inhaltsverzeichnis
-
-:toc:
-:toc-placement!:
-toc::[]
-
 
 == 1. Zusammenfassung
 Dieses Dokument dient dazu die Grenzen und Parameter des angestrebten Produktes festzustellen und 

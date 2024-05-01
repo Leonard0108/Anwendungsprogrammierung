@@ -42,7 +42,9 @@ public class Film  implements Comparable<Film>{
         this.fskAge = fskAge;
     }
 
-    /**
+	protected Film() {}
+
+	/**
      * Get the internal id of this film
      * @return 
      */

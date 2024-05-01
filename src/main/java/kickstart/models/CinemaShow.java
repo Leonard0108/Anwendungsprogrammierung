@@ -3,6 +3,7 @@ package kickstart.models;
 import jakarta.persistence.*;
 import org.javamoney.moneta.Money;
 
+import java.net.Authenticator;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,10 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	@ManyToOne
 	//@JoinColumn(name = "film_id")
 	private Film film;
+
+	@ManyToOne
+	@JoinColumn(name = "cinema_hall_id")
+	private CinemaHall cinemaHall;
 
 	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film film) {
 		this.startDateTime = startDateTime;
@@ -47,6 +52,14 @@ public class CinemaShow implements Comparable<CinemaShow>{
 
 	public Money getBasePrice() {
 		return this.basePrice;
+	}
+
+	public CinemaHall getCinemaHall() {
+		return this.cinemaHall;
+	}
+
+	public void setCinemaHall(CinemaHall cinemaHall) {
+		this.cinemaHall = cinemaHall;
 	}
 
 	@Override

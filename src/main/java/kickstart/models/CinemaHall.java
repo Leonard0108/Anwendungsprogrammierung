@@ -7,6 +7,7 @@ import org.springframework.data.util.Streamable;
 import java.util.*;
 import java.util.stream.Stream;
 
+// https://www.baeldung.com/hibernate-one-to-many
 @Entity
 @Table(name = "CINEMA_HALLS")
 public class CinemaHall {
@@ -18,16 +19,17 @@ public class CinemaHall {
 	@ElementCollection
 	private final Map<Seat, Seat.SeatOccupancy> seats;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cinemaHall", cascade =  CascadeType.ALL)
 	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private final HashSet<Event> events = new HashSet<>();
+	//@OneToMany(cascade = CascadeType.ALL)
+	//private final HashSet<Event> events = new HashSet<>();
 
-	public CinemaHall(String name, final Map<Seat, Seat.SeatOccupancy> seats) {
+	public CinemaHall(String name/*, final Map<Seat, Seat.SeatOccupancy> seats*/) {
 		this.name = name;
-		this.numberOfPlaces = seats.size();
-		this.seats = new TreeMap<>(seats);
+		this.numberOfPlaces = 0;/*seats.size();*/
+		this.seats = new TreeMap<>();
+		//this.seats = new TreeMap<>(seats);
 	}
 
 	public CinemaHall() {
@@ -53,24 +55,29 @@ public class CinemaHall {
 		return Streamable.of(this.cinemaShows);
 	}
 
+	/*
 	public Streamable<Event> getEvents() {
 		return Streamable.of(this.events);
 	}
+	 */
 
-	void addCinemaShow(CinemaShow newCinemaShow) {
+	public void addCinemaShow(CinemaShow newCinemaShow) {
 		if(cinemaShows.contains(newCinemaShow)) return;
 
 		this.cinemaShows.add(newCinemaShow);
+		newCinemaShow.setCinemaHall(this);
 	}
 
+	/*
 	void addEvent(Event newEvent) {
 		this.events.add(newEvent);
 	}
+	 */
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getName(), getNumberOfPlaces(),
-			this.seats, this.cinemaShows, this.events);
+			this.seats, this.cinemaShows/*, this.events*/);
 	}
 
 	@Override
@@ -84,9 +91,7 @@ public class CinemaHall {
 			Objects.equals(getName(), cinemaHall.getName()) &&
 			Objects.equals(getNumberOfPlaces(), cinemaHall.getNumberOfPlaces()) &&
 			Objects.equals(this.seats, cinemaHall.seats) &&
-			Objects.equals(this.cinemaShows, cinemaHall.cinemaShows) &&
-			Objects.equals(this.events, cinemaHall.events);
+			Objects.equals(this.cinemaShows, cinemaHall.cinemaShows) /*&&
+			Objects.equals(this.events, cinemaHall.events)*/;
 	}
-
-
 }

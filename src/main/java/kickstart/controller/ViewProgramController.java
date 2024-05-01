@@ -39,10 +39,17 @@ public class ViewProgramController {
 	// Helper Methoden
 	// TODO: Später in einen Service verschieben
 
+	/**
+	 * @return max. Anzahl an Kalenderwochen, welches ein Jahr hat.
+	 * Es zählen auch die erste und die letzte Woche, auch wenn diese nicht vollständig in dem Jahr liegen.
+	 */
 	public static int getMaxYearWeeks(int year) {
 		return getWeekOfYear(LocalDateTime.of(year, 12, 31, 0, 0));
 	}
 
+	/**
+	 * @return aktuelle Kalenderwoche eines Jahres
+	 */
 	public static int getWeekOfYear(LocalDateTime dateTime) {
 		return dateTime
 			.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
@@ -50,6 +57,13 @@ public class ViewProgramController {
 
 	// Chat GPT 3.5
 	// Promt: Wie bekomme ich das Start-Datum zu einer bestimmten Woche?
+
+	/**
+	 *
+	 * @param year das Jahr
+	 * @param week die Kalenderwoche zum angegebenen Jahr
+	 * @return Startdatum der Woche (Montag um 00:00)
+	 */
 	public static LocalDateTime getStartWeekDateTime(int year, int week) {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
@@ -58,6 +72,10 @@ public class ViewProgramController {
 			.with(weekFields.dayOfWeek(), 1);
 	}
 
+	/**
+	 * @param dateTime beliebiges Datum (+ Zeitpunk)
+	 * siehe {@link #getStartWeekDateTime(int, int)}
+	 */
 	public static LocalDateTime getStartWeekDateTime(LocalDateTime dateTime) {
 		return getStartWeekDateTime(
 			dateTime.getYear(),
@@ -65,6 +83,12 @@ public class ViewProgramController {
 		);
 	}
 
+	/**
+	 *
+	 * @param year das Jahr
+	 * @param week die Kalenderwoche zum angegebenen Jahr
+	 * @return Enddatum der Woche (Sonntag um 23:59)
+	 */
 	public static LocalDateTime getEndWeekDateTime(int year, int week) {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
@@ -73,6 +97,10 @@ public class ViewProgramController {
 			.with(weekFields.dayOfWeek(), 7);
 	}
 
+	/**
+	 * @param dateTime beliebiges Datum (+ Zeitpunk)
+	 * siehe {@link #getEndWeekDateTime(int, int)}
+	 */
 	public static LocalDateTime getEndWeekDateTime(LocalDateTime dateTime) {
 		return getEndWeekDateTime(
 			dateTime.getYear(),

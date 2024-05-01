@@ -17,7 +17,12 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	private LocalDateTime startDateTime;
 	private Money basePrice;
 
-	@OneToOne
+	/* Chat GPT 3.5
+   	Promt: Wie fÃ¼ge ich andere Entity Klassen in eine Entity Klasse als Attribute ein?
+ 	*/
+	// Jede Veranstaltung-Instanz verweist auf eine bestimmte Film-Instanz
+	@ManyToOne
+	//@JoinColumn(name = "film_id")
 	private Film film;
 
 	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film film) {

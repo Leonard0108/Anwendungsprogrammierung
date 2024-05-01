@@ -1,0 +1,13 @@
+= Protokoll 29.4.2024
+
+== Allgemeines
+- Achtung bei Mainbranchsynchronisation, erst pullen, dann pushen
+
+
+
+== Pflichtenheft
+- Vereinheitlichung der Verwendung von händischer und automatischer Funktionsnamengenerierung
+
+== Weiteres
+- Jeder sollte eigene Branch für Prototypen haben
+-Beginn mit Entwicklerdokumentation (Lukas)

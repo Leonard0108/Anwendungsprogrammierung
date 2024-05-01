@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -106,5 +107,24 @@ public class ViewProgramController {
 			dateTime.getYear(),
 			getWeekOfYear(dateTime)
 		);
+	}
+
+	/**
+	 * @return Ausgabe String: "Woche-Von-Datum - Woche-Bis-Datum"
+	 */
+	public static String getWeekRangeFormat(int year, int week) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault());
+
+		String formattedStartDate = getStartWeekDateTime(year, week).format(formatter);
+		String formattedEndDate = getEndWeekDateTime(year, week).format(formatter);
+
+		return formattedStartDate + " - " + formattedEndDate;
+	}
+	/**
+	 * @param dateTime beliebiges Datum (+ Zeitpunk)
+	 * siehe {@link #getWeekRangeFormat(int, int)}
+	 */
+	public static String getWeekRangeFormat(LocalDateTime dateTime) {
+		return getWeekRangeFormat(dateTime.getYear(), getWeekOfYear(dateTime));
 	}
 }

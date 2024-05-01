@@ -74,7 +74,7 @@
                                            th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</a>
                                         <p>
                                             <span th:text="${#temporals.format(cinemaShow.getStartDateTime(), 'HH:mm')} + ' Uhr, '
-                                            + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - ' + 'Saal X'">
+                                            + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - ' + ${cinemaShow.getCinemaHall().getName()}">
                                                 HH:mm Uhr, dd.MM.yyyy - Saal X
                                             </span>
                                             <span th:class="'fsk-label fsk-' + ${cinemaShow.getFilm().getFskAge()}" class="fsk-label fsk-12"
@@ -93,63 +93,18 @@
                         </div>
                     </div>
 
-                    <!--
-                    <div class="current-films-tile-sections">
-                        <h2>Montag, 15.04.2024</h2>
-                        <div class="current-film-tile-sections-day">
-                            <div class="film-card">
-                                <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" alt="Bell im Märchenland">
-                                <div class="film-card-main-section">
-                                    <a class="film-card-film-link" href="/film/info?id=fg4g54g4f54g5454" title="Bell im Märchenland | UFO Kinos">Bell im Märchenland</a>
-                                    <p>09:30 Uhr, 15.04.2024 - Saal 2 - <span class="fsk-label fsk-12">FSK 12</span> 95min</p>
-                                    <p class="reserve-error">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
-                                </div>
-                                <div class="film-card-reserve-section">
-                                    Plätze reservieren
-                                    <a href="/current-films?change=1&AMP;id=83490258902890890" style="display: block">ändern</a>
-                                    <a href="/current-films?delete=1&AMP;id=83490258902890890" style="display: block">löschen</a>
-                                </div>
-                            </div>
-                            <div class="film-card">
-                                <img class="film-poster" src="/assets/film-posters/d4dd465trvg4r18g.jpg" alt="Parry Hotter und die Hochschule Merseburg">
-                                <div class="film-card-main-section">
-                                    <a class="film-card-film-link" href="/film/info?id=d4dd465trvg4r18g" title="Parry Hotter und die Hochschule Merseburg | UFO Kinos">Parry Hotter und die Hochschule Merseburg</a>
-                                    <p>09:30 Uhr, 15.04.2024 - Saal 1 - <span class="fsk-label fsk-12">FSK 12</span> 138 min</p>
-                                    <p class="reserve-error">Zu diesem Film wurden alle Plätze reserviert. Rückläufer gibt es nur vor Ort an der Kinokasse.</p>
-                                </div>
-                                <div class="film-card-reserve-section">
-                                    Plätze reservieren
-                                    <a href="/current-films?change=1&AMP;id=74397584378952574" style="display: block">ändern</a>
-                                    <a href="/current-films?delete=1&AMP;id=74397584378952574" style="display: block">löschen</a>
-                                </div>
-                            </div>
-                            <div class="film-card">
-                                <img class="film-poster" src="/assets/film-posters/4g5e4e54r5gr5eg4er5g4e56.jpg" alt="Extra 4's Jannes Müller: Im Kino">
-                                <div class="film-card-main-section">
-                                    <a class="film-card-film-link" href="/film/info?id=4g5e4e54r5gr5eg4er5g4e56" title="Extra 4's Jannes Müller: Im Kino | UFO Kinos">Extra 4's Jannes Müller: Im Kino</a>
-                                    <p>11 Uhr, 15.04.2024 - Saal 3 - <span class="fsk-label fsk-6">FSK 6</span> 105min</p>
-                                </div>
-                                <div class="film-card-reserve-section">
-                                    <a href="/reserve-spots/reserve?id=20240415_4g5e4e54r5gr5eg4er5g4e56" title="Extra 4's Jannes Müller: Im Kino | Plätze reservieren">Plätze reservieren</a>
-                                    <a href="/current-films?change=1&AMP;id=59824058980438983" style="display: block">ändern</a>
-                                    <a href="/current-films?delete=1&AMP;id=59824058980438983" style="display: block">löschen</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    -->
                     <h2 id="addprogram">Neu hinzufügen</h2>
                     <form action="/current-films">
                         <p>Datum: <input type="datetime-local" name="addTime"></p>
                                 <p>Film: <select name="film">
-                                        <option value="Bell im Märchenland">Bell im Märchenland</option>
-                                        <option value="Parry Hotter und die Hochschule Merseburg">Parry Hotter und die Hochschule Merseburg</option>
-                                        <option value="Extra 4's Jannes Müller: Im Kino">Extra 4's Jannes Müller: Im Kino</option>
-                            </select></p>
+                                    <div th:each="film : ${allFilms}">
+                                        <option value="Film" th:text="${film.getTitle()}" th:value="${film.getTitle()}">Film</option>
+                                    </div>
+                                </select></p>
                             <select name="room">
-                                <option value="Saal 1">Saal 1</option>
-                                <option value="Saal 2">Saal 2</option>
-                                <option value="Saal 3">Saal 3</option>
+                                <div th:each="cinemaHall : ${allCinemaHalls}">
+                                    <option value="Kinosaal" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getName()}">Kinosaal</option>
+                                </div>
                             </select>
                             <button name="addProgramPoint">Hinzufügen</button>
                     </form>

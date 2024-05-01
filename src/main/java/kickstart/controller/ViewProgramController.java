@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -31,10 +33,24 @@ public class ViewProgramController {
     @GetMapping("/current-films/{year}/{week}")
     public String getCurrentProgram(@PathVariable int year, @PathVariable int week , Model m) {
 
-		System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
-		System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
+		LocalDateTime startDateTime = getStartWeekDateTime(year, week);
+		LocalDate dayDate;
+		WeekFields weekFields = WeekFields.of(Locale.getDefault());
+		List<String> dayDateHeadlines = new ArrayList<>();
 
-		return "welcome";
+		m.addAttribute("weekRangeFormat", getWeekRangeFormat(year, week));
+		// TODO: effizienter umsetzen:
+		// Alle Wochentage einzeln behandeln
+		for(int i = 1; i <= 7; i++) {
+			dayDate = startDateTime.with(weekFields.dayOfWeek(), i).toLocalDate();
+			dayDateHeadlines.add(getDayFormat(dayDate));
+		}
+		m.addAttribute("dayDateHeadlines", dayDateHeadlines);
+
+		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
+		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
+
+		return "current-films-renderer";
 	}
 
 	// Helper Methoden
@@ -110,7 +126,7 @@ public class ViewProgramController {
 	}
 
 	/**
-	 * @return Ausgabe String: "Woche-Von-Datum - Woche-Bis-Datum"
+	 * @return Ausgabe String: "Woche-Von-Datum (dd.MM.yyyy) - Woche-Bis-Datum (dd.MM.yyyy)"
 	 */
 	public static String getWeekRangeFormat(int year, int week) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault());
@@ -126,5 +142,14 @@ public class ViewProgramController {
 	 */
 	public static String getWeekRangeFormat(LocalDateTime dateTime) {
 		return getWeekRangeFormat(dateTime.getYear(), getWeekOfYear(dateTime));
+	}
+
+	/**
+	 * @return Ausgabe String: "Wochentag, Datum (dd.MM.yyyy)"
+	 */
+	public static String getDayFormat(LocalDate date) {
+		// EEEE: Wochentag, Sprache hängt von Locale.getDefault() ab
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd.MM.yyyy", Locale.getDefault());
+		return date.format(formatter);
 	}
 }

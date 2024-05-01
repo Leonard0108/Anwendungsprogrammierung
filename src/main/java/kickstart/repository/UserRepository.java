@@ -1,5 +1,6 @@
-package kickstart.UserAuthentication;
+package kickstart.repository;
 
+import kickstart.models.UserEntry;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

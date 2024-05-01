@@ -3,3 +3,10 @@
 
 == Branches
 - resynchronisieren
+
+
+== Reservierung
+- Erweiterung der API-Funktionen
+
+
+== Prototypen

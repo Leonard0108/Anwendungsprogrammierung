@@ -1,4 +1,4 @@
-package kickstart.UserAuthentication;
+package kickstart.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -77,7 +77,8 @@
                                             + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - ' + 'Saal X'">
                                                 HH:mm Uhr, dd.MM.yyyy - Saal X
                                             </span>
-                                            <span class="fsk-label fsk-12" th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
+                                            <span th:class="'fsk-label fsk-' + ${cinemaShow.getFilm().getFskAge()}" class="fsk-label fsk-12"
+                                                  th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
                                             <span th:text="${cinemaShow.getFilm().getTimePlaying() + 'min'}">Zmin</span>
                                         </p>
                                         <p class="reserve-error">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
@@ -213,7 +214,20 @@
             .film-card .reserve-error{
                 color:red;
             }
+            /*TODO Farben für andere FSK hinzufügen*/
+            .fsk-label.fsk-0{
+                color:#01d501;
+            }
+            .fsk-label.fsk-6{
+                color:#01d501;
+            }
             .fsk-label.fsk-12{
+                color:#01d501;
+            }
+            .fsk-label.fsk-16{
+                color:#01d501;
+            }
+            .fsk-label.fsk-18{
                 color:#01d501;
             }
             .film-card img{

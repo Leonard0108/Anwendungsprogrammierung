@@ -32,35 +32,23 @@ public class UserEntry {
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
-	public void setStreetNumber(String streetNumber) {
-		this.streetNumber = streetNumber;
-	}
-
-
-
+	public void setStreetNumber(String streetNumber) {this.streetNumber = streetNumber;}
 	public void setCity(String city) {
 		this.city = city;
 	}
 	public void setState(String state) {
 		this.state = state;
 	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
+	public void setLastName(String lastName) {this.lastName = lastName;}
+	public void setName(String name) {this.name = name;}
 	public Long getId() {
 		return id;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getLastName() {
 		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 	public String getEmail() {
 		return email;

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -14,10 +15,10 @@ import java.util.Objects;
 public class Event implements Comparable<Event>{
 
 	private @Id	@GeneratedValue long id;
-	private String name;
-	private LocalDateTime startDateTime;
+	private @NotEmpty String name;
+	private @NotEmpty LocalDateTime startDateTime;
 	// Dauer in Minuten
-	private int duration;
+	private @NotEmpty int duration;
 
 	public Event(String name, LocalDateTime startDateTime, int duration) {
 		this.name = name;

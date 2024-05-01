@@ -5,7 +5,9 @@
 package kickstart.controller;
 
 import kickstart.models.CinemaShow;
+import kickstart.repository.CinemaHallRepository;
 import kickstart.repository.CinemaShowRepository;
+import kickstart.repository.FilmRepository;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,8 +32,15 @@ public class ViewProgramController {
 
 	private CinemaShowRepository cinemaShowRepository;
 
-	public ViewProgramController(CinemaShowRepository cinemaShowRepository) {
+	private CinemaHallRepository cinemaHallRepository;
+
+	private FilmRepository filmRepository;
+
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaHallRepository cinemaHallRepository,
+								 FilmRepository filmRepository) {
 		this.cinemaShowRepository = cinemaShowRepository;
+		this.cinemaHallRepository = cinemaHallRepository;
+		this.filmRepository = filmRepository;
 	}
 
     /**
@@ -57,6 +66,8 @@ public class ViewProgramController {
 			);
 		}
 		m.addAttribute("oneWeekCinemaShows", oneWeekCinemaShows);
+		m.addAttribute("allCinemaHalls", cinemaHallRepository.findAll());
+		m.addAttribute("allFilms", filmRepository.findAll());
 
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));

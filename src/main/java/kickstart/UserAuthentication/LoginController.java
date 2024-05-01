@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(path = "/lunar_space_port")
 public class LoginController {
-	private UserRepository userRepository;
-
+	UserRepository userRepository;
 
 
 	public LoginController(UserRepository userRepository) {

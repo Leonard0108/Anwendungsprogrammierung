@@ -4,6 +4,9 @@
  */
 package kickstart.controller;
 
+import kickstart.models.CinemaShow;
+import kickstart.repository.CinemaShowRepository;
+import org.springframework.data.util.Streamable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +27,13 @@ import java.util.Locale;
  */
 @Controller
 public class ViewProgramController {
-    
+
+	private CinemaShowRepository cinemaShowRepository;
+
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository) {
+		this.cinemaShowRepository = cinemaShowRepository;
+	}
+
     /**
      * todo: where rights check?
      * @param week
@@ -36,21 +45,51 @@ public class ViewProgramController {
 		LocalDateTime startDateTime = getStartWeekDateTime(year, week);
 		LocalDate dayDate;
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
-		List<String> dayDateHeadlines = new ArrayList<>();
+		List<CinemaShowDayEntry> oneWeekCinemaShows = new ArrayList<>();
 
 		m.addAttribute("weekRangeFormat", getWeekRangeFormat(year, week));
 		// TODO: effizienter umsetzen:
 		// Alle Wochentage einzeln behandeln
 		for(int i = 1; i <= 7; i++) {
 			dayDate = startDateTime.with(weekFields.dayOfWeek(), i).toLocalDate();
-			dayDateHeadlines.add(getDayFormat(dayDate));
+			oneWeekCinemaShows.add(
+				new CinemaShowDayEntry(dayDate, this.cinemaShowRepository.findCinemaShowsOnDay(dayDate))
+			);
 		}
-		m.addAttribute("dayDateHeadlines", dayDateHeadlines);
+		m.addAttribute("oneWeekCinemaShows", oneWeekCinemaShows);
 
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
 
 		return "current-films-renderer";
+	}
+
+	public static class CinemaShowDayEntry {
+		private Streamable<CinemaShow> cinemaShows;
+		private String dayDateHeadline;
+
+		/**
+		 *
+		 * @param dayDate Datum, für alle Veranstaltungen welche an dem Tag laufen (Startzeit).
+		 * @param cinemaShows alle Veranstaltungen an einem Tag
+		 */
+		public CinemaShowDayEntry(LocalDate dayDate, Streamable<CinemaShow> cinemaShows) {
+			// Verhindert Fehler bei nicht vorhandenen Kino-Veranstaltungen an dem Tag
+			if(cinemaShows == null) cinemaShows = Streamable.empty();
+			this.cinemaShows = cinemaShows;
+			this.dayDateHeadline = getDayFormat(dayDate);
+		}
+
+		public Streamable<CinemaShow> getCinemaShows() {
+			return this.cinemaShows;
+		}
+
+		/**
+		 * @return Erhalte Datums-Überschrift-Eintrag
+		 */
+		public String getDayDateHeadline() {
+			return this.dayDateHeadline;
+		}
 	}
 
 	// Helper Methoden

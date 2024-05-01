@@ -19,5 +19,6 @@
 == Prototypen
 - Jeder einen
 
-== Zurück auf main
-- Freitag, 3.5.2024
+== To do
+- Samstag, 4.5.2024
+- nächstes Meeting am selben Tag.

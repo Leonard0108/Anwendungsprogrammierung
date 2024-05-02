@@ -22,8 +22,8 @@ public class CinemaHall {
 	@OneToMany(mappedBy = "cinemaHall", cascade =  CascadeType.ALL)
 	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
 
-	//@OneToMany(cascade = CascadeType.ALL)
-	//private final HashSet<Event> events = new HashSet<>();
+	@OneToMany(cascade = CascadeType.ALL)
+	private final HashSet<Event> events = new HashSet<>();
 
 	public CinemaHall(String name/*, final Map<Seat, Seat.SeatOccupancy> seats*/) {
 		this.name = name;
@@ -55,11 +55,11 @@ public class CinemaHall {
 		return Streamable.of(this.cinemaShows);
 	}
 
-	/*
+
 	public Streamable<Event> getEvents() {
 		return Streamable.of(this.events);
 	}
-	 */
+
 
 	public void addCinemaShow(CinemaShow newCinemaShow) {
 		if(cinemaShows.contains(newCinemaShow)) return;
@@ -68,11 +68,11 @@ public class CinemaHall {
 		newCinemaShow.setCinemaHall(this);
 	}
 
-	/*
-	void addEvent(Event newEvent) {
+
+	public void addEvent(Event newEvent) {
 		this.events.add(newEvent);
 	}
-	 */
+
 
 	@Override
 	public int hashCode() {

@@ -1,10 +1,7 @@
 package kickstart.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
@@ -19,11 +16,15 @@ public class Event implements Comparable<Event>{
 	private @NotEmpty LocalDateTime startDateTime;
 	// Dauer in Minuten
 	private @NotEmpty int duration;
+	@ManyToOne
+	@JoinColumn(name = "cinema_hall_id")
+	private CinemaHall cinemaHall;
 
-	public Event(String name, LocalDateTime startDateTime, int duration) {
+	public Event(String name, LocalDateTime startDateTime, int duration, CinemaHall cinemaHall) {
 		this.name = name;
 		this.startDateTime = startDateTime;
 		this.duration = duration;
+		this.cinemaHall = cinemaHall;
 	}
 
 	public Event() {}
@@ -44,6 +45,9 @@ public class Event implements Comparable<Event>{
 		return duration;
 	}
 
+	public CinemaHall getCinemaHall() {
+		return cinemaHall;
+	}
 
 	@Override
 	public int hashCode() {

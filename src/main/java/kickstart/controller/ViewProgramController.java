@@ -52,11 +52,19 @@ public class ViewProgramController {
 		this.cinemaHallRepository = cinemaHallRepository;
 		this.filmRepository = filmRepository;
 	}
+        
+        @GetMapping("/current-films/")
+        public String getCurrentWeekProgram(Model m){
+            LocalDateTime now = LocalDateTime.now();
+            return getCurrentProgram(now.getYear(), getWeekOfYear(now), m);
+        }
 
     /**
      * todo: where rights check?
+     * @param year
      * @param week
      * @param m 
+     * @return  
      */
     @GetMapping("/current-films/{year}/{week}")
     public String getCurrentProgram(@PathVariable int year, @PathVariable int week , Model m) {

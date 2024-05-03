@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * The main application class.
@@ -40,6 +41,10 @@ public class Application {
 
 	@Configuration
 	static class WebSecurityConfiguration {
+		@Bean
+		public BCryptPasswordEncoder pwEncoder() {
+			return new BCryptPasswordEncoder();
+		}
 
 		@Bean
 		SecurityFilterChain videoShopSecurity(HttpSecurity http) throws Exception {

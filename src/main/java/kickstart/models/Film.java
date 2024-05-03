@@ -25,6 +25,7 @@ public class Film  implements Comparable<Film>{
     private int fskAge;
     //in minutes
     private int timePlaying;
+    private int basicRentFee;
 
     /**
      * Creates a new film object, with the specified title, (short) description, timePlaying &amp; FSK age restriction
@@ -42,7 +43,20 @@ public class Film  implements Comparable<Film>{
         this.fskAge = fskAge;
     }
 
-	protected Film() {}
+    public Film(String title, String desc, int timePlaying, int fskAge, int basicRentFee) {
+        this.title = title;
+        this.desc = desc;
+        this.fskAge = fskAge;
+        this.timePlaying = timePlaying;
+        this.basicRentFee = basicRentFee;
+    }
+    
+    
+
+    /**
+     * Hibernate-only constructor. Do not use, you will break things.
+     */
+    public Film() {}
 
 	/**
      * Get the internal id of this film
@@ -83,6 +97,16 @@ public class Film  implements Comparable<Film>{
     public int getFskAge() {
         return fskAge;
     }
+
+    public int getBasicRentFee() {
+        return basicRentFee;
+    }
+
+    public void setBasicRentFee(int basicRentFee) {
+        this.basicRentFee = basicRentFee;
+    }
+    
+    
 
     /**
      * Generate a hash code for this film. Due to the equals contract, hashcode is calculated from the id only.
@@ -130,15 +154,16 @@ public class Film  implements Comparable<Film>{
         }
         return this.title.compareTo(o.title);
     }
-    
+
     /**
      * Returns a string representation of this object. This method is mainly intended for debugging purposes.
      * @return a string
      */
     @Override
     public String toString() {
-        return "Film{" + "title=" + title + ", timePlaying=" + timePlaying + '}';
+        return "Film{" + "title=" + title + ", desc=" + desc + ", fskAge=" + fskAge + ", timePlaying=" + timePlaying + ", basicRentFee=" + basicRentFee + '}';
     }
-
+    
+    
     
 }

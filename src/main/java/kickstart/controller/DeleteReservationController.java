@@ -23,9 +23,9 @@ public class DeleteReservationController {
     
     @GetMapping("/cancel-reservation/{@id}")
     @PreAuthorize("USER")
-    public void getDeleteForm(){}
+    public void getDeleteForm(Model m, Reservation id){}
     
     @PostMapping("/cancel-reservation/{@id}")
     @PreAuthorize("USER")
-    public void deleteReservation(@PathVariable Reservation toBeDeleted){}
+    public void deleteReservation(@PathVariable Reservation id){}
 }

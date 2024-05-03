@@ -50,7 +50,8 @@ public class FilmDataInitializer implements DataInitializer {
 				"Film " + i,
 				"Film-Beschreibung " + i,
 				90 + i * 10,
-				fsks.get(random.nextInt(fsks.size()))
+				fsks.get(random.nextInt(fsks.size())),
+                                random.nextInt(1000, 2000)
 			));
 		}
 
@@ -60,6 +61,7 @@ public class FilmDataInitializer implements DataInitializer {
 			System.out.println("Beschreibung: " + f.getDesc());
 			System.out.println("FSK: " + f.getFskAge());
 			System.out.println("ID: " + f.getId());
+                        System.out.println("Leih-Grundgebür: " + f.getBasicRentFee());
 			System.out.println("=======================================");
 		});
 	}

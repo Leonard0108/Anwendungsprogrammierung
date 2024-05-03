@@ -8,8 +8,22 @@
 = Entwicklerdokumentation
 
 == Einführung und Ziele
-* Aufgabenstellung
-* Qualitätsziele
+
+Ziel dieser neuen webbasierten Kino-Allrounder-Software ist es, sowohl die Arbeitsprozesse der Mitarbeiter, autorisierten Mitarbeiter und des Bosses zu erleichtern, sowie als auch den Komfort und die Flexibilität der Kunden zu fördern. Die klassischen Vorgänge des ausschließlichen Vorort-Services, sowie die unübersichtliche, zeitintensive und nicht immer aktuelle Pflege von Ordner-Papier-Dokumenten für die Verwaltung, Organisation und strategische Planung sollen durch diese Software ersetzt und durch die Automatisierung für alle beteiligten Personen erleichtert werden.
+
+In unserem Kino-System UFO spielen zum einen die Kunden (Customer) eine wesentliche Rolle. Diese können jederzeit über diese Anwendung über das Web sich das aktuelle Kinoprogramm  anzeigen lassen und nach Belieben bequem z.B. von Zuhause aus sich Plätze (Seat)s für eine kommende Veranstaltung (CinemaShow)s reservieren (Reservation) und diese dann vor Ort bis 30min vor der Veranstaltung kaufen.
+
+Das System beinhaltet allerdings noch weitere Rollen (User), welche alle relational aufeinander aufbauen, was so viel bedeutet wie, jede Rolle mit einem höheren Status erlangt zusätzlich zu allen Rechten der unteren Rolle, weitere Rechte, um mit dem Kinosystem zu interagieren.
+
+Als Erstes haben wir da den "normalen" Mitarbeiter, welcher die Verkaufsoberfläche des Systems nutzen kann, um z.B. Karten und Snacks zu verkaufen und Reservierungen vom Kunden (vor Ort / telefonisch) direkt anzulegen.
+
+Dann gibt es den autorisierten Mitarbeiter, welcher neben den Aktionen des "normalen" Mitarbeiters zusätzlich noch Verwaltungsaufgaben im System einsehen, anlegen und ändern kann. Darunter zählt z.B. das Anpassen des Programms, Anbieter vergleichen, Zentrallager verwalten und aktuelle Filmstatistiken einsehen.
+
+Die höchste Rolle besitzt der Chef, dieser kann alle Funktionen des Systems benutzen. Hierbei kommen administrative und operative Systemoptionen hinzu, wie z.B. das externe Vermieten von Sälen, die gesamte Personalverwaltung, das Anpassen von Preisen, sowie das Einsehen von Wirtschaftsdaten (Diagramme in einem Dashboard).
+
+Alle Rollen sind dabei klar voneinander getrennt. Ein unregistrierter Nutzer kann dabei nur sich das Programm anzeigen lassen und sich neu registrieren (erhällt die Rolle des Kunden). Jeder Nutzer-Account besteht aus 3 Datenfeldern: E-Mail, Benutzername, Passwort. Die E-Mail dient dazu, damit ein Nutzer mit böswilligen Absichten sich nicht beliebig viele Nutzer-Accounts erstellt, um das Kino komplett mit Reservierungen auszubuchen. Dabei wird die E-Mail auf Validität geprüft und ebenfalls ob ein starkes Passwort vorhanden ist. Durch eine erfolgreiche Anmeldung erhällt der Nutzer seine jeweilige Rolle im System und dementsprechend die nötigen Rechte, um die aufgeführten UseCases auszuführen, zu können. Alle freigeschalteten Funktionen sind in der Navigationsbar auf der Startseite der Website des Kinos zentral durch Untermenüs aufrufbar. In jedem Untermenü kann eine oder mehrere Aktion(en) durchgeführt werden. Dies kann der Zugang zu Informationen sein, sowie das Editieren und Konfigurieren von aktuellen Geschehnissen im Kino. Zum Schutz vor unbefugtem Zugriff aus das System wird eine Nutzer-Session nach einer gewissen Zeit geschlossen und der Nutzer muss sich erneut anmelden.
+
+Zusammenfassend soll eine solide, sichere, erweiterbare, zentrale webbasierte Kino-Allrounder Software entstehen, welche mehr Kunden anlocken soll und den Arbeitsaufwand des Personals und des Chefs verringern soll.
 
 == Randbedingungen
 * Hardware-Vorgaben

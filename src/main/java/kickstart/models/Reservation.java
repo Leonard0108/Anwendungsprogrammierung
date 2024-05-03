@@ -7,6 +7,7 @@ package kickstart.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -24,8 +25,10 @@ public class Reservation {
     
     private @Id @GeneratedValue Long id;
     //private 
+    @ManyToOne
     private @NotNull UserEntry reservingAccount;
     
+    @ManyToOne
     private @NotNull CinemaShow cinemaShow;
     
     /**

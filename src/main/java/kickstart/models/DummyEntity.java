@@ -20,5 +20,21 @@ public class DummyEntity {
         System.getLogger(DummyEntity.class.getName()).log(System.Logger.Level.WARNING, "Unresolved link");
     }
     
-    private @Id @GeneratedValue int id;
+    private @Id @GeneratedValue Integer id;
+    
+    private String data;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+    
+    
 }

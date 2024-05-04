@@ -4,21 +4,13 @@
  */
 package kickstart.repository;
 
-import kickstart.models.CinemaShow;
-import kickstart.models.Film;
+import kickstart.models.DummyEntity;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.util.Streamable;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Jannik
  */
-@Repository
-public interface FilmRepository extends CrudRepository<Film, Long>{
-        @Override
-	Streamable<Film> findAll();
-        
-        
-        
+public interface DummyEntityRepository  extends CrudRepository<DummyEntity, Integer>{
+    
 }

@@ -8,6 +8,7 @@
 |Version | Status      | Bearbeitungsdatum   | Autoren(en) |  Vermerk
 |0.1     | In Arbeit   | 01.04.2023          | Autor       | Initiale Version
 |0.3     | In Arbeit   | 21.04.2024          | diverse     | Nachtrag Versionierung
+|1.0     | Meilenstein | 03.05.2024          | alle.       | Pflichtenheft
 |===
 
 == Inhaltsverzeichnis
@@ -61,9 +62,9 @@ Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genu
 
 Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
 
-Mozilla Firefox, Version 92.0.1+
+Mozilla Firefox, Version 125.0.3+
 
-Google Chrome, Version 94.0.4606+
+Google Chrome, Version 124.0.6367+
 
 Das Kundenportal kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
 Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv bedienbar sein, wodurch sich die Mitarbeiter und der Chef schnell daran gewöhnen können.
@@ -214,7 +215,7 @@ _Logout_:
 2. Nutzer ist nun abgemeldet und erhällt die Rolle des unangemeldeten Nutzers.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0021>>, <<F0022>>
+|Funktionale Anforderungen  |<<F0021>>, <<F0022>>, <<F0023>>
 |===
 
 [cols="1h, 3"]
@@ -640,10 +641,10 @@ mit folgenden Informationen:
 |[[F0022]]<<F0022>>
 |v0.1
 |Logout
-a|Sicheres beenden der Verbindung.
+a|Sicheres beenden der Verbindung, freigeben des Sockets und freigabe von entsprechenden Ressourcen.
 |
 
-|[[F0022]]<<F0022>>
+|[[F0022]]<<F0023>>
 |v0.1
 |Verbindungsterminierung
 a|Sicheres beenden der Verbindung im Falle eines unerwarteten Verbindungsabbruchs
@@ -852,7 +853,7 @@ image::./models/analysis/GUI-Entwurf/index-renderer-guest.png[Startseite, 100%, 
 
 Ansicht, wie sie ein angemeldeter Benutzer sieht. 
 
-image::./models/analysis/GUI-Entwurf/inex-renderer-user.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (angemeldeter Benutzer)", align=center]
+image::./models/analysis/GUI-Entwurf/index-renderer-user.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (angemeldeter Benutzer)", align=center]
 
 Ansicht, wie sie ein Mitarbeiter sieht. 
 
@@ -860,7 +861,7 @@ image::./models/analysis/GUI-Entwurf/index-renderer-staff.png[Startseite, 100%, 
 
 Ansicht, wie sie ein autorisierter Mitarbeiter sieht. 
 
-image::./models/analysis/GUI-Entwurf/index-renderer-authorised-staff.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (autorisierter Mitarbeiter)", align=center]
+image::./models/analysis/GUI-Entwurf/index-renderer-authorized-staff.png[Startseite, 100%, 100%, pdfwidth=100%, title= "Startseite (autorisierter Mitarbeiter)", align=center]
 
 Ansicht, wie sie der Boss sieht. 
 
@@ -1010,7 +1011,7 @@ Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit
 [cols="1h, 4"]
 |===
 |ID            |[[AT0120]]<<AT0120>>
-|Name          |Kunde Reserviert Sitzplätze
+|Name          |Kunde reserviert Sitzplätze
 |Use Case      |<<UC0120>> Online reservieren
 |Voraussetzung(en)      a|Ein angemeldeter Nutzer nutzt das Kundenportal.
 |Ablauf      a|

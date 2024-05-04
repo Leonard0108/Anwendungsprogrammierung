@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Plätze reservieren</h1>
+            <form id="reserve-spots-form" action="/reserve-spots/reserve" method="post">
+                        <p><label for="htmlUniqueID1">Film:</label></p>
+                        <select id="htmlUniqueID1" name="event">
+                            <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></option>
+                        </select>
+                        <p style="color:red">Hinweis: Über dieses Formular können maximal 10 Tickets pro Veranstaltung gebucht werden. Sollten Sie legitimen Bedarf an einer größeren Reservierung haben, sprechen Sie bitte unser Kassenpersonal vor Ort an.</p>
+                        <button name="next" value="1">Weiter</button>
+                    </form>
+        </div>
+</html>
+

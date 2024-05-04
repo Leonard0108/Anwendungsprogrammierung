@@ -1,0 +1,21 @@
+== 3. Review - PT
+
+== Verbesserungen
+- kickstart aus projekt entfernen(hohe prio)
+
+=== Pflichtenheft und funktionale Anforderungen
+- nummerierung am Anfang der Überschriften im Pflichtenheft entfernen
+- Kartentausch in funktionalen Anforderungen ausformullieren
+- Personalverwaltung muss in die MUSS-Kriterien
+- Andere Anforderungen in KANN (an Aufgabenstellung halten)
+- Filmstatistik einsehen 2x (einmal in das richtige umbenennen)
+- Historie Anpassen(Versionierung unter Vermerk Meilenstein, Status Meilenstein)
+- Produktnutzung: Browser Versionierung anpassen
+- Inhaltsverzeichniss löschen
+
+=== Prototypen
+- An Videoshop orientieren (Karol: einfach ein bisschen klauen)(Was kann aus Salespoint verwendet werden ?)
+
+=== Entwickler Doku
+- diese Woche mindestens die grob vertigstellbaren Sachen machen(bis einschließlich 4.)
+- C4 nicht nötig(keine Aussagekraft)

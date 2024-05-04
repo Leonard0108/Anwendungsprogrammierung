@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de" class="client-nojs">
+    <head>
+        <meta charset="utf-8">
+        <title>Programm | UFO Kinos</title>
+        <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
+        <meta name="keywords" content="lorem, ipsum">
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+        <meta name="theme-color" content="#000000">
+        <meta name="color-scheme" content="dark">
+        <meta name="robots" content="index,follow">
+        <!-- <meta name="rating" content="adult"> -->
+
+        <link rel="stylesheet" href="/css/common.css">
+
+        <link rel="icon" href="/assets/branding/icon-48.png">
+
+        <script src="/js/lib/jquery.js?ver=202404"></script>
+        <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
+    </head>
+    <body>
+        <!-- todo:background asset? -->
+        <div class="background"></div>
+        <div class="css-hack">
+            <nav class="main-nav">
+                <div id="custumer-stuff" class="nav-section">
+                    <span class="nav-section-title">Kundenorientiert</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
+                        <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
+                        <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
+                        <li><a href="/logout" title="Abmelden | UFO Kinos">Abmelden</a></li>
+                    </ul>
+                </div>
+                <div id="checkout-stuff" class="nav-section">
+                    <span class="nav-section-title">Kassensystem</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/sell#tickets" title="Kartenverkauf | UFO Kinos">Kartenverkauf</a></li>
+                        <li><a href="/tickets/change" title="Kartentausch | UFO Kinos">Kartentausch</a></li>
+                        <li><a href="/tickets/return" title="Kartenrückgabe | UFO Kinos">Kartenrückgabe</a></li>
+                        <li><a href="/sell#snacks" title="Snackverkauf | UFO Kinos">Snackverkauf</a></li>
+                    </ul>
+                </div>
+                <div id="management-stuff" class="nav-section">
+                    <span class="nav-section-title">Management</span>
+                    <ul class="nav-section-content">
+                        <li><a href="/current-films" title="Programmverwaltung | UFO Kinos">Programmverwaltung</a></li>
+                        <li><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
+                        <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="main-outer">
+                <div class="head">
+                    <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
+                </div>
+                <div class="main-wrapper" role="main">
+                    <h1>Programm</h1>
+                    <div class="week-navigator">
+                        <div class="prev">&nbsp;</div>
+                        <div class="current" th:text="${weekRangeFormat}">11.04.2024 - 17.04.2024</div>
+                        <div class="next">
+                            <a href="/current-films?week=202415" title="Filmplan | UFO Kinos">18.04.2024 - 24.04.2024</a>
+                        </div>
+                    </div>
+                    <div class="current-films-tile-sections">
+                        <div th:each="oneDayCinemaShows : ${oneWeekCinemaShows}">
+                            <h2 th:text="${oneDayCinemaShows.getDayDateHeadline()}">Wochentag, Datum</h2>
+                            <div class="current-film-tile-sections-day">
+                                <div class="film-card" th:each="cinemaShow : ${oneDayCinemaShows.getCinemaShows()}">
+                                    <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${cinemaShow.getFilm().getTitle()}" alt="Filmtitel">
+                                    <div class="film-card-main-section">
+                                        <a class="film-card-film-link" href="/film/info?id=fg4g54g4f54g5454" title="Filmtitel | UFO Kinos"
+                                           th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</a>
+                                        <p>
+                                            <span th:text="${#temporals.format(cinemaShow.getStartDateTime(), 'HH:mm')} + ' Uhr, '
+                                            + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - ' + ${cinemaShow.getCinemaHall().getName()}">
+                                                HH:mm Uhr, dd.MM.yyyy - Saal X
+                                            </span>
+                                            <span th:class="'fsk-label fsk-' + ${cinemaShow.getFilm().getFskAge()}" class="fsk-label fsk-12"
+                                                  th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
+                                            <span th:text="${cinemaShow.getFilm().getTimePlaying() + 'min'}">Zmin</span>
+                                        </p>
+                                        <p class="reserve-error">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
+                                    </div>
+                                    <div class="film-card-reserve-section">
+                                        Plätze reservieren
+                                        <a href="/current-films?change=1&AMP;id=83490258902890890" style="display: block">ändern</a>
+                                        <a href="/current-films?delete=1&AMP;id=83490258902890890" style="display: block">löschen</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 id="addprogram">Neu hinzufügen</h2>
+                    <form method="post">
+                        <p>Datum: <input type="datetime-local" name="addTime"></p>
+                        <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
+                                <p>Film: <select name="film">
+                                    <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}">Film</option>
+                                </select></p>
+                            <select name="room">
+                                <option th:each="cinemaHall : ${allCinemaHalls}" value="Kinosaal"  th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Kinosaal</option>
+                            </select>
+                            <button name="addProgramPoint">Hinzufügen</button>
+                    </form>
+                </div>
+                <div class="footer">
+                    <span class="copyright">&copy; UFO-Kinos</span>
+                    <ul class="links">
+                        <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+                        <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+                        <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <style>
+            nav{
+                float: left;
+                padding-right:0.5em;
+            }
+            nav li,.footer li{
+                list-style:none;
+            }
+            .css-hack{
+                display: flex;
+            }
+            .main-outer{
+                flex-grow:1;
+            }
+            .main-wrapper{
+                margin-top: 1em;
+            }
+            .footer li{
+                display: inline-block;
+                padding: 0em 1em;
+            }
+
+            .client-nojs .nojs-hide{
+                display: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .week-navigator{
+                display: flex;
+            }
+
+            .week-navigator *{
+                flex-grow:1;
+                text-align: center;
+            }
+
+            .film-card{
+                display: flex;
+            }
+            .film-card-main-section{
+                flex-grow:1;
+                padding: 0em 2em;
+            }
+            .film-card p{
+                margin: 0;
+            }
+            .film-card .reserve-error{
+                color:red;
+            }
+            /*TODO Farben für andere FSK hinzufügen*/
+            .fsk-label.fsk-0{
+                color:#01d501;
+            }
+            .fsk-label.fsk-6{
+                color:#01d501;
+            }
+            .fsk-label.fsk-12{
+                color:#01d501;
+            }
+            .fsk-label.fsk-16{
+                color:#01d501;
+            }
+            .fsk-label.fsk-18{
+                color:#01d501;
+            }
+            .film-card img{
+                margin-left: 2em;
+                max-width: 100px;
+            }
+            .film-card-reserve-section{
+                margin-right: 2em;
+            }
+        </style>
+        <script></script>
+    </body>
+</html>

@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" th:href="@{/resources/css/style.css}">
-		<title th:text="#{welcome.title}">Welcome!</title>
-	</head>
-	<body>
-		<h1 th:text="#{welcome.title}">Welcome!</h1>
-		<p th:text="#{welcome.text}"></p>
-	</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1 style="visibility:hidden">Startseite</h1>
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <div class="mainpage-tile-sections">
+                        <div id="current-films" class="tile-section">
+                            <h2 class="tile-section-title"><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></h2>
+                            <ul>
+                                <li th:each="film: ${filmList}" th:text="${film.title}">foo 1</li>
+                                <li th:if="${hasMore}">... und <a href="/current-films" title="Filmplan | UFO Kinos">weitere</a></li>
+                            </ul>
+                        </div>
+                        <div id="reserve-spots" class="tile-section">
+                            <h2 class="tile-section-title"><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></h2>
+                            <p>Hier reservierte Plätze müssen 30min vor der Vorlesung abgeholt und bezahlt werden, sonst verfallen sie.</p>
+                            <p>Alternativ können sie Karten auch vor Ort oder telefonisch unter +49 12345 6789 reservierenn.</p>
+                        </div>
+                    </div>
+        </div>
 </html>

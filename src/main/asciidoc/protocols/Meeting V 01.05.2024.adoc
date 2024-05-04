@@ -1,0 +1,39 @@
+= Meeting 1.5.2024
+
+== Besprochen
+- neue Klasse LeihAnbieter
+- Leihkosten für Film in Datenfeld "GrundLeihgebühr" unter Klasse Film
+- Loginsysteme im Prototyp weglassen
+- Samstag alles auf main Mergen
+- Datainitialiser in extra Package
+
+
+=== kickstart entfernen: (zusammen im Meeting am Samstag)
+- pom.xml
+- packages unter src/main und src/test
+- neuer Packagename: de/ufo/cinemasystem
+
+
+
+
+== Branches
+- resynchronisieren
+
+
+== Reservierung
+- Erweiterung der API-Funktionen
+
+
+== Prototypen
+
+
+== Reservierung
+- Erweiterung der API-Funktionen
+
+
+== Prototypen
+- Jeder einen
+
+== To do
+- Samstag, 4.5.2024
+- nächstes Meeting am selben Tag.

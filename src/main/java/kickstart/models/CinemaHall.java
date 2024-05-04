@@ -22,8 +22,8 @@ public class CinemaHall {
 	@OneToMany(mappedBy = "cinemaHall", cascade =  CascadeType.ALL)
 	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private final HashSet<Event> events = new HashSet<>();
+	@OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.ALL)
+	private final SortedSet<Event> events = new TreeSet<>();
 
 	public CinemaHall(String name/*, final Map<Seat, Seat.SeatOccupancy> seats*/) {
 		this.name = name;

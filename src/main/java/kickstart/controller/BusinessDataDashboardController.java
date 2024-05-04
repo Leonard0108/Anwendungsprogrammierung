@@ -12,16 +12,10 @@ public class BusinessDataDashboardController {
 
 	//Anzeigen von Tageseinnahmen Diagramm, darunter Monatsumsatz Diagramm
 	@GetMapping("/business-data-dashboard")
-<<<<<<< HEAD
 	//@PreAuthorize("hasRole('BOSS')")
-	public String getDashboard(Model m){
+	public String getDashboard(Model m) {
 		return "business-data-dashboard-boss-renderer";
-=======
-
-	@PreAuthorize("hasRole('BOSS')")
-	public String getDashboard(Model m){
-		return "dashboard";
->>>>>>> 1d289c3 (Dashboard angepasst)
 	}
 
 }
+

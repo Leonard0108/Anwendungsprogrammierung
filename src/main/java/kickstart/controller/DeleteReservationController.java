@@ -5,27 +5,48 @@
 package kickstart.controller;
 
 import kickstart.models.Reservation;
+import kickstart.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author Jannik
  */
+@Controller
 public class DeleteReservationController {
     
-    @GetMapping("/cancel-reservation")
-    @PreAuthorize("USER")
-    public void getReservations(Model m){}
+    private @Autowired ReservationRepository repo;
     
-    @GetMapping("/cancel-reservation/{@id}")
-    @PreAuthorize("USER")
-    public void getDeleteForm(Model m, Reservation id){}
+    @GetMapping("/my-reservations")
+    //@PreAuthorize("USER")
+    public String getReservations(Model m){
+        m.addAttribute("title", "Meine Reservierungen");
+        m.addAttribute("reservations", repo.findAll());
+        return "reservation-list";
+    }
     
-    @PostMapping("/cancel-reservation/{@id}")
-    @PreAuthorize("USER")
-    public void deleteReservation(@PathVariable Reservation id){}
+    @PostMapping("/my-reservations/delete/")
+    //@PreAuthorize("USER")
+    public String getDeleteForm2(Model m, @RequestParam("reserveNumber") Reservation id){
+        return "cancel-reservation";
+    }
+    
+    @GetMapping("/cancel-reservation/{id}")
+    //@PreAuthorize("USER")
+    public String getDeleteForm(Model m, @PathVariable Reservation id){
+        return "cancel-reservation";
+    }
+    
+    @PostMapping("/cancel-reservation/{id}")
+    //@PreAuthorize("USER")
+    public String deleteReservation(@PathVariable Reservation id){
+        return "redirect:/my-reservations";
+    }
 }

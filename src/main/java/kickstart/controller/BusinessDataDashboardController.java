@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BusinessDataDashboardController {
 
 	//Anzeigen von Tageseinnahmen Diagramm, darunter Monatsumsatz Diagramm
-	@GetMapping("/business-data-dashboard")
+	@GetMapping("/statistics")
 	//@PreAuthorize("hasRole('BOSS')")
 	public String getDashboard(Model m) {
 		return "business-data-dashboard-boss-renderer";

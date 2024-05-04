@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" class="client-js" xmlns:th="http://www.thymeleaf.org">
+<html lang="de" class="client-nojs">
     <head>
         <meta charset="utf-8">
         <title>Saalverwaltung | UFO Kinos</title>
@@ -17,69 +17,6 @@
 
         <script src="/js/lib/jquery.js?ver=202404"></script>
         <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
-
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    ['Work',     11],
-                    ['Eat',      2],
-                    ['Commute',  2],
-                    ['Watch TV', 2],
-                    ['Sleep',    7]
-                ]);
-
-                var options = {
-                    title: 'My Daily Activities',
-                    pieHole: 0.4,
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('dailyIncome'));
-                chart.draw(data, options);
-            }
-        </script>
-        <script type="text/javascript">
-        google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawBasic);
-
-        function drawBasic() {
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('number', 'X');
-        data.addColumn('number', 'Dogs');
-
-        data.addRows([
-        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
-        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
-        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-        [66, 70], [67, 72], [68, 75], [69, 80]
-        ]);
-
-        var options = {
-        hAxis: {
-        title: 'Time'
-        },
-        vAxis: {
-        title: 'Popularity'
-        }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('revenue'));
-
-        chart.draw(data, options);
-        }
-        </script>
     </head>
     <body>
         <!-- todo:background asset? -->
@@ -121,13 +58,32 @@
                     <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
                 </div>
                 <div class="main-wrapper" role="main">
-                    <h1>Dashboard</h1>
-                    <h2>Tageseinnahmen</h2>
-                    <div id="dailyIncome" style="width: 900px; height: 500px;"></div>
-                    <h2>Umsatz</h2>
-                    <div id="revenue" style="width: 900px; height: 500px;"></div>
+                    <h1>Saalverwaltung</h1>
+                    <form th:action="@{/manage/rooms}" method="get" >
+                        <p>Saal <select  name="room">
+                                <option th:each="cinemaHall : ${allCinemaHalls}" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getName()}">Saal 1</option>
+                            </select></p>
+                            <p>am <input type="date" name="date"  placeholder="19.04.2024"></p>
+                        <input type="submit" name="show" value="Anzeigen" />
+                    </form>
+                    <h2>Vorstellungen</h2>
 
-
+                    <h2>Kinoprogramm hinzufügen</h2>
+                    <a href="/current-films#addprogram" title="Programmverwaltung | UFO Kinos" target="new">Programmverwaltung</a>
+                    <h2>Saal vermieten</h2>
+                    <form action="/manage/rooms" method="post">
+                        <p>Von: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="from" required=""></p>
+                        <p>Bis: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="from" required=""></p>
+                        <p>Saal: <select name="room">
+                                <option value="Saal 1">Saal 1</option>
+                                <option value="Saal 2">Saal 2</option>
+                                <option value="Saal 3">Saal 3</option>
+                            </select></p>
+                            <p>Eventname: <input type="text" name="eventname" placeholder="Cooles Event" required=""></p>
+                            <p>Ansprechpartner: <input type="email" required="" name="who"></p>
+                            <button name="calculatePrice">Preis berechnen</button>
+                            <button name="addEvent">Event buchen</button>
+                    </form>
                 </div>
                 <div class="footer">
                     <span class="copyright">&copy; UFO-Kinos</span>

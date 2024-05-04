@@ -13,9 +13,9 @@ public class Event implements Comparable<Event>{
 
 	private @Id	@GeneratedValue long id;
 	private @NotEmpty String name;
-	private @NotEmpty LocalDateTime startDateTime;
+	private LocalDateTime startDateTime;
 	// Dauer in Minuten
-	private @NotEmpty int duration;
+	private int duration;
 	@ManyToOne
 	@JoinColumn(name = "cinema_hall_id")
 	private CinemaHall cinemaHall;

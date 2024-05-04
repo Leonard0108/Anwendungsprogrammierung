@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
+import java.util.Optional;
 
 
 @Controller
@@ -35,34 +34,65 @@ public class LoginController {
 
 	@GetMapping(path = "/registration")
 	public String registration() {
-		return "welcome";
+		return "registration";
 	}
 
 
-	@PostMapping(path = "/register", consumes = "application/json")
+	@PostMapping(path = "/register", consumes = {"application/json"})
 	String register(@RequestBody RegistrationRequest registrationRequest) {
-		if (userRepository.findByEmail(registrationRequest.email) == null)
+		if (userRepository.findByEmail(registrationRequest.email).isEmpty())
 		{
 			UserEntry newUser = new UserEntry();
 			newUser.setEmail(registrationRequest.getEmail());
 			newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-			userRepository.save(newUser);
+			try {
+				userRepository.save(newUser);
+				System.out.println(userRepository.findByEmail("lukasd2000@gmx.de").toString());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 
 
-			System.out.println(userRepository.findByEmail(registrationRequest.email).getEmail());
-			return "redirect:/lunar_space_port/isLoggedIn"; // Redirect to login page
+			return "welcome";
 		}
 		else
 		{
-			return "registration";
+			return "welcome";
 		}
 	}
 
 
-	@GetMapping(path = "/login")
+	@GetMapping(path = "/login", consumes = {"application/json"})
 	String login() {
+		return "login";
+	}
+
+
+
+
+	@PostMapping(path = "/checkLoginData")
+	String checkLoginData(@RequestBody RegistrationRequest loginRequest)
+	{
+		Optional<UserEntry> loginUser = userRepository.findByEmail(loginRequest.email);
+		String    password  = passwordEncoder.encode(loginRequest.getPassword());
+
+
+		//password = passwordEncoder.encode(password);
+
+		if (loginUser.isPresent())
+		{
+			if (passwordEncoder.matches(loginRequest.password, loginUser.get().getPassword()))
+			{
+				System.out.println(loginUser.get().getEmail());
+				System.out.println("Hallo Welt");
+				return "welcome";
+			}
+			System.out.println("Tschüss Welt");
+			return "welcome";
+		}
+		System.out.println(loginUser);
 		return "welcome";
-		//userRepository.findByEmail()
 	}
 
 
@@ -90,17 +120,10 @@ public class LoginController {
 			return email;
 		}
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
 		public String getPassword() {
 			return password;
 		}
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
 	}
 }
 

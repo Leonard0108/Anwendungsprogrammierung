@@ -1,72 +1,79 @@
 package kickstart.models;
 
 import jakarta.persistence.*;
+import kickstart.additionalfiles.UserRole;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Collections;
+
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "user")
-public class UserEntry {
+public class UserEntry implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long   id;
-	String name;
-	String lastName;
-	String email;
-	String password;
-	String streetAddress;
-	String streetNumber;
-	String city;
-	String state;
-	String country;
+	Long     id;
+	Boolean  enabled;
+	Boolean  locked;
+	String   name;
+	String   lastName;
+	String   email;
+	String   password;
+	String   streetAddress;
+	String   streetNumber;
+	String   city;
+	String   state;
+	String   country;
+	String   phoneNumber;
+	UserRole userRole;
 
 
 
 
-	public void setEmail(String email) {
-		this.email = email;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.name());
+		return Collections.singletonList(simpleGrantedAuthority);
 	}
-	public void setPassword(String password) {
-		this.password = password;
+
+
+
+
+	@Override
+	public String getUsername() {
+		return "";
 	}
-	public void setStreetAddress(String streetAddress) {
-		this.streetAddress = streetAddress;
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
 	}
-	public void setStreetNumber(String streetNumber) {this.streetNumber = streetNumber;}
-	public void setCity(String city) {
-		this.city = city;
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return !locked;
 	}
-	public void setState(String state) {
-		this.state = state;
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
-	public void setLastName(String lastName) {this.lastName = lastName;}
-	public void setName(String name) {this.name = name;}
-	public Long getId() {
-		return id;
-	}
-	public String getName() {
-		return name;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public String getStreetAddress() {
-		return streetAddress;
-	}
-	public String getStreetNumber() {
-		return streetNumber;
-	}
-	public String getCity() {
-		return city;
-	}
-	public String getState() {
-		return state;
-	}
-	public String getCountry() {
-		return country;
+
+	@Override
+	public boolean isEnabled() {
+		return false;
 	}
 }

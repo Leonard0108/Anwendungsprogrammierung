@@ -37,6 +37,7 @@ public class UserEntry implements UserDetails {
 	String   state;
 	String   country;
 	String   phoneNumber;
+	@Enumerated(EnumType.STRING)
 	UserRole userRole;
 
 

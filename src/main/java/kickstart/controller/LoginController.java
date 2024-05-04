@@ -38,7 +38,7 @@ public class LoginController {
 	}
 
 
-	@PostMapping(path = "/register", consumes = {"application/json"})
+	@PostMapping(path = "/register", consumes = "application/json")
 	String register(@RequestBody RegistrationRequest registrationRequest) {
 		if (userRepository.findByEmail(registrationRequest.email).isEmpty())
 		{

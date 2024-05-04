@@ -95,31 +95,33 @@
 </style>
 
 <script>
-    $(document).ready(function () {
-        $('#registerForm').submit(function (event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-            // Serialize form data to JSON
-            var formData = JSON.stringify({
-                'email': $('#email').val(),
-                'password': $('#password').val()
-            });
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
 
-            $.ajax({
-                type: 'POST',
-                url: '/lunar_space_port/register',
-                contentType: 'application/json',
-                data: formData,
-                success: function (response) {
-                    // Handle success response
-                    window.location.href = '/lunar_space_port/isLoggedIn';
-                },
-                error: function (xhr, status, error) {
-                    // Handle error
-                    console.error(error);
+        var data = {
+            email: email,
+            password: password
+        };
+
+        fetch('http://localhost:8080/lunar_space_port/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+                if (response.ok) {
+                    alert("Daten wurden erfolgreich gesendet!");
+                } else {
+                    alert("Fehler beim Senden der Daten!");
                 }
+            })
+            .catch(error => {
+                alert("Es ist ein Fehler aufgetreten: " + error.message);
             });
-        });
     });
 </script>
 </body>

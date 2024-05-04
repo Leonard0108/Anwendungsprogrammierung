@@ -44,7 +44,7 @@ public class LoginController {
 		if (userRepository.findByEmail(registrationRequest.email).isEmpty())
 		{
 			UserEntry newUser = new UserEntry();
-			newUser.setEmail(registrationRequest.getEmail());
+			newUser.setEmail(registrationRequest.email);
 			newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 			try {
 				userRepository.save(newUser);

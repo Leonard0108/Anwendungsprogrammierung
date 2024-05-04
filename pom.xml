@@ -4,15 +4,12 @@
 
 	<!-- Dear students, please *do not* change the following metadata. Thanks! -->
 
-	<artifactId>lab-kickstart</artifactId>
+	<artifactId>cinemasystem</artifactId>
 	<version>4.0.0</version>
 
-	<name>Software Engineering Lab - Kickstart</name>
-	<description>Template project for the ST lab</description>
-	<url>https://github.com/st-tu-dresden/kickstart</url>
-	<scm>
-		<url>https://github.com/st-tu-dresden/kickstart</url>
-	</scm>
+	<name>UFO CinemaSystem</name>
+	<description>Managementsoftware for UFO Ciname GmbH</description>
+	<url>https://cinemasystem.ufo.de</url>
 
 	<parent>
 		<groupId>de.tudresden.inf.st.lab</groupId>
@@ -31,6 +28,12 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 
 		<!--
 			exposes runtime information on the application that can be displayed

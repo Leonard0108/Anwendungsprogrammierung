@@ -4,14 +4,23 @@
  */
 package kickstart.controller;
 
+import kickstart.models.CinemaHall;
 import kickstart.models.CinemaShow;
+import kickstart.models.Film;
+import kickstart.repository.CinemaHallRepository;
 import kickstart.repository.CinemaShowRepository;
+import kickstart.repository.FilmRepository;
+import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,6 +29,9 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+
+import static org.salespointframework.core.Currencies.EURO;
 
 /**
  *
@@ -30,14 +42,29 @@ public class ViewProgramController {
 
 	private CinemaShowRepository cinemaShowRepository;
 
-	public ViewProgramController(CinemaShowRepository cinemaShowRepository) {
+	private CinemaHallRepository cinemaHallRepository;
+
+	private FilmRepository filmRepository;
+
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaHallRepository cinemaHallRepository,
+								 FilmRepository filmRepository) {
 		this.cinemaShowRepository = cinemaShowRepository;
+		this.cinemaHallRepository = cinemaHallRepository;
+		this.filmRepository = filmRepository;
 	}
+        
+        @GetMapping("/current-films/")
+        public String getCurrentWeekProgram(Model m){
+            LocalDateTime now = LocalDateTime.now();
+            return getCurrentProgram(now.getYear(), getWeekOfYear(now), m);
+        }
 
     /**
      * todo: where rights check?
+     * @param year
      * @param week
      * @param m 
+     * @return  
      */
     @GetMapping("/current-films/{year}/{week}")
     public String getCurrentProgram(@PathVariable int year, @PathVariable int week , Model m) {
@@ -48,6 +75,7 @@ public class ViewProgramController {
 		List<CinemaShowDayEntry> oneWeekCinemaShows = new ArrayList<>();
 
 		m.addAttribute("weekRangeFormat", getWeekRangeFormat(year, week));
+		// TODO: Sortierung nach Zeit an einem Tag korrekt implementieren
 		// TODO: effizienter umsetzen:
 		// Alle Wochentage einzeln behandeln
 		for(int i = 1; i <= 7; i++) {
@@ -57,11 +85,47 @@ public class ViewProgramController {
 			);
 		}
 		m.addAttribute("oneWeekCinemaShows", oneWeekCinemaShows);
+		m.addAttribute("allCinemaHalls", cinemaHallRepository.findAll());
+		m.addAttribute("allFilms", filmRepository.findAll());
 
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
 
 		return "current-films-renderer";
+	}
+
+	@PostMapping("/current-films/{year}/{week}")
+	public String postNewProgram(@PathVariable int year, @PathVariable int week,
+								 @RequestParam("film") Long film, @RequestParam("room") Long room,
+								 //ChatGPT 3.5
+								 // Promt: Wie kann ich aus einem input Feld vom type="datetime-local ein LocalDateTime Objekt machen?
+								 @RequestParam("addTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime addTime,
+								 Model m) {
+
+		Optional<Film> optFilmInst = filmRepository.findById(film);
+		Optional<CinemaHall> optRoomInst = cinemaHallRepository.findById(room);
+		if(optFilmInst.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films/{year}/{week}";
+		}
+		if(optRoomInst.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films/{year}/{week}";
+		}
+		// TODO: Prüfe ob sich Events oder Filme überlappen, wenn ja Abbruch und Fehler
+		// Erstelle neue Vorführung
+		CinemaShow show = new CinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get());
+		CinemaHall roomInst = optRoomInst.get();
+
+		// Stelle Bidirektional Verbindung zwischen Kinosaal und Vorführung her
+		roomInst.addCinemaShow(show);
+
+		// Aktualisiere den Kinosaal in der Datenbank
+		cinemaHallRepository.save(roomInst);
+		// Füge Vorführung in die Datenbank ein
+		cinemaShowRepository.save(show);
+
+		return "redirect:/current-films/{year}/{week}";
 	}
 
 	public static class CinemaShowDayEntry {

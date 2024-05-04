@@ -1,18 +1,7 @@
 image:https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions/workflows/build.yml/badge.svg["CI Build", link="https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions"]
 
-= SP2024-G4-Kinobetreiber (hier sollte Ihr Projektname stehen)
-
-Dies ist das initiale Template für alle Software-Projekte die Java, Salespoint und Spring verwenden.
-
-Bitte passen Sie das Template an Ihre team- und aufgabenspezifischen Erfordernisse anpassen. Als erstes sollen Sie Ihre Aufgabenstellung einpflegen!
-
-Folgendes ist enthalten:
-
-* eine minimale Java 17 Webanwendung auf der Basis von Spring Boot und dem Salespoint-Framework von der TU-Dresden (siehe die Ordner `src/main/java` und `src/test/java`)
-* vorbereitete Asciidoc-Templates für die zu erstellende Dokumentation `src/main/asciidoc`
-** Informationen über Asciidoc finden Sie link:https://asciidoctor.org/docs/asciidoc-writers-guide/[hier]!
-
-== Die folgenden Dokumente sind für Sie vorbereitet
+= Kinoverwaltungs- und Reservierungssystem UFO Kinos
+== Vorbereitete Dokumente
 
 * link:src/main/asciidoc/protocols[Meeting-Protokolle]: eine Vorlage mit der Sie Ihre Meetings und deren Ergebnisse protokollieren können.
 * link:src/main/asciidoc/time_recording.adoc[Zeiterfassung]: eine Hilfestellung mit der Sie Ihre individuellen Arbeitszeiten erfassen können.
@@ -31,9 +20,9 @@ Grundsätzlich entspricht die Projektstruktur dem Maven-Standardlayout. Sie find
   └── test/
       └── java/       -- Die automatischen Unit- und Integrationstests werden in einem separatem Verzeichnis abgelegt. Das ermöglicht es uns, die Testfälle sauber von der eigentlichen Anwendung zu trennen. Die Testfälle werden am Besten mit dem link:https://junit.org/junit5/[JUnit-Framework] erstellt.
 
-Weitere Dateien, über die Sie stolpern werden:
+Weitere Dateien:
 
-* `.gitignore`          -- In dieser Datei können Sie Git mitteilen, welche Dateien und Verzeichnisse nicht in das Repository eingecheckt werden sollen.
+* `.gitignore`          -- Dateien und Verzeichnisse nicht in das Repository eingecheckt werden sollen.
 * `pom.xml`             -- Dies ist die Maven Build-Spezifikation, Informationen zu diesem Format finden Sie in der link:https://maven.apache.org/index.html[Maven-Dokumentation].
 * `.editorconfig`       -- Erlaubt es, verschiedene Editoren mit identischen Grundeinstellungen zu versehen, z.B. bezüglich des Datei-Encodings, welches Sie standardmäßig am Besten auf UTF-8 stellen.
 * `mvnw` und `mvnw.cmd` -- Shell-Skripte, die Maven herunterladen, installieren und ausführen, wenn es sich noch nicht auf Ihrem System befindet.

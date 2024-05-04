@@ -7,13 +7,16 @@ package kickstart.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * Represents a single reservation in the system
+ * Represents a single reservation in the system. Calling any of the methods of this class with a null argument will result in a NullPointerException.
  * @author Jannik
  */
 @Entity
@@ -22,26 +25,37 @@ public class Reservation {
     
     private @Id @GeneratedValue Long id;
     //private 
-    private long reservingAccountID;
+    @ManyToOne
+    private @NotNull UserEntry reservingAccount;
     
-    private long cinemaShowID;
+    @ManyToOne
+    private @NotNull CinemaShow cinemaShow;
     
     /**
      * TODO: linking
      */
     @OneToMany
-    private List<DummyEntity> tickets;
+    private List<DummyEntity> tickets = new ArrayList<>();
 
     /**
-     * Create a new reservation, initially containing 0 tickets.
-     * @param reservingAccountID
-     * @param cinemaShowID 
+     * Hibernate-only constructor. Do not use, you will break things.
      */
-    public Reservation(long reservingAccountID, long cinemaShowID) {
-        this.reservingAccountID = reservingAccountID;
-        this.cinemaShowID = cinemaShowID;
+    public Reservation() {
     }
 
+    
+    
+    /**
+     * Create a new reservation, initially containing 0 tickets.
+     * @param reservingAccount
+     * @param cinemaShow 
+     */
+    public Reservation(UserEntry reservingAccount, CinemaShow cinemaShow) {
+        this.reservingAccount = Objects.requireNonNull(reservingAccount);
+        this.cinemaShow = Objects.requireNonNull(cinemaShow);
+    }
+
+    
     /**
      * Get the id of this reservation
      * @return 
@@ -50,20 +64,30 @@ public class Reservation {
         return id;
     }
 
-    /**
-     * Get the account id of whoever reserved this.
-     * @return 
-     */
-    public long getReservingAccountID() {
-        return reservingAccountID;
+    public UserEntry getReservingAccount() {
+        return reservingAccount;
+    }
+
+    public void setReservingAccount(UserEntry reservingAccount) {
+        this.reservingAccount = Objects.requireNonNull(reservingAccount);
+    }
+
+    public CinemaShow getCinemaShow() {
+        return cinemaShow;
+    }
+
+    public void setCinemaShow(CinemaShow cinemaShow) {
+        this.cinemaShow = Objects.requireNonNull(cinemaShow);
     }
 
     /**
-     * Get the CinemaShowID of the cinema show this reservation belongs to.
+     * Allocates a new array containing all the tickets in this reservation. The returned array has exactly as many elements
+     * as there are tickets in this reservation. Changes to the returned array will not affect this class or any other already-obtained return value from
+     * this class, but modifying the individual tickets in the array will.
      * @return 
      */
-    public long getCinemaShowID() {
-        return cinemaShowID;
+    public DummyEntity[] getTickets(){
+        return this.tickets.toArray(DummyEntity[]::new);
     }
     
     /**

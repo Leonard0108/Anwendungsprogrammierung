@@ -1,0 +1,26 @@
+= Meeting 4.5.2024
+
+== Besprochen
+- Preisänderung bei laufenden Filmen:
+    - ab bestimmten Datum übernehmen mit extra Datenfeld(zukünftiger Preis)
+    - Preise nur bei erstellung festlegbar(einfacher Ansatz, kann aber nichtmehr geändert werden)
+- Anbieter - Ausleihdatum von Film
+- Navigation in eine Datei auslagern(an make-reservation-... Template orientieren)
+-
+
+
+== Fragen
+- Wo soll der Preis rein?:
+    - unter Film
+    - beim erstellen Basispreis durch Mitarbeiter
+    - Chef kann Preis anpassen
+    - alle zukünftig erstellten Veranstalltungen bekommen den neuen Preis
+- Wo soll Ausleihdatum(AusleihDatum und AusleihEndDatum) gespeichert werden?
+    - in Film
+    - in Anbieter Klasse(schwieriger)
+
+
+== Fragen an Karol
+- Müssen die Preise für Film Tickets während der Laufzeit eines Films geändert werden können?
+
+

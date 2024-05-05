@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Saalverwaltung</h1>
+            <form th:action="@{/manage/rooms}" method="get" >
+                <p>Saal <select  name="room">
+                        <option th:each="cinemaHall : ${allCinemaHalls}" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getName()}">Saal 1</option>
+                    </select></p>
+                <p>am <input type="date" name="date"  placeholder="19.04.2024"></p>
+                <input type="submit" name="show" value="Anzeigen" />
+            </form>
+            <h2>Vorstellungen</h2>
+
+            <h2>Kinoprogramm hinzufügen</h2>
+            <a href="/current-films#addprogram" title="Programmverwaltung | UFO Kinos" target="new">Programmverwaltung</a>
+            <h2>Saal vermieten</h2>
+            <form action="/manage/rooms" method="post">
+                <p>Von: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="from" required=""></p>
+                <p>Bis: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="from" required=""></p>
+                <p>Saal: <select name="room">
+                        <option value="Saal 1">Saal 1</option>
+                        <option value="Saal 2">Saal 2</option>
+                        <option value="Saal 3">Saal 3</option>
+                    </select></p>
+                <p>Eventname: <input type="text" name="eventname" placeholder="Cooles Event" required=""></p>
+                <p>Ansprechpartner: <input type="email" required="" name="who"></p>
+                <button name="calculatePrice">Preis berechnen</button>
+                <button name="addEvent">Event buchen</button>
+            </form>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Verkauf</h1>
+            <form id="sell-form" action="/sell" method="post">
+                <input type="hidden" name="token" value="rgeoirjer+\\">
+                <input type="hidden" name="prevState" value="ijg348j934j89j3g9g4j89">
+                <div class="already-in-cart">
+                    <div class="ticket">
+                        <p>1 Erwachsener, Reihe 06, Platz 5</p>
+                        <p class="flex">Platzgruppe 2 <span class="grow"></span> 19.99€</p>
+                        <button class="deleteButton" type="submit" name="deleteCartEntry[]" value="0" formnovalidate="">Löschen</button>
+                    </div>
+                </div>
+                <p class="flex">Derzeitige Zwischensumme: <span class="grow"></span>19.99€</p>
+                <h2>Ticket hinzufügen</h2>
+                <p><label for="htmlUniqueID2">Film:</label></p>
+                <select id="htmlUniqueID2" name="event">
+                    <optgroup label="Montag, 22. 04. 204">
+                        <option value="932080493289489320" selected="">10 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                        <option value="890385990583995809">10 Uhr, Saal 1: Parry Hotter und die Hochschule Merseburg (FSK 12)</option>
+                    </optgroup>
+                    <optgroup label="Dienstag, 23. 04. 2024">
+                        <option value="4382943280948329028">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                        <option value="3298409328904328904">10 Uhr, Saal 3: Extra 4's Jannes Müller: Im Kino (FSK 6)</option>
+                    </optgroup>
+                </select>
+                <button name="loadDetails" formnovalidate="">Plätze Laden</button>
+                <p>Preisliste:</p>
+                <ul>
+                    <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
+                    <li>Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
+                    <li>Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
+                </ul>
+
+                <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType">
+                        <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                        <option value="adult">Erwachsender</option>
+                        <option value="child">Kind (Bis 14 Jahre)</option>
+                        <option value="disabled">Schwerbehinderter</option>
+                    </select> </p>
+                <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
+                <img src="spots-view-2.png" alt="Saalansicht" th:src="@{/resources/spots-view-2.png}" /><br>
+                <button name="addTicket" value="1">Ticket hinzufügen</button>
+                <h2>Snacks Hinzufügen</h2>
+                <p> <label for="htmlUniqueID3">Snack </label> <select id="htmlUniqueID3" name="snackType">
+                        <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                        <option value="popcorn-s">Popcorn klein</option>
+                        <option value="popcorn-m">Popcorn mittel</option>
+                        <option value="popcorn-l">Popcorn Groß</option>
+                    </select> </p>
+                <button name="addSnack">Snack hinzufügen</button>
+                <hr>
+                <p class="flex">Gesamtsumme: <span class="grow"></span> 19.99€</p>
+                <button name="doReserve" value="1">Kaufvorgang abschließen</button>
+            </form>
+        </div>
+
+    </body>
+</html>

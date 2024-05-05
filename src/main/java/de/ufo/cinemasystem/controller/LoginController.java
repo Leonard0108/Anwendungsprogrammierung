@@ -35,7 +35,7 @@ public class LoginController {
 
 	@GetMapping(path = "/registration")
 	public String registration() {
-		return "registration";
+		return "registration-renderer";
 	}
 
 
@@ -66,7 +66,7 @@ public class LoginController {
 
 	@GetMapping(path = "/login", consumes = {"application/json"})
 	String login() {
-		return "login";
+		return "login-renderer";
 	}
 
 

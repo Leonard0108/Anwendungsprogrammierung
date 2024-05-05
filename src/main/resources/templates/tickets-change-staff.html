@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Kartentausch</h1>
+                    <form action="/tickets/change" method="post">
+                        <p>Tausche</p>
+                        <p><label for="htmlUniqueID1">Film:</label></p>
+                        <select id="htmlUniqueID1" name="event1">
+                            <optgroup label="Montag, 22. 04. 204">
+                                <option value="932080493289489320">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="890385990583995809">10 Uhr, Saal 1: Parry Hotter und die Hochschule Merseburg (FSK 12)</option>
+                            </optgroup>
+                            <optgroup label="Dienstag, 23. 04. 2024">
+                                <option value="4382943280948329028">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="3298409328904328904">10 Uhr, Saal 3: Extra 4's Jannes Müller: Im Kino (FSK 6)</option>
+                            </optgroup>
+                        </select><br>
+                        <img src="spots-view-2.png" alt="Saalansicht" th:src="@{/resources/spots-view-2.png}" /><br>
+                        <p>(<button name="loadType">Tickettyp aus Datenbank Laden</button>)</p>
+                        <p>gegen</p>
+                        <select id="htmlUniqueID2" name="event2">
+                            <optgroup label="Montag, 22. 04. 204">
+                                <option value="932080493289489320">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="890385990583995809">10 Uhr, Saal 1: Parry Hotter und die Hochschule Merseburg (FSK 12)</option>
+                            </optgroup>
+                            <optgroup label="Dienstag, 23. 04. 2024">
+                                <option value="4382943280948329028">9 Uhr, Saal 2: Bell im Märchenland (FSK 12)</option>
+                                <option value="3298409328904328904">10 Uhr, Saal 3: Extra 4's Jannes Müller: Im Kino (FSK 6)</option>
+                            </optgroup>
+                        </select><br>
+                        <img src="spots-view-2.png" alt="Saalansicht" th:src="@{/resources/spots-view-2.png}" /><br>
+                        <p> <label for="htmlUniqueID3">Tickettyp: </label> <select id="htmlUniqueID3" name="ticketType">
+                                <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                                <option value="adult">Erwachsender</option>
+                                <option value="child">Kind (Bis 14 Jahre)</option>
+                                <option value="disabled">Schwerbehinderter</option>
+                            </select> </p>
+                        <hr>
+                        <p style="color:red">Wichtig: Tickets können nur über dieses Formular umgetauscht werden, wenn Film, Saal, Preiskategorie und Preis gleich bleiben.</p>
+                        <button name="changeTickets">Tickets umbuchen</button>
+                    </form>
+        </div>
+
+    </body>
+</html>

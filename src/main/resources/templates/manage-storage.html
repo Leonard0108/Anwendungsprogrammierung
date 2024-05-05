@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Lagerverwaltung</h1>
+            <h2>Aktuelles Inventar</h2>
+            <ul>
+                <li>25x 1kg Popcornmais</li>
+                <li>31x 1l Putzmittel Supersauber</li>
+                <li>&nbsp;5x Ticketpapier 100 Tickets</li>
+            </ul>
+            <h2>Inventar hinzufügen</h2>
+            <form action="/manage/storage" method="post">
+                <input type="number" min="0" name="count"> von 
+                <select name="what">
+                    <option>1kg Popcornmais</option>
+                    <option>1l Putzmittel Supersauber</option>
+                    <option>Ticketpapier 100 Tickets</option>
+                </select>
+                <p>Neues Item? <input name="whatNew" placeholder="Name"></p>
+                <button name="add">Hinzufügen</button>
+            </form>
+            <h2>Inventar Entfernen</h2>
+            <form action="/manage/storage" method="post">
+                <input type="number" min="0" name="count"> von 
+                <select name="what">
+                    <option>1kg Popcornmais</option>
+                    <option>1l Putzmittel Supersauber</option>
+                    <option>Ticketpapier 100 Tickets</option>
+                </select>
+                <button name="add">Hinzufügen</button>
+            </form>
+        </div>
+
+    </body>
+</html>

@@ -25,7 +25,7 @@ import static org.salespointframework.core.Currencies.EURO;
 
 @Component
 // Testdaten der Kinoveranstaltungen werden nach den Testdaten für die Filme und der Kinosäle erstellt (deshalb: Order = 3)
-@Order(3)
+@Order(4)
 public class CinemaShowDataInitializer implements DataInitializer {
 
 	private final CinemaShowRepository cinemaShowRepository;

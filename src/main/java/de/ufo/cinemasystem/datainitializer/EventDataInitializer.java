@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-@Order(4)
+@Order(5)
 public class EventDataInitializer implements DataInitializer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EventDataInitializer.class);

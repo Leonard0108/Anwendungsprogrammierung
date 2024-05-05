@@ -4,10 +4,7 @@
  */
 package de.ufo.cinemasystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -25,6 +22,9 @@ public class Film  implements Comparable<Film>{
     private int fskAge;
     //in minutes
     private int timePlaying;
+
+	@ManyToOne
+	private FilmProvider filmProvider;
     private int basicRentFee;
 
     /**
@@ -36,18 +36,20 @@ public class Film  implements Comparable<Film>{
      * @throws NullPointerException if title or desc are null
      * @throws IllegalArgumentException if timePlaying &lt;= 0, or fskAge &lt;0
      */
-    public Film(String title, String desc, int timePlaying, int fskAge) {
+    public Film(String title, String desc, int timePlaying, int fskAge, FilmProvider filmProvider) {
         this.title = title;
         this.desc = desc;
         this.timePlaying = timePlaying;
         this.fskAge = fskAge;
+		this.filmProvider = filmProvider;
     }
 
-    public Film(String title, String desc, int timePlaying, int fskAge, int basicRentFee) {
+    public Film(String title, String desc, int timePlaying, int fskAge, FilmProvider filmProvider, int basicRentFee) {
         this.title = title;
         this.desc = desc;
         this.fskAge = fskAge;
         this.timePlaying = timePlaying;
+		this.filmProvider = filmProvider;
         this.basicRentFee = basicRentFee;
     }
     
@@ -97,6 +99,10 @@ public class Film  implements Comparable<Film>{
     public int getFskAge() {
         return fskAge;
     }
+
+	public FilmProvider getFilmProvider() {
+		return filmProvider;
+	}
 
     public int getBasicRentFee() {
         return basicRentFee;

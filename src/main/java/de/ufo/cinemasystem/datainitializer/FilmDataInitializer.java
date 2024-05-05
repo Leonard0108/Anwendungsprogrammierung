@@ -3,7 +3,9 @@ package de.ufo.cinemasystem.datainitializer;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
+import de.ufo.cinemasystem.models.FilmProvider;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
+import de.ufo.cinemasystem.repository.FilmProviderRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 
 import org.javamoney.moneta.Money;
@@ -20,15 +22,19 @@ import static org.salespointframework.core.Currencies.EURO;
 
 @Component
 // Testdaten für die Filme werden als erstes erzeugt (Order = 1)
-@Order(1)
+@Order(2)
 public class FilmDataInitializer implements DataInitializer {
 
 	private final FilmRepository filmRepository;
 
-	FilmDataInitializer(FilmRepository filmRepository) {
+	private final FilmProviderRepository filmProviderRepository;
+
+	FilmDataInitializer(FilmRepository filmRepository, FilmProviderRepository filmProviderRepository) {
 		Assert.notNull(filmRepository, "FilmRepository must not be null!");
+		Assert.notNull(filmProviderRepository, "FilmProviderRepository must not be null!");
 
 		this.filmRepository = filmRepository;
+		this.filmProviderRepository = filmProviderRepository;
 	}
 
 	@Override
@@ -43,6 +49,7 @@ public class FilmDataInitializer implements DataInitializer {
 		List<Integer> fsks = List.of(0,6,12,16,18);
 		CinemaShow show;
 		List<Film> allFilms = filmRepository.findAll().toList();
+		List<FilmProvider> allFilmProviders = filmProviderRepository.findAll().toList();
 
 		// TestDaten:
 		// Speichert 10 Filme mit ansteigender Filmlänge und zufälliger fsk.
@@ -52,7 +59,8 @@ public class FilmDataInitializer implements DataInitializer {
 				"Film-Beschreibung " + i,
 				90 + i * 10,
 				fsks.get(random.nextInt(fsks.size())),
-                                random.nextInt(1000, 2000)
+				allFilmProviders.get(random.nextInt(allFilmProviders.size())),
+				random.nextInt(1000, 2000)
 			));
 		}
 
@@ -62,7 +70,8 @@ public class FilmDataInitializer implements DataInitializer {
 			System.out.println("Beschreibung: " + f.getDesc());
 			System.out.println("FSK: " + f.getFskAge());
 			System.out.println("ID: " + f.getId());
-                        System.out.println("Leih-Grundgebür: " + f.getBasicRentFee());
+			System.out.println("Anbieter: " + f.getFilmProvider().getName());
+			System.out.println("Leih-Grundgebür: " + f.getBasicRentFee());
 			System.out.println("=======================================");
 		});
 	}

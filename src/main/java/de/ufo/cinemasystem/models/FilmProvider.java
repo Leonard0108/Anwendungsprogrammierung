@@ -15,16 +15,25 @@ public class FilmProvider{
 	private Long id;
 
 	// ein Anbieter bietet mehrere Filme an
-	@OneToMany
-	private Set<Film> films = new HashSet<>();
+	//@OneToMany
+	//private final Set<Film> films = new HashSet<>();
 	private String name;
 
+	public FilmProvider(String name) {
+		this.name = name;
+	}
+
+	// Default Construktor, nicht benutzen!
+	public FilmProvider() {}
+
+	/*
 	public void addFilm(Film film) {
 		if(films.contains(film)) return;
 
 		this.films.add(film);
 		//film.setFilmProvider(this);
 	}
+	 */
 
 	public Long getId() {
 		return id;
@@ -34,9 +43,11 @@ public class FilmProvider{
 		return this.name;
 	}
 
+	/*
 	public Streamable<Film> getFilms() {
 		return Streamable.of(this.films);
 	}
+	 */
 
 	@Override
 	public int hashCode() {

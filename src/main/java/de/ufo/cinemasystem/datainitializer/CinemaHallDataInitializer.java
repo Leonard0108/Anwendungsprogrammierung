@@ -12,7 +12,7 @@ import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import java.util.HashMap;
 
 @Component
-@Order(2)
+@Order(3)
 public class CinemaHallDataInitializer implements DataInitializer {
 
 	private final CinemaHallRepository cinemaHallRepository;

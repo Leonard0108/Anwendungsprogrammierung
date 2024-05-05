@@ -20,11 +20,10 @@ public class Event implements Comparable<Event>{
 	@JoinColumn(name = "cinema_hall_id")
 	private CinemaHall cinemaHall;
 
-	public Event(String name, LocalDateTime startDateTime, int duration, CinemaHall cinemaHall) {
+	public Event(String name, LocalDateTime startDateTime, int duration) {
 		this.name = name;
 		this.startDateTime = startDateTime;
 		this.duration = duration;
-		this.cinemaHall = cinemaHall;
 	}
 
 	public Event() {}
@@ -47,6 +46,10 @@ public class Event implements Comparable<Event>{
 
 	public CinemaHall getCinemaHall() {
 		return cinemaHall;
+	}
+
+	public void setCinemaHall(CinemaHall cinemaHall) {
+		this.cinemaHall = cinemaHall;
 	}
 
 	@Override

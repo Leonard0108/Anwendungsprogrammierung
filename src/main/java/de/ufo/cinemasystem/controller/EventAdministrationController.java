@@ -1,11 +1,9 @@
 package de.ufo.cinemasystem.controller;
 
-import jakarta.validation.Valid;
 
-import org.springframework.data.util.Streamable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -15,11 +13,15 @@ import de.ufo.cinemasystem.models.Event;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.EventRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Controller
 public class EventAdministrationController {
@@ -37,33 +39,31 @@ public class EventAdministrationController {
 
 	@GetMapping(value = "/manage/rooms", params = "show")
 	//@PreAuthorize("hasRole('BOSS')")
-	public String getEvents(Model m, @Valid EventListForm eventListForm){
-
-		m.addAttribute("eventListForm", eventListForm);
+	public String getEvents(Model m, @RequestParam("room") Long room,
+							  		 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
 
-		System.out.println(eventListForm.getDateOfShow().toString());
-
-		List<CinemaShow> showsOnDate = cinemaShowRepository.findCinemaShowsOnDay(eventListForm.getDateOfShow()).toList();
+		List<CinemaShow> showsOnDate = cinemaShowRepository.findCinemaShowsOnDay(date).toList();
 		List<CinemaShow> showsOnDateInHall = new ArrayList<>();
-
-		if(showsOnDate.isEmpty()){
-			//keine Vorstellungen an diesem Tag
-			//später Saal und Datum anzeigen mit leerer Liste darunter
-			return "manage-rooms-boss-renderer-empty";
-		}
 
 		//übernehme nur die Shows für gesuchten Saal
 		for(CinemaShow show : showsOnDate){
-			if(show.getCinemaHall().getName().equals(eventListForm.getHallName())){
+			if(show.getCinemaHall().getId().equals(room)){
 				showsOnDateInHall.add(show);
 			}
 		}
 		m.addAttribute("showsOnDate", showsOnDateInHall);
+		m.addAttribute("room", room);
+		m.addAttribute("date", date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
-
+		/*
+		for(CinemaShow show : showsOnDateInHall){
+			System.out.println(show.getFilm().getTitle());
+		}
+		if(showsOnDateInHall.isEmpty()) System.out.println("no shows");
+		*/
 
 		return "manage-rooms-boss-renderer";
 	}
@@ -86,9 +86,26 @@ public class EventAdministrationController {
 
 	@PostMapping("/manage/rooms")
 	//@PreAuthorize("hasRole('BOSS')")
-	public String addEvent(@Valid Event newEventForm, Errors result){
+	public String addEvent(Model m,
+						   @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+						   @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+						   @RequestParam("room") Long room,
+						   @RequestParam("eventname") String eventname){
 
-		return "manage-rooms-boss-renderer";
+		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
+		m.addAttribute("allCinemaHalls", allCinemaHalls);
+
+		CinemaHall updateHall = cinemaHallRepository.findById(room).get();
+
+		int duration = (int) from.until(to, MINUTES);
+		Event newEvent = new Event(eventname, from, duration);
+
+		updateHall.addEvent(newEvent);
+
+		cinemaHallRepository.save(updateHall);
+		eventRepository.save(newEvent);
+
+		return "manage-rooms-boss-renderer-success";
 	}
 
 

@@ -43,3 +43,7 @@ nav li,.footer li{
     padding: 0;
     margin: 0;
 }
+
+.success-message{
+    color: #1d6a1d;
+}

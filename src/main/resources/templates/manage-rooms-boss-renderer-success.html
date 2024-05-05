@@ -31,28 +31,27 @@
                 </div>
                 <div class="main-wrapper" role="main" layout:fragment="content">
                     <h1>Saalverwaltung</h1>
-                    <form th:action="@{/manage/rooms}" method="get">
+                    <form action="/manage/rooms" method="get" >
                         <p>Saal <select  name="room">
                                 <option th:each="cinemaHall : ${allCinemaHalls}" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Saal 1</option>
                             </select></p>
-                            <p>am <input type="date" name="date" placeholder="19.04.2024" required=""></p>
+                            <p>am <input type="date" name="date"  placeholder="19.04.2024"></p>
                         <input type="submit" name="show" value="Anzeigen" />
                     </form>
-                    <h2>Saal [[${room}]] am [[${date}]]</h2>
-                    <ul th:each="show : ${showsOnDate}">
-                        <li> [[${show.getStartDateTime().getHour()}]]:[[${show.getStartDateTime().getMinute()}]] [[${show.getFilm().getTimePlaying()}]]min [[${show.getFilm().getTitle()}]]</li>
-                    </ul>
+                    <h2>Vorstellungen</h2>
+                    <p>Wählen Sie einen Saal und ein Datum aus</p>
                     <h2>Kinoprogramm hinzufügen</h2>
                     <a href="/current-films#addprogram" title="Programmverwaltung | UFO Kinos" target="new">Programmverwaltung</a>
                     <h2>Saal vermieten</h2>
+                    <p class="success-message">Event hinzugefügt</p>
                     <form action="/manage/rooms" method="post">
                         <p>Von: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="from" required=""></p>
                         <p>Bis: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="to" required=""></p>
                         <p>Saal <select  name="room">
-                            <option th:each="cinemaHall : ${allCinemaHalls}" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Saal 1</option>
-                        </select></p>
-                        <p>Eventname: <input type="text" name="eventname" placeholder="Cooles Event" required=""></p>
-                        <button name="addEvent">Event buchen</button>
+                        <option th:each="cinemaHall : ${allCinemaHalls}" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Saal 1</option>
+                            </select></p>
+                            <p>Eventname: <input type="text" name="eventname" placeholder="Cooles Event" required=""></p>
+                            <button name="addEvent">Event buchen</button>
                     </form>
                 </div>
                 <div class="footer">
@@ -94,9 +93,7 @@
                 margin: 0;
             }
 
-            .success-message{
-                color: #1d6a1d;
-            }
+
 
         </style>
         <script></script>

@@ -2,12 +2,13 @@
 [cols="1, 3, 3"]
 |===
 |Version | Bearbeitungsdatum   | Autor 
-|...	| ... | ...
+| 0.2    | 05.05.2024          | Jannik
 |===
 
 = Entwicklerdokumentation
 
-== Einführung und Ziele
+== 1. Einführung und Ziele
+=== Zieldefinition
 
 Ziel dieser neuen webbasierten Kino-Allrounder-Software ist es, sowohl die Arbeitsprozesse der Mitarbeiter, autorisierten Mitarbeiter und des Bosses zu erleichtern, sowie als auch den Komfort und die Flexibilität der Kunden zu fördern. Die klassischen Vorgänge des ausschließlichen Vorort-Services, sowie die unübersichtliche, zeitintensive und nicht immer aktuelle Pflege von Ordner-Papier-Dokumenten für die Verwaltung, Organisation und strategische Planung sollen durch diese Software ersetzt und durch die Automatisierung für alle beteiligten Personen erleichtert werden.
 
@@ -25,26 +26,54 @@ Alle Rollen sind dabei klar voneinander getrennt. Ein unregistrierter Nutzer kan
 
 Zusammenfassend soll eine solide, sichere, erweiterbare, zentrale webbasierte Kino-Allrounder Software entstehen, welche mehr Kunden anlocken soll und den Arbeitsaufwand des Personals und des Chefs verringern soll.
 
-== Randbedingungen
+
+=== 1.2 Qualitätsanforderungen
+
+Um die Qualität der Software beurteiln zu können, wurden die folgenden, durch die Software zu erfüllenden, Qualitätsmerkmale definiert:
+Hinweis: Die nachfolgenden Erläuterungen wurden von https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO/IEC 25010 Software Quality Model^] und https://github.com/HOME-programming-pub/videoshop/blob/2aa60ddfa2ead70c23d8a655ff0f748e1fbec330/src/main/asciidoc/developer_documentation.adoc[HOME-programming-pub/videoshop] adaptiert.
+
+Wartbarkeit::
+Wartbarkeit bezeichnet den Grad an Effizienz, mit derer das System verbessert, korrigiert oder an neue Umgebungsbedingungen angepasst werden kann.
+
+Nutzbarkeit::
+Grad, zu dem das System durch die einzelnen Nutzergruppen effizient zum jeweiligen Nutzungszweck genutzt werden kann
+
+Sicherheit::
+Grad, zu derer das System Informationen, insbesondere personenbezogenen Daten, denjenigen Personden oder Systemen zeigt, die dafür autorisiert sind, und vor denjenigen verbirgt, die nicht autorisiert sind.
+
+Die nachfolgende Tabelle zeigt die Qualitätsmerkmale sowie deren Wichtigkeit.
+Die erste Spalte gibt den Namen des Qualitätsziels an, während in den Verbleibenden Spalten die Priorität durch dass
+Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, das unwichtig ist, 5 einem, dass sehr wichtig ist.
+
+[options="header", cols="3h, ^1, ^1, ^1, ^1, ^1"]
+|===
+|Quality Demand           | 1 | 2 | 3 | 4 | 5
+|Wartbarkeit              |   |   |   |   | X
+|Nutzbarkeit              |   |   |   | X | 
+|Sicherheit                 |   |   |   | X |
+|===
+
+== 2. Randbedingungen
 * Hardware-Vorgaben
 * Software-Vorgaben
 * Vorgaben zum Betrieb des Software
 
-== Kontextabgrenzung
+== 3. Kontextabgrenzung
 * Kontextdiagramm
 
-== Lösungsstrategie
-=== Erfüllung der Qualitätsziele
+== 4. Lösungsstrategie
+=== 4.1 Erfüllung der Qualitätsziele
 [options="header"]
 |=== 
 |Qualitätsziel |Lösungsansatz
 |... |...
 |===
 
-=== Softwarearchitektur
+
+=== 4.2 Softwarearchitektur
 * Beschreibung der Architektur anhand der Top-Level-Architektur oder eines Client-Server-Diagramms
 
-=== Entwurfsentscheidungen
+=== 4.3 Entwurfsentscheidungen
 * Verwendete Muster
 * Persistenz
 * Benutzeroberfläche
@@ -56,7 +85,7 @@ Zusammenfassend soll eine solide, sichere, erweiterbare, zentrale webbasierte Ki
 |... |... |...
 |===
 
-== Bausteinsicht
+== 5. Bausteinsicht
 * Package-Diagramm
 * Entwurfsklassendiagramme der einzelnen Packages
 
@@ -66,7 +95,7 @@ Zusammenfassend soll eine solide, sichere, erweiterbare, zentrale webbasierte Ki
 |... |...
 |===
 
-=== Rückverfolgbarkeit zwischen Analyse- und Entwurfsmodell
+=== 5.1 Rückverfolgbarkeit zwischen Analyse- und Entwurfsmodell
 _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analysemodell._
 
 [options="header"]
@@ -75,7 +104,7 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 |... |...
 |===
 
-== Laufzeitsicht
+== 6. Laufzeitsicht
 * Darstellung der Komponenteninteraktion anhand eines Sequenzdiagramms, welches die relevantesten Interaktionen darstellt.
 
 

@@ -46,13 +46,9 @@ public class LoginController {
 			UserEntry newUser = new UserEntry();
 			newUser.setEmail(registrationRequest.email);
 			newUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-			try {
-				userRepository.save(newUser);
-				System.out.println(userRepository.findByEmail("lukasd2000@gmx.de").toString());
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+
+			userRepository.save(newUser);
+			System.out.println(userRepository.findByEmail("lukasd2000@gmx.de").toString());
 
 
 			return "welcome";
@@ -76,23 +72,21 @@ public class LoginController {
 	String checkLoginData(@RequestBody RegistrationRequest loginRequest)
 	{
 		Optional<UserEntry> loginUser = userRepository.findByEmail(loginRequest.email);
-		String    password  = passwordEncoder.encode(loginRequest.getPassword());
+		String              password  = passwordEncoder.encode(loginRequest.getPassword());
 
 
-		//password = passwordEncoder.encode(password);
 
 		if (loginUser.isPresent())
 		{
 			if (passwordEncoder.matches(loginRequest.password, loginUser.get().getPassword()))
 			{
-				System.out.println(loginUser.get().getEmail());
 				System.out.println("Hallo Welt");
 				return "welcome";
 			}
 			System.out.println("Tschüss Welt");
 			return "welcome";
 		}
-		System.out.println(loginUser);
+		System.out.println("Leider keine Mail gefunden.");
 		return "welcome";
 	}
 

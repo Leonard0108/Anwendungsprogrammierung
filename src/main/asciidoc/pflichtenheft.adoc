@@ -1,5 +1,10 @@
 = Pflichtenheft
 :project_name: Kinosystem UFO
+:toc: left
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+[discrete]
 == __{project_name}__
 
 [options="header"]
@@ -9,22 +14,16 @@
 |0.1     | In Arbeit   | 01.04.2023          | Autor       | Initiale Version
 |0.3     | In Arbeit   | 21.04.2024          | diverse     | Nachtrag Versionierung
 |1.0     | Meilenstein | 03.05.2024          | alle.       | Pflichtenheft
+|0.1     | Meilenstein   | 29.04.2024        | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll | Meilenstein
 |===
 
-== Inhaltsverzeichnis
-
-:toc:
-:toc-placement!:
-toc::[]
-
-
-== 1. Zusammenfassung
+== Zusammenfassung
 Dieses Dokument dient dazu die Grenzen und Parameter des angestrebten Produktes festzustellen und 
 die Bedürfnisse an die Software zu fassen. Dazu werden sowohl die Wünsche des Kunden formuliert, als auch die technischen Rahmenbedingen.
 Wir unterteilen also in Beschreibungen und Systementwurf. Weiterhin wird aufgegliedert, welche Anwendungsfälle und Funktionen das Zielsystem bedienen soll und wie eine mögliche Ansicht des Systems aussehen kann.
 
   
-== 2. Aufgabenstellung und Zielsetzung
+== Aufgabenstellung und Zielsetzung
 Die Kinobetreibergesellschaft UFO möchte zukünftig aus personalpolitischen Gründen in
 allen Kinos eine einheitliche Software für den Kartenverkauf und für Verwaltungsaufgaben
 einsetzen. Die Gesellschaft wendet sich an Sie mit der Bitte, eine moderne und
@@ -57,21 +56,21 @@ Neben dem Geschäft mit Filmen und Veranstaltungen, ist der Verkauf leckerster S
 sehr wichtige Einnahmequelle der Kinos. Sie Software soll daher, nach Möglichkeit, den
 Bestand und Verkauf in den Kinos, und das Zentrallager unterstützen.
 
-== 3. Produktnutzung
+== Produktnutzung
 Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
 
 Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
 
-Mozilla Firefox, Version 125.0.3+
+Mozilla Firefox, Version 125.0.2+
 
-Google Chrome, Version 124.0.6367+
+Google Chrome, Version 126.0.6439+
 
 Das Kundenportal kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
 Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv bedienbar sein, wodurch sich die Mitarbeiter und der Chef schnell daran gewöhnen können.
 
 Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die Anwendung zugänglich sein (z.B. sollten Mitarbeiter  keine SQL-Anfragen formulieren müssen)
 
-== 4. Interessensgruppen (Stakeholder)
+== Interessensgruppen (Stakeholder)
 
 
 [options="header", cols="2, ^1, 4, 4"]
@@ -118,7 +117,7 @@ a|
 - geringer Wartungsaufwand
 |===
 
-== 5. Systemgrenze und Top-Level-Architektur
+== Systemgrenze und Top-Level-Architektur
 
 === Kontextdiagramm
 image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
@@ -128,7 +127,7 @@ Top-Level-Architektur C4 Model:
 
 image::./models/analysis/Top-Level-Architektur/Top-Level-Architecture_C4_3.svg[Top-Level-Architektur_C4, 100%, 100%, pdfwidth=100%, title= "Top-Level-Architektur C4", align=center]
 
-== 6. Anwendungsfälle
+== Anwendungsfälle
 
 In diesem Abschnitt werden die meisten UseCases aufgelistet. Je nach Relevanz der UseCases existieren ausführlichere- und weniger ausführlichere Use-Case-Beschreibungen.
 
@@ -279,7 +278,7 @@ _Reservierungen bearbeiten im Reservierungs-Eintrag-Menü_:
 . Sonst: Kunde erhällt eine Information und es werden keine Änderungen vorgenommen.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0121>>
+|Funktionale Anforderungen  |<<F0121>>,<<F0122>>
 |===
 
 image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm reservieren", align=center]
@@ -374,7 +373,7 @@ _Tickets und Veranstaltung vor Ort auswählen_:
 . sonst: Zeige Information an und Mitarbeiter wählt einen neuen Platz aus.
 
 |Erweiterungen              |-
-|Funktionale Anforderungen  |<<F0231>>, <<F0232>>, <<F0233>>, <<F0234>>, <<F0235>>
+|Funktionale Anforderungen  |<<F0231>>, <<F0232>>, <<F0233>>, <<F0234>>, <<F0235>>, <<F0121>>
 |===
 
 [cols="1h, 3"]
@@ -624,27 +623,28 @@ mit folgenden Informationen:
 |v0.1
 |Überprüfung der Registrierung
 a|
-Überprüft Registrierung (E-Mail ...)
+Überprüft ob die vom Nutzer angegebene E-Mail bereits für einen anderen Nutzer verwendet wird und lehnt die Registrierung gegebenenfalls ab.
 |Könnte über Tests geregelt werden.
 
 |[[F0021]]<<F0021>>
 |v0.1
 |Anmeldung
 a|
-Nutzer können sich anmelden.
-mit folgenden Informationen:
+Nutzer können sich mit folgenden Informationen anmelden:
 
 * Nutzername oder E-Mail
 * Password
+
+und erhalten dann die dem Nutzerkonto entsprechenden Berechtigungen.
 |
 
 |[[F0022]]<<F0022>>
 |v0.1
 |Logout
-a|Sicheres beenden der Verbindung, freigeben des Sockets und freigabe von entsprechenden Ressourcen.
+a|Der Nutzer kann sich ausloggen und verliert damit die Berechtigungen seines Nutzerkontos, bis er sich erneut anmeldet.
 |
 
-|[[F0022]]<<F0023>>
+|[[F0023]]<<F0023>>
 |v0.1
 |Verbindungsterminierung
 a|Sicheres beenden der Verbindung im Falle eines unerwarteten Verbindungsabbruchs
@@ -668,21 +668,21 @@ Nutzer kann Snacks oder Film Tickets zum Warenkorb hinzufügen.
 |v0.1
 |Anzeigen zum Warenkorb
 a|
-Nutzer kann sich den Warenkorb anzeigen.
+Nutzer kann sich den Warenkorb anzeigen lassen und sieht darin alle zuvor ausgewählten Snacks und Tickets
 |
 
 |[[F0121]]<<F0121>>
 |v0.1
-|Überprüfung der Reservierung
+|Überprüfung der Plätze
 a|
-Platz frei?
+Überprüft ob der zuvor ausgewählte Platz immer noch als frei im System gekennzeichnet ist.
 |
 
 |[[F0234]]<<F0234>>
 |v0.1
 |Suche nach Reservierung
 a|
-Mitarbeiter sucht über die Reservierungsnummer (oder den Nutzernamen oder E-Mail des Kundens(KANN)) nach seiner Reservierung
+Mitarbeiter sucht über die Reservierungsnummer nach seiner Reservierung
 |
 
 |[[F0111]]<<F0111>>
@@ -692,24 +692,32 @@ a|
 Kunden können auf Website das aktuelle Programm anschauen
 |
 
+|[[F0122]]<<F0122>>
+|v0.1
+|Plätze Reservieren
+a|
+Kunden können auf Website zu einer ausgewählten Veranstaltung Plätze reservieren und dann beim Kartenkauf an der Kasse bezahlen.
+|
+
+|[[F0123]]<<F0123>>
+|v0.1
+|Platzreservierung Stornieren
+a|
+Kunden können auf Website zuvor reservierte Plätze zu jeder Zeit stornieren. Damit gelten die reservierten Plätze wieder als frei.
+|
+
+|[[F0112]]<<F0112>>
+|v0.1
+|Kartentausch
+a|Kunden können die Veranstaltung für die ihr Ticket gültig ist ändern lassen, falls sie den zuvor gebuchten Termin nicht wahrnehmen können.
+|
+
 |[[F0235]]<<F0235>>
 |v0.1
 |Kauf von Karten
 a|
-Kunden können die Karte (-n) im Warenkorb an den jeweiligen Kassen bezahlen.
+Kunden können die Karte(n) im Warenkorb an den jeweiligen Kassen bezahlen.
 |
-
-|[[F0235]]<<F0236>>
-|v0.1
-|Kauf von Snacks
-a|Kunden können die Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
-|
-
-|[[F0311]]<<F0311>>
-|v0.1
-|Säle vermieten
-a| Der Chef sollte die Möglichkeit haben Säle vermieten zu können.
-|Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
 
 |[[F0321]]<<F0321>>
 |v0.1
@@ -724,43 +732,34 @@ a|Autorisierte Mitarbeiter sollten in der Lage sein mehrere Anbieter vergleichen
   entsprechende Leihangebote annehmen zu können
 |
 
-|[[F0331]]<<F0331>>
-|v0.1
-|Zentrallagerverwaltung
-a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
-  So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
-|
-
 |[[F0351]]<<F0351>>
 |v0.1
 |Filmstatistik einsehen
-a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Staistik
-  notwendig, die einem die aktuellen Tagesergebnisse des Kinos, bzw. aller Filme und ggf.
-  Snacks, anzeigt. So ist eine bessere operative Steuerung möglich.
+a|Um die aktuellen Performance Ergebnisse der einzelnen Filme sehen zu können ist eine Statistik
+  notwendig, die einem die auslastung der Kinosäle in Abhängigkeit vom gezeigten Film anzeigt. Diese Information nutzen Mitarbeiter um das Programm möglichst gewinnbringend anzupassen.
 |Wie schon in Beschreibung erwähnt nur zu operativen Zwecken gedacht. Für strategische Planung
  wird anderes Tool verwendet.
 
 |[[F0431]]<<F0431>>
 |v0.1
 |Preisverwaltung
-a|Um die aktuellen Performanceergebnisse des Kinos sehen zu können ist eine Staistik
-notwendig, die einem die aktuellen Tagesergebnisse des Kinos, bzw. aller Filme und ggf.
-Snacks, anzeigt. So ist eine bessere operative Steuerung möglich.
+a|Dem Chef ist es möglich die Grundpreise der einzelnen Filme sowie die Rabattierung der unterschiedlichen Ticketarten anzupassen.
 |
 
 |[[F0451]]<<F0451>>
 |v0.1
-|Filmstatistik einsehen
-a|Strategisches Pendant zum Einsehen der Filmstatistik. Dient dem Erfassen von Statistiken mehrerer Filme
-  und sonstiger Einnahmen/ Ausgaben. Kann ggf auch als Hilfe für die Erstellung des Jahresabschlusses
+|Umsatzstatistiken einsehen
+a|Der Chef kann sich Statistiken zu Tageseinnahmen sowie Monatsumsätzen anzeigen lassen. Kann ggf auch als Hilfe für die Erstellung des Jahresabschlusses
   genutzt werden
 |
 
-|[[F0001]]<<F0001>>
+|[[F0421]]<<F0421>>
 |v0.1
-|Kartentausch
-a|Dient dem Tausch on Karten, wenn Termin oder Film nicht passen.
+|Personal verwalten
+a|Der Chef kann die Nutzerkonten der Mitarbeiter erstellen und verwalten sowie ihre Berechtigungen ändern.
 |
+
+
 
 |===
 
@@ -778,16 +777,35 @@ Anforderungen, die das Programm leisten können soll, aber für den korrekten Be
 |Beschreibung
 |Hinweise
 
-|[[F0421]]<<F0421>>
+|[[F0236]]<<F0236>>
 |v0.1
-|Personal verwalten
-a|Dient der Einstellung und Entlassung, sowie der Arbeitszeitverwaltung des Personals.
-Ist nur vom Chef bearbeitbar Mitarbeiter haben begrenzte Leserechte.
+|Kauf von Snacks
+a|Kunden können die Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
 |
+
+|[[F0237]]<<F0237>>
+|v0.1
+|Erweiterte Suche nach Reservierung
+a|
+Mitarbeiter sucht außerdem über den Nutzernamen oder E-Mail des Kunden nach seiner Reservierung.
+|
+
+|[[F0331]]<<F0331>>
+|v0.1
+|Zentrallagerverwaltung
+a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
+So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
+|
+
+|[[F0311]]<<F0311>>
+|v0.1
+|Säle vermieten
+a| Der Chef sollte die Möglichkeit haben Säle für externe Events vermieten zu können.
+|Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
 
 |===
 
-== 8. Nicht-Funktionale Anforderungen
+== Nicht-Funktionale Anforderungen
 
 === Qualitätsziele
 
@@ -841,7 +859,7 @@ Nutzerpasswörter sollen nur als Hashwert einer für die Passwortspeicherung gee
 
 //[small] Adaptiert von https://github.com/HOME-programming-pub/videoshop/blob/1bf0531354ab7cd8998be1484b64dd368d48f072/src/main/asciidoc/Pflichtenheft.adoc?plain=1#L732-L775
 
-== 9. GUI Prototyp
+== GUI Prototyp
 
 Die nachfolgenden GUI-Renderer sollen zeigen, wie das fertige System aussehen könnte. 
 
@@ -964,7 +982,7 @@ Dieser Abschnitt stellt eine Vereinigung von Glossar und der Beschreibung von Kl
 |Umsätze|Kummulierte Werte de Tagesumsätze
 |===
 
-== 11. Akzeptanztestfälle
+== Akzeptanztestfälle
 
 [cols="1h, 4"]
 |===

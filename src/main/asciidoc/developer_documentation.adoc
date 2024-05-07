@@ -109,10 +109,14 @@ image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwid
 * Beschreibung der Architektur anhand der Top-Level-Architektur oder eines Client-Server-Diagramms
 
 === Entwurfsentscheidungen
-* Verwendete Muster
-* Persistenz
-* Benutzeroberfläche
-* Verwendung externer Frameworks
+==== Verwendete Muster
+
+==== Persistenz
+
+==== Benutzeroberfläche
+
+
+=== Verwendung externer Frameworks
 
 [options="header", cols="1,2,3"]
 |===
@@ -121,14 +125,58 @@ image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwid
 |===
 
 == Bausteinsicht
-* Package-Diagramm
-* Entwurfsklassendiagramme der einzelnen Packages
+=== Package-Diagramm
+NOTE: If your package structure is more nested as in this example, add an *UML package diagram* to this document. This diagram only shows the packages of the application, their containment structure, and \<<use>>-relationships between them. The goal is to give an overview of the detailed architecture._
+
+_Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-package-diagram-example.html_
+
+
+=== Entwurfsklassendiagramme der einzelnen Packages
+
+==== Kassensubsystem
 
 [options="header"]
 |=== 
 |Klasse/Enumeration |Description
 |... |...
 |===
+
+
+==== Kundenportal
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+|... |...
+|===
+
+
+==== Verwaltungssystem
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+|... |...
+|===
+
+
+==== Operativsystem
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+|... |...
+|===
+
+
+==== Loginsystem
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+|... |...
+|===
+
 
 === Rückverfolgbarkeit zwischen Analyse- und Entwurfsmodell
 _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analysemodell._
@@ -142,4 +190,14 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 == Laufzeitsicht
 * Darstellung der Komponenteninteraktion anhand eines Sequenzdiagramms, welches die relevantesten Interaktionen darstellt.
 
+=== Kassensubsystem
+
+
+=== Kundenportal
+
+
+=== Verwaltungssystem
+
+
+=== Operativsystem
 

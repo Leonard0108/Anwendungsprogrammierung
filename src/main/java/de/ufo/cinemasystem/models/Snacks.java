@@ -1,13 +1,17 @@
 package de.ufo.cinemasystem.models;
 
+import jakarta.persistence.Entity;
 import org.javamoney.moneta.Money;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
+@Entity
 public class Snacks {
 
-    public static enum SnackType {
+	public static enum SnackType {
         Getränk,
         Essen
     }
@@ -18,6 +22,7 @@ public class Snacks {
     private Money price;
     private int count;
 
+	public Snacks() {}
     public Snacks(String name, SnackType type, Money price, int count) {
         this.name = name;
         this.type = type;
@@ -37,19 +42,19 @@ public class Snacks {
         return price;
     }
 
-    public int addStock(int Count) {
-        count += count;
-        return count;
+	public int getCount() { return count; }
+
+    public int addStock(int count) {
+        this.count += count;
+        return this.count;
         // ToDO Logging einrichten
     }
 
-    public int removeStock(int Count) {
-        if (count >= Count) {
-            count -= Count;
-            return count;
-        } else {
-            return count;
+    public int removeStock(int count) {
+        if (this.count >= count) {
+            this.count -= count;
         }
+        return this.count;
         // ToDO Logging einrichten
     }
 

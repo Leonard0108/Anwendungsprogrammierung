@@ -10,9 +10,9 @@
             <h1>Lagerverwaltung</h1>
             <h2>Aktuelles Inventar</h2>
             <ul>
-                <li>25x 1kg Popcornmais</li>
-                <li>31x 1l Putzmittel Supersauber</li>
-                <li>&nbsp;5x Ticketpapier 100 Tickets</li>
+                <li th:each="snack : ${allSnacks}">
+                    <span th:text="${snack.getCount()} + 'x ' + ${snack.getName()}">Anzahlx Snack</span>
+                </li>
             </ul>
             <h2>Inventar hinzufügen</h2>
             <form action="/manage/storage" method="post">

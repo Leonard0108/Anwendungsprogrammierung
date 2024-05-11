@@ -63,10 +63,22 @@ Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, 
 
 == 4. Lösungsstrategie
 === 4.1 Erfüllung der Qualitätsziele
+Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderungen an. Sie wurde Teilweise von https://github.com/HOME-programming-pub/videoshop/blob/main/src/main/asciidoc/developer_documentation.adoc#architecture-decisions inspiriert.
+
 [options="header"]
-|=== 
+|===
 |Qualitätsziel |Lösungsansatz
-|... |...
+|Wartbarkeit a|
+* *Modularität* Die Anwendung wird aus einzelnen Modulen gebaut, sodass Änderungen an einer Stelle sich auf wenige Stellen auswirken.
+* *Wiederverwendbarkeit* Einzelkomponenten sollen von andere Systeme weitergenutzt werden können
+* *Modifizierbarkeit* Die Anwendung soll ohne Fehler erweitert oder modifiziert werden können.
+|Nutzbarkeit a|
+* *Learnability* Das System soll für Nutzer einfach zu verstehen sein, etwa durch klare Beschreibungen von Knöpfen und Eingabefeldern.
+* *Error handling/Nutzerschutz* Ungültige Eingaben müssen erkannt werden und dürfen nicht zu ungültigen Systemstadien führen.
+* *Accessibility* Es muss sichergestellt werden, dass diverse potentiell eingeschränkte Personen das System Nutzen können, etwa durch die verwendung geeigneter Schriftgrößen und Farbkontraste
+|Sicherheit a|
+* *Geheimhaltung* Das System muss sicherstellen, dass nur solche Personen Zugang zu Informationen bekommen, die dafür auch autorisiert sind. Dies wird mit _Spring Security_ und _Thymeleaf_ (`sec:authorize` - tag) erledigt.
+* *Integrität* Das System muss die nicht autorisierte Modifizierung von Daten verhindern. Dies kann mit _Spring Security_ (`@PreAuthorize` - annotation) gemacht werden.
 |===
 
 

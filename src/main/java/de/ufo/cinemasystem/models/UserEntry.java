@@ -22,7 +22,7 @@ import java.util.Collections;
 @EqualsAndHashCode
 @Entity
 @Table(name = "user")
-public class UserEntry implements UserDetails {
+public class UserEntry implements UserDetails  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long     id;
@@ -33,7 +33,7 @@ public class UserEntry implements UserDetails {
 	String   email;
 	String   password;
 	String   streetAddress;
-	String   streetNumber;
+	Long     streetNumber;
 	String   city;
 	String   state;
 	String   country;
@@ -51,13 +51,8 @@ public class UserEntry implements UserDetails {
 		return Collections.singletonList(simpleGrantedAuthority);
 	}
 
-
-
-
 	@Override
-	public String getUsername() {
-		return "";
-	}
+	public String getUsername() {return "";}
 
 	@Override
 	public boolean isAccountNonExpired() {

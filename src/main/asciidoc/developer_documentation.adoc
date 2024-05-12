@@ -161,11 +161,17 @@ _Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-packag
 
 
 ==== Operativsystem
-
+image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Entwurfsklassendiagramm.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Operativsystems", align=center]
 [options="header"]
 |===
 |Klasse/Enumeration |Description
-|... |...
+|Event |Eine Klasse für alle externen Events die in gemieteten Kinosälen stadtfinden können
+|EventDataInitializer |Eine Implementation des DataInitializer, der Event Testdaten beim Starten des Programms erzeugt
+|EventAdministrationController |Ein Spring MVC Controller, der Veranstaltungen auflisten und Events hinzufügen kann
+|BusinessDataDashboardController |Ein Spring MVC Controller, der auf Anfrage ein Dashboard mit Wirtschaftsdaten sendet
+|PriceAdjustController |Ein Spring MVC Controller, der ees ermöglicht Preise und Rabattierung anzupassen
+|StaffManageController |Ein Spring MVC Controller mit dem man Mitarbeiterkonten anzeigen, erstellen und bearbeiten kann
+|EventRepository |Eine Implementation eines GRUD-Interfaces, dass Event Daten verwaltet
 |===
 
 
@@ -200,4 +206,4 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 
 
 === Operativsystem
-
+image::./models/design/Operativsystem/Sequenzdiagramm/Operativsystem_Sequenzdiagramm.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Operativsystems für die Event Controller Funktionen", align=center]

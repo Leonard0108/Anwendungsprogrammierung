@@ -1,6 +1,7 @@
 package de.ufo.cinemasystem.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,5 +14,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface UserRepository extends CrudRepository<UserEntry, Long> {
 	Optional<UserEntry> findByEmail(String email);
-	UserEntry findByEmailAndPassword(String email, String password);
+	@Override
+	Streamable<UserEntry> findAll();
 }

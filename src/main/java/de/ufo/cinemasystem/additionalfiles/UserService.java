@@ -2,7 +2,11 @@ package de.ufo.cinemasystem.additionalfiles;
 
 
 import de.ufo.cinemasystem.models.UserEntry;
+import lombok.NoArgsConstructor;
+import org.salespointframework.useraccount.Password;
+import org.salespointframework.useraccount.Role;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.util.Streamable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,69 +16,62 @@ import org.salespointframework.useraccount.UserAccountManagement;
 
 
 import de.ufo.cinemasystem.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 
-@Primary
+
 @Service
-public class UserService implements UserDetailsService {
-	private final   String                USER_NOT_FOUND_MESSAGE = "User with e-mail %s not found.";
-	private final   UserAccountManagement userAccountManagement;
-	UserRepository                        userRepository;
-	PasswordEncoder                       passwordEncoder;
+@Transactional
+public class UserService {
+	public static final Role                  CUSTOMER_ROLE = Role.of("USER"); //Im Original Customer
+	private final       UserRepository        userRepository;
+	private final       UserAccountManagement userAccounts;
 
+	/**
+	 * Creates a new {@link UserService} with the given {@link UserRepository} and
+	 * {@link UserAccountManagement}.
+	 *
+	 * @param userRepository must not be {@literal null}.
+	 * @param userAccounts must not be {@literal null}.
+	 */
+	UserService(UserRepository userRepository, UserAccountManagement userAccounts) {
 
+		Assert.notNull(userRepository, "CustomerRepository must not be null!");
+		Assert.notNull(userAccounts, "UserAccountManagement must not be null!");
 
+		this.userRepository = userRepository;
+		this.userAccounts   = userAccounts;
+	}
 
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAccountManagement userAccountManagement) {
-		this.userRepository        = userRepository;
-		this.passwordEncoder       = passwordEncoder;
-		this.userAccountManagement = userAccountManagement;
+	/**
+	 * Creates a new {@link UserEntry} using the information given in the {@link RegistrationForm}.
+	 *
+	 * @param form must not be {@literal null}.
+	 * @return the new {@link UserEntry} instance.
+	 */
+	public UserEntry createCustomer(RegistrationForm form) {
+
+		Assert.notNull(form, "Registration form must not be null!");
+
+		var password = Password.UnencryptedPassword.of(form.getPassword());
+		var userAccount = userAccounts.create(form.getName(), password, CUSTOMER_ROLE);
+
+		return userRepository.save(new UserEntry(userAccount, form.getAddress()));
+	}
+
+	/**
+	 * Returns all {@link UserEntry}s currently available in the system.
+	 *
+	 * @return all {@link UserEntry} entities.
+	 */
+	public Streamable<UserEntry> findAll() {
+		return userRepository.findAll();
 	}
 
 
-
-	@Override
-	public UserDetails loadUserByUsername(String eMail) throws UsernameNotFoundException {
-		return userRepository.findByEmail(eMail).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, eMail)));
-	}
-
-
-
-	public boolean signUp(String eMail, String password, String forename, String name,
-						  String streetAddress, Long houseNumber, String city, String state, String country, String phoneNumber)
+	public UserEntry login(LoginForm form)
 	{
-		if (userRepository.findByEmail(eMail).isEmpty())
-		{
-			UserEntry newUser = new UserEntry();
-			newUser.setEmail(eMail);
-			newUser.setPassword(passwordEncoder.encode(password));
-			newUser.setName(forename);
-			newUser.setLastName(name);
-			newUser.setStreetAddress(streetAddress);
-			newUser.setStreetNumber(houseNumber);
-			newUser.setCity(city);
-			newUser.setState(state);
-			newUser.setCountry(country);
-			newUser.setPhoneNumber(phoneNumber);
-
-			userRepository.save(newUser);
-			System.out.println("Hallo Welt.");
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-
-
-
-	public boolean login(String eMail, String password) {
-		String encodedPassword = passwordEncoder.encode(password);
-		return userAccountManagement.findByUsername(eMail)
-			.filter(account -> account.getPassword().equals(encodedPassword))
-			.isPresent();
+		Assert.notNull(LoginForm, "Login form must not be null");
 	}
 }

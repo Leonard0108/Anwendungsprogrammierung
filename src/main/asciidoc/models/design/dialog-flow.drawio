@@ -1,0 +1,225 @@
+<mxfile host="app.diagrams.net" modified="2024-05-11T13:30:34.441Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0" etag="YVzgsyGor0NJuLOGh-ZW" version="24.4.0" type="device">
+  <diagram name="Seite-1" id="YMGrcAXvVB50B8oh9kBQ">
+    <mxGraphModel dx="1434" dy="754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-1" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="1500" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-2" value="&lt;div&gt;index.html&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="585" y="60" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-3" target="UabXOc1vm3OVl_ovUZzc-61">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="380" />
+              <mxPoint x="180" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-3" target="UabXOc1vm3OVl_ovUZzc-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-3" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="current-program.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-5">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="60" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-6" target="UabXOc1vm3OVl_ovUZzc-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-6" value="Programm" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="130" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-8" value="Meine Reservierungen" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-9" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="reservation-list.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-10">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="220" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-11" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-8" target="UabXOc1vm3OVl_ovUZzc-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="410" as="sourcePoint" />
+            <mxPoint x="440" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="280" y="230" />
+              <mxPoint x="260" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-12" value="Plätze Reservieren" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="370" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-13" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="300" width="120" height="120" as="geometry" />
+        </mxCell>
+        <UserObject label="make-reservation-cinema-show-selector.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-14">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="350" y="300" width="90" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-16" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-12" target="UabXOc1vm3OVl_ovUZzc-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="410" as="sourcePoint" />
+            <mxPoint x="440" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-17" target="UabXOc1vm3OVl_ovUZzc-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-17" value="Karten verkaufen" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="650" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-18" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="707" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="sell-items.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-19">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="727" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-22" target="UabXOc1vm3OVl_ovUZzc-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-22" value="Snacks verkaufen" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="777" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-25" target="UabXOc1vm3OVl_ovUZzc-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-25" value="Kartentausch" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="930" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-27" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="910" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;div&gt;tickets-change.html&lt;/div&gt;" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-28">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="930" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-31" target="UabXOc1vm3OVl_ovUZzc-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-31" value="Kartenrückgabe" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-32" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;div&gt;tickets-return.html&lt;/div&gt;" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-33">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="1250" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-35" target="UabXOc1vm3OVl_ovUZzc-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-35" value="Statistiken" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="130" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-36" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1390" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="buissness-data-dashboard.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-37">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="1405" y="300" width="90" height="50" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-40" target="UabXOc1vm3OVl_ovUZzc-42">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="190" y="200" />
+              <mxPoint x="190" y="400" />
+              <mxPoint x="110" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-40" value="Saalverwaltung" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="140" y="130" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-41" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="420" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="manage-rooms.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-42">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="70" y="420" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-45" target="UabXOc1vm3OVl_ovUZzc-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-45" value="Preisgestaltung" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="530" y="130" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-46" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="530" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="adjust-pricing.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-47">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="550" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-49" target="UabXOc1vm3OVl_ovUZzc-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-49" value="Personalverwaltung" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="130" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-50" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="manage-staff.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-51">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="1090" y="300" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-53" target="UabXOc1vm3OVl_ovUZzc-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-53" value="Lagerverwaltung" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="440" y="90" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-58" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="620" y="410" width="120" height="80" as="geometry" />
+        </mxCell>
+        <UserObject label="manage-storage.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-59">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="640" y="410" width="80" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-61" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="450" width="120" height="120" as="geometry" />
+        </mxCell>
+        <UserObject label="make-reservation-ticket-adder.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-62">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="350" y="450" width="90" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UabXOc1vm3OVl_ovUZzc-63" target="UabXOc1vm3OVl_ovUZzc-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-63" value="Weiter" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="350" y="370" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="UabXOc1vm3OVl_ovUZzc-66" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="525" width="120" height="45" as="geometry" />
+        </mxCell>
+        <UserObject label="film-detail.html" placeholders="1" name="Variable" id="UabXOc1vm3OVl_ovUZzc-67">
+          <mxCell style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;" vertex="1" parent="1">
+            <mxGeometry x="60" y="525" width="90" height="35" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

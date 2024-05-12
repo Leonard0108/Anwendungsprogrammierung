@@ -8,30 +8,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.salespointframework.useraccount.UserAccountManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.salespointframework.useraccount.UserAccountManagement;
 
 
 import de.ufo.cinemasystem.repository.UserRepository;
-
-import java.util.Optional;
 
 
 @Primary
 @Service
 public class UserService implements UserDetailsService {
-	private final String USER_NOT_FOUND_MESSAGE = "User with e-mail %s not found.";
-	UserRepository userRepository;
-	PasswordEncoder passwordEncoder;
-	private final UserAccountManager userAccountManager;
+	private final   String                USER_NOT_FOUND_MESSAGE = "User with e-mail %s not found.";
+	private final   UserAccountManagement userAccountManagement;
+	UserRepository                        userRepository;
+	PasswordEncoder                       passwordEncoder;
 
 
 
 
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAccountManagement userAccountManagement) {
+		this.userRepository        = userRepository;
+		this.passwordEncoder       = passwordEncoder;
+		this.userAccountManagement = userAccountManagement;
 	}
 
 
@@ -46,7 +43,7 @@ public class UserService implements UserDetailsService {
 	public boolean signUp(String eMail, String password, String forename, String name,
 						  String streetAddress, Long houseNumber, String city, String state, String country, String phoneNumber)
 	{
-		if (!userRepository.findByEmail(eMail).isPresent())
+		if (userRepository.findByEmail(eMail).isEmpty())
 		{
 			UserEntry newUser = new UserEntry();
 			newUser.setEmail(eMail);
@@ -69,5 +66,15 @@ public class UserService implements UserDetailsService {
 		{
 			return false;
 		}
+	}
+
+
+
+
+	public boolean login(String eMail, String password) {
+		String encodedPassword = passwordEncoder.encode(password);
+		return userAccountManagement.findByUsername(eMail)
+			.filter(account -> account.getPassword().equals(encodedPassword))
+			.isPresent();
 	}
 }

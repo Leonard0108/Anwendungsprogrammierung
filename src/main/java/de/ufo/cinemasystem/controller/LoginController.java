@@ -3,34 +3,31 @@ package de.ufo.cinemasystem.controller;
 
 
 import de.ufo.cinemasystem.additionalfiles.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import de.ufo.cinemasystem.additionalfiles.*;
-import de.ufo.cinemasystem.Application;
-import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.UserRepository;
-
-import java.util.Optional;
 
 
 @Controller
 @RequestMapping(path = "/lunar_space_port")
 public class LoginController {
-	private final   Application application;
 	UserRepository  userRepository;
 	PasswordEncoder passwordEncoder;
 	UserService     userService;
 
 
-	public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder, Application application, UserService userService) {
+	public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
-		this.application = application;
 		this.userService = userService;
 	}
 
@@ -52,7 +49,7 @@ public class LoginController {
 	}
 
 
-	@GetMapping(path = "/login", consumes = {"application/json"})
+	@GetMapping(path = "/login")
 	String login() {
 		return "login";
 	}
@@ -60,38 +57,63 @@ public class LoginController {
 
 
 
-	@PostMapping(path = "/checkLoginData")
-	String checkLoginData(@RequestBody RegistrationRequest loginRequest)
+	@PostMapping(path = "/test")
+	String test() {
+		return "welcome";
+	}
+
+
+
+
+	@PostMapping(path = "/checkLoginData", consumes = {"application/json"})
+	String checkLoginData(@RequestBody SignInRequest signInRequest)
 	{
-		Optional<UserEntry> loginUser = userRepository.findByEmail(loginRequest.email);
-
-
-		if (loginUser.isPresent())
+		if (signInRequest.email == null || signInRequest.password == null)
 		{
-			if (passwordEncoder.matches(loginRequest.password, loginUser.get().getPassword()))
-			{
-				System.out.println(loginUser.get().getEmail());
-				System.out.println("Hallo Welt");
-				return "welcome";
-			}
-			System.out.println("Tschüss Welt");
+			return "redirect:/lunar_space_port/login";
+		}
+
+		if (userRepository.findByEmail(signInRequest.email).isPresent())
+		{
+			System.out.println("User is already logged in.");
+			return "redirect:/lunar_space_port/test";
+		}
+
+		userService.login(signInRequest.email, signInRequest.password);
+		System.out.println("Nutzer wurde angemeldet.");
+
+		return "welcome";
+	}
+
+
+
+
+	@GetMapping(path = "/isLoggedIn", consumes = {"application/json"})
+	String isLoggedIn(SignInRequest signInRequestRequest) {
+		if (userRepository.findByEmail(signInRequestRequest.email).isPresent())
+		{
+			System.out.println("User is already logged in.");
 			return "welcome";
 		}
-		System.out.println(loginUser);
-		System.out.println("Hallo Welt");
-		return "welcome";
+		return "redirect:/lunar_space_port/login";
 	}
 
 
-	@GetMapping(path = "/isLoggedIn")
-	String isLoggedIn() {
-		return "welcome";
-	}
 
 
-	@GetMapping(path = "/logOut")
-	String logout() {
-		return "welcome";
+	@PostMapping(path = "/logOut")
+	String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate(); // Ungültig machen der aktuellen Session
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					cookie.setMaxAge(0); // Löschen aller Cookies
+				}
+			}
+		}
+		return "redirect:/lunar_space_port/login";
 	}
 
 
@@ -109,6 +131,13 @@ public class LoginController {
 		private String state;
 		private String country;
 		private String phoneNumber;
+	}
+
+
+	@Getter
+	static class SignInRequest {
+		private String email;
+		private String password;
 	}
 }
 

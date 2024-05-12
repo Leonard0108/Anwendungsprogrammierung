@@ -233,7 +233,7 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 
 
 === Kundenportal
-
+image::./models/design/Kundenportal/webportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]
 
 === Verwaltungssystem
 

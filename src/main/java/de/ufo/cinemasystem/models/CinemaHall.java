@@ -70,7 +70,10 @@ public class CinemaHall {
 
 
 	public void addEvent(Event newEvent) {
+		if(events.contains(newEvent)) return;
+
 		this.events.add(newEvent);
+		newEvent.setCinemaHall(this);
 	}
 
 

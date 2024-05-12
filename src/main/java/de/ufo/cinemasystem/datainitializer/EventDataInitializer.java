@@ -53,16 +53,13 @@ public class EventDataInitializer implements DataInitializer {
 
 		event1 = new Event("Jubiläumsfeier: 10 Jahre Zusammenarbeit",
 			LocalDateTime.of(2024, 7, 20, 9, 0, 0),
-			180,
-			hall1);
+			180);
 		event2 = new Event("Firmenpräsentation: Neue Produkteinführung",
 			LocalDateTime.of(2024,9,12,19,0,0),
-			240,
-			hall2);
+			240);
 		event3 = new Event("Filmabend mit Freunden",
 			LocalDateTime.of(2024, 5, 10, 18, 0, 0),
-			300,
-			hall3);
+			300);
 
 		hall1.addEvent(event1);
 		hall2.addEvent(event2);

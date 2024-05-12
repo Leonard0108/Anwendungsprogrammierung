@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="de" class="client-js" xmlns:th="http://www.thymeleaf.org">
+<html lang="de" class="client-js"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
     <head>
         <meta charset="utf-8">
         <title>Saalverwaltung | UFO Kinos</title>
@@ -24,16 +28,16 @@
             google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    ['Work',     11],
-                    ['Eat',      2],
-                    ['Commute',  2],
-                    ['Watch TV', 2],
-                    ['Sleep',    7]
+                    ['Einnahmequelle', 'Einnahmen'],
+                    ['Ticket: Bell im Märchenland',     250],
+                    ['Ticket: Parry Hotter und die Hochschule Merseburg',      200],
+                    ['Snacks: Popcorn',  75],
+                    ['Snacks: Softdrinks', 30],
+                    ['Ticket: Extra 4\'s Jannes Müller',    10]
                 ]);
 
                 var options = {
-                    title: 'My Daily Activities',
+                    title: 'Tageseinnahmen',
                     pieHole: 0.4,
                 };
 
@@ -48,30 +52,25 @@
         function drawBasic() {
 
         var data = new google.visualization.DataTable();
-        data.addColumn('number', 'X');
-        data.addColumn('number', 'Dogs');
+        data.addColumn('date', 'Day');
+        data.addColumn('number', 'Umsatz in €');
 
         data.addRows([
-        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
-        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
-        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-        [66, 70], [67, 72], [68, 75], [69, 80]
+        [new Date(2024, 4, 1), 10],  [new Date(2024, 4, 2), 23],  [new Date(2024, 4, 3), 17],  [new Date(2024, 4, 4), 18],  [new Date(2024, 4, 5), 9],
+        [new Date(2024, 4, 6), 11],  [new Date(2024, 4, 7), 27],  [new Date(2024, 4, 8), 33],  [new Date(2024, 4, 9), 40],  [new Date(2024, 4, 10), 32], [new Date(2024, 4, 11), 35],
+        [new Date(2024, 4, 12), 30], [new Date(2024, 4, 13), 40], [new Date(2024, 4, 14), 42], [new Date(2024, 4, 15), 47], [new Date(2024, 4, 16), 44], [new Date(2024, 4, 17), 48],
+        [new Date(2024, 4, 18), 52], [new Date(2024, 4, 19), 54], [new Date(2024, 4, 20), 42], [new Date(2024, 4, 21), 55], [new Date(2024, 4, 22), 56], [new Date(2024, 4, 23), 57],
+        [new Date(2024, 4, 24), 60], [new Date(2024, 4, 25), 50], [new Date(2024, 4, 26), 52], [new Date(2024, 4, 27), 51], [new Date(2024, 4, 28), 49], [new Date(2024, 4, 29), 53],
+        [new Date(2024, 4, 30), 55]
         ]);
 
         var options = {
         hAxis: {
-        title: 'Time'
+            title: 'Tag',
+            format: 'dd/MM',
         },
         vAxis: {
-        title: 'Popularity'
+            title: 'Umsatz(€)'
         }
         };
 
@@ -85,45 +84,15 @@
         <!-- todo:background asset? -->
         <div class="background"></div>
         <div class="css-hack">
-            <nav class="main-nav">
-                <div id="custumer-stuff" class="nav-section">
-                    <span class="nav-section-title">Kundenorientiert</span>
-                    <ul class="nav-section-content">
-                        <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
-                        <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
-                        <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
-                        <li><a href="/logout" title="Abmelden | UFO Kinos">Abmelden</a></li>
-                    </ul>
-                </div>
-                <div id="checkout-stuff" class="nav-section">
-                    <span class="nav-section-title">Kassensystem</span>
-                    <ul class="nav-section-content">
-                        <li><a href="/sell#tickets" title="Kartenverkauf | UFO Kinos">Kartenverkauf</a></li>
-                        <li><a href="/tickets/change" title="Kartentausch | UFO Kinos">Kartentausch</a></li>
-                        <li><a href="/tickets/return" title="Kartenrückgabe | UFO Kinos">Kartenrückgabe</a></li>
-                        <li><a href="/sell#snacks" title="Snackverkauf | UFO Kinos">Snackverkauf</a></li>
-                    </ul>
-                </div>
-                <div id="management-stuff" class="nav-section">
-                    <span class="nav-section-title">Management</span>
-                    <ul class="nav-section-content">
-                        <li><a href="/current-films" title="Programmverwaltung | UFO Kinos">Programmverwaltung</a></li>
-                        <li><a href="/statistics" title="Statistiken | UFO Kinos">Wirtschaftsstatistiken</a></li>
-                        <li><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
-                        <li><a href="/manage/pricing" title="Preisgestaltung | UFO Kinos">Preisgestaltung</a></li>
-                        <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
-                        <li><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li>
-                    </ul>
-                </div>
-            </nav>
             <div class="main-outer">
                 <div class="head">
                     <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
                 </div>
-                <div class="main-wrapper" role="main">
+                <div class="main-wrapper" role="main" layout:fragment="content">
                     <h1>Dashboard</h1>
                     <h2>Tageseinnahmen</h2>
                     <div id="dailyIncome" style="width: 900px; height: 500px;"></div>
+                    <br><hr><br>
                     <h2>Umsatz</h2>
                     <div id="revenue" style="width: 900px; height: 500px;"></div>
 

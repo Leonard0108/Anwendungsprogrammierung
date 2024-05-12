@@ -1,3 +1,10 @@
+= Entwicklerdokumentation
+:project_name: Kinosystem UFO
+:toc: left
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+
 [options="header"]
 [cols="1, 3, 3"]
 |===
@@ -5,9 +12,9 @@
 | 0.2    | 05.05.2024          | Jannik
 |===
 
-= Entwicklerdokumentation
 
-== 1. Einführung und Ziele
+
+== Einführung und Ziele
 === Zieldefinition
 
 Ziel dieser neuen webbasierten Kino-Allrounder-Software ist es, sowohl die Arbeitsprozesse der Mitarbeiter, autorisierten Mitarbeiter und des Bosses zu erleichtern, sowie als auch den Komfort und die Flexibilität der Kunden zu fördern. Die klassischen Vorgänge des ausschließlichen Vorort-Services, sowie die unübersichtliche, zeitintensive und nicht immer aktuelle Pflege von Ordner-Papier-Dokumenten für die Verwaltung, Organisation und strategische Planung sollen durch diese Software ersetzt und durch die Automatisierung für alle beteiligten Personen erleichtert werden.
@@ -27,7 +34,7 @@ Alle Rollen sind dabei klar voneinander getrennt. Ein unregistrierter Nutzer kan
 Zusammenfassend soll eine solide, sichere, erweiterbare, zentrale webbasierte Kino-Allrounder Software entstehen, welche mehr Kunden anlocken soll und den Arbeitsaufwand des Personals und des Chefs verringern soll.
 
 
-=== 1.2 Qualitätsanforderungen
+=== Qualitätsanforderungen
 
 Um die Qualität der Software beurteiln zu können, wurden die folgenden, durch die Software zu erfüllenden, Qualitätsmerkmale definiert:
 Hinweis: Die nachfolgenden Erläuterungen wurden von https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO/IEC 25010 Software Quality Model^] und https://github.com/HOME-programming-pub/videoshop/blob/2aa60ddfa2ead70c23d8a655ff0f748e1fbec330/src/main/asciidoc/developer_documentation.adoc[HOME-programming-pub/videoshop] adaptiert.
@@ -53,18 +60,47 @@ Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, 
 |Sicherheit                 |   |   |   | X |
 |===
 
-== 2. Randbedingungen
-* Hardware-Vorgaben
-* Software-Vorgaben
-* Vorgaben zum Betrieb des Software
+== Randbedingungen
+=== Hardware Spezifikationen
+Eine Liste der erforderlichen Geräte/Hardware zur Ausführung und Verwendung der Anwendung.
 
-== 3. Kontextabgrenzung
-* Kontextdiagramm
+- Server
+- Computer
+- Tastatur
+- Maus
 
-== 4. Lösungsstrategie
-=== 4.1 Erfüllung der Qualitätsziele
+=== Software Spezifikationen
+Eine Liste der erforderlichen Software zur Ausführung und Verwendung der Anwendung.
+
+Für die Ausführung der Anwendung ist die folgende (oder neuere) Java-Version erforderlich:
+
+- Java 22
+
+
+Zur Verwendung der Anwendung sind die folgenden (oder neuere) Browser-Versionen erforderlich:
+
+- Edge 124.0
+- Firefox 125.0
+- Google Chrome 126.0
+- Opera 109.0
+
+=== Produktnutzung
+Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
+
+Das Kundenportal kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
+Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv bedienbar sein, wodurch sich die Mitarbeiter und der Chef schnell daran gewöhnen können.
+
+Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die Anwendung zugänglich sein (z.B. sollten Mitarbeiter  keine SQL-Anfragen formulieren müssen)
+
+== Kontextabgrenzung
+=== Kontextdiagramm
+[[context_diagram_d_c4]]
+image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
+
+== Lösungsstrategie
+=== Erfüllung der Qualitätsziele
+
 Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderungen an. Sie wurde Teilweise von https://github.com/HOME-programming-pub/videoshop/blob/main/src/main/asciidoc/developer_documentation.adoc#architecture-decisions inspiriert.
-
 [options="header"]
 |===
 |Qualitätsziel |Lösungsansatz
@@ -82,14 +118,18 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 |===
 
 
-=== 4.2 Softwarearchitektur
+=== Softwarearchitektur
 * Beschreibung der Architektur anhand der Top-Level-Architektur oder eines Client-Server-Diagramms
 
-=== 4.3 Entwurfsentscheidungen
-* Verwendete Muster
-* Persistenz
-* Benutzeroberfläche
-* Verwendung externer Frameworks
+=== Entwurfsentscheidungen
+==== Verwendete Muster
+
+==== Persistenz
+
+==== Benutzeroberfläche
+
+
+=== Verwendung externer Frameworks
 
 [options="header", cols="1,2,3"]
 |===
@@ -97,15 +137,22 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 |... |... |...
 |===
 
-==== 4.3.3 UI-Design
+
+====  UI-Design
 [[Nutzerinterface]]
 image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
 
 Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden Links des Navigationsmenüs sowie Seitenneuladende Aktionen (bspw. Ticket hinzufügen) weggelassen.
 
-== 5. Bausteinsicht
-* Package-Diagramm
+== Bausteinsicht
+=== Package-Diagramm
+NOTE: If your package structure is more nested as in this example, add an *UML package diagram* to this document. This diagram only shows the packages of the application, their containment structure, and \<<use>>-relationships between them. The goal is to give an overview of the detailed architecture._
+
+_Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-package-diagram-example.html_
+
+
 === Entwurfsklassendiagramme der einzelnen Packages
+
 ==== Kassensubsystem
 
 [options="header"]
@@ -116,6 +163,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 
 
 ==== Kundenportal
+
 
 
 image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Entwurfsklassendiagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
@@ -146,10 +194,17 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 
 ==== Operativsystem
 
+image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Entwurfsklassendiagramm.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Operativsystems", align=center]
 [options="header"]
 |===
 |Klasse/Enumeration |Description
-|... |...
+|Event |Eine Klasse für alle externen Events die in gemieteten Kinosälen stadtfinden können
+|EventDataInitializer |Eine Implementation des DataInitializer, der Event Testdaten beim Starten des Programms erzeugt
+|EventAdministrationController |Ein Spring MVC Controller, der Veranstaltungen auflisten und Events hinzufügen kann
+|BusinessDataDashboardController |Ein Spring MVC Controller, der auf Anfrage ein Dashboard mit Wirtschaftsdaten sendet
+|PriceAdjustController |Ein Spring MVC Controller, der ees ermöglicht Preise und Rabattierung anzupassen
+|StaffManageController |Ein Spring MVC Controller mit dem man Mitarbeiterkonten anzeigen, erstellen und bearbeiten kann
+|EventRepository |Eine Implementation eines GRUD-Interfaces, dass Event Daten verwaltet
 |===
 
 
@@ -161,7 +216,8 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 |... |...
 |===
 
-=== 5.1 Rückverfolgbarkeit zwischen Analyse- und Entwurfsmodell
+
+=== Rückverfolgbarkeit zwischen Analyse- und Entwurfsmodell
 _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analysemodell._
 
 [options="header"]
@@ -170,7 +226,17 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 |... |...
 |===
 
-== 6. Laufzeitsicht
+== Laufzeitsicht
 * Darstellung der Komponenteninteraktion anhand eines Sequenzdiagramms, welches die relevantesten Interaktionen darstellt.
 
+=== Kassensubsystem
 
+
+=== Kundenportal
+
+
+=== Verwaltungssystem
+
+
+=== Operativsystem
+image::./models/design/Operativsystem/Sequenzdiagramm/Operativsystem_Sequenzdiagramm.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Operativsystems für die Event Controller Funktionen", align=center]

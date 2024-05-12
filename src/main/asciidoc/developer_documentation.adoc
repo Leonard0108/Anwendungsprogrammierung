@@ -97,12 +97,66 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 |... |... |...
 |===
 
+==== 4.3.3 UI-Design
+[[Nutzerinterface]]
+image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
+
+Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden Links des Navigationsmenüs sowie Seitenneuladende Aktionen (bspw. Ticket hinzufügen) weggelassen.
+
 == 5. Bausteinsicht
 * Package-Diagramm
-* Entwurfsklassendiagramme der einzelnen Packages
+=== Entwurfsklassendiagramme der einzelnen Packages
+==== Kassensubsystem
 
 [options="header"]
 |=== 
+|Klasse/Enumeration |Description
+|... |...
+|===
+
+
+==== Kundenportal
+
+
+image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Entwurfsklassendiagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+| DeleteReservationController | Spring MVC-Controller für das Anzeigen und Löschen von Reservierungen
+| Film | Modellklasse für Filme
+| FilmDataInitialiser | Eine Implementieruung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
+| FilmRepository | Repository-Interface zum Verwalten von Filmen
+| IndexController | Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
+| MakeReservationController | Spring MVC-Controller für das Erstellen von Reservierungen
+| Reservation | Datenklasse für Reservierungen
+| ReservationRepository |Repository-Interface zum Verwalten von Reservierungen
+| ViewProgramController | Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und ändern des Programms
+|===
+
+
+==== Verwaltungssystem
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+|... |...
+|===
+
+
+==== Operativsystem
+
+[options="header"]
+|===
+|Klasse/Enumeration |Description
+|... |...
+|===
+
+
+==== Loginsystem
+
+[options="header"]
+|===
 |Klasse/Enumeration |Description
 |... |...
 |===

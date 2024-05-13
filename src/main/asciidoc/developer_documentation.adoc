@@ -131,7 +131,11 @@ image::./models/design/SoftwareArchitektur/Client-Server_Ansicht.svg[Client Serv
 === Entwurfsentscheidungen
 ==== Verwendete Muster
 
+* Spring MVC
+
 ==== Persistenz
+
+Es wird eine H2 Datenbank benutzt, die über Spring Data JPA Java Klassen in die Tabellen verbindet. Persistenz wird über Spring Data JPA sichergestellt.
 
 ==== Benutzeroberfläche
 [[Nutzerinterface]]

@@ -201,23 +201,16 @@ image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Ent
 |BusinessDataDashboardController |Ein Spring MVC Controller, der auf Anfrage ein Dashboard mit Wirtschaftsdaten sendet
 |PriceAdjustController |Ein Spring MVC Controller, der ees ermöglicht Preise und Rabattierung anzupassen
 |StaffManageController |Ein Spring MVC Controller mit dem man Mitarbeiterkonten anzeigen, erstellen und bearbeiten kann
-|EventRepository |Eine Implementierung eines GRUD-Interfaces, dass Event Daten verwaltet
+|EventRepository |Eine Implementation eines GRUD-Interfaces, dass Event Daten verwaltet
 |===
 
 
-==== Login-System
-[[registration-flow]]
-image::./models/design/LoginSystem/registration-flow.drawio[Registrierungsklassendiagramm, 100%, 100%, pdfwidth=100%, title= "Registrieungsdiagramm", align=center]
+==== Loginsystem
+
 [options="header"]
 |===
 |Klasse/Enumeration |Description
-|UserEntry              |Eine Klasse, die als Datenspeicher für Nutzerdaten gedacht ist
-                         und die Klasse Useraccount extended und einige Daten (die Adresse) hinzufügt.
-|LoginController        |Ein MVC Controller, der auf das Spring-Framework. Dieser dient als Kommunikation
-                         zwischen Front-End und weiterleiten von Informationen an das Backend.
-|UserService            |Stellt das Backend dar, welches die Daten vom Controller entgegennimmt, speichert, aus redundanzen prüft und,
-                         An- und Abmeldungen übernimmt.
-|Login-/RegistrationForm|Stellt vor allem Datenkapselungen bereit. Dienen zur Interaktion der anderen Klassen miteinander.
+|... |...
 |===
 
 

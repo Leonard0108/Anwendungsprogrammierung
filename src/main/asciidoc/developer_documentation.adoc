@@ -166,6 +166,8 @@ _Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-packag
 
 ==== Kassensubsystem
 
+image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
+
 [options="header"]
 |=== 
 |Klasse/Enumeration |Beschreibung

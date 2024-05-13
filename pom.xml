@@ -7,9 +7,9 @@
     <artifactId>cinemasystem</artifactId>
     <version>4.0.0</version>
 
-    <name>UFO CinemaSystem</name>
-    <description>Managementsoftware for UFO Ciname GmbH</description>
-    <url>https://cinemasystem.ufo.de</url>
+	<name>UFO CinemaSystem</name>
+	<description>Managementsoftware for UFO Cinema GmbH</description>
+	<url>https://cinemasystem.ufo.de</url>
 
     <parent>
         <groupId>de.tudresden.inf.st.lab</groupId>

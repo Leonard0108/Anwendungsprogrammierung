@@ -1,20 +1,28 @@
 package de.ufo.cinemasystem.datainitializer;
 
+import java.util.Random;
+
+import org.javamoney.moneta.Money;
 import org.salespointframework.core.DataInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Snacks.SnackType;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 
-import java.util.Random;
+@Component
+// Testdaten der Snacks werden nach Filmen und Kinosälen
+// erstellt (deshalb: Order = 5)
+@Order(5)
+public class SnacksDataInitializer implements DataInitializer {
 
-import org.javamoney.moneta.Money;
+    private SnacksRepository snacksrepository;
+    private static final Logger LOG = LoggerFactory.getLogger(SnacksDataInitializer.class);
 
-public class SnacksInitializer implements DataInitializer {
-
-    private final SnacksRepository snacksrepository;
-
-    SnacksInitializer(SnacksRepository snacksRepository) {
+    SnacksDataInitializer(SnacksRepository snacksRepository) {
         this.snacksrepository = snacksRepository;
     }
 

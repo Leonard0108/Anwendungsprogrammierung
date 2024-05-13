@@ -1,0 +1,13 @@
+== 4. Review - PT Meilenstein
+
+== Priorität
+- Entwicklerdokumentation beenden(dann E-Mail an Karol)
+- danach mit Implememtierungsphase beginnen(Grundfunktionalität in 2 Wochen fertig)
+
+=== Entwickler Doku
+- 1.2 Qualitätsanforderungen: genauer erläutern
+- 4.3.3 Benutzeroberläche: Rückwärtskanten nutzen, bzw. Aufzählung von weggelassenen Teilen
+
+=== Preisgestaltung
+- erstmal statisch
+- in funktionale Anforderung einfügen (KANN)

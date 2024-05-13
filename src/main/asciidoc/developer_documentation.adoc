@@ -10,6 +10,7 @@
 |===
 |Version | Bearbeitungsdatum   | Autor 
 | 0.2    | 05.05.2024          | Jannik
+| 0.3    | 13.05.2025          | Jannik, Yannick, Tobias
 |===
 
 
@@ -127,7 +128,10 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 ==== Persistenz
 
 ==== Benutzeroberfläche
+[[Nutzerinterface]]
+image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
 
+Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden Links des Navigationsmenüs sowie Seitenneuladende Aktionen (bspw. Ticket hinzufügen) weggelassen.
 
 === Verwendung externer Frameworks
 
@@ -137,12 +141,6 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 |... |... |...
 |===
 
-
-====  UI-Design
-[[Nutzerinterface]]
-image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
-
-Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden Links des Navigationsmenüs sowie Seitenneuladende Aktionen (bspw. Ticket hinzufügen) weggelassen.
 
 == Bausteinsicht
 === Package-Diagramm
@@ -157,7 +155,7 @@ _Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-packag
 
 [options="header"]
 |=== 
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 |... |...
 |===
 
@@ -166,14 +164,14 @@ _Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-packag
 
 
 
-image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Entwurfsklassendiagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
+image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
 
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 | DeleteReservationController | Spring MVC-Controller für das Anzeigen und Löschen von Reservierungen
 | Film | Modellklasse für Filme
-| FilmDataInitialiser | Eine Implementieruung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
+| FilmDataInitialiser | Eine Implementierung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
 | FilmRepository | Repository-Interface zum Verwalten von Filmen
 | IndexController | Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
 | MakeReservationController | Spring MVC-Controller für das Erstellen von Reservierungen
@@ -185,9 +183,11 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 
 ==== Verwaltungssystem
 
+image::./models/design/Verwaltungssystem/verwaltung_klasse.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Verwaltungssystem", align=center]
+
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 |... |...
 |===
 
@@ -197,7 +197,7 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Entwurfsklassendiagramm.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Operativsystems", align=center]
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 |Event |Eine Klasse für alle externen Events die in gemieteten Kinosälen stadtfinden können
 |EventDataInitializer |Eine Implementation des DataInitializer, der Event Testdaten beim Starten des Programms erzeugt
 |EventAdministrationController |Ein Spring MVC Controller, der Veranstaltungen auflisten und Events hinzufügen kann
@@ -212,7 +212,7 @@ image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Ent
 
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 |... |...
 |===
 
@@ -236,7 +236,7 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 image::./models/design/Kundenportal/webportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]
 
 === Verwaltungssystem
-
+image::./models/design/Verwaltungssystem/verwaltung_sequenz.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen", align=center]
 
 === Operativsystem
 image::./models/design/Operativsystem/Sequenzdiagramm/Operativsystem_Sequenzdiagramm.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Operativsystems für die Event Controller Funktionen", align=center]

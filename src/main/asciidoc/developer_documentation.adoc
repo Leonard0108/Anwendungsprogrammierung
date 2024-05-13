@@ -58,8 +58,25 @@ Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, 
 |Quality Demand           | 1 | 2 | 3 | 4 | 5
 |Wartbarkeit              |   |   |   |   | X
 |Nutzbarkeit              |   |   |   | X | 
-|Sicherheit                 |   |   |   | X |
+|Sicherheit               |   |   |   | X |
 |===
+
+
+Im folgenden werden die Merkmale näher beleuchtet.
+
+==== Wartbarkeit
+Das zu entwickelnde System muss hochgradig wartbar sein, da bei einer Kinokette der Größe der UFO Kinos davon auszugehen ist, 
+das dass System mehrere Jahre, vielleicht Jahrzehnte, in Benutzung sein wird. Hinzu kommt, dass Ausfälle im Produktiveinsatz schnell
+teuer werden können, wenn die Kasse streikt und daher kein Kartenverkauf möglich ist.
+
+==== Nutzbarkeit
+Das System muss einfach sowohl für Kunden als auch für Mitarbeiter zu bedienen sein. Einschränkungen in der Bedienbarkeit führen bei Kunden in erster Linie dazu, das sie Aufgaben an Mitarbeiter delegieren, oder aber auch, dass sie einfach versuchen, spontan an der Kasse karten zu kaufen, was möglicherweise nicht mehr rechzeitig vor Beginn geschehen kann. Auf Mitarbeiterseite führt eine schlechte Nutzbarkeit i erster Linie zu einer geringeren mittleren Rate an Aktionen (Reservierungen, Verkäufen) pro Zeit bzw. längeren Einzelaktionen (Programm festlegen, Säle Vermieten, Effektivität einer Veränderung in der Häufigkeit eines Films beurteilen). Schlimmstenfalls drohen Wirtschaftseinbußen, wenn bspw. Leute nicht rechtzeitig ihre Karten erwerben können oder jemand Snacks mit natürlich oder gesetzlich bedingter maximaler Lagerdauer in falscher Quantität bestellt.
+
+==== Sicherheit
+Das System muss robust sein, da ein Ausfall während der Geschäftszeit Geldeinbußen für das Kino durch nicht verkaufbare Karten bedeutet.
+Zudem würde ein Ausfall die Kundschaft verärgern, die damit möglicherweise zur Konkurrenz abwandern. Hinzu kommen durch die Speicherung
+von E-Mail-Adressen Verpflichtungen durch die Datenschutz-Grundverordnung sowie ein möglicher Imageschaden für das Kino im Falle eines 
+Datenlecks, insbesondere wenn sich die Art der Passwortspeicherung als unzulänglich herausstellen sollte.
 
 == Randbedingungen
 === Hardware Spezifikationen

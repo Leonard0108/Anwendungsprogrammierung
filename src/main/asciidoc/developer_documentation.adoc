@@ -270,5 +270,7 @@ image::./models/design/Kundenportal/webportal_sequenzdiagram.drawio.svg[Sequenz 
 === Verwaltungssystem
 image::./models/design/Verwaltungssystem/verwaltung_sequenz.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen", align=center]
 
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_verleih.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die RentFilmController-Funktionen", align=center]
+
 === Operativsystem
 image::./models/design/Operativsystem/Sequenzdiagramm/Operativsystem_Sequenzdiagramm.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Operativsystems für die Event Controller Funktionen", align=center]

@@ -268,7 +268,7 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 image::./models/design/Kundenportal/webportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]
 
 === Verwaltungssystem
-image::./models/design/Verwaltungssystem/verwaltung_sequenz.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen", align=center]
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_program.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen", align=center]
 
 image::./models/design/Verwaltungssystem/verwaltung_sequenz_verleih.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die RentFilmController-Funktionen", align=center]
 

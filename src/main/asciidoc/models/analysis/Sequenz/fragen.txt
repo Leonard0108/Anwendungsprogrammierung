@@ -1,0 +1,20 @@
+Gibt eine Rolle, welche als reale Person auftritt (aktuell einfach "Person"), soll diese auch mit ins UseCase Diagramm?
+
+Rolle "Nutzer" (im UseCase Diagramm) umbenennen in "unangemeldeter Nutzer"
+
+System "Website" umbenennen (im UseCase Diagramm), da nun alles auf der Website läuft, z.B. "Online-Kundensystem"
+
+UseCases weiter aufteilen:
+- reservieren -> Reservierung anzeigen, Reservierung bearbeiten, Reservierung anlegen
+=> jeweils online und vor Ort/telefonisch
+
+TODO: 
+- einheitliche Button-Bezeichnungen festlegen
+
+Sequenzdiagramme: Abläufe noch mal checken, z.B. wann werden Tickets nur geblockt und wann gebucht.
+
+Programm anpassen-> auf Saal festlegen, wann läuft welcher Film
+
+TODO:
+- Verwaltungssystem und Operativ-System abstimmen
+- Online Reservieren und Stornieren abstimmen

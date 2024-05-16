@@ -7,7 +7,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,9 +41,9 @@ public class LoginController {
 
 	@PostMapping(path = "/register", consumes = "application/json")
 	String register(@RequestBody RegistrationRequest registrationRequest) {
-		userService.signUp(registrationRequest.email, registrationRequest.password, registrationRequest.forename, registrationRequest.name,
+		/*userService.signUp(registrationRequest.email, registrationRequest.password, registrationRequest.forename, registrationRequest.name,
 			registrationRequest.streetAddress, registrationRequest.houseNumber, registrationRequest.city, registrationRequest.state, registrationRequest.country,
-			registrationRequest.phoneNumber);
+			registrationRequest.phoneNumber);*/
 		return "redirect:/lunar_space_port/register";
 	}
 
@@ -79,7 +78,7 @@ public class LoginController {
 			return "redirect:/lunar_space_port/test";
 		}
 
-		userService.login(signInRequest.email, signInRequest.password);
+		//userService.login(signInRequest.email, signInRequest.password);
 		System.out.println("Nutzer wurde angemeldet.");
 
 		return "welcome";

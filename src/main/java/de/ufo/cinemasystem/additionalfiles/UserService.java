@@ -72,6 +72,7 @@ public class UserService {
 
 	public UserEntry login(LoginForm form)
 	{
-		Assert.notNull(LoginForm, "Login form must not be null");
+		//Assert.notNull(LoginForm, "Login form must not be null");
+		return null;
 	}
 }

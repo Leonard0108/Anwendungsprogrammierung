@@ -270,7 +270,7 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 * Darstellung der Komponenteninteraktion anhand eines Sequenzdiagramms, welches die relevantesten Interaktionen darstellt.
 
 === Kassensubsystem
-image::./models/design/Kassensubsystem/sequenzdiagram_Kassensubsystem.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kassensubsystem für die MakeOrderController-Funktionen", align=center]
+image::./models/design/Kassensubsystem/SequenzDiagramm_Kassensubsystem.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kassensubsystem für die MakeOrderController-Funktionen", align=center]
 
 === Kundenportal
 image::./models/design/Kundenportal/kundenportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]

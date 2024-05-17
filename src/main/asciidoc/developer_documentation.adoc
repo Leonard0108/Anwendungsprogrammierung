@@ -188,7 +188,15 @@ image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class
 [options="header"]
 |=== 
 |Klasse/Enumeration |Beschreibung
-|... |...
+|MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und hinzufügen von Tickets und Snacks
+| DeleteOrderController | SpringMVC Controller für das Löschen von Bestellungen 
+| Order | Modelklasse für Bestellungen
+| Ticket | Modellklasse für Tickets
+| Snacks |  Modellklasse für Snacks
+| Reservation |  Modellklasse für Reservierungen
+| SnacksRepository | Repository-Interface zum Verwalten von Snacks
+| ReservationRepository | Repository-Interface zum Verwalten von Reservierungen 
+| SnackDataInitializer | Implementierung des DataInititializer Interfaces, zum erzeugen von Dummy/Testdaten
 |===
 
 
@@ -208,7 +216,7 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 | IndexController | Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
 | MakeReservationController | Spring MVC-Controller für das Erstellen von Reservierungen
 | Reservation | Datenklasse für Reservierungen
-| ReservationRepository |Repository-Interface zum Verwalten von Reservierungen
+| ReservationRepository | Repository-Interface zum Verwalten von Reservierungen
 | ViewProgramController | Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und ändern des Programms
 |===
 
@@ -262,7 +270,7 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 * Darstellung der Komponenteninteraktion anhand eines Sequenzdiagramms, welches die relevantesten Interaktionen darstellt.
 
 === Kassensubsystem
-
+image::./models/design/Kassensubsystem/sequenzdiagram_Kassensubsystem.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kassensubsystem für die MakeOrderController-Funktionen", align=center]
 
 === Kundenportal
 image::./models/design/Kundenportal/kundenportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]

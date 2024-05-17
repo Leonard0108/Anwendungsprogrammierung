@@ -228,7 +228,20 @@ image::./models/design/Verwaltungssystem/verwaltung_klasse.drawio.svg[Class diag
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung
-|... |...
+| CinemaHall | Modellklasse für Kino-Säle
+| CinemaHallRepository | Repository-Interface zum Verwalten von Kino-Sälen
+| CinemaShow | Modellklasse für Kino-Vorführungen
+| CinemaShowDayEntry | Meta-Klasse, welche alle Veranstaltungen einer Spielwoche im Kino beinhaltet
+| CinemaShowRepository | Repository-Interface zum Verwalten von Kino-Vorführungen
+| Film | Modellklasse für Filme
+| FilmProvider | Modellklasse für Film-Anbieter
+| FilmProviderRepository | Repository-Interface zum Verwalten von Film-Anbietern
+| FilmRepository | Repository-Interface zum Verwalten von Filmen
+| ManageStorageController | SpringMVC Controller für das Anzeigen, Anlegen und Bearbeiten (hinzufügen und entfernen) von Items (aktuell nur Snacks) im Lager des Kinos
+| RentFilmController | SpringMVC Controller für das Anzeigen von aktuell geliehenen Filmen, die Verlängerung der Film-Leihe, Anzeigen von neuen verfügbaren Filmen und die Möglichkeit diese auszuleihen.
+| Seat | Modellklasse für Plätze
+| SnacksRepository | Repository-Interface zum Verwalten von Snacks
+| ViewProgramController | SpringMVC Controller für das Anzeigen des (aktuellen) Kinoprogramms (wochenweise) und das Hinzufügen von neuen Kino-Vorführungen
 |===
 
 

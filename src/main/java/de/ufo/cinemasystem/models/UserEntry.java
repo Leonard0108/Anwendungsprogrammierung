@@ -1,81 +1,100 @@
 package de.ufo.cinemasystem.models;
 
+
+
+
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
 
-import de.ufo.cinemasystem.additionalfiles.UserRole;
+import java.io.Serializable;
+import java.util.UUID;
 
-import java.util.Collection;
-import java.util.Collections;
-
+import org.jmolecules.ddd.types.Identifier;
+import org.salespointframework.core.AbstractAggregateRoot;
+import org.salespointframework.useraccount.UserAccount;
 
 
 @Getter
 @Setter
-@NoArgsConstructor
-@EqualsAndHashCode
 @Entity
+@NoArgsConstructor
 @Table(name = "user")
-public class UserEntry implements UserDetails {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long     id;
-	Boolean  enabled;
-	Boolean  locked;
-	String   name;
-	String   lastName;
-	String   email;
-	String   password;
-	String   streetAddress;
-	String   streetNumber;
-	String   city;
-	String   state;
-	String   country;
-	String   phoneNumber;
-	@Enumerated(EnumType.STRING)
-	UserRole userRole;
+public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>   {
 
+	private @EmbeddedId UserIdentifier id = new UserIdentifier();
 
+	private String address;
 
+	// (｡◕‿◕｡)
+	// Jedem Customer ist genau ein UserAccount zugeordnet, um später über den UserAccount an den
+	// Customer zu kommen, speichern wir den hier
+	@OneToOne //
+	private UserAccount userAccount;
 
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.name());
-		return Collections.singletonList(simpleGrantedAuthority);
+	public UserEntry(UserAccount userAccount, String address) {
+		this.userAccount = userAccount;
+		this.address = address;
 	}
 
 
 
+	@Embeddable
+	public static final class UserIdentifier implements Identifier, Serializable {
 
-	@Override
-	public String getUsername() {
-		return "";
-	}
+		private static final long serialVersionUID = 7740660930809051850L;
+		private final UUID identifier;
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+		/**
+		 * Creates a new unique identifier for {@link UserEntry}s.
+		 */
+		UserIdentifier() {
+			this(UUID.randomUUID());
+		}
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return !locked;
-	}
+		/**
+		 * Only needed for property editor, shouldn't be used otherwise.
+		 *
+		 * @param identifier The string representation of the identifier.
+		 */
+		UserIdentifier(UUID identifier) {
+			this.identifier = identifier;
+		}
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
 
-	@Override
-	public boolean isEnabled() {
-		return false;
+			final int prime = 31;
+			int result = 1;
+
+			result = prime * result + (identifier == null ? 0 : identifier.hashCode());
+
+			return result;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+
+			if (obj == this) {
+				return true;
+			}
+
+			if (!(obj instanceof UserIdentifier that)) {
+				return false;
+			}
+
+			return this.identifier.equals(that.identifier);
+		}
 	}
 }

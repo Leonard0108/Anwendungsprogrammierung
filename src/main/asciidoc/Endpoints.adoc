@@ -1,0 +1,57 @@
+= Endpunkte des Webshops
+
+
+:toc: left
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+
+
+== Endpunkte Login-Controller
+=== Haputadresse
+- lunar_space_port/
+
+=== Unteradressen
+- register
+- registration
+- login
+- checkLoginData
+
+
+== BusinessDataDashboardController
+- statistics
+
+== DeleteReservationController
+- /my-reservations
+- /my-reservations/delete/
+- /cancel-reservation/{id}
+
+== IndexController
+- /
+
+== EventAdministrationController
+=== Hauptreferenz
+- /manage
+
+=== Unteradressen
+- /rooms
+
+== MakeReservationController
+=== Hauptreferenz
+- /reserve-spots
+
+=== Unteradressen
+- /add-ticket
+- /remove-ticket
+- /commit
+
+== RentFilmController
+- rent-films
+
+== ViewProgrammController
+=== Hauptreferenz
+- /current-films
+
+=== UnterAdressen
+- /{year}/{week}
+-

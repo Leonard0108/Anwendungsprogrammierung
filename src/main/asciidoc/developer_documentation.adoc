@@ -174,9 +174,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 
 == Bausteinsicht
 === Package-Diagramm
-NOTE: If your package structure is more nested as in this example, add an *UML package diagram* to this document. This diagram only shows the packages of the application, their containment structure, and \<<use>>-relationships between them. The goal is to give an overview of the detailed architecture._
-
-_Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-package-diagram-example.html_
+image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
 
 
 === Entwurfsklassendiagramme der einzelnen Packages
@@ -266,7 +264,30 @@ image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Ent
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung
-|... |...
+|DeleteReservationController |Spring MVC-Controller für das Anzeigen und Löschen von Reservierungen
+
+|Film |Modellklasse für Filme
+
+|FilmDataInitialiser
+|Eine Implementieruung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
+
+|FilmRepository
+|Repository-Interface zum Verwalten von Filmen
+
+|IndexController
+|Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
+
+|MakeReservationController
+|Spring MVC-Controller für das Erstellen von Reservierungen
+
+|Reservation
+|Datenklasse für Reservierungen
+
+|ReservationRepository
+|Repository-Interface zum Verwalten von Reservierungen
+
+|ViewProgramController
+|Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und ändern des Programms
 |===
 
 
@@ -276,7 +297,17 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 [options="header"]
 |===
 |Klasse/Enumeration (Analysemodell) |Klasse/Enumeration (Entwurfsmodell)
-|... |...
+|Bestellung   |MakeReservationController, DeleteReservationController
+|CinemaHall   |MakeReservationController, DeleteReservationController
+|CinemaShow   |ViewProgrammController
+|Event        |EventAdministrationController
+|Film         |RentFilmController
+|FilmProvider |RentFilmController
+|Reservation  |MakeReservationController, DeleteReservationController
+|Seat         |MakeReservationController
+|Snacks       |ManageStorage
+|Ticket       |MakeReservationController, DeleteReservationController
+|UserEntry    |LoginController.
 |===
 
 == Laufzeitsicht

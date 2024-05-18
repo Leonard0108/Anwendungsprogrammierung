@@ -1,0 +1,26 @@
+= Meeting 18.05.2024
+
+Anwesenheit: Lukas, Jannik, Yannick, Tobias
+
+Datum: 18.05.2024
+
+Beginn: 15:00
+
+Ende: 16:00
+
+Nächstes Meeting 25.5.2024
+
+'''
+
+== Aktuelle Aufgaben
+- Korrektur von fehlerhaften img-Datei-Verlinkungen und Diagrammen
+- Nur detailliertes Beschreiben von Klassen, die von eigenem Bereich benötigt werden.
+
+
+== Folgende Aufgaben
+- Implementierung der Grundfunktionalität,
+- Erstellen von Wünschen was noch für HTML-/ CSS-Ergänzungen gebraucht wird,
+- Erstellen von Liste mit Endpunkten (Lukas), wird in asciidoc-Ordner
+- Einbindung von JavaDoc,
+- Quellcode
+- Filmverleih mit

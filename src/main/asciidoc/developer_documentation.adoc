@@ -10,6 +10,7 @@
 |===
 |Version | Bearbeitungsdatum   | Autor 
 | 0.2    | 05.05.2024          | Jannik
+| 0.3    | 13.05.2025          | Jannik, Yannick, Tobias
 |===
 
 
@@ -57,8 +58,25 @@ Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, 
 |Quality Demand           | 1 | 2 | 3 | 4 | 5
 |Wartbarkeit              |   |   |   |   | X
 |Nutzbarkeit              |   |   |   | X | 
-|Sicherheit                 |   |   |   | X |
+|Sicherheit               |   |   |   | X |
 |===
+
+
+Im folgenden werden die Merkmale näher beleuchtet.
+
+==== Wartbarkeit
+Das zu entwickelnde System muss hochgradig wartbar sein, da bei einer Kinokette der Größe der UFO Kinos davon auszugehen ist, 
+das dass System mehrere Jahre, vielleicht Jahrzehnte, in Benutzung sein wird. Hinzu kommt, dass Ausfälle im Produktiveinsatz schnell
+teuer werden können, wenn die Kasse streikt und daher kein Kartenverkauf möglich ist.
+
+==== Nutzbarkeit
+Das System muss einfach sowohl für Kunden als auch für Mitarbeiter zu bedienen sein. Einschränkungen in der Bedienbarkeit führen bei Kunden in erster Linie dazu, das sie Aufgaben an Mitarbeiter delegieren, oder aber auch, dass sie einfach versuchen, spontan an der Kasse karten zu kaufen, was möglicherweise nicht mehr rechzeitig vor Beginn geschehen kann. Auf Mitarbeiterseite führt eine schlechte Nutzbarkeit i erster Linie zu einer geringeren mittleren Rate an Aktionen (Reservierungen, Verkäufen) pro Zeit bzw. längeren Einzelaktionen (Programm festlegen, Säle Vermieten, Effektivität einer Veränderung in der Häufigkeit eines Films beurteilen). Schlimmstenfalls drohen Wirtschaftseinbußen, wenn bspw. Leute nicht rechtzeitig ihre Karten erwerben können oder jemand Snacks mit natürlich oder gesetzlich bedingter maximaler Lagerdauer in falscher Quantität bestellt.
+
+==== Sicherheit
+Das System muss robust sein, da ein Ausfall während der Geschäftszeit Geldeinbußen für das Kino durch nicht verkaufbare Karten bedeutet.
+Zudem würde ein Ausfall die Kundschaft verärgern, die damit möglicherweise zur Konkurrenz abwandern. Hinzu kommen durch die Speicherung
+von E-Mail-Adressen Verpflichtungen durch die Datenschutz-Grundverordnung sowie ein möglicher Imageschaden für das Kino im Falle eines 
+Datenlecks, insbesondere wenn sich die Art der Passwortspeicherung als unzulänglich herausstellen sollte.
 
 == Randbedingungen
 === Hardware Spezifikationen
@@ -121,28 +139,38 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 === Softwarearchitektur
 * Beschreibung der Architektur anhand der Top-Level-Architektur oder eines Client-Server-Diagramms
 
+[[SoftwareArchitektur_diagram_d_c4]]
+image::./models/design/SoftwareArchitektur/Software-Architecture_C4.svg[Software Architektur diagram, 100%, 100%, pdfwidth=100%, title= "Software Architektur Diagram des {project_name}", align=center]
+
+[[Client_Server_View]]
+image::./models/design/SoftwareArchitektur/Client-Server_Ansicht.svg[Client Server Ansicht, 100%, 100%, pdfwidth=100%, title= "Software Architektur Client Server Diagram des {project_name}", align=center]
+
 === Entwurfsentscheidungen
 ==== Verwendete Muster
 
+* Spring MVC
+
 ==== Persistenz
 
+Es wird eine H2 Datenbank benutzt, die über Spring Data JPA Java Klassen in die Tabellen verbindet. Persistenz wird über Spring Data JPA sichergestellt.
+
 ==== Benutzeroberfläche
-
-
-=== Verwendung externer Frameworks
-
-[options="header", cols="1,2,3"]
-|===
-|Externes Package |Verwendet von |Warum
-|... |... |...
-|===
-
-
-====  UI-Design
 [[Nutzerinterface]]
 image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
 
 Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden Links des Navigationsmenüs sowie Seitenneuladende Aktionen (bspw. Ticket hinzufügen) weggelassen.
+
+=== Verwendung externer Frameworks
+
+[options="header"]
+|===
+|Externe Bibliothek|Kategorie|Beschreibung
+|Spring Boot|Allgemeine Nutzung|Funktionen für das MVC System der Anwendung
+|Spring Data JPA|Datenanbindung|Hilfe beim Datenzugriff und der Einhaltung der Persistenz
+|Salespoint|Allgemeine Nutzung|Allgmeine Funktionen einer MVC Anwendung mit vorgefertigten Strukturen
+|Thymeleaf|UserInterface|Darstellungshilfe für HTML 
+|===
+
 
 == Bausteinsicht
 === Package-Diagramm
@@ -155,10 +183,20 @@ _Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-packag
 
 ==== Kassensubsystem
 
+image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
+
 [options="header"]
 |=== 
-|Klasse/Enumeration |Description
-|... |...
+|Klasse/Enumeration |Beschreibung
+|MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und hinzufügen von Tickets und Snacks
+| DeleteOrderController | SpringMVC Controller für das Löschen von Bestellungen 
+| Order | Modelklasse für Bestellungen
+| Ticket | Modellklasse für Tickets
+| Snacks |  Modellklasse für Snacks
+| Reservation |  Modellklasse für Reservierungen
+| SnacksRepository | Repository-Interface zum Verwalten von Snacks
+| ReservationRepository | Repository-Interface zum Verwalten von Reservierungen 
+| SnackDataInitializer | Implementierung des DataInititializer Interfaces, zum erzeugen von Dummy/Testdaten
 |===
 
 
@@ -166,29 +204,44 @@ _Example: https://www.uml-diagrams.org/multi-layered-web-architecture-uml-packag
 
 
 
-image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Entwurfsklassendiagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
+image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
 
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 | DeleteReservationController | Spring MVC-Controller für das Anzeigen und Löschen von Reservierungen
 | Film | Modellklasse für Filme
-| FilmDataInitialiser | Eine Implementieruung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
+| FilmDataInitialiser | Eine Implementierung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
 | FilmRepository | Repository-Interface zum Verwalten von Filmen
 | IndexController | Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
 | MakeReservationController | Spring MVC-Controller für das Erstellen von Reservierungen
 | Reservation | Datenklasse für Reservierungen
-| ReservationRepository |Repository-Interface zum Verwalten von Reservierungen
+| ReservationRepository | Repository-Interface zum Verwalten von Reservierungen
 | ViewProgramController | Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und ändern des Programms
 |===
 
 
 ==== Verwaltungssystem
 
+image::./models/design/Verwaltungssystem/verwaltung_klasse.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Verwaltungssystem", align=center]
+
 [options="header"]
 |===
-|Klasse/Enumeration |Description
-|... |...
+|Klasse/Enumeration |Beschreibung
+| CinemaHall | Modellklasse für Kino-Säle
+| CinemaHallRepository | Repository-Interface zum Verwalten von Kino-Sälen
+| CinemaShow | Modellklasse für Kino-Vorführungen
+| CinemaShowDayEntry | Meta-Klasse, welche alle Veranstaltungen einer Spielwoche im Kino beinhaltet
+| CinemaShowRepository | Repository-Interface zum Verwalten von Kino-Vorführungen
+| Film | Modellklasse für Filme
+| FilmProvider | Modellklasse für Film-Anbieter
+| FilmProviderRepository | Repository-Interface zum Verwalten von Film-Anbietern
+| FilmRepository | Repository-Interface zum Verwalten von Filmen
+| ManageStorageController | SpringMVC Controller für das Anzeigen, Anlegen und Bearbeiten (hinzufügen und entfernen) von Items (aktuell nur Snacks) im Lager des Kinos
+| RentFilmController | SpringMVC Controller für das Anzeigen von aktuell geliehenen Filmen, die Verlängerung der Film-Leihe, Anzeigen von neuen verfügbaren Filmen und die Möglichkeit diese auszuleihen.
+| Seat | Modellklasse für Plätze
+| SnacksRepository | Repository-Interface zum Verwalten von Snacks
+| ViewProgramController | SpringMVC Controller für das Anzeigen des (aktuellen) Kinoprogramms (wochenweise) und das Hinzufügen von neuen Kino-Vorführungen
 |===
 
 
@@ -197,7 +250,7 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Entwurfsklassendiagramm.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Operativsystems", align=center]
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 |Event |Eine Klasse für alle externen Events die in gemieteten Kinosälen stadtfinden können
 |EventDataInitializer |Eine Implementation des DataInitializer, der Event Testdaten beim Starten des Programms erzeugt
 |EventAdministrationController |Ein Spring MVC Controller, der Veranstaltungen auflisten und Events hinzufügen kann
@@ -212,7 +265,7 @@ image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Ent
 
 [options="header"]
 |===
-|Klasse/Enumeration |Description
+|Klasse/Enumeration |Beschreibung
 |... |...
 |===
 
@@ -230,13 +283,15 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 * Darstellung der Komponenteninteraktion anhand eines Sequenzdiagramms, welches die relevantesten Interaktionen darstellt.
 
 === Kassensubsystem
-
+image::./models/design/Kassensubsystem/SequenzDiagramm_Kassensubsystem.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kassensubsystem für die MakeOrderController-Funktionen", align=center]
 
 === Kundenportal
-image::./models/design/Kundenportal/webportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]
+image::./models/design/Kundenportal/kundenportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]
 
 === Verwaltungssystem
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_program.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen", align=center]
 
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_verleih.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die RentFilmController-Funktionen", align=center]
 
 === Operativsystem
 image::./models/design/Operativsystem/Sequenzdiagramm/Operativsystem_Sequenzdiagramm.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Operativsystems für die Event Controller Funktionen", align=center]

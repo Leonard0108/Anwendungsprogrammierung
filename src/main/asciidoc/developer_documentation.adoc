@@ -281,7 +281,7 @@ image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Ent
 
 
 ==== Loginsystem
-image::./models/design/LoginSystem/registration-flow.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Loginsystems", align=center]
+image::./models/design/LoginSystem/Klassendiagramm.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Loginsystems", align=center]
 
 [options="header"]
 |===

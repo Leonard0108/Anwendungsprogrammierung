@@ -1,0 +1,37 @@
+= Meeting 18.05.2024
+
+Anwesenheit: Lukas, Jannik, Yannick, Tobias
+
+Datum: 18.05.2024
+
+Beginn: 15:00
+
+Ende: 16:00
+
+Nächstes Meeting 25.5.2024
+
+'''
+
+== Aktuelle Aufgaben
+- Korrektur von fehlerhaften img-Datei-Verlinkungen und Diagrammen
+- Nur detailliertes Beschreiben von Klassen, die von eigenem Bereich benötigt werden.
+- Fertigstellen der Entwicklerdoku
+- Snacks auf Salespoint umstellen
+
+
+== Folgende Aufgaben
+- Implementierung der Grundfunktionalität: die wichtigsten UseCases sollen implementiert werden
+- Über UI Gedanken machen: Erstellen von Wünschen was noch für HTML-/ CSS-Ergänzungen gebraucht wird
+- Erstellen von Liste mit Endpunkten (Lukas), wird in asciidoc-Ordner
+- Einbindung von JavaDoc an Stellen im Quellcode die Dokumentation benötigen
+
+== Besprochen
+- Seats muss von CinemaHall in Cinemashow
+- für Seats in CinemaShow: Methoden für buchen und reservieren der Seats
+- In Seats raw in row umbenennen
+- Dokumentation im Code auf Deutsch
+- Autorisierter Mitarbeiter kann Film von Anbieter auswählen und Filme leihen. Erst wenn der Chef für den Film den Preis angegeben hat können für den Film Vorstellungen ertsellt werden
+- Interface für Auflistung aller CinemaShows und Events in eine Strucktur (wird genutzt um freie Slots zu finden)
+
+== Fragen
+Soll der Anbieter Filme direkt ausleihen können oder nur dem Chef einen Vorschlag machen?

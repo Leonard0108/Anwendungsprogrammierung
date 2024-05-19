@@ -11,8 +11,8 @@
 |Version | Bearbeitungsdatum   | Autor 
 | 0.2    | 05.05.2024          | Jannik
 | 0.3    | 13.05.2025          | Jannik, Yannick, Tobias
+| 1.0    | 19.05.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll
 |===
-
 
 
 == Einführung und Ziele
@@ -38,6 +38,7 @@ Zusammenfassend soll eine solide, sichere, erweiterbare, zentrale webbasierte Ki
 === Qualitätsanforderungen
 
 Um die Qualität der Software beurteiln zu können, wurden die folgenden, durch die Software zu erfüllenden, Qualitätsmerkmale definiert:
+
 Hinweis: Die nachfolgenden Erläuterungen wurden von https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO/IEC 25010 Software Quality Model^] und https://github.com/HOME-programming-pub/videoshop/blob/2aa60ddfa2ead70c23d8a655ff0f748e1fbec330/src/main/asciidoc/developer_documentation.adoc[HOME-programming-pub/videoshop] adaptiert.
 
 Wartbarkeit::
@@ -64,19 +65,23 @@ Vorhandensein einex "X" ausgewiesen wird. 1 entspricht einem Qualitätsmerkmal, 
 
 Im folgenden werden die Merkmale näher beleuchtet.
 
+
 ==== Wartbarkeit
 Das zu entwickelnde System muss hochgradig wartbar sein, da bei einer Kinokette der Größe der UFO Kinos davon auszugehen ist, 
 das dass System mehrere Jahre, vielleicht Jahrzehnte, in Benutzung sein wird. Hinzu kommt, dass Ausfälle im Produktiveinsatz schnell
 teuer werden können, wenn die Kasse streikt und daher kein Kartenverkauf möglich ist.
 
+
 ==== Nutzbarkeit
 Das System muss einfach sowohl für Kunden als auch für Mitarbeiter zu bedienen sein. Einschränkungen in der Bedienbarkeit führen bei Kunden in erster Linie dazu, das sie Aufgaben an Mitarbeiter delegieren, oder aber auch, dass sie einfach versuchen, spontan an der Kasse karten zu kaufen, was möglicherweise nicht mehr rechzeitig vor Beginn geschehen kann. Auf Mitarbeiterseite führt eine schlechte Nutzbarkeit i erster Linie zu einer geringeren mittleren Rate an Aktionen (Reservierungen, Verkäufen) pro Zeit bzw. längeren Einzelaktionen (Programm festlegen, Säle Vermieten, Effektivität einer Veränderung in der Häufigkeit eines Films beurteilen). Schlimmstenfalls drohen Wirtschaftseinbußen, wenn bspw. Leute nicht rechtzeitig ihre Karten erwerben können oder jemand Snacks mit natürlich oder gesetzlich bedingter maximaler Lagerdauer in falscher Quantität bestellt.
+
 
 ==== Sicherheit
 Das System muss robust sein, da ein Ausfall während der Geschäftszeit Geldeinbußen für das Kino durch nicht verkaufbare Karten bedeutet.
 Zudem würde ein Ausfall die Kundschaft verärgern, die damit möglicherweise zur Konkurrenz abwandern. Hinzu kommen durch die Speicherung
 von E-Mail-Adressen Verpflichtungen durch die Datenschutz-Grundverordnung sowie ein möglicher Imageschaden für das Kino im Falle eines 
 Datenlecks, insbesondere wenn sich die Art der Passwortspeicherung als unzulänglich herausstellen sollte.
+
 
 == Randbedingungen
 === Hardware Spezifikationen
@@ -92,33 +97,37 @@ Eine Liste der erforderlichen Software zur Ausführung und Verwendung der Anwend
 
 Für die Ausführung der Anwendung ist die folgende (oder neuere) Java-Version erforderlich:
 
-- Java 22
+- Java 17
 
 
 Zur Verwendung der Anwendung sind die folgenden (oder neuere) Browser-Versionen erforderlich:
 
 - Edge 124.0
-- Firefox 125.0
+- Firefox 126.0
 - Google Chrome 126.0
 - Opera 109.0
+
 
 === Produktnutzung
 Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte Kunden und der Kinobetreibergesellschaft UFO erreichbar.
 
 Das Kundenportal kann intuitiv von Kunden genutzt werden, da sie das Navigationslayout einer typischen Webseite besitzt.
+
 Das Kassensubsystem und das Verwaltungssystem wird wenig komplex und intuitiv bedienbar sein, wodurch sich die Mitarbeiter und der Chef schnell daran gewöhnen können.
 
 Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die Anwendung zugänglich sein (z.B. sollten Mitarbeiter  keine SQL-Anfragen formulieren müssen)
+
 
 == Kontextabgrenzung
 === Kontextdiagramm
 [[context_diagram_d_c4]]
 image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
 
+
 == Lösungsstrategie
 === Erfüllung der Qualitätsziele
 
-Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderungen an. Sie wurde Teilweise von https://github.com/HOME-programming-pub/videoshop/blob/main/src/main/asciidoc/developer_documentation.adoc#architecture-decisions inspiriert.
+Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderungen an. Sie wurde Teilweise von https://github.com/HOME-programming-pub/videoshop/blob/main/src/main/asciidoc/developer_documentation.adoc#architecture-decisions[HOME-programming-pub/videoshop] inspiriert.
 [options="header"]
 |===
 |Qualitätsziel |Lösungsansatz
@@ -129,7 +138,7 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 |Nutzbarkeit a|
 * *Learnability* Das System soll für Nutzer einfach zu verstehen sein, etwa durch klare Beschreibungen von Knöpfen und Eingabefeldern.
 * *Error handling/Nutzerschutz* Ungültige Eingaben müssen erkannt werden und dürfen nicht zu ungültigen Systemstadien führen.
-* *Accessibility* Es muss sichergestellt werden, dass diverse potentiell eingeschränkte Personen das System Nutzen können, etwa durch die verwendung geeigneter Schriftgrößen und Farbkontraste
+* *Accessibility* Es muss sichergestellt werden, dass diverse potentiell eingeschränkte Personen das System nutzen können, etwa durch die verwendung geeigneter Schriftgrößen und Farbkontraste
 |Sicherheit a|
 * *Geheimhaltung* Das System muss sicherstellen, dass nur solche Personen Zugang zu Informationen bekommen, die dafür auch autorisiert sind. Dies wird mit _Spring Security_ und _Thymeleaf_ (`sec:authorize` - tag) erledigt.
 * *Integrität* Das System muss die nicht autorisierte Modifizierung von Daten verhindern. Dies kann mit _Spring Security_ (`@PreAuthorize` - annotation) gemacht werden.
@@ -145,6 +154,7 @@ image::./models/design/SoftwareArchitektur/Software-Architecture_C4.svg[Software
 [[Client_Server_View]]
 image::./models/design/SoftwareArchitektur/Client-Server_Ansicht.svg[Client Server Ansicht, 100%, 100%, pdfwidth=100%, title= "Software Architektur Client Server Diagram des {project_name}", align=center]
 
+
 === Entwurfsentscheidungen
 ==== Verwendete Muster
 
@@ -152,13 +162,26 @@ image::./models/design/SoftwareArchitektur/Client-Server_Ansicht.svg[Client Serv
 
 ==== Persistenz
 
-Es wird eine H2 Datenbank benutzt, die über Spring Data JPA Java Klassen in die Tabellen verbindet. Persistenz wird über Spring Data JPA sichergestellt.
+Es wird eine H2 Datenbank benutzt, die über Hibernate-Annotationen (`@Entity`, etc.) Java-Klassen auf Datenbanktabellen mappt. Persistenz wird über Spring Data JPA sichergestellt.
 
 ==== Benutzeroberfläche
 [[Nutzerinterface]]
 image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
 
-Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden Links des Navigationsmenüs sowie Seitenneuladende Aktionen (bspw. Ticket hinzufügen) weggelassen.
+Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden die folgenden Elemente oder Elementgruppen weggelassen:
+
+* Links des Navigationsmenüs ( link:./../resources/templates/layout.html[layout.html] ) außerhalb der Startseite
+* Links und Knöpfe, die die aktuelle Seite (ggf. mit anderen Parametern bzw. geänderterten Serverseitiger Datenstrukturen) neu laden
+** `current-program.html`: Woche wechseln, Veranstaltung hinzufügen, Veranstaltung ändern
+** `manage-rooms.html`: Säle vermieten oder Vermietung ändern, angezeigten Saal ändern
+** `make-reservation-ticket-adder.html`: Ticket hinzufügen
+** `adjust-pricing.html`: Preise anpassen
+** `manage-storage.html`: Elemente dem Lager hinzufügen, Elemente aus dem Lager entfernen
+** `tickets-change.html`: Ticket umtauschen
+** `tickets-return.html`: Ticket zurückgeben
+** `manage-staff.html`: Mitarbeiter einstellen, Mitarbeiter ändern, Mitarbeiter entlassen
+** `buissness-data-dashboard.html`: Betrachtungszeitraum ändern
+
 
 === Verwendung externer Frameworks
 
@@ -169,16 +192,16 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 |Spring Data JPA|Datenanbindung|Hilfe beim Datenzugriff und der Einhaltung der Persistenz
 |Salespoint|Allgemeine Nutzung|Allgmeine Funktionen einer MVC Anwendung mit vorgefertigten Strukturen
 |Thymeleaf|UserInterface|Darstellungshilfe für HTML 
+|Google Charts|UserInterface|Diagrammtool für das Statistikdashboard
 |===
 
 
 == Bausteinsicht
 === Package-Diagramm
-image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
+image::./models/design/packagediagramm/PackageDiagram.drawio.svg[Package-Diagramm, 100%, 100%, pdfwidth=100%, title= "Package-Diagramm des Kinosystems", align=center]
 
 
 === Entwurfsklassendiagramme der einzelnen Packages
-
 ==== Kassensubsystem
 
 image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
@@ -186,7 +209,7 @@ image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class
 [options="header"]
 |=== 
 |Klasse/Enumeration |Beschreibung
-|MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und hinzufügen von Tickets und Snacks
+|MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und Hinzufügen von Tickets und Snacks
 | DeleteOrderController | SpringMVC Controller für das Löschen von Bestellungen 
 | Order | Modelklasse für Bestellungen
 | Ticket | Modellklasse für Tickets
@@ -199,8 +222,6 @@ image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class
 
 
 ==== Kundenportal
-
-
 
 image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
 
@@ -215,7 +236,7 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 | MakeReservationController | Spring MVC-Controller für das Erstellen von Reservierungen
 | Reservation | Datenklasse für Reservierungen
 | ReservationRepository | Repository-Interface zum Verwalten von Reservierungen
-| ViewProgramController | Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und ändern des Programms
+| ViewProgramController | Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und Ändern des Programms
 |===
 
 
@@ -260,6 +281,7 @@ image::./models/design/Operativsystem/Entwurfsklassendiagramm/Operativsystem_Ent
 
 
 ==== Loginsystem
+image::./models/design/LoginSystem/registration-flow.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Loginsystems", align=center]
 
 [options="header"]
 |===
@@ -297,17 +319,17 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 [options="header"]
 |===
 |Klasse/Enumeration (Analysemodell) |Klasse/Enumeration (Entwurfsmodell)
-|Bestellung   |MakeReservationController, DeleteReservationController
-|CinemaHall   |MakeReservationController, DeleteReservationController
-|CinemaShow   |ViewProgrammController
-|Event        |EventAdministrationController
-|Film         |RentFilmController
-|FilmProvider |RentFilmController
-|Reservation  |MakeReservationController, DeleteReservationController
-|Seat         |MakeReservationController
-|Snacks       |ManageStorage
-|Ticket       |MakeReservationController, DeleteReservationController
-|UserEntry    |LoginController.
+|Bestellung   |de.ufo.cinemasystem.models.Bestellung
+|CinemaHall   |de.ufo.cinemasystem.models.CinemaHall
+|CinemaShow   |de.ufo.cinemasystem.models.CinemaShow
+|Event        |de.ufo.cinemasystem.models.Event
+|Film         |de.ufo.cinemasystem.models.Film
+|FilmProvider |de.ufo.cinemasystem.models.FilmProvider
+|Reservation  |de.ufo.cinemasystem.models.Reservation
+|Seat         |de.ufo.cinemasystem.models.Seat
+|Snacks       |de.ufo.cinemasystem.models.Snacks
+|Ticket       |de.ufo.cinemasystem.models.Ticket
+|UserEntry    |de.ufo.cinemasystem.models.UserEntry.
 |===
 
 == Laufzeitsicht

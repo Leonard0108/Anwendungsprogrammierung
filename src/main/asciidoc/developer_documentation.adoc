@@ -173,7 +173,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 * Links des Navigationsmenüs ( link:./../resources/templates/layout.html[layout.html] ) außerhalb der Startseite
 * Links und Knöpfe, die die aktuelle Seite (ggf. mit anderen Parametern bzw. geänderterten Serverseitiger Datenstrukturen) neu laden
 ** `current-program.html`: Woche wechseln, Veranstaltung hinzufügen, Veranstaltung ändern
-** `manage-rooms.html`: Säle vermieten oder Vermietung ändern
+** `manage-rooms.html`: Säle vermieten oder Vermietung ändern, angezeigten Saal ändern
 ** `make-reservation-ticket-adder.html`: Ticket hinzufügen
 ** `adjust-pricing.html`: Preise anpassen
 ** `manage-storage.html`: Elemente dem Lager hinzufügen, Elemente aus dem Lager entfernen

@@ -198,7 +198,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 
 == Bausteinsicht
 === Package-Diagramm
-image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=100%, title= "UI-Verlauf des Kinosystems", align=center]
+image::./models/design/packagediagramm/PackageDiagram.drawio.svg[Package-Diagramm, 100%, 100%, pdfwidth=100%, title= "Package-Diagramm des Kinosystems", align=center]
 
 
 === Entwurfsklassendiagramme der einzelnen Packages

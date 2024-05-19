@@ -5,6 +5,7 @@ import de.ufo.cinemasystem.models.UserEntry;
 import lombok.NoArgsConstructor;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +27,7 @@ import org.springframework.util.Assert;
 public class UserService {
 	public static final Role                  CUSTOMER_ROLE = Role.of("USER"); //Im Original Customer
 	private final       UserRepository        userRepository;
-	private final       UserAccountManagement userAccounts;
+	//private final       UserAccountManagement userAccounts;
 
 	/**
 	 * Creates a new {@link UserService} with the given {@link UserRepository} and
@@ -35,13 +36,14 @@ public class UserService {
 	 * @param userRepository must not be {@literal null}.
 	 * @param userAccounts must not be {@literal null}.
 	 */
-	UserService(UserRepository userRepository, UserAccountManagement userAccounts) {
+	UserService(UserRepository userRepository)//, @Qualifier("userAccountManagement") UserAccountManagement userAccounts)
+	{
 
 		Assert.notNull(userRepository, "CustomerRepository must not be null!");
-		Assert.notNull(userAccounts, "UserAccountManagement must not be null!");
+		//Assert.notNull(userAccounts, "UserAccountManagement must not be null!");
 
 		this.userRepository = userRepository;
-		this.userAccounts   = userAccounts;
+		//this.userAccounts   = userAccounts;
 	}
 
 	/**
@@ -55,9 +57,10 @@ public class UserService {
 		Assert.notNull(form, "Registration form must not be null!");
 
 		var password = Password.UnencryptedPassword.of(form.getPassword());
-		var userAccount = userAccounts.create(form.getName(), password, CUSTOMER_ROLE);
+		//var userAccount = userAccounts.create(form.getName(), password, CUSTOMER_ROLE);
 
-		return userRepository.save(new UserEntry(userAccount, form.getAddress()));
+		//return userRepository.save(new UserEntry(userAccount, form.getAddress()));
+		return null;
 	}
 
 	/**

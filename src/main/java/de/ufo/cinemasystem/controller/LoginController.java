@@ -20,13 +20,13 @@ import de.ufo.cinemasystem.repository.UserRepository;
 @RequestMapping(path = "/lunar_space_port")
 public class LoginController {
 	UserRepository  userRepository;
-	PasswordEncoder passwordEncoder;
+	//PasswordEncoder passwordEncoder;
 	UserService     userService;
 
 
 	public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService) {
 		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
+		//this.passwordEncoder = passwordEncoder;
 		this.userService = userService;
 	}
 
@@ -67,16 +67,16 @@ public class LoginController {
 	@PostMapping(path = "/checkLoginData", consumes = {"application/json"})
 	String checkLoginData(@RequestBody SignInRequest signInRequest)
 	{
-		if (signInRequest.email == null || signInRequest.password == null)
+		/*if (signInRequest.email == null || signInRequest.password == null)
 		{
 			return "redirect:/lunar_space_port/login";
 		}
 
-		if (userRepository.findByEmail(signInRequest.email).isPresent())
+		/*if (userRepository.findByEmail(signInRequest.email).isPresent())
 		{
 			System.out.println("User is already logged in.");
 			return "redirect:/lunar_space_port/test";
-		}
+		}*/
 
 		//userService.login(signInRequest.email, signInRequest.password);
 		System.out.println("Nutzer wurde angemeldet.");
@@ -89,11 +89,11 @@ public class LoginController {
 
 	@GetMapping(path = "/isLoggedIn", consumes = {"application/json"})
 	String isLoggedIn(SignInRequest signInRequestRequest) {
-		if (userRepository.findByEmail(signInRequestRequest.email).isPresent())
+		/*if (userRepository.findByEmail(signInRequestRequest.email).isPresent())
 		{
 			System.out.println("User is already logged in.");
 			return "welcome";
-		}
+		}*/
 		return "redirect:/lunar_space_port/login";
 	}
 

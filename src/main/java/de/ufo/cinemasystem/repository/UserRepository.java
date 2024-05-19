@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface UserRepository extends CrudRepository<UserEntry, Long> {
-	Optional<UserEntry> findByEmail(String email);
+	//Optional<UserEntry> findByEmail(String email);
 	@Override
 	Streamable<UserEntry> findAll();
 }

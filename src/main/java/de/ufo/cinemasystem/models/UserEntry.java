@@ -64,6 +64,8 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 			this.identifier = identifier;
 		}
 
+
+
 		/*
 		 * (non-Javadoc)
 		 * @see java.lang.Object#hashCode()

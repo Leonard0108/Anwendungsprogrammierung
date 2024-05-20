@@ -17,7 +17,7 @@ public class CinemaHall {
 	private String name;
 	private int numberOfPlaces = 0;
 	@ElementCollection
-	private final Map<Seat, Seat.SeatOccupancy> seats;
+	private final Map<Seat, Seat.PlaceGroup> seats = new TreeMap<>();
 
 	@OneToMany(mappedBy = "cinemaHall", cascade =  CascadeType.ALL)
 	private final SortedSet<CinemaShow> cinemaShows = new TreeSet<>();
@@ -25,16 +25,14 @@ public class CinemaHall {
 	@OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.ALL)
 	private final SortedSet<Event> events = new TreeSet<>();
 
-	public CinemaHall(String name/*, final Map<Seat, Seat.SeatOccupancy> seats*/) {
+	CinemaHall(String name, final Map<Seat, Seat.PlaceGroup> seats) {
 		this.name = name;
 		this.numberOfPlaces = 0;/*seats.size();*/
-		this.seats = new TreeMap<>();
+		this.seats.putAll(seats);
 		//this.seats = new TreeMap<>(seats);
 	}
 
-	public CinemaHall() {
-		this.seats = new TreeMap<>();
-	}
+	public CinemaHall() {}
 
 	public Long getId() {
 		return id;
@@ -46,15 +44,63 @@ public class CinemaHall {
 
 	public int getNumberOfPlaces() { return this.numberOfPlaces; }
 
-	public Streamable<Map.Entry<Seat, Seat.SeatOccupancy>> getSeats() {
+	/**
+	 * @return alle Sitzplätze und die dazugehörigen Platzgruppen des Kinosaals
+	 */
+	public Streamable<Map.Entry<Seat, Seat.PlaceGroup>> getSeatsAndPlaceGroups() {
 		return Streamable.of(this.seats.entrySet());
+	}
+
+	/**
+	 * @param row Reihe des Platzes beginnend bei index 0
+	 * @param pos Position des Platzes in jeder Reihe beginnend bei index 0, max. 99
+	 * @return Sitz und Platzgruppe, wenn der Platz an der Stelle im Kinosaal vorhanden ist, sonst empty
+	 */
+	public Optional<Map.Entry<Seat, Seat.PlaceGroup>> getSeatAndPlaceGroup(int row, int pos) {
+		Optional<Seat> optSeat = getSeat(row, pos);
+		if(optSeat.isEmpty()) return Optional.empty();
+		Seat seat = optSeat.get();
+
+		return Optional.of(new AbstractMap.SimpleEntry<>(seat, seats.get(seat)));
+	}
+
+	/**
+	 * @return alle Sitzplätze des Kinosaals
+	 */
+	public Streamable<Seat> getSeats() {
+		return Streamable.of(this.seats.keySet());
+	}
+
+	/**
+	 * @param row Reihe des Platzes beginnend bei index 0
+	 * @param pos Position des Platzes in jeder Reihe beginnend bei index 0, max. 99
+	 * @return Sitz, wenn der Platz an der Stelle im Kinosaal vorhanden ist, sonst empty
+	 */
+	public Optional<Seat> getSeat(int row, int pos) {
+		return this.seats.keySet().stream().filter(s -> s.getRow() == row && s.getPosition() == pos).findAny();
+	}
+
+	/**
+	 * @param row Reihe des Platzes beginnend bei index 0
+	 * @param pos Position des Platzes in jeder Reihe beginnend bei index 0, max. 99
+	 * @return Platzgruppe, wenn der Platz an der Stelle im Kinosaal vorhanden ist, sonst empty
+	 */
+	public Optional<Seat.PlaceGroup> getPlaceGroup(int row, int pos) {
+		return getSeat(row, pos).map(seats::get);
+	}
+
+	/**
+	 * @param seat Sitzplatz an einer Stelle
+	 * @return Platzgruppe, wenn der Platz an der Stelle im Kinosaal vorhanden ist, sonst empty
+	 */
+	public Optional<Seat.PlaceGroup> getPlaceGroup(Seat seat) {
+		return Optional.ofNullable(seats.get(seat));
 	}
 
 	// siehe: https://www.tabnine.com/code/java/methods/org.springframework.data.util.Streamable/of
 	public Streamable<CinemaShow> getCinemaShows() {
 		return Streamable.of(this.cinemaShows);
 	}
-
 
 	public Streamable<Event> getEvents() {
 		return Streamable.of(this.events);

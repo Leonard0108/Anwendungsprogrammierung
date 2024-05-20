@@ -31,6 +31,7 @@ public class CinemaShowService {
 		}
 		cinemaShow.initSeats(seats);
 
+		// Stelle Bidirektional Verbindung zwischen Kinosaal und Vorführung her
 		cinemaHall.addCinemaShow(cinemaShow);
 
 		// Kinosaal und Vorführung müssen gespeichert werden,

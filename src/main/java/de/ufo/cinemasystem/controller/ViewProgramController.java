@@ -4,6 +4,7 @@
  */
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.models.CinemaShowService;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,21 +44,24 @@ public class ViewProgramController {
 
 	private CinemaShowRepository cinemaShowRepository;
 
+	private CinemaShowService cinemaShowService;
+
 	private CinemaHallRepository cinemaHallRepository;
 
 	private FilmRepository filmRepository;
 
-	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaHallRepository cinemaHallRepository,
-								 FilmRepository filmRepository) {
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
+								 CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository) {
 		this.cinemaShowRepository = cinemaShowRepository;
+		this.cinemaShowService = cinemaShowService;
 		this.cinemaHallRepository = cinemaHallRepository;
 		this.filmRepository = filmRepository;
 	}
         
-        @GetMapping("/current-films/")
+        @GetMapping("/current-films")
         public String getCurrentWeekProgram(Model m){
             LocalDateTime now = LocalDateTime.now();
-            return getCurrentProgram(now.getYear(), getWeekOfYear(now), m);
+			return "redirect:/current-films/" + now.getYear() + "/" + getWeekOfYear(now);
         }
 
     /**
@@ -115,16 +119,7 @@ public class ViewProgramController {
 		}
 		// TODO: Prüfe ob sich Events oder Filme überlappen, wenn ja Abbruch und Fehler
 		// Erstelle neue Vorführung
-		CinemaShow show = new CinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get());
-		CinemaHall roomInst = optRoomInst.get();
-
-		// Stelle Bidirektional Verbindung zwischen Kinosaal und Vorführung her
-		roomInst.addCinemaShow(show);
-
-		// Aktualisiere den Kinosaal in der Datenbank
-		cinemaHallRepository.save(roomInst);
-		// Füge Vorführung in die Datenbank ein
-		cinemaShowRepository.save(show);
+		cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get(), optRoomInst.get());
 
 		return "redirect:/current-films/{year}/{week}";
 	}

@@ -146,10 +146,7 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 
 
 === Softwarearchitektur
-* Beschreibung der Architektur anhand der Top-Level-Architektur oder eines Client-Server-Diagramms
-
-[[SoftwareArchitektur_diagram_d_c4]]
-image::./models/design/SoftwareArchitektur/Software-Architecture_C4.svg[Software Architektur diagram, 100%, 100%, pdfwidth=100%, title= "Software Architektur Diagram des {project_name}", align=center]
+* Beschreibung der Architektur anhand eines Client-Server-Diagramms
 
 [[Client_Server_View]]
 image::./models/design/SoftwareArchitektur/Client-Server_Ansicht.svg[Client Server Ansicht, 100%, 100%, pdfwidth=100%, title= "Software Architektur Client Server Diagram des {project_name}", align=center]

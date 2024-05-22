@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-05-22T06:50:44.130Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="b53YK8PBaYPcIyQCvV7H" version="24.4.4" type="device">
+<mxfile host="app.diagrams.net" modified="2024-05-22T11:18:58.211Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0" etag="iwnzpPrFPJatGA-hwjuT" version="24.4.4" type="device">
   <diagram id="lcPPTLjZXhJ7gWwHTS3b" name="Page-1">
     <mxGraphModel dx="1434" dy="754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -55,7 +55,7 @@
         <mxCell id="37" value="Event" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="565.5" y="280" width="110" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="39" value="Bestellung" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+        <mxCell id="39" value="Order" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="450" y="330" width="115.5" height="50" as="geometry" />
         </mxCell>
         <mxCell id="40" value="CinemaHall" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">

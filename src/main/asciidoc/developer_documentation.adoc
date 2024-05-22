@@ -121,7 +121,7 @@ Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die
 == Kontextabgrenzung
 === Kontextdiagramm
 [[context_diagram_d_c4]]
-image::./models/design/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
+image::./models/design/Kontext/Kontext.drawio.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
 
 
 == Lösungsstrategie

@@ -24,11 +24,11 @@ In unserem Kino-System UFO spielen zum einen die Kunden (Customer) eine wesentli
 
 Das System beinhaltet allerdings noch weitere Rollen (User), welche alle relational aufeinander aufbauen, was so viel bedeutet wie, jede Rolle mit einem höheren Status erlangt zusätzlich zu allen Rechten der unteren Rolle, weitere Rechte, um mit dem Kinosystem zu interagieren.
 
-Als Erstes haben wir da den "normalen" Mitarbeiter, welcher die Verkaufsoberfläche des Systems nutzen kann, um z.B. Karten und Snacks zu verkaufen und Reservierungen vom Kunden (vor Ort / telefonisch) direkt anzulegen.
+Als Erstes haben wir da den "normalen" Mitarbeiter (CoWorker), welcher die Verkaufsoberfläche des Systems nutzen kann, um z.B. Karten und Snacks zu verkaufen und Reservierungen vom Kunden (vor Ort / telefonisch) direkt anzulegen.
 
-Dann gibt es den autorisierten Mitarbeiter, welcher neben den Aktionen des "normalen" Mitarbeiters zusätzlich noch Verwaltungsaufgaben im System einsehen, anlegen und ändern kann. Darunter zählt z.B. das Anpassen des Programms, Anbieter vergleichen, Zentrallager verwalten und aktuelle Filmstatistiken einsehen.
+Dann gibt es den autorisierten Mitarbeiter (AuthorizedCoWorker), welcher neben den Aktionen des "normalen" Mitarbeiters zusätzlich noch Verwaltungsaufgaben im System einsehen, anlegen und ändern kann. Darunter zählt z.B. das Anpassen des Programms, Anbieter vergleichen, Zentrallager verwalten und aktuelle Filmstatistiken einsehen.
 
-Die höchste Rolle besitzt der Chef, dieser kann alle Funktionen des Systems benutzen. Hierbei kommen administrative und operative Systemoptionen hinzu, wie z.B. das externe Vermieten von Sälen, die gesamte Personalverwaltung, das Anpassen von Preisen, sowie das Einsehen von Wirtschaftsdaten (Diagramme in einem Dashboard).
+Die höchste Rolle besitzt der Chef (Boss), dieser kann alle Funktionen des Systems benutzen. Hierbei kommen administrative und operative Systemoptionen hinzu, wie z.B. das externe Vermieten von Sälen, die gesamte Personalverwaltung, das Anpassen von Preisen, sowie das Einsehen von Wirtschaftsdaten (Diagramme in einem Dashboard).
 
 Alle Rollen sind dabei klar voneinander getrennt. Ein unregistrierter Nutzer kann dabei nur sich das Programm anzeigen lassen und sich neu registrieren (erhällt die Rolle des Kunden). Jeder Nutzer-Account besteht aus 3 Datenfeldern: E-Mail, Benutzername, Passwort. Die E-Mail dient dazu, damit ein Nutzer mit böswilligen Absichten sich nicht beliebig viele Nutzer-Accounts erstellt, um das Kino komplett mit Reservierungen auszubuchen. Dabei wird die E-Mail auf Validität geprüft und ebenfalls ob ein starkes Passwort vorhanden ist. Durch eine erfolgreiche Anmeldung erhällt der Nutzer seine jeweilige Rolle im System und dementsprechend die nötigen Rechte, um die aufgeführten UseCases auszuführen, zu können. Alle freigeschalteten Funktionen sind in der Navigationsbar auf der Startseite der Website des Kinos zentral durch Untermenüs aufrufbar. In jedem Untermenü kann eine oder mehrere Aktion(en) durchgeführt werden. Dies kann der Zugang zu Informationen sein, sowie das Editieren und Konfigurieren von aktuellen Geschehnissen im Kino. Zum Schutz vor unbefugtem Zugriff aus das System wird eine Nutzer-Session nach einer gewissen Zeit geschlossen und der Nutzer muss sich erneut anmelden.
 
@@ -73,7 +73,7 @@ teuer werden können, wenn die Kasse streikt und daher kein Kartenverkauf mögli
 
 
 ==== Nutzbarkeit
-Das System muss einfach sowohl für Kunden als auch für Mitarbeiter zu bedienen sein. Einschränkungen in der Bedienbarkeit führen bei Kunden in erster Linie dazu, das sie Aufgaben an Mitarbeiter delegieren, oder aber auch, dass sie einfach versuchen, spontan an der Kasse karten zu kaufen, was möglicherweise nicht mehr rechzeitig vor Beginn geschehen kann. Auf Mitarbeiterseite führt eine schlechte Nutzbarkeit i erster Linie zu einer geringeren mittleren Rate an Aktionen (Reservierungen, Verkäufen) pro Zeit bzw. längeren Einzelaktionen (Programm festlegen, Säle Vermieten, Effektivität einer Veränderung in der Häufigkeit eines Films beurteilen). Schlimmstenfalls drohen Wirtschaftseinbußen, wenn bspw. Leute nicht rechtzeitig ihre Karten erwerben können oder jemand Snacks mit natürlich oder gesetzlich bedingter maximaler Lagerdauer in falscher Quantität bestellt.
+Das System muss einfach sowohl für Kunden als auch für Mitarbeiter zu bedienen sein. Einschränkungen in der Bedienbarkeit führen bei Kunden in erster Linie dazu, das sie Aufgaben an Mitarbeiter delegieren, oder aber auch, dass sie einfach versuchen, spontan an der Kasse karten zu kaufen, was möglicherweise nicht mehr rechzeitig vor Beginn geschehen kann. Auf Mitarbeiterseite führt eine schlechte Nutzbarkeit in erster Linie zu einer geringeren mittleren Rate an Aktionen (Reservierungen, Verkäufen) pro Zeit bzw. längeren Einzelaktionen (Programm festlegen, Säle Vermieten, Effektivität einer Veränderung in der Häufigkeit eines Films beurteilen). Schlimmstenfalls drohen Wirtschaftseinbußen, wenn bspw. Leute nicht rechtzeitig ihre Karten erwerben können oder jemand Snacks mit natürlich oder gesetzlich bedingter maximaler Lagerdauer in falscher Quantität bestellt.
 
 
 ==== Sicherheit
@@ -121,13 +121,14 @@ Alle Daten sollen persistent in einer Datenbank gespeichert werden und über die
 == Kontextabgrenzung
 === Kontextdiagramm
 [[context_diagram_d_c4]]
-image::./models/analysis/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
+image::./models/design/Kontext/Kontext.svg[Context diagram, 100%, 100%, pdfwidth=100%, title= "Kontextdiagramm des {project_name}", align=center]
 
 
 == Lösungsstrategie
 === Erfüllung der Qualitätsziele
 
 Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderungen an. Sie wurde Teilweise von https://github.com/HOME-programming-pub/videoshop/blob/main/src/main/asciidoc/developer_documentation.adoc#architecture-decisions[HOME-programming-pub/videoshop] inspiriert.
+
 [options="header"]
 |===
 |Qualitätsziel |Lösungsansatz
@@ -136,7 +137,7 @@ Die Nachfolgende Tabelle gibt die Lösungsansätze für die Qualitätsanforderun
 * *Wiederverwendbarkeit* Einzelkomponenten sollen von andere Systeme weitergenutzt werden können
 * *Modifizierbarkeit* Die Anwendung soll ohne Fehler erweitert oder modifiziert werden können.
 |Nutzbarkeit a|
-* *Learnability* Das System soll für Nutzer einfach zu verstehen sein, etwa durch klare Beschreibungen von Knöpfen und Eingabefeldern.
+* *Learnability* Das System soll für die Nutzenden einfach zu verstehen sein, etwa durch klare Beschreibungen von Knöpfen und Eingabefeldern.
 * *Error handling/Nutzerschutz* Ungültige Eingaben müssen erkannt werden und dürfen nicht zu ungültigen Systemstadien führen.
 * *Accessibility* Es muss sichergestellt werden, dass diverse potentiell eingeschränkte Personen das System nutzen können, etwa durch die verwendung geeigneter Schriftgrößen und Farbkontraste
 |Sicherheit a|
@@ -168,7 +169,7 @@ image::./models/design/dialog-flow.drawio.svg[UI-Diagram, 100%, 100%, pdfwidth=1
 Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werden kann. Zur besseren Übersichtlichkeit wurden die folgenden Elemente oder Elementgruppen weggelassen:
 
 * Links des Navigationsmenüs ( link:./../resources/templates/layout.html[layout.html] ) außerhalb der Startseite
-* Links und Knöpfe, die die aktuelle Seite (ggf. mit anderen Parametern bzw. geänderterten Serverseitiger Datenstrukturen) neu laden
+* Links und Knöpfe, die die aktuelle Seite (ggf. mit anderen Parametern bzw. geänderten Serverseitiger Datenstrukturen) neu laden
 ** `current-program.html`: Woche wechseln, Veranstaltung hinzufügen, Veranstaltung ändern
 ** `manage-rooms.html`: Säle vermieten oder Vermietung ändern, angezeigten Saal ändern
 ** `make-reservation-ticket-adder.html`: Ticket hinzufügen
@@ -206,7 +207,7 @@ image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class
 [options="header"]
 |=== 
 |Klasse/Enumeration |Beschreibung
-|MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und Hinzufügen von Tickets und Snacks
+| MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und Hinzufügen von Tickets und Snacks
 | DeleteOrderController | SpringMVC Controller für das Löschen von Bestellungen 
 | Order | Modelklasse für Bestellungen
 | Ticket | Modellklasse für Tickets
@@ -321,7 +322,6 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 |Chef         |de.ufo.cinemasystem.models.UserEntry, salespointframework.UserAccount, salespointframework.Role
 |Event        |de.ufo.cinemasystem.models.Event
 |Film         |de.ufo.cinemasystem.models.Film
-|FilmProvider |de.ufo.cinemasystem.models.FilmProvider
 |Mitarbeiter  |de.ufo.cinemasystem.models.UserEntry, salespointframework.UserAccount, salespointframework.Role
 |Platz        |de.ufo.cinemasystem.models.Seat
 |Reservierung |de.ufo.cinemasystem.models.Reservation

@@ -8,10 +8,8 @@ import de.ufo.cinemasystem.models.CinemaShowService;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -122,6 +120,20 @@ public class ViewProgramController {
 		cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get(), optRoomInst.get());
 
 		return "redirect:/current-films/{year}/{week}";
+	}
+
+	@GetMapping("/current-films/detail/{id}")
+	public String detailCinemaShow(@PathVariable Long id, Model m) {
+		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
+		if(optionalCinemaShow.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films";
+		}
+		CinemaShow cinemaShow = optionalCinemaShow.get();
+
+		m.addAttribute("cinemaShow", cinemaShow);
+
+		return "film-detail";
 	}
 
 	public static class CinemaShowDayEntry {

@@ -68,10 +68,16 @@
                             <h2 th:text="${oneDayCinemaShows.getDayDateHeadline()}">Wochentag, Datum</h2>
                             <div class="current-film-tile-sections-day">
                                 <div class="film-card" th:each="cinemaShow : ${oneDayCinemaShows.getCinemaShows()}">
-                                    <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${cinemaShow.getFilm().getTitle()}" alt="Filmtitel">
+                                    <a th:href="'/current-films/detail/' + ${cinemaShow.getId()}" href="/current-films/detail/1">
+                                        <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${cinemaShow.getFilm().getTitle()}" alt="Filmtitel">
+                                    </a>
                                     <div class="film-card-main-section">
+                                        <!--
                                         <a class="film-card-film-link" href="/film/info?id=fg4g54g4f54g5454" title="Filmtitel | UFO Kinos"
-                                           th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</a>
+                                        th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</a>-->
+                                        <p>
+                                            <span th:text="${cinemaShow.getFilm().getTitle()}"></span>
+                                        </p>
                                         <p>
                                             <span th:text="${#temporals.format(cinemaShow.getStartDateTime(), 'HH:mm')} + ' Uhr, '
                                             + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - ' + ${cinemaShow.getCinemaHall().getName()}">

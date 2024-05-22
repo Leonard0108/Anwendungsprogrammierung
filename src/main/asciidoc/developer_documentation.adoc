@@ -316,17 +316,20 @@ _Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analy
 [options="header"]
 |===
 |Klasse/Enumeration (Analysemodell) |Klasse/Enumeration (Entwurfsmodell)
+|Autorisierter Mitarbeiter  |de.ufo.cinemasystem.models.UserEntry, salespointframework.UserAccount, salespointframework.Role
 |Bestellung   |de.ufo.cinemasystem.models.Bestellung
-|CinemaHall   |de.ufo.cinemasystem.models.CinemaHall
-|CinemaShow   |de.ufo.cinemasystem.models.CinemaShow
+|Chef         |de.ufo.cinemasystem.models.UserEntry, salespointframework.UserAccount, salespointframework.Role
 |Event        |de.ufo.cinemasystem.models.Event
 |Film         |de.ufo.cinemasystem.models.Film
 |FilmProvider |de.ufo.cinemasystem.models.FilmProvider
-|Reservation  |de.ufo.cinemasystem.models.Reservation
-|Seat         |de.ufo.cinemasystem.models.Seat
+|Mitarbeiter  |de.ufo.cinemasystem.models.UserEntry, salespointframework.UserAccount, salespointframework.Role
+|Platz        |de.ufo.cinemasystem.models.Seat
+|Reservierung |de.ufo.cinemasystem.models.Reservation
+|Saal         |de.ufo.cinemasystem.models.CinemaHall
 |Snacks       |de.ufo.cinemasystem.models.Snacks
 |Ticket       |de.ufo.cinemasystem.models.Ticket
-|UserEntry    |de.ufo.cinemasystem.models.UserEntry.
+|User         |de.ufo.cinemasystem.models.UserEntry, salespointframework.UserAccount, salespointframework.Role
+|Vorführung   |de.ufo.cinemasystem.models.CinemaShow
 |===
 
 == Laufzeitsicht

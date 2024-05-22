@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1 th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</h1>
+
+            <div class="film-detail-box">
+                <p class="fsk-label.fsk-18">
+                    <img class="big-film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" alt="Filmtitel">
+                </p>
+
+                <h2>Inhaltsangabe:</h2>
+                <p>
+                    <span th:text="${cinemaShow.getFilm().getDesc()}">Film-Beschreibung</span>
+                </p>
+
+                <h2>Altersfreigabe:</h2>
+                <p>
+                    <span th:class="'fsk-label fsk-' + ${cinemaShow.getFilm().getFskAge()}" class="fsk-label fsk-12"
+                          th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
+                </p>
+                <h2>Ort:</h2>
+                <p>
+                    <span th:text="${cinemaShow.getCinemaHall().getName()}">Kinosaal</span>
+                </p>
+                <h2>Zeit:</h2>
+                <p>
+                    <span th:text="${#temporals.format(cinemaShow.getStartDateTime(), 'HH:mm')} + ' Uhr, '
+                                            + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - '
+                                            + ${cinemaShow.getFilm().getTimePlaying()} + 'min'">
+                                                HH:mm Uhr, dd.MM.yyyy - mm min
+                    </span>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -4,13 +4,12 @@
  */
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.models.CinemaShowService;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,21 +42,24 @@ public class ViewProgramController {
 
 	private CinemaShowRepository cinemaShowRepository;
 
+	private CinemaShowService cinemaShowService;
+
 	private CinemaHallRepository cinemaHallRepository;
 
 	private FilmRepository filmRepository;
 
-	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaHallRepository cinemaHallRepository,
-								 FilmRepository filmRepository) {
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
+								 CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository) {
 		this.cinemaShowRepository = cinemaShowRepository;
+		this.cinemaShowService = cinemaShowService;
 		this.cinemaHallRepository = cinemaHallRepository;
 		this.filmRepository = filmRepository;
 	}
         
-        @GetMapping("/current-films/")
+        @GetMapping("/current-films")
         public String getCurrentWeekProgram(Model m){
             LocalDateTime now = LocalDateTime.now();
-            return getCurrentProgram(now.getYear(), getWeekOfYear(now), m);
+			return "redirect:/current-films/" + now.getYear() + "/" + getWeekOfYear(now);
         }
 
     /**
@@ -92,7 +94,7 @@ public class ViewProgramController {
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
 
-		return "current-films-renderer";
+		return "current-films";
 	}
 
 	@PostMapping("/current-films/{year}/{week}")
@@ -115,18 +117,55 @@ public class ViewProgramController {
 		}
 		// TODO: Prüfe ob sich Events oder Filme überlappen, wenn ja Abbruch und Fehler
 		// Erstelle neue Vorführung
-		CinemaShow show = new CinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get());
-		CinemaHall roomInst = optRoomInst.get();
-
-		// Stelle Bidirektional Verbindung zwischen Kinosaal und Vorführung her
-		roomInst.addCinemaShow(show);
-
-		// Aktualisiere den Kinosaal in der Datenbank
-		cinemaHallRepository.save(roomInst);
-		// Füge Vorführung in die Datenbank ein
-		cinemaShowRepository.save(show);
+		cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get(), optRoomInst.get());
 
 		return "redirect:/current-films/{year}/{week}";
+	}
+
+	@GetMapping("/cinema-shows/{id}")
+	public String detailCinemaShow(@PathVariable Long id, Model m) {
+		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
+		if(optionalCinemaShow.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films";
+		}
+		CinemaShow cinemaShow = optionalCinemaShow.get();
+
+		m.addAttribute("cinemaShow", cinemaShow);
+		m.addAttribute("allFilms", filmRepository.findAll());
+
+		return "film-detail";
+	}
+
+	@PostMapping("/cinema-shows/{id}/edit")
+	public String editCinemaShow(@PathVariable Long id,
+								 @RequestParam("film") Long film,
+								 @RequestParam("editTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime editTime,
+								 Model m) {
+		Optional<Film> optFilmInst = filmRepository.findById(film);
+		if(optFilmInst.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films/{year}/{week}";
+		}
+
+		cinemaShowService.update(id)
+			.setStartDateTime(editTime)
+			.setFilm(optFilmInst.get())
+			.save();
+
+		return "redirect:/cinema-shows/{id}";
+	}
+
+	@PostMapping("/cinema-shows/{id}/delete")
+	public String deleteCinemaShow(@PathVariable Long id, Model m) {
+		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
+		if(optionalCinemaShow.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films";
+		}
+		cinemaShowService.deleteCinemaShow(optionalCinemaShow.get());
+
+		return "redirect:/current-films";
 	}
 
 	public static class CinemaShowDayEntry {

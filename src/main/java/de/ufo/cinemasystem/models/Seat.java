@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.models;
 
+import de.ufo.cinemasystem.repository.SeatRepository;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -10,8 +11,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "SEATS")
 public class Seat implements Comparable<Seat>{
-	private int raw;
-	private int number;
+	private int row;
+	private int position;
 
 	@Id
 	private Long id;
@@ -20,23 +21,28 @@ public class Seat implements Comparable<Seat>{
 		BOUGHT,
 		RESERVED,
 		FREE
-
 	}
 
-	public Seat(int raw, int number) {
-		this.raw = raw;
-		this.number = number;
-		this.id = 100L * raw + number;
+	public enum PlaceGroup {
+		GROUP_1,
+		GROUP_2,
+		GROUP_3
+	}
+
+	public Seat(int row, int position) {
+		this.row = row;
+		this.position = position;
+		this.id = 100L * row + position;
 	}
 
 	public Seat() {}
 
-	public int getRaw() {
-		return this.raw;
+	public int getRow() {
+		return this.row;
 	}
 
-	public int getNumber() {
-		return this.number;
+	public int getPosition() {
+		return this.position;
 	}
 
 	public Long getId() {
@@ -45,7 +51,7 @@ public class Seat implements Comparable<Seat>{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getRaw(), getNumber());
+		return Objects.hash(getId(), getRow(), getPosition());
 	}
 
 	@Override
@@ -56,15 +62,15 @@ public class Seat implements Comparable<Seat>{
 			return false;
 
 		return Objects.equals(getId(), seat.getId()) &&
-			Objects.equals(getRaw(), seat.getRaw()) &&
-			Objects.equals(getNumber(), seat.getNumber());
+			Objects.equals(getRow(), seat.getRow()) &&
+			Objects.equals(getPosition(), seat.getPosition());
 	}
 
 	@Override
 	public int compareTo(Seat seat) {
-		int compareResult = Integer.compare(this.raw, seat.raw);
+		int compareResult = Integer.compare(this.row, seat.row);
 		if (compareResult == 0) {
-			return Integer.compare(this.number, seat.number);
+			return Integer.compare(this.position, seat.position);
 		}
 		return compareResult;
 	}

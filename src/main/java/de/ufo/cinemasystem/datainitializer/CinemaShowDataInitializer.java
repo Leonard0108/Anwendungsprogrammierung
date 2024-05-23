@@ -1,9 +1,7 @@
 package de.ufo.cinemasystem.datainitializer;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
-import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.Film;
+import de.ufo.cinemasystem.models.*;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
@@ -30,16 +28,21 @@ public class CinemaShowDataInitializer implements DataInitializer {
 
 	private final CinemaShowRepository cinemaShowRepository;
 
+	private final CinemaShowService cinemaShowService;
+
 	private final CinemaHallRepository cinemaHallRepository;
 
 	private final FilmRepository filmRepository;
 
-	CinemaShowDataInitializer(CinemaShowRepository cinemaShowRepository, CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository) {
+	CinemaShowDataInitializer(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
+							  CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository) {
 		Assert.notNull(cinemaShowRepository, "CinemaShowRepository must not be null!");
+		Assert.notNull(cinemaShowService, "CinemaShowService must not be null!");
 		Assert.notNull(cinemaHallRepository, "cinemaHallRepository must not be null!");
 		Assert.notNull(filmRepository, "FilmRepository must not be null!");
 
 		this.cinemaShowRepository = cinemaShowRepository;
+		this.cinemaShowService = cinemaShowService;
 		this.cinemaHallRepository = cinemaHallRepository;
 		this.filmRepository = filmRepository;
 	}
@@ -63,20 +66,12 @@ public class CinemaShowDataInitializer implements DataInitializer {
 		// Filme werden zufällig aus den aktuellen bestehenden Filmen ausgewählt.
 		// Der Basis-Preis ist konstant.
 		for(int i = 0; i < 10; i++) {
-			show = new CinemaShow(
-					LocalDateTime.now().plusDays(i),
-					Money.of(10.99, EURO),
-					allFilms.get(random.nextInt(allFilms.size()))
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(i),
+				Money.of(10.99, EURO),
+				allFilms.get(random.nextInt(allFilms.size())),
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
 			);
-			hall = allCinemaHalls.get(random.nextInt(allCinemaHalls.size()));
-
-			hall.addCinemaShow(show);
-
-			// Kinosaal und Vorführung müssen gespeichert werden,
-			// damit die bidirektionale Beziehung hergestellt werden kann.
-			// Hinweis: zuerst den Kinosaal speichern!
-			cinemaHallRepository.save(hall);
-			cinemaShowRepository.save(show);
 		}
 
 		// Gebe alle Veranstaltungen aus, welche aktuell in der Datenbank liegen:

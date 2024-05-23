@@ -14,29 +14,99 @@
                     <img class="big-film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" alt="Filmtitel">
                 </p>
 
-                <h2>Inhaltsangabe:</h2>
-                <p>
-                    <span th:text="${cinemaShow.getFilm().getDesc()}">Film-Beschreibung</span>
-                </p>
+                <div class="film-detail-text">
+                    <h2>Inhaltsangabe:</h2>
+                    <p>
+                        <span th:text="${cinemaShow.getFilm().getDesc()}">Film-Beschreibung</span>
+                    </p>
 
-                <h2>Altersfreigabe:</h2>
-                <p>
+                    <h2>Altersfreigabe:</h2>
+                    <p>
                     <span th:class="'fsk-label fsk-' + ${cinemaShow.getFilm().getFskAge()}" class="fsk-label fsk-12"
                           th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
-                </p>
-                <h2>Ort:</h2>
-                <p>
-                    <span th:text="${cinemaShow.getCinemaHall().getName()}">Kinosaal</span>
-                </p>
-                <h2>Zeit:</h2>
-                <p>
+                    </p>
+                    <h2>Ort:</h2>
+                    <p>
+                        <span th:text="${cinemaShow.getCinemaHall().getName()}">Kinosaal</span>
+                    </p>
+                    <h2>Zeit:</h2>
+                    <p>
                     <span th:text="${#temporals.format(cinemaShow.getStartDateTime(), 'HH:mm')} + ' Uhr, '
                                             + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - '
                                             + ${cinemaShow.getFilm().getTimePlaying()} + 'min'">
                                                 HH:mm Uhr, dd.MM.yyyy - mm min
                     </span>
-                </p>
+                    </p>
+                </div>
             </div>
+
+            <h2 id="edit-program">Vorführung ändern</h2>
+            <form th:action="'/cinema-shows/' + ${cinemaShow.getId()} + '/edit'" action="/cinema-shows/{id}/edit" method="post">
+                <p>Datum und Uhrzeit: <input type="datetime-local" name="editTime" th:value="${#temporals.format(cinemaShow.startDateTime, 'yyyy-MM-dd''T''HH:mm')}"></p>
+                <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
+                <p>Film: <select name="film">
+                    <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}"
+                     th:selected="${film.equals(cinemaShow.getFilm())}">Film</option>
+                </select></p>
+                <!--<select name="room">
+                    <option th:each="cinemaHall : ${allCinemaHalls}" value="Kinosaal"  th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Kinosaal</option>
+                </select>-->
+                <button name="editProgramPoint">Ändern</button>
+            </form>
+            <p class="change-cinema-show-caution">Achtung: Änderungen an der Veranstaltung sollten nur im Notfall vorgenommen werden.
+            Kunden mit bereits vorhandenen Tickets/Reservierungen, könnten diese Änderungen nicht mitbekommen.</p>
+            <p class="change-cinema-show-hint">Hinweis: Sollte sich der Saal ändern, muss diese Vorführung gelöscht
+            und eine neue erstellt werden, aufgrund einer unterschiedlichen Platzverteilung.</p>
+
+            <h2 id="delete-program">Vorführung löschen</h2>
+            <form th:action="'/cinema-shows/' + ${cinemaShow.getId()} + '/delete'" action="/cinema-shows/{id}/delete" method="post">
+                <button name="deleteProgramPoint">Löschen</button>
+            </form>
+            <p class="change-cinema-show-caution">Achtung: Das Löschen einer Veranstaltung sollte nur im Notfall vorgenommen werden.
+                Sämtliche Reservierungen und Buchungen gehen verloren und müssen manuell wieder eingefegt, bzw. erstattet werden.</p>
+
+            <style>
+                .film-detail-box {
+                    box-sizing: border-box;
+                    display: inline-block;
+                    width: 100%;
+                }
+
+                .big-film-poster {
+                    display: inline-block;
+                    width: 30%;
+                    float: left;
+                }
+
+                .film-detail-text {
+                    display: inline-block;
+                    width: 65%;
+                    float: right;
+                    padding-left: 5%;
+                }
+
+                .change-cinema-show-caution {
+                    color:red;
+                }
+                .change-cinema-show-hint {
+                    color:yellow;
+                }
+                .fsk-label.fsk-0{
+                    color:#FFFFFF;
+                }
+                .fsk-label.fsk-6{
+                    color:#FFCC33;
+                }
+                .fsk-label.fsk-12{
+                    color:#01d501;
+                }
+                .fsk-label.fsk-16{
+                    color:#3399FF;
+                }
+                .fsk-label.fsk-18{
+                    color:#FF6666;
+                }
+            </style>
         </div>
     </body>
 </html>

@@ -94,7 +94,7 @@ public class ViewProgramController {
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
 
-		return "current-films-renderer";
+		return "current-films";
 	}
 
 	@PostMapping("/current-films/{year}/{week}")
@@ -122,7 +122,7 @@ public class ViewProgramController {
 		return "redirect:/current-films/{year}/{week}";
 	}
 
-	@GetMapping("/current-films/detail/{id}")
+	@GetMapping("/cinema-shows/{id}")
 	public String detailCinemaShow(@PathVariable Long id, Model m) {
 		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
 		if(optionalCinemaShow.isEmpty()) {
@@ -132,8 +132,40 @@ public class ViewProgramController {
 		CinemaShow cinemaShow = optionalCinemaShow.get();
 
 		m.addAttribute("cinemaShow", cinemaShow);
+		m.addAttribute("allFilms", filmRepository.findAll());
 
 		return "film-detail";
+	}
+
+	@PostMapping("/cinema-shows/{id}/edit")
+	public String editCinemaShow(@PathVariable Long id,
+								 @RequestParam("film") Long film,
+								 @RequestParam("editTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime editTime,
+								 Model m) {
+		Optional<Film> optFilmInst = filmRepository.findById(film);
+		if(optFilmInst.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films/{year}/{week}";
+		}
+
+		cinemaShowService.update(id)
+			.setStartDateTime(editTime)
+			.setFilm(optFilmInst.get())
+			.save();
+
+		return "redirect:/cinema-shows/{id}";
+	}
+
+	@PostMapping("/cinema-shows/{id}/delete")
+	public String deleteCinemaShow(@PathVariable Long id, Model m) {
+		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
+		if(optionalCinemaShow.isEmpty()) {
+			// TODO Fehlerbehandlung
+			return "redirect:/current-films";
+		}
+		cinemaShowService.deleteCinemaShow(optionalCinemaShow.get());
+
+		return "redirect:/current-films";
 	}
 
 	public static class CinemaShowDayEntry {

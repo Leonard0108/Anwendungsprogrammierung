@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.models;
 import jakarta.persistence.*;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.net.Authenticator;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	@Id
 	@GeneratedValue
 	private Long id;
+
 	private LocalDateTime startDateTime;
 	private Money basePrice;
 
@@ -48,12 +50,24 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		return film;
 	}
 
+	void setFilm(Film film) {
+		this.film = film;
+	}
+
 	public LocalDateTime getStartDateTime() {
 		return this.startDateTime;
 	}
 
+	void setStartDateTime(LocalDateTime startDateTime) {
+		this.startDateTime = startDateTime;
+	}
+
 	public Money getBasePrice() {
 		return this.basePrice;
+	}
+
+	void setBasePrice(Money basePrice) {
+		this.basePrice = basePrice;
 	}
 
 	public CinemaHall getCinemaHall() {

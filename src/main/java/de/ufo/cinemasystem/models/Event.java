@@ -1,6 +1,7 @@
 package de.ufo.cinemasystem.models;
 
 
+import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EVENTS")
-public class Event implements Comparable<Event>{
+public class Event implements Comparable<Event>, ScheduledActivity {
 
 	private @Id	@GeneratedValue long id;
 	private @NotEmpty String name;
@@ -28,22 +29,27 @@ public class Event implements Comparable<Event>{
 
 	public Event() {}
 
+	@Override
 	public long getId() {
 		return id;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public LocalDateTime getStartDateTime() {
 		return startDateTime;
 	}
 
+	@Override
 	public int getDuration() {
 		return duration;
 	}
 
+	@Override
 	public CinemaHall getCinemaHall() {
 		return cinemaHall;
 	}
@@ -69,5 +75,10 @@ public class Event implements Comparable<Event>{
 	@Override
 	public int compareTo(Event event) {
 		return this.getStartDateTime().compareTo(event.getStartDateTime());
+	}
+
+	@Override
+	public int compareTo(ScheduledActivity scheduledActivity) {
+		return this.getStartDateTime().compareTo(scheduledActivity.getStartDateTime());
 	}
 }

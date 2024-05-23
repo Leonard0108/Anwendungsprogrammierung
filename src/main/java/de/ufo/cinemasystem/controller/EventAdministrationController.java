@@ -1,6 +1,8 @@
 package de.ufo.cinemasystem.controller;
 
 
+import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
+import de.ufo.cinemasystem.additionalfiles.ScheduledActivityService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,7 @@ public class EventAdministrationController {
 	}
 
 
-	@GetMapping(value = "/manage/rooms", params = "show")
+	@GetMapping(value = "/manage/rooms", params = {"room", "date"})
 	//@PreAuthorize("hasRole('BOSS')")
 	public String getEvents(Model m, @RequestParam("room") Long room,
 							  		 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
@@ -45,16 +47,17 @@ public class EventAdministrationController {
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
 
-		List<CinemaShow> showsOnDate = cinemaShowRepository.findCinemaShowsOnDay(date).toList();
-		List<CinemaShow> showsOnDateInHall = new ArrayList<>();
-
-		//übernehme nur die Shows für gesuchten Saal
-		for(CinemaShow show : showsOnDate){
-			if(show.getCinemaHall().getId().equals(room)){
-				showsOnDateInHall.add(show);
+		ScheduledActivityService scheduledActivityService = new ScheduledActivityService(eventRepository, cinemaShowRepository);
+		List<ScheduledActivity> activitiesOnDate = scheduledActivityService.getOnDayActivitysSorted(date);
+		List<ScheduledActivity> scheduledActivitysOnDateInHall = new ArrayList<>();
+		
+		//übernehme nur die Shows und Events für gesuchten Saal
+		for(ScheduledActivity activity : activitiesOnDate){
+			if(activity.getCinemaHall().getId().equals(room)) {
+				scheduledActivitysOnDateInHall.add(activity);
 			}
 		}
-		m.addAttribute("showsOnDate", showsOnDateInHall);
+		m.addAttribute("scheduledActivitysOnDate", scheduledActivitysOnDateInHall);
 		m.addAttribute("room", room);
 		m.addAttribute("date", date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
@@ -81,9 +84,6 @@ public class EventAdministrationController {
 	}
 
 
-
-
-
 	@PostMapping("/manage/rooms")
 	//@PreAuthorize("hasRole('BOSS')")
 	public String addEvent(Model m,
@@ -95,7 +95,7 @@ public class EventAdministrationController {
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
 
-		CinemaHall updateHall = cinemaHallRepository.findById(room).get();
+		CinemaHall updateHall = cinemaHallRepository.findById(room).orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + room));
 
 		int duration = (int) from.until(to, MINUTES);
 		Event newEvent = new Event(eventname, from, duration);
@@ -105,8 +105,8 @@ public class EventAdministrationController {
 		cinemaHallRepository.save(updateHall);
 		eventRepository.save(newEvent);
 
-		return "manage-rooms-boss-renderer-success";
+		LocalDate date = from.toLocalDate();
+
+		return "redirect:/manage/rooms?room=" + room + "&date=" + date;
 	}
-
-
 }

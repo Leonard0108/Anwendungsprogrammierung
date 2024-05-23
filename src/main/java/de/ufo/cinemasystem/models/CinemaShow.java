@@ -143,6 +143,44 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	}
 
 	/**
+	 * @return max. Anzahl an Plätzen in der Vorführung (indirekt abhängig vom Kinosaal)
+	 */
+	public int getSeatCount() {
+		return this.seats.size();
+	}
+
+	/**
+	 * @return Anzahl an Plätzen in der Vorführung nach Belebtheit-Status
+	 */
+	public int getSeatCount(Seat.SeatOccupancy occupancy) {
+		return (int) this.seats.values().stream().filter(o -> o .equals(occupancy)).count();
+	}
+
+	/**
+	 * @return Anzahl an belegten PLätzen (Reserviert + gekauft)
+	 */
+	public int getSeatProvenCount(Seat.SeatOccupancy occupancy) {
+		return getSeatCount() - getSeatCount(Seat.SeatOccupancy.FREE);
+	}
+
+	/**
+	 * @return Prozentualer Belegten-Status-Anteil
+	 */
+	public double getPercentageSeatShare(Seat.SeatOccupancy occupancy) {
+		int seatCount = getSeatCount();
+		if(seatCount == 0) return 0.0;
+
+		return getSeatCount(occupancy) / (double) seatCount;
+	}
+
+	/**
+	 * @return Prozentualer Anteil an belegten Plätzen (Reserviert + gekauft)
+	 */
+	public double getPercentageSeatProvenShare() {
+		return 1.0 - getPercentageSeatShare(Seat.SeatOccupancy.FREE);
+	}
+
+	/**
 	 * Setzt neue Platzbelegung für die Kino-Vorführung
 	 * @param row Reihe des Platzes beginnend bei index 0
 	 * @param pos Position des Platzes in jeder Reihe beginnend bei index 0, max. 99

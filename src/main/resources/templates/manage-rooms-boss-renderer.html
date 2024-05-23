@@ -36,12 +36,18 @@
                                 <option th:each="cinemaHall : ${allCinemaHalls}" th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Saal 1</option>
                             </select></p>
                             <p>am <input type="date" name="date" placeholder="19.04.2024" required=""></p>
-                        <input type="submit" name="show" value="Anzeigen" />
+                        <input type="submit"/>
                     </form>
                     <h2>Saal [[${room}]] am [[${date}]]</h2>
-                    <ul th:each="show : ${showsOnDate}">
-                        <li> [[${show.getStartDateTime().getHour()}]]:[[${show.getStartDateTime().getMinute()}]] [[${show.getFilm().getTimePlaying()}]]min [[${show.getFilm().getTitle()}]]</li>
+                    <ul th:each="activity : ${scheduledActivitysOnDate}">
+                        <li>
+                            <span th:text="${#temporals.format(activity.getStartDateTime(), 'HH:mm')}"></span>
+                            <span th:text="${activity.getDuration()}"></span> min
+                            <span th:text="${activity.getName()}"></span>
+                        </li>
                     </ul>
+
+
                     <h2>Kinoprogramm hinzufügen</h2>
                     <a href="/current-films#addprogram" title="Programmverwaltung | UFO Kinos" target="new">Programmverwaltung</a>
                     <h2>Saal vermieten</h2>

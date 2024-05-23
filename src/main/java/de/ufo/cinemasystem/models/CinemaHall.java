@@ -114,6 +114,12 @@ public class CinemaHall {
 		newCinemaShow.setCinemaHall(this);
 	}
 
+	public void removeCinemaShow(CinemaShow cinemaShow) {
+		if(!cinemaShows.contains(cinemaShow)) return;
+
+		this.cinemaShows.remove(cinemaShow);
+		cinemaShow.setCinemaHall(null);
+	}
 
 	public void addEvent(Event newEvent) {
 		if(events.contains(newEvent)) return;

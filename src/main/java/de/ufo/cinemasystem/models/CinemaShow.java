@@ -1,6 +1,7 @@
 package de.ufo.cinemasystem.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -125,6 +126,46 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	 */
 	public Optional<Seat.SeatOccupancy> getOccupancy(Seat seat) {
 		return Optional.ofNullable(seats.get(seat));
+	}
+
+	/**
+	 * Prüft, ob der Sitzplatz (Reihe, Position) in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
+	 */
+	public boolean containsSeat(int row, int pos) {
+		return getSeat(row, pos).isPresent();
+	}
+
+	/**
+	 * Prüft, ob der Sitzplatz in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
+	 */
+	public boolean containsSeat(Seat seat) {
+		return this.seats.containsKey(seat);
+	}
+
+	/**
+	 * Setzt neue Platzbelegung für die Kino-Vorführung
+	 * @param row Reihe des Platzes beginnend bei index 0
+	 * @param pos Position des Platzes in jeder Reihe beginnend bei index 0, max. 99
+	 * @param occupancy Platzbelegung für den Platz
+	 * @throws EntityNotFoundException wenn der Sitzplatz in der Vorführung nicht vorhanden ist.
+	 */
+	void setOccupancy(int row, int pos, Seat.SeatOccupancy occupancy) {
+		Seat seat = getSeat(row, pos).
+			orElseThrow(() -> new EntityNotFoundException("Seat ist in der Vorführung (Abhängig vom Kinosaal) nicht vorhanden!"));
+		this.seats.put(seat, occupancy);
+	}
+
+	/**
+	 * Setzt neue Platzbelegung für die Kino-Vorführung
+	 * @param seat der zu ändernde Platz
+	 * @param occupancy Platzbelegung für den Platz
+	 * @throws EntityNotFoundException wenn der Sitzplatz in der Vorführung nicht vorhanden ist.
+	 */
+	void setOccupancy(Seat seat, Seat.SeatOccupancy occupancy) {
+		if(!seats.containsKey(seat))
+			throw new EntityNotFoundException("Seat ist in der Vorführung (Abhängig vom Kinosaal) nicht vorhanden!");
+
+		this.seats.put(seat, occupancy);
 	}
 
 	void initSeats(final Map<Seat, Seat.SeatOccupancy> seats) {

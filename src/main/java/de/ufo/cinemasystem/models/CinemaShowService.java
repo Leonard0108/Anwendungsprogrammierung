@@ -22,6 +22,7 @@ public class CinemaShowService {
 	@Autowired
 	private CinemaShowRepository cinemaShowRepository;
 
+
 	/**
 	 * Erstellt eine neue Kino-Vorführung (CinemaShow-Objekt) und speichert dieses in der Datenbank.
 	 * @param startDateTime Startzeit der Vorführung muss mind. 1/2 Stunde in Zukunft liegen
@@ -130,7 +131,17 @@ public class CinemaShowService {
 			return this;
 		}
 
-		// TODO: weitere Sitzplatz update Belegtheit Methoden ergänzen
+		/**
+		 * Ändert die Sitzplatz-Belegung eines Sitzplatzes im CinemaShowUpdater-Objekt.
+		 * Diese Methode verändert noch keine Daten am CinemaShow-@Entity-Objekt oder in der Datenbank.
+		 * @param seat Sitzplatz, mit neuer Belegung
+		 * @param occupancy Sitzplatz-Belegung
+		 * @return Builder zum Setzen weiterer Daten oder zum finalen Speichern ({@link  #save()}) der Daten
+		 */
+		public CinemaShowUpdater setSeatOccupancy(Seat seat, Seat.SeatOccupancy occupancy) {
+			this.seats.put(seat, occupancy);
+			return this;
+		}
 
 		/**
 		 * Aktualisiert die gespeicherten CinemaShow-Daten im richtigen CinemaShow-Objekt und in der Datenbank.

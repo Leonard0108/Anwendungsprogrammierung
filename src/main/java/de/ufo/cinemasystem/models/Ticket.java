@@ -1,18 +1,16 @@
 package de.ufo.cinemasystem.models;
 
-import jakarta.persistence.Entity;
 import java.util.Objects;
 
 import org.javamoney.moneta.Money;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
-
 
 @Entity
-@Table(name= "TICKETS")
+@Table(name = "TICKETS")
 public class Ticket implements Comparable<Ticket> {
 
     public static enum TicketCategory {
@@ -28,14 +26,10 @@ public class Ticket implements Comparable<Ticket> {
 
     private TicketCategory category;
     private Money TicketPrice;
-    /**
-     * temp variable saving the seat id.
-     */
-    private int seatID;
-    // private CinemaShow show;
-    // private Reservation reservation;
+    private CinemaShow show;
+    private Reservation reservation;
 
-    public Ticket(TicketCategory Category/* , CinemaShow cinemaShow */) {
+    Ticket(TicketCategory Category, CinemaShow cinemaShow) {
         this.category = Category;
         double reduction;
         switch (this.category) {
@@ -46,8 +40,8 @@ public class Ticket implements Comparable<Ticket> {
             default:
                 reduction = 1;
         }
-        // this.show = cinemaShow;
-        // this.TicketPreis = show.getBasePrice() * reduction;
+        this.show = cinemaShow;
+        this.TicketPrice = show.getBasePrice().multiply(reduction);
 
     }
 
@@ -56,15 +50,19 @@ public class Ticket implements Comparable<Ticket> {
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public TicketCategory getCategory() {
-        return this.category;
+        return category;
     }
 
     public Money getTicketPrice() {
-        return this.TicketPrice;
+        return TicketPrice;
+    }
+
+    public String getTicketShowName() {
+        return show.getFilm().getTitle();
     }
 
     public int getSeatID() {
@@ -74,13 +72,13 @@ public class Ticket implements Comparable<Ticket> {
     public void setSeatID(int seatID) {
         this.seatID = seatID;
     }
-    
-    public String getSeatString(){
-        return ((char)('A' + this.seatID / 100)) + ("" + this.seatID % 100);
+
+    public String getSeatString() {
+        return ((char) ('A' + this.seatID / 100)) + ("" + this.seatID % 100);
     }
-    
-    public String categoryToLabel(){
-        return switch(this.category){
+
+    public String categoryToLabel() {
+        return switch (this.category) {
             case normal -> "Erwachsener";
             case children -> "Kind (Bis 14 Jahre)";
             case reduced -> "Schwerbehinderter";

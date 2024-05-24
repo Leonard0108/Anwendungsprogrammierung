@@ -147,4 +147,5 @@ public class MakeOrderController {
 
 		public static Pattern validSeat = Pattern.compile("[A-La-l]([0-9]|1[0-9])$", Pattern.CASE_INSENSITIVE);
 	}
+
 }

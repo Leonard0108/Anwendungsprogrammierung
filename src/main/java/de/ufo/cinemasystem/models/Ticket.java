@@ -21,10 +21,10 @@ public class Ticket implements Comparable<Ticket> {
 
     private TicketCategory category;
     private Money TicketPrice;
-    // private CinemaShow show;
-    // private Reservation reservation;
+    private CinemaShow show;
+    private Reservation reservation;
 
-    Ticket(TicketCategory Category/* , CinemaShow cinemaShow */) {
+    Ticket(TicketCategory Category, CinemaShow cinemaShow) {
         this.category = Category;
         double reduction;
         switch (this.category) {
@@ -35,8 +35,8 @@ public class Ticket implements Comparable<Ticket> {
             default:
                 reduction = 1;
         }
-        // this.show = cinemaShow;
-        // this.TicketPreis = show.getBasePrice() * reduction;
+        this.show = cinemaShow;
+        this.TicketPrice = show.getBasePrice().multiply(reduction);
 
     }
 
@@ -45,15 +45,19 @@ public class Ticket implements Comparable<Ticket> {
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public TicketCategory getCategory() {
-        return this.category;
+        return category;
     }
 
     public Money getTicketPrice() {
-        return this.TicketPrice;
+        return TicketPrice;
+    }
+
+    public String getTicketShowName() {
+        return show.getFilm().getTitle();
     }
 
     @Override

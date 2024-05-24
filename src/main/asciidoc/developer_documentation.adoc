@@ -92,6 +92,19 @@ Eine Liste der erforderlichen Geräte/Hardware zur Ausführung und Verwendung de
 - Tastatur
 - Maus
 
+==== Mindestanforderungen
+
+===== Client Hardware
+- Prozessor mit 1GHz Taktrate
+- 2GB RAM Arbeitsspeicher
+- 500MB freien Festplattenspeicher
+
+===== Server Hardware
+- Quadcore Prozessor mit 2GHz Taktrate
+- 8GB RAM Arbeitsspeicher
+- 4GB freien Festplattenspeicher
+
+
 === Software Spezifikationen
 Eine Liste der erforderlichen Software zur Ausführung und Verwendung der Anwendung.
 

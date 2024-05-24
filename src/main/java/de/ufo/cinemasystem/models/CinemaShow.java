@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.models;
 
+import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.javamoney.moneta.Money;
@@ -12,7 +13,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "CINEMA_SHOWS")
-public class CinemaShow implements Comparable<CinemaShow>{
+public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -43,7 +44,8 @@ public class CinemaShow implements Comparable<CinemaShow>{
 
 	public CinemaShow() {}
 
-	public Long getId() {
+	@Override
+	public long getId() {
 		return this.id;
 	}
 
@@ -55,6 +57,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		this.film = film;
 	}
 
+	@Override
 	public LocalDateTime getStartDateTime() {
 		return this.startDateTime;
 	}
@@ -67,10 +70,12 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		return this.basePrice;
 	}
 
+
 	void setBasePrice(Money basePrice) {
 		this.basePrice = basePrice;
 	}
 
+	@Override
 	public CinemaHall getCinemaHall() {
 		return this.cinemaHall;
 	}
@@ -177,6 +182,17 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	}
 
 	@Override
+	public int getDuration(){
+		// Kinosaal muss 10 min vor und 10 min nach Filmbeginn gebucht sein
+		return film.getTimePlaying() + 20;
+	}
+
+	@Override
+	public String getName(){
+		return film.getTitle();
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getStartDateTime(),
                 getBasePrice(), getFilm());
@@ -198,5 +214,10 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	@Override
 	public int compareTo(CinemaShow cinemaShow) {
 		return this.getStartDateTime().compareTo(cinemaShow.getStartDateTime());
+	}
+
+	@Override
+	public int compareTo(ScheduledActivity scheduledActivity) {
+		return this.getStartDateTime().compareTo(scheduledActivity.getStartDateTime());
 	}
 }

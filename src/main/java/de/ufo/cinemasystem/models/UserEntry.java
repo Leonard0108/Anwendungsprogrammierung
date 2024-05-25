@@ -27,7 +27,7 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 
 	private @EmbeddedId UserIdentifier id = new UserIdentifier();
 
-	private String address;
+	private String streetName, houseNumber, city, state, postalCode, country;
 
 	// (｡◕‿◕｡)
 	// Jedem Customer ist genau ein UserAccount zugeordnet, um später über den UserAccount an den
@@ -35,9 +35,14 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	@OneToOne //
 	private UserAccount userAccount;
 
-	public UserEntry(UserAccount userAccount, String address) {
+	public UserEntry(UserAccount userAccount, String streetName, String houseNumber, String city, String postalCode, String state, String country) {
 		this.userAccount = userAccount;
-		this.address = address;
+		this.streetName  = streetName;
+		this.houseNumber = houseNumber;
+		this.city        = city;
+		this.postalCode  = postalCode;
+		this.state       = state;
+		this.country     = country;
 	}
 
 

@@ -1,126 +1,65 @@
 <!DOCTYPE html>
-<html lang="de">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html(title=#{register.title})}">
 <head>
-    <meta charset="utf-8">
-    <title>Registrieren | UFO Kinos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
-<h1>Registrieren</h1>
-<form id="registerForm">
-    <label for="email">E-Mail:</label>
-    <input id="email" name="email" type="email" required><br>
+<section layout:fragment="content">
+    <form method="post" role="form" class="ui form" id="form" th:action="@{/register}" th:object="${registrationForm}">
 
-    <label for="password">Passwort:</label>
-    <input id="password" name="password" type="password" required><br>
+        <h3 class="ui dividing header" th:text="#{register.userdata}">Nutzerdaten</h3>
 
-    <label for="forename">Vorname:</label>
-    <input id="forename" name="forename" type="text" required><br>
+        <div class="ui negative message" th:if="${#fields.hasErrors('*')}">
+            <p>Einige Angaben sind nicht korrekt.</p>
+        </div>
 
-    <label for="name">Name:</label>
-    <input id="name" name="name" type="text" required><br>
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" th:field="*{name}" th:errorclass="fieldError" type="text" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                <p>Der Name darf nicht leer sein.</p>
+            </div>
+        </div>
 
-    <label for="streetAddress">Straße:</label>
-    <input id="streetAddress" name="streetAddress" type="text" required><br>
+        <div class="field">
+            <label th:text="#{register.password}" for="password">Passwort</label>
+            <input id="password" name="password" th:field="*{password}" th:errorclass="fieldError" type="password"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Das Passwort darf
+                nicht leer sein.</p>
+        </div>
+        <div class="field">
+            <label th:text="#{register.address}" for="address">Adresse</label>
+            <input id="streetName" name="streetName" th:field="*{streetName}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}">Die Straße darf
+                nicht leer sein.</p>
+            <input id="streetNumber" name="streetNumber" th:field="*{streetNumber}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('streetNumber')}" th:errors="*{streetNumber}">Die Hausnummer darf
+                nicht leer sein.</p>
+            <input id="city" name="city" th:field="*{city}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Die Stadt darf
+                nicht leer sein.</p>
+            <input id="postalCode" name="postalCode" th:field="*{postalCode}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">Die Postleitzahl darf
+                nicht leer sein.</p>
+            <input id="state" name="state" th:field="*{state}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('state')}" th:errors="*{state}">Der Bundesland darf
+                nicht leer sein.</p>
+            <input id="country" name="country" th:field="*{country}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Das Land darf
+                nicht leer sein.</p>
+        </div>
 
-    <label for="houseNumber">Hausnummer:</label>
-    <input id="houseNumber" name="houseNumber" type="text" required><br>
-
-    <label for="city">Stadt:</label>
-    <input id="city" name="city" type="text" required><br>
-
-    <label for="state">Bundesland:</label>
-    <input id="state" name="state" type="text" required><br>
-
-    <label for="country">Land:</label>
-    <input id="country" name="country" type="text" required><br>
-
-    <label for="phoneNumber">Telefonnummer:</label>
-    <input id="phoneNumber" name="phoneNumber" type="tel" required><br>
-
-    <button type="submit">Registrieren</button>
-</form>
-
-<script>
-    document.getElementById("registerForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-        var forename = document.getElementById("forename").value;
-        var name = document.getElementById("name").value;
-        var streetAddress = document.getElementById("streetAddress").value;
-        var houseNumber = document.getElementById("houseNumber").value;
-        var city = document.getElementById("city").value;
-        var state = document.getElementById("state").value;
-        var country = document.getElementById("country").value;
-        var phoneNumber = document.getElementById("phoneNumber").value;
-
-        var data = {
-            email: email,
-            password: password,
-            forename: forename,
-            name: name,
-            streetAddress: streetAddress,
-            houseNumber: houseNumber,
-            city: city,
-            state: state,
-            country: country,
-            phoneNumber: phoneNumber
-        };
-
-        fetch('http://localhost:8080/lunar_space_port/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => {
-            if (response.ok) {
-                alert("Daten wurden erfolgreich gesendet!");
-            } else {
-                alert("Fehler beim Senden der Daten!");
-            }
-        })
-            .catch(error => {
-                alert("Es ist ein Fehler aufgetreten: " + error.message);
-            });
-    });
-</script>
+        <button type="submit" class="ui button" th:text="#{register.submit}">Registrieren</button>
+    </form>
+</section>
 </body>
 </html>

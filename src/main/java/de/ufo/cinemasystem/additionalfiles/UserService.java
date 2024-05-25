@@ -50,14 +50,14 @@ public class UserService {
 	 * @param form must not be {@literal null}.
 	 * @return the new {@link UserEntry} instance.
 	 */
-	public UserEntry createCustomer(RegistrationForm form) {
+	public UserEntry createUser(RegistrationForm form) {
 
 		Assert.notNull(form, "Registration form must not be null!");
 
 		var password = Password.UnencryptedPassword.of(form.getPassword());
 		var userAccount = userAccounts.create(form.getName(), password, CUSTOMER_ROLE);
 
-		return userRepository.save(new UserEntry(userAccount, form.getAddress()));
+		return userRepository.save(new UserEntry(userAccount, form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
 	}
 
 	/**

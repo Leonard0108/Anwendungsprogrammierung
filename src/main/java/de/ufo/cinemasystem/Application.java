@@ -19,7 +19,9 @@ import org.salespointframework.EnableSalespoint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,7 +42,19 @@ public class Application {
 	}
 
 	@Configuration
+	@EnableWebSecurity
 	static class WebSecurityConfiguration {
+
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			// Konfiguration der Benutzer und ihrer Rollen
+			auth.inMemoryAuthentication()
+				.withUser("boss").password("{noop}password").roles("BOSS")
+				.and()
+				.withUser("employee").password("{noop}password").roles("EMPLOYEE");
+		}
+
+
+
 		@Bean
 		public BCryptPasswordEncoder pwEncoder() {
 			return new BCryptPasswordEncoder();

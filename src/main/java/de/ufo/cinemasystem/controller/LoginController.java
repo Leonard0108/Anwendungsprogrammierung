@@ -5,11 +5,9 @@ package de.ufo.cinemasystem.controller;
 import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import de.ufo.cinemasystem.models.UserEntry;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import de.ufo.cinemasystem.repository.UserRepository;
 
@@ -66,12 +63,29 @@ public class LoginController {
 
 
 	@PostMapping
-	String login(@Valid LoginForm form, Errors result) {
+	String login(@Valid LoginForm form, Errors result, HttpSession session) {
+		UserEntry toSignInUser;
+
+
+
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return "login";
 		}
-		return "redirect:/";
+
+
+		toSignInUser = userService.login(form);
+
+		if(toSignInUser != null)
+		{
+			session.setAttribute("user", form);
+			return "redirect:/";
+		}
+
+
+
+		return "login";
+
 	}
 
 

@@ -2,15 +2,11 @@ package de.ufo.cinemasystem.additionalfiles;
 
 
 import de.ufo.cinemasystem.models.UserEntry;
-import lombok.NoArgsConstructor;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.util.Streamable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.salespointframework.useraccount.UserAccountManagement;
 
@@ -27,6 +23,7 @@ public class UserService {
 	public static final Role                  CUSTOMER_ROLE = Role.of("USER"); //Im Original Customer
 	private final       UserRepository        userRepository;
 	private final       UserAccountManagement userAccounts;
+	private final       BCryptPasswordEncoder passwordEncoder;
 
 	/**
 	 * Creates a new {@link UserService} with the given {@link UserRepository} and
@@ -35,13 +32,14 @@ public class UserService {
 	 * @param userRepository must not be {@literal null}.
 	 * @param userAccounts must not be {@literal null}.
 	 */
-	UserService(UserRepository userRepository, UserAccountManagement userAccounts) {
+	UserService(UserRepository userRepository, UserAccountManagement userAccounts, @Qualifier("passwordEncoder") BCryptPasswordEncoder passwordEncoder) {
 
 		Assert.notNull(userRepository, "CustomerRepository must not be null!");
 		Assert.notNull(userAccounts, "UserAccountManagement must not be null!");
 
 		this.userRepository = userRepository;
 		this.userAccounts   = userAccounts;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	/**
@@ -72,7 +70,21 @@ public class UserService {
 
 	public UserEntry login(LoginForm form)
 	{
-		//Assert.notNull(LoginForm, "Login form must not be null");
-		return null;
+		UserEntry toCheckUserEntry;
+
+
+		Assert.notNull(form, "Login form must not be null");
+		toCheckUserEntry = userRepository.findByUserAccountEmail(LoginForm.geteMail());
+
+
+
+		//Falls nicht funktionsfähig mal dehashen.
+		if (toCheckUserEntry == null || passwordEncoder.matches(passwordEncoder.encode(LoginForm.getPassword()), String.valueOf(toCheckUserEntry.getUserAccount().getPassword()))) {
+			return null;
+		}
+
+
+
+		return toCheckUserEntry;
 	}
 }

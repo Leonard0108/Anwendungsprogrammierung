@@ -74,7 +74,7 @@ public class LoginController {
 		}
 
 
-		toSignInUser = userService.login(form);
+		toSignInUser = userService.loginBackground(form);
 
 		if(toSignInUser != null)
 		{
@@ -116,6 +116,16 @@ public class LoginController {
 		model.addAttribute("customerList", userService.findAll());
 
 		return "customers";
+	}
+
+
+
+
+	@PostMapping("/LogOut")
+	String logout (HttpSession session)
+	{
+		session.invalidate();
+		return "redirect:/";
 	}
 }
 

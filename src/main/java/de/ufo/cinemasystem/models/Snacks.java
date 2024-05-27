@@ -1,10 +1,10 @@
 package de.ufo.cinemasystem.models;
 
+import org.javamoney.moneta.Money;
+import org.salespointframework.catalog.Product;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import org.javamoney.moneta.Money;
-
-import org.salespointframework.catalog.Product;
 
 @Entity
 @Table(name = "Snacks")

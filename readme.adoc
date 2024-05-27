@@ -36,8 +36,8 @@ Weitere Dateien:
 == Paketierung
 
 Java-Anwendungen werden in der Regel als JAR-Dateien gepackt und ausgeliefert. Eine JAR-Datei kann von Javas virtueller Maschine direkt verarbeitet und ausgeführt werden, vorrausgesetzt in der JAR-Datei befindet sich eine Klasse mit einer `main`-Funktion, und diese ist im `Main-Class`-Attribut der Datei `/META-INF/MANIFEST.MF` des JAR's angegeben.
-# vgl. https://stackoverflow.com/questions/9689793/cant-execute-jar-file-no-main-manifest-attribute?rq=2
-# und  https://stackoverflow.com/questions/18093928/what-does-could-not-find-or-load-main-class-mean
+// vgl. https://stackoverflow.com/questions/9689793/cant-execute-jar-file-no-main-manifest-attribute?rq=2
+// und  https://stackoverflow.com/questions/18093928/what-does-could-not-find-or-load-main-class-mean
 
 Maven unterstützt Sie auch bei der Erstellung solcher Paketierungen:
 

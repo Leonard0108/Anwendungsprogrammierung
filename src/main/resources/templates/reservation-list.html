@@ -9,13 +9,13 @@
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Meine Reservierungen</h1>
             <div th:each="reservation:${reservations}">
-                <p th:text="reservation.getCinemaShow().getFilm().getTitle()">foo</p>
-                <p th:text="'FSK ' + reservation.getCinemaShow().getFilm().getFskAge()">0</p>
-                <p th:text="reservation.getCinemaShow().getStartDateTime()">0 Uhr, 01.01.1970</p>
+                <p th:text="${reservation.getCinemaShow().getFilm().getTitle()}">foo</p>
+                <p th:text="'FSK ' + ${reservation.getCinemaShow().getFilm().getFskAge()}" th:class="'fsk-' + ${reservation.getCinemaShow().getFilm().getFskAge()}">0</p>
+                <p th:text="${reservation.getCinemaShow().getStartDateTime()}">0 Uhr, 01.01.1970</p>
                 <ul>
-                    <li th:each="ticket: reservation.getTickets()" th:text="ticket.data"></li>
+                    <li th:each="ticket: ${reservation.getTickets()}" th:text="${ticket.getSeatString()} +' '+ ${ticket.categoryToLabel()} +' '+ ${ticket.getTicketPrice()}"></li>
                 </ul>
-                <a th:href="'/cancel-reservation/' + reservation.getId()" class="fakeButton" title="Reservierung stornieren | UFO Kinos">Stornieren</a>
+                <a th:href="'/cancel-reservation/' + ${reservation.getId()}" class="fakeButton" title="Reservierung stornieren | UFO Kinos">Stornieren</a>
             </div>
             <h2>Reservierung stornieren</h2>
             <form method="post" action="/my-reservations/delete/">

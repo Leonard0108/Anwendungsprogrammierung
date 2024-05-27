@@ -35,6 +35,11 @@ public class DummyEntity {
     public void setData(String data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "DummyEntity{" + "id=" + id + ", data=" + data + '}';
+    }
     
     
 }

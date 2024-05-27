@@ -14,6 +14,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.money.CurrencyUnit;
+import javax.money.MonetaryAmount;
+import org.javamoney.moneta.CurrencyUnitBuilder;
+import org.javamoney.moneta.Money;
 
 /**
  * Represents a single reservation in the system. Calling any of the methods of this class with a null argument will result in a NullPointerException.
@@ -35,7 +39,7 @@ public class Reservation {
      * TODO: linking
      */
     @OneToMany
-    private List<DummyEntity> tickets = new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();
 
     /**
      * Hibernate-only constructor. Do not use, you will break things.
@@ -86,15 +90,15 @@ public class Reservation {
      * this class, but modifying the individual tickets in the array will.
      * @return 
      */
-    public DummyEntity[] getTickets(){
-        return this.tickets.toArray(DummyEntity[]::new);
+    public Ticket[] getTickets(){
+        return this.tickets.toArray(Ticket[]::new);
     }
     
     /**
      * Add a ticket to this reservation.
      * @param ticket 
      */
-    public void addTicket(DummyEntity ticket){
+    public void addTicket(Ticket ticket){
         if(this.tickets.contains(ticket)){
             return;
         }
@@ -105,8 +109,16 @@ public class Reservation {
      * Remove a ticket from this reservation.
      * @param ticket 
      */
-    public void removeTicket(DummyEntity ticket){
+    public void removeTicket(Ticket ticket){
         this.tickets.remove(ticket);
+    }
+    
+    public Money getTotalPrice(){
+        Money total = Money.of(0, "EUR");
+        for(Ticket t:tickets){
+            total = total.add(t.getTicketPrice() != null? t.getTicketPrice():total);
+        }
+        return total;
     }
 
     

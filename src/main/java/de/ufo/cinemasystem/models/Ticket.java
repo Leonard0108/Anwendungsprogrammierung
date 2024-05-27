@@ -1,13 +1,18 @@
 package de.ufo.cinemasystem.models;
 
+import jakarta.persistence.Entity;
 import java.util.Objects;
 
 import org.javamoney.moneta.Money;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
+
+@Entity
+@Table(name= "TICKETS")
 public class Ticket implements Comparable<Ticket> {
 
     public static enum TicketCategory {
@@ -16,15 +21,21 @@ public class Ticket implements Comparable<Ticket> {
         children
     }
 
-    @NotEmpty
+    /**
+     * never empty. if null, hibernate will decide one. @SimonBanks42
+     */
     private @Id @GeneratedValue Long id;
 
     private TicketCategory category;
     private Money TicketPrice;
+    /**
+     * temp variable saving the seat id.
+     */
+    private int seatID;
     // private CinemaShow show;
     // private Reservation reservation;
 
-    Ticket(TicketCategory Category/* , CinemaShow cinemaShow */) {
+    public Ticket(TicketCategory Category/* , CinemaShow cinemaShow */) {
         this.category = Category;
         double reduction;
         switch (this.category) {
@@ -40,7 +51,7 @@ public class Ticket implements Comparable<Ticket> {
 
     }
 
-    Ticket() {
+    public Ticket() {
 
     }
 
@@ -54,6 +65,27 @@ public class Ticket implements Comparable<Ticket> {
 
     public Money getTicketPrice() {
         return this.TicketPrice;
+    }
+
+    public int getSeatID() {
+        return seatID;
+    }
+
+    public void setSeatID(int seatID) {
+        this.seatID = seatID;
+    }
+    
+    public String getSeatString(){
+        return ((char)('A' + this.seatID / 100)) + ("" + this.seatID % 100);
+    }
+    
+    public String categoryToLabel(){
+        return switch(this.category){
+            case normal -> "Erwachsener";
+            case children -> "Kind (Bis 14 Jahre)";
+            case reduced -> "Schwerbehinderter";
+            default -> null;
+        };
     }
 
     @Override

@@ -2,16 +2,14 @@ package de.ufo.cinemasystem.models;
 
 import java.util.Objects;
 
-import org.javamoney.moneta.Money;
+import javax.money.MonetaryAmount;
 
-import jakarta.persistence.Entity;
+import org.salespointframework.catalog.Product;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "TICKETS")
-public class Ticket implements Comparable<Ticket> {
+public class Ticket extends Product {
 
     public static enum TicketCategory {
         normal,
@@ -25,7 +23,6 @@ public class Ticket implements Comparable<Ticket> {
     private @Id @GeneratedValue Long id;
 
     private TicketCategory category;
-    private Money TicketPrice;
     private CinemaShow show;
     private Reservation reservation;
 
@@ -49,7 +46,7 @@ public class Ticket implements Comparable<Ticket> {
 
     }
 
-    public Long getId() {
+    public ProductIdentifier getId() {
         return id;
     }
 
@@ -57,7 +54,7 @@ public class Ticket implements Comparable<Ticket> {
         return category;
     }
 
-    public Money getTicketPrice() {
+    public MonetaryAmount getTicketPrice() {
         return TicketPrice;
     }
 
@@ -98,10 +95,10 @@ public class Ticket implements Comparable<Ticket> {
                 && Objects.equals(getCategory(), ticket.getCategory())
                 && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
     }
-
-    @Override
-    public int compareTo(Ticket ticket) {
-        return (this.equals(ticket)) ? 0 : 1;
-    }
-
+    /*
+     * @Override
+     * public int compareTo(Ticket ticket) {
+     * return (this.equals(ticket)) ? 0 : 1;
+     * }
+     */
 }

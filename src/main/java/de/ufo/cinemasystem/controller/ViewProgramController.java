@@ -25,6 +25,7 @@ import de.ufo.cinemasystem.repository.FilmRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,11 +201,38 @@ public class ViewProgramController {
 	// TODO: Später in einen Service verschieben
 
 	/**
-	 * @return max. Anzahl an Kalenderwochen, welches ein Jahr hat.
-	 * Es zählen auch die erste und die letzte Woche, auch wenn diese nicht vollständig in dem Jahr liegen.
+	 * @return max. Anzahl an Kalenderwochen, welches ein Jahr hat. (nach ISO 8601)
 	 */
 	public static int getMaxYearWeeks(int year) {
-		return getWeekOfYear(LocalDateTime.of(year, 12, 31, 0, 0));
+		LocalDate date = LocalDate.of(year, 6, 1);
+		return (int) IsoFields.WEEK_OF_WEEK_BASED_YEAR.rangeRefinedBy(date).getMaximum();
+	}
+
+	/**
+	 * Erhalte nächste Woche anhand von Jahr und aktueller Woche nach ISO 8601
+	 * @param year aktuelles Jahr
+	 * @param week aktuelle Woche (1..52 oder 1..53 je nach Jahr, 1. Woche im Jahr, wenn Donnerstag der Woche in diesem Jahr liegt, siehe ISO 8601)
+	 * @return [0]: das nächste Jahr, wenn nächste Woche im neuen Jahr liegt (siehe week), sonst unverändert, [1]: nächste Woche (1..52 oder 1..53)
+	 */
+	public static int[] nextWeek(int year, int week) {
+		int maxYearWeeks = getMaxYearWeeks(year);
+		if(week < 1 || week > maxYearWeeks)
+			throw new IllegalArgumentException("week muss zwischen 1 und " + maxYearWeeks + " liegen!");
+		return new int[]{((week % maxYearWeeks == 0) ? year + 1 : year), (week % maxYearWeeks) + 1};
+	}
+
+
+	/**
+	 * Erhalte letzte Woche anhand von Jahr und aktueller Woche nach ISO 8601
+	 * @param year aktuelles Jahr
+	 * @param week aktuelle Woche (1..52 oder 1..53 je nach Jahr, 1. Woche im Jahr, wenn Donnerstag der Woche in diesem Jahr liegt, siehe ISO 8601)
+	 * @return [0]: das letzte Jahr, wenn letzte Woche im alten Jahr liegt (siehe week), sonst unverändert, [1]: vorherige Woche (1..52 oder 1..53)
+	 */
+	public static int[] lastWeek(int year, int week) {
+		int maxYearWeeks = getMaxYearWeeks(year);
+		if(week < 1 || week > maxYearWeeks)
+			throw new IllegalArgumentException("week muss zwischen 1 und " + maxYearWeeks + " liegen!");
+		return new int[]{(week == 1 ? year - 1 : year), (week == 1 ? getMaxYearWeeks(year - 1) : week - 1)};
 	}
 
 	/**

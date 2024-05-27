@@ -4,13 +4,10 @@ import java.util.Random;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.core.DataInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Snacks.SnackType;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import de.ufo.cinemasystem.services.SnacksService;

@@ -25,6 +25,7 @@
 		<sonar.token>${env.STLAB_SONAR_LOGIN}</sonar.token>-->
 		<argLine>-Xmx1G</argLine>
 		<kotlin.version>1.9.23</kotlin.version>
+                <start-class>de.ufo.cinemasystem.Application</start-class>
 	</properties>
 
 	<dependencies>

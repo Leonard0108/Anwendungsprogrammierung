@@ -29,7 +29,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	//@JoinColumn(name = "film_id")
 	private Film film;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private final Map<Seat, Seat.SeatOccupancy> seats = new TreeMap<>();
 
 	@ManyToOne

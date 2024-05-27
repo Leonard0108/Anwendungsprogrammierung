@@ -9,17 +9,17 @@
 
 == Endpunkte Login-Controller
 === Haputadresse
-- lunar_space_port/
+- /lunar_space_port/
 
 === Unteradressen
-- register
-- registration
-- login
-- checkLoginData
+- /register
+- /registration
+- /login
+- /checkLoginData
 
 
 == BusinessDataDashboardController
-- statistics
+- /statistics
 
 == DeleteReservationController
 - /my-reservations
@@ -46,7 +46,7 @@
 - /commit
 
 == RentFilmController
-- rent-films
+- /rent-films/
 
 == ViewProgrammController
 === Hauptreferenz

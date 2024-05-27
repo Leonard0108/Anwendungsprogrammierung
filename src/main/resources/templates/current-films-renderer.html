@@ -28,8 +28,10 @@
                     <ul class="nav-section-content">
                         <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
                         <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
-                        <li><a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">Reservierung stornieren</a></li>
-                        <li><a href="/logout" title="Abmelden | UFO Kinos">Abmelden</a></li>
+                        <li><a href="/my-reservations" title="Meine Reservierungen | UFO Kinos">Meine Reservierungen</a></li>
+                        <!--<li sec:authorize="hasAnyRole(USER,STAFF,TRUSTEDSTAFF,BOSS)"><a href="/lunar_space_port/logOut" title="Abmelden | UFO Kinos">Abmelden</a></li>-->
+                        <li><a href="/lunar_space_port/login" title="Anmelden | UFO Kinos">Anmelden</a></li>
+                        <li><a href="/lunar_space_port/registration" title="Registrieren | UFO Kinos">Registrieren</a></li>
                     </ul>
                 </div>
                 <div id="checkout-stuff" class="nav-section">
@@ -45,8 +47,12 @@
                     <span class="nav-section-title">Management</span>
                     <ul class="nav-section-content">
                         <li><a href="/current-films" title="Programmverwaltung | UFO Kinos">Programmverwaltung</a></li>
+                        <li><a href="/rent-films/" title="Filme ausleihen | UFO Kinos">Filme ausleihen</a></li>
+                        <li><a href="/statistics" title="Statistiken | UFO Kinos">Wirtschaftsstatistiken</a></li>
                         <li><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
+                        <li><a href="/manage/pricing" title="Preisgestaltung | UFO Kinos">Preisgestaltung</a></li>
                         <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
+                        <li><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li>
                     </ul>
                 </div>
             </nav>

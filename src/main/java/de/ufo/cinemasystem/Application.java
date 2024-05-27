@@ -53,7 +53,7 @@ public class Application {
 					.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
 					.csrf(csrf -> csrf.disable())
 					.formLogin(login -> login.loginProcessingUrl("/login"))
-					.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))
+					.logout(logout -> logout.logoutUrl("/lunar_space_port/logOut").logoutSuccessUrl("/"))
 					.build();
 		}
 	}

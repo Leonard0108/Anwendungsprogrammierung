@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import de.ufo.cinemasystem.models.Bestellung;
 import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.OrderRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
@@ -29,16 +30,15 @@ public class MakeOrderController {
 	private @Autowired UserRepository userRepo;
 
 	@GetMapping("/sell#tickets")
-	public String startOrder(Model m, @PathVariable CinemaShow what, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session) {
+	public String startOrder(Model m, @PathVariable Ticket ticket, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session) {
 
 		if(session.getAttribute(orderSessionKey) == null){
             session.setAttribute(orderSessionKey, new Bestellung(currentUser));
         }
 
 		Bestellung bestellung = (Bestellung) session.getAttribute(orderSessionKey);
-        m.addAttribute("tickets", bestellung.getTickets());
-        m.addAttribute("show", bestellung.());
-		return "films-rental-renderer";
+        m.addAttribute("tickets", bestellung.addTicket(ticket));
+		return "sell-items-1";
 	}
 
 }

@@ -1,0 +1,17 @@
+= Meeting 27.05.2024
+
+== Aktuelle Aufgaben
+- grundlegende funktionalitäten Implementieren
+
+
+== Besprochen
+- Autorisierter Mitarbeiter leiht Film ohne Preis festzulegen. Chef bearbeitet Preis: erst dann kann der Film gebucht werden
+
+
+== AufgabenVerteilung
+
+Lukas: Loginsystem beenden
+Jannik: Reservierung beenden, integration Kassensystem, Platzwahl
+Yannick: Lagerverwaltung, Film ausleihen von autorisierten Mitarbeiter
+Simon: Snack und Ticket Verkauf, Warenkorb, Inventory Verwaltung
+Tobias: Personalverwaltung, Wirtschaftsdaten dynamisch, Preisgestalltung, Interface Scheduled Activity fkt. onDay Argummente in Zeitspanne

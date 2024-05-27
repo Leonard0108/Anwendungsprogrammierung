@@ -51,6 +51,12 @@
                     <h2>Kinoprogramm hinzufügen</h2>
                     <a href="/current-films#addprogram" title="Programmverwaltung | UFO Kinos" target="new">Programmverwaltung</a>
                     <h2>Saal vermieten</h2>
+                    <div th:if="${errorMessage}" class="error">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                    <div th:if="${successMessage}" class="success">
+                        <p th:text="${successMessage}"></p>
+                    </div>
                     <form action="/manage/rooms" method="post">
                         <p>Von: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="from" required=""></p>
                         <p>Bis: <input type="datetime-local" placeholder="19.04.2024 13:15 Uhr" name="to" required=""></p>

@@ -1,31 +1,45 @@
 package de.ufo.cinemasystem.models;
 
-import org.javamoney.moneta.Money;
+import java.util.UUID;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import javax.money.MonetaryAmount;
 
-public class Snacks {
+import org.salespointframework.catalog.Product;
+import org.salespointframework.quantity.Metric;
+import org.springframework.lang.NonNull;
+
+import jakarta.persistence.EmbeddedId;
+import lombok.Getter;
+
+public class Snacks extends Product {
 
     public static enum SnackType {
         Getränk,
         Essen
     }
 
-    private @Id @GeneratedValue Long id;
-    private String name;
+    private @EmbeddedId ProductIdentifier id = ProductIdentifier.of(UUID.randomUUID().toString());
+    private @NonNull @Getter String name;
+    private @NonNull @Getter MonetaryAmount price;
+    private Metric metric;
     private SnackType type;
-    private Money price;
     private int count;
 
-    public Snacks(String name, SnackType type, Money price, int count) {
+    public Snacks(String name, MonetaryAmount price) {
+        this.name = name;
+        this.price = price;
+        this.count = 0;
+        this.metric = Metric.UNIT;
+    }
+
+    public Snacks(String name, MonetaryAmount price, int count) {
         this.name = name;
         this.type = type;
         this.price = price;
         this.count = count;
     }
 
-    public Long getId() {
+    public ProductIdentifier getId() {
         return id;
     }
 
@@ -33,7 +47,7 @@ public class Snacks {
         return name;
     }
 
-    public Money getPrice() {
+    public MonetaryAmount getPrice() {
         return price;
     }
 

@@ -37,7 +37,6 @@ public class SnacksDataInitializer implements DataInitializer {
             SnackType type = (i % 2 == 0) ? SnackType.Essen : SnackType.Getränk;
             snacksrepository.save(new Snacks(
                     "Snack " + i,
-                    type,
                     Money.of(random.nextDouble(3.5, 20), "EUR"),
                     random.nextInt(10, 50)));
         }

@@ -1,14 +1,17 @@
 package de.ufo.cinemasystem.models;
 
 import java.util.Objects;
+import java.util.UUID;
 
-import org.javamoney.moneta.Money;
+import javax.money.MonetaryAmount;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotEmpty;
+import org.salespointframework.catalog.Product;
+import org.springframework.lang.NonNull;
 
-public class Ticket implements Comparable<Ticket> {
+import jakarta.persistence.EmbeddedId;
+import lombok.Getter;
+
+public class Ticket extends Product {
 
     public static enum TicketCategory {
         normal,
@@ -16,11 +19,10 @@ public class Ticket implements Comparable<Ticket> {
         children
     }
 
-    @NotEmpty
-    private @Id @GeneratedValue Long id;
-
+    private @EmbeddedId ProductIdentifier id = ProductIdentifier.of(UUID.randomUUID().toString());
+    private @NonNull @Getter String name;
+    private @NonNull @Getter MonetaryAmount TicketPrice;
     private TicketCategory category;
-    private Money TicketPrice;
     private CinemaShow show;
     private Reservation reservation;
 
@@ -44,7 +46,7 @@ public class Ticket implements Comparable<Ticket> {
 
     }
 
-    public Long getId() {
+    public ProductIdentifier getId() {
         return id;
     }
 
@@ -52,7 +54,7 @@ public class Ticket implements Comparable<Ticket> {
         return category;
     }
 
-    public Money getTicketPrice() {
+    public MonetaryAmount getTicketPrice() {
         return TicketPrice;
     }
 
@@ -72,10 +74,10 @@ public class Ticket implements Comparable<Ticket> {
                 && Objects.equals(getCategory(), ticket.getCategory())
                 && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
     }
-
-    @Override
-    public int compareTo(Ticket ticket) {
-        return (this.equals(ticket)) ? 0 : 1;
-    }
-
+    /*
+     * @Override
+     * public int compareTo(Ticket ticket) {
+     * return (this.equals(ticket)) ? 0 : 1;
+     * }
+     */
 }

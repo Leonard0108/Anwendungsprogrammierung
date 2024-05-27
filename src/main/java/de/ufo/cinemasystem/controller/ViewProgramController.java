@@ -78,7 +78,19 @@ public class ViewProgramController {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
 		List<CinemaShowDayEntry> oneWeekCinemaShows = new ArrayList<>();
 
-		m.addAttribute("weekRangeFormat", getWeekRangeFormat(year, week));
+		int[] nextYearWeek = ViewProgramController.nextWeek(year, week);
+		int[] lastYearWeek = ViewProgramController.lastWeek(year, week);
+
+		m.addAttribute("lastWeekRangeFormat", getWeekRangeFormat(lastYearWeek[0], lastYearWeek[1]));
+		m.addAttribute("lastYear", lastYearWeek[0]);
+		m.addAttribute("lastWeek", lastYearWeek[1]);
+
+		m.addAttribute("currentWeekRangeFormat", getWeekRangeFormat(year, week));
+
+		m.addAttribute("nextWeekRangeFormat", getWeekRangeFormat(nextYearWeek[0], nextYearWeek[1]));
+		m.addAttribute("nextYear", nextYearWeek[0]);
+		m.addAttribute("nextWeek", nextYearWeek[1]);
+
 		// TODO: Sortierung nach Zeit an einem Tag korrekt implementieren
 		// TODO: effizienter umsetzen:
 		// Alle Wochentage einzeln behandeln

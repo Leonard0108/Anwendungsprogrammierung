@@ -8,8 +8,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
-import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
+
+import java.time.LocalDateTime;
 
 /**
  *
@@ -17,9 +18,14 @@ import de.ufo.cinemasystem.models.Film;
  */
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long>{
-        @Override
+	
+	@Override
 	Streamable<Film> findAll();
-        
-        
-        
+	default Streamable<Film> findAvailableAt(LocalDateTime dateTime) {
+		return findAll().filter(f -> f.isAvailableAt(dateTime));
+	}
+
+	default Streamable<Film> findAvailableNow() {
+		return findAll().filter(Film::isAvailableNow);
+	}
 }

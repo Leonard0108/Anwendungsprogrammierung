@@ -1,20 +1,32 @@
 package de.ufo.cinemasystem.additionalfiles;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Id;
 import org.jetbrains.annotations.NotNull;
-import org.thymeleaf.dialect.AbstractDialect;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Embeddable
 public class YearWeekEntry implements Comparable<YearWeekEntry>{
 	private final int year;
 	private final int week;
+	@Id
+	private Long id;
 
 	public YearWeekEntry(int year, int week) {
 		int maxYearWeeks = AdditionalDateTimeWorker.getMaxYearWeeks(year);
 		if(week < 1 || week > maxYearWeeks)
 			throw new IllegalArgumentException("week muss zwischen 1 und " + maxYearWeeks + " für das Jahr " + year + " liegen (week = " + week + ").");
+
+		this.id = year * 53L + week;
 		this.year = year;
 		this.week = week;
+	}
+
+	protected YearWeekEntry() {
+		this.year = 2000;
+		this.week = 1;
 	}
 
 	public int getYear() {
@@ -24,6 +36,8 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>{
 	public int getWeek() {
 		return this.week;
 	}
+
+	public Long getId() { return id; }
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#getWeekRangeFormat(int, int)}
@@ -65,6 +79,23 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>{
 	 */
 	public int getMaxYearWeeks() {
 		return AdditionalDateTimeWorker.getMaxYearWeeks(this.year);
+	}
+
+	/**
+	 * Prüft, ob der angegebene Zeitpunkt in der Woche und in dem Jahr liegt
+	 * @param date Zeitpunkt
+	 * @return true, wenn Zeitpunkt in der Woche und in dem Jahr liegt, sonst false
+	 */
+	public boolean isInYearWeek(LocalDateTime date) {
+		if(date.getYear() != this.year) return false;
+		return AdditionalDateTimeWorker.getWeekOfYear(date) == this.week;
+	}
+
+	/**
+	 * @return true, wenn der aktuelle Zeitpunkt in der Woche und in dem Jahr liegt, sonst false
+	 */
+	public boolean isNowInYearWeek() {
+		return isInYearWeek(LocalDateTime.now());
 	}
 
 	@Override

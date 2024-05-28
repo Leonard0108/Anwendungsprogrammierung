@@ -127,6 +127,11 @@ public class ViewProgramController {
 			// TODO Fehlerbehandlung
 			return "redirect:/current-films/{year}/{week}";
 		}
+		Film filmInst = optFilmInst.get();
+		if(!filmInst.isAvailableAt(addTime)) {
+			// TODO: Fehlerbehandlung
+			return "redirect:/current-films/{year}/{week}";
+		}
 		// TODO: Prüfe ob sich Events oder Filme überlappen, wenn ja Abbruch und Fehler
 		// Erstelle neue Vorführung
 		cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get(), optRoomInst.get());

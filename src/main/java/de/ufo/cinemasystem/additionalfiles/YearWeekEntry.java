@@ -4,11 +4,11 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Id;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Embeddable
-public class YearWeekEntry implements Comparable<YearWeekEntry>{
+public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 	private final int year;
 	private final int week;
 	@Id

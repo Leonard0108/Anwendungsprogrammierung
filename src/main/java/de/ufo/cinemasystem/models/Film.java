@@ -18,8 +18,10 @@ import java.util.*;
 @Entity
 @Table(name= "FILMS")
 public class Film  implements Comparable<Film>{
-    
-    private @Id @GeneratedValue Long id;
+
+	@Id
+	@GeneratedValue
+    private Long id;
     private @NotNull String title;
     private @NotNull String desc;
     private int fskAge;

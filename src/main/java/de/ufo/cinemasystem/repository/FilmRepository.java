@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long>{
-	
+
 	@Override
 	Streamable<Film> findAll();
 	default Streamable<Film> findAvailableAt(LocalDateTime dateTime) {

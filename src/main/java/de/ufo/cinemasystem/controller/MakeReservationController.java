@@ -4,6 +4,7 @@
  */
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
@@ -50,7 +51,7 @@ public class MakeReservationController {
     public String startReservation(Model m){
         m.addAttribute("title", "Plätze reservieren");
         LocalDateTime now = LocalDateTime.now();
-        m.addAttribute("shows", showsRepo.findCinemaShowsInWeek(now.getYear(), ViewProgramController.getWeekOfYear(now)).toList());
+        m.addAttribute("shows", showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList());
         return "make-reservation-cinema-show-selection";
     }
     

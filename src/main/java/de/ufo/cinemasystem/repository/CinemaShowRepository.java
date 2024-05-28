@@ -1,15 +1,11 @@
 package de.ufo.cinemasystem.repository;
 
-import org.salespointframework.core.SalespointRepository;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
-import de.ufo.cinemasystem.controller.ViewProgramController;
 import de.ufo.cinemasystem.models.CinemaShow;
 
 import java.time.LocalDate;
@@ -23,8 +19,8 @@ public interface CinemaShowRepository extends CrudRepository<CinemaShow, Long> {
 
 	default Streamable<CinemaShow> findCinemaShowsInWeek(int year, int week) {
 		return findCinemaShowsInPeriodOfTime(
-			ViewProgramController.getStartWeekDateTime(year, week),
-			ViewProgramController.getEndWeekDateTime(year, week)
+			AdditionalDateTimeWorker.getStartWeekDateTime(year, week),
+			AdditionalDateTimeWorker.getEndWeekDateTime(year, week)
 		);
 	}
 

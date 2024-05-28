@@ -7,6 +7,7 @@ package de.ufo.cinemasystem.models;
 import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.util.Streamable;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -128,6 +129,35 @@ public class Film  implements Comparable<Film>{
 		return this.rentWeeks.remove(entry);
 	}
 
+	public Streamable<YearWeekEntry> getRentWeeks() {
+		return Streamable.of(this.rentWeeks);
+	}
+
+	public Optional<YearWeekEntry> getFirstRentWeek() {
+		return this.rentWeeks.stream().min(Comparator.naturalOrder());
+	}
+
+	public Optional<YearWeekEntry> getLastRentWeek() {
+		return this.rentWeeks.stream().max(Comparator.naturalOrder());
+	}
+
+	public boolean isRent(LocalDateTime dateTime) {
+		return this.rentWeeks.stream()
+			.anyMatch(e -> e.isInYearWeek(dateTime));
+	}
+
+	public boolean isRent(YearWeekEntry entry) {
+		return this.rentWeeks.contains(entry);
+	}
+
+	public int getRentWeekCount() {
+		return this.rentWeeks.size();
+	}
+
+	public boolean isRentNow() {
+		return isRent(LocalDateTime.now());
+	}
+
 	/**
 	 * Gibt an, ob der Film zu dem Zeitpunkt im Kino zu dem Zeitpunkt verfügbar ist (z.B. zum Verwenden in einer Veranstaltung)
 	 * TODO: auch hier prüfen, ob Ticket-Preise vom Chef gesetzt wurden
@@ -135,8 +165,7 @@ public class Film  implements Comparable<Film>{
 	 * @return true, wenn Verfügbar, sonst false
 	 */
 	public boolean isAvailableAt(LocalDateTime dateTime) {
-		return this.rentWeeks.stream()
-			.anyMatch(e -> e.isInYearWeek(dateTime));
+		return isRent(dateTime);
 	}
 
 	/**

@@ -118,4 +118,9 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 	public int hashCode() {
 		return this.year * 53 + this.week;
 	}
+
+	public static YearWeekEntry getNowYearWeek() {
+		LocalDateTime now = LocalDateTime.now();
+		return new YearWeekEntry(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now));
+	}
 }

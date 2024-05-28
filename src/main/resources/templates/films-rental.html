@@ -8,17 +8,70 @@
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Filme Verleih</h1>
-            <div th:each="film : ${allFilms}" class="current-rent-films-tile-sections">
-                <h2 th:text="${film.getTitle()}"></h2>
-                <div class="rent-film-card">
-                    <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${film.getTitle()}" alt="Test-Film 1">
-                    <div class="rent-film-main-info-section">
+            <div th:each="film : ${allFilms}" class="rent-films-tile-sections">
+                <div class="rent-film-card" th:attr="onclick='location.href=\'/rent-films/' + ${film.getId()} + '\''">
+                    <!--<a th:href="'/cinema-shows/' + ${cinemaShow.getId()}" href="/current-films/detail/1">-->
+                    <img class="rent-film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${film.getTitle()}" alt="Filmtitel">
+                    <!--</a>-->
+                    <div class="rent-film-card-main-section">
+                        <p>
+                            <span th:text="${film.getTitle()}"></span>
+                        </p>
                         <p th:text="'Anbieter: ' + ${film.getFilmProvider().getName()}">Anbieter</p>
-                        <p th:text="'Leihkosten: ' + ${film.getBasicRentFee()}">Leihkosten</p>
+                        <p th:text="'Basis-Leihkosten: ' + ${film.getBasicRentFee() + ' €'}">Leihkosten</p>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <style>
+                nav{
+                    float: left;
+                    padding-right:0.5em;
+                }
+                nav li,.footer li{
+                    list-style:none;
+                }
+                .main-wrapper{
+                    margin-top: 1em;
+                }
+                .footer li{
+                    display: inline-block;
+                    padding: 0em 1em;
+                }
+
+                .client-nojs .nojs-hide{
+                    display: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .week-navigator *{
+                    flex-grow:1;
+                    text-align: center;
+                }
+
+                .rent-film-card{
+                    display: flex;
+                    cursor: pointer;
+                }
+                .rent-film-card:hover {
+                    background-color: #333333;
+                }
+                .rent-film-card-main-section{
+                    flex-grow:1;
+                    padding: 0em 2em;
+                }
+                .rent-film-card p{
+                    margin: 0;
+                }
+                .rent-film-card .reserve-error{
+                    color:red;
+                }
+                .rent-film-card img{
+                    margin-left: 2em;
+                    max-width: 100px;
+                }
+            </style>
+        </div>
     </body>
 </html>

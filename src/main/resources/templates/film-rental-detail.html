@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Leih-Woche</th>
+                        <th>aktueller Leihstatus</th>
+                        <th>neuer Leihstatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="week : ${allRangeYearWeeks}">
+                        <td th:text="${week.getWeekRangeFormat()}">...</td>
+
+                        <td>
+                            <input type="checkbox" name="checkbox1" value="1" th:checked="${film.isRent(week)}" disabled>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="checkbox1" value="1" th:checked="${film.isRent(week)}">
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #333333;
+                }
+            </style>
+        </div>
+    </body>
+</html>

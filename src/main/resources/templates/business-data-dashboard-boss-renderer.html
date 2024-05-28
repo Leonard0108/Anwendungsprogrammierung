@@ -23,18 +23,22 @@
         <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script th:inline="javascript">
+            // Daten aus Thymeleaf in JavaScript-Array umwandeln
+            var dailyIncomeData = /*[[${dailyIncomeData}]]*/ '[]';
+        </script>
         <script type="text/javascript">
             google.charts.load("current", {packages:["corechart"]});
             google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Einnahmequelle', 'Einnahmen'],
-                    ['Ticket: Bell im Märchenland',     250],
-                    ['Ticket: Parry Hotter und die Hochschule Merseburg',      200],
-                    ['Snacks: Popcorn',  75],
-                    ['Snacks: Softdrinks', 30],
-                    ['Ticket: Extra 4\'s Jannes Müller',    10]
-                ]);
+                console.log(dailyIncomeData);
+                var dataArray = [];
+                dataArray.push(['Einnahmequelle', 'Einnahmen'])
+                for (var i = 0; i < dailyIncomeData.length; i++) {
+                    dataArray.push([dailyIncomeData[i].source, dailyIncomeData[i].income]);
+                }
+
+                var data = google.visualization.arrayToDataTable(dataArray);
 
                 var options = {
                     title: 'Tageseinnahmen',

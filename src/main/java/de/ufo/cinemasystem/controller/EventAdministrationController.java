@@ -1,8 +1,8 @@
 package de.ufo.cinemasystem.controller;
 
 
-import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
-import de.ufo.cinemasystem.additionalfiles.ScheduledActivityService;
+import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.services.ScheduledActivityService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Event;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
@@ -31,13 +30,11 @@ public class EventAdministrationController {
 
 	private EventRepository eventRepository;
 	private CinemaHallRepository cinemaHallRepository;
-	private CinemaShowRepository cinemaShowRepository;
 	private ScheduledActivityService scheduledActivityService;
 
 	public EventAdministrationController(EventRepository eventRepository, CinemaHallRepository cinemaHallRepository, CinemaShowRepository cinemaShowRepository) {
 		this.eventRepository = eventRepository;
 		this.cinemaHallRepository = cinemaHallRepository;
-		this.cinemaShowRepository = cinemaShowRepository;
 		this.scheduledActivityService = new ScheduledActivityService(eventRepository, cinemaShowRepository);
 	}
 

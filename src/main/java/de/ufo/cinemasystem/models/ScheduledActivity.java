@@ -1,9 +1,10 @@
-package de.ufo.cinemasystem.additionalfiles;
-
-import de.ufo.cinemasystem.models.CinemaHall;
+package de.ufo.cinemasystem.models;
 
 import java.time.LocalDateTime;
 
+/**
+ * Interface fasst CineaShows und Events zusammen
+ */
 public interface ScheduledActivity {
 	long getId();
 	LocalDateTime getStartDateTime();

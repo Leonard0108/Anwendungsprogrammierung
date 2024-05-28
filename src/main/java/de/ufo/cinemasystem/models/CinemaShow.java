@@ -1,13 +1,9 @@
 package de.ufo.cinemasystem.models;
 
-import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.net.Authenticator;
 import java.time.LocalDateTime;
 import java.util.*;
 

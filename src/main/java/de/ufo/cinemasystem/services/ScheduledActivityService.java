@@ -1,18 +1,18 @@
-package de.ufo.cinemasystem.additionalfiles;
+package de.ufo.cinemasystem.services;
 
 import de.ufo.cinemasystem.models.Event;
 import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.ScheduledActivity;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.EventRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Comparator;
 import java.util.List;
 
-
+// @Service
 public class ScheduledActivityService {
 
 	private EventRepository eventRepository;

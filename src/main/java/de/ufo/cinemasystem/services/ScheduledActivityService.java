@@ -86,14 +86,36 @@ public class ScheduledActivityService {
 
 	/**
 	 *
-	 * Prüft, ob im angegebenen Zeitintervall keine Aktivitäten stattfinden.
+	 *  Ruft alle CinemaShows und Events aus der Datenbank ab, die in einem bestimmten Zeitintervall und in einem bestimmten Kinosaal stattfinden,
+	 *  und gibt sie als sortierte Liste von ScheduledActivity zurück.
 	 *
 	 * @param from der Beginn des Zeitintervalls
 	 * @param to das Ende des Zeitintervalls
+	 * @param roomId die ID des betrachteten Kinosaals
+	 * @return eine sortierte Liste von ScheduledActivity-Objekten, die im angegebenen Zeitintervall stattfinden
+	 */
+	public List<ScheduledActivity> getActivitysInTimeInterval(LocalDateTime from, LocalDateTime to, long roomId) {
+
+		List<ScheduledActivity> activitiesInInterval = getActivitysOnDay(from.toLocalDate());
+
+		// entfernt alle Aktivitäten die nicht ins Intervall fallen
+		activitiesInInterval.removeIf(activity -> activity.getCinemaHall().getId() != roomId || activity.getStartDateTime().plusMinutes(activity.getDuration()).isBefore(from) ||
+			activity.getStartDateTime().isAfter(to));
+		return activitiesInInterval;
+	}
+
+
+	/**
+	 *
+	 * Prüft, ob im angegebenen Zeitintervall und Saal keine Aktivitäten stattfinden.
+	 *
+	 * @param from der Beginn des Zeitintervalls
+	 * @param to das Ende des Zeitintervalls
+	 * @param roomId die ID des betrachteten Kinosaals
 	 * @return true, wenn keine Aktivitäten im Zeitintervall stattfinden, andernfalls false
 	 */
-	public boolean isTimeSlotAvailable(LocalDateTime from, LocalDateTime to){
-		return getActivitysInTimeInterval(from, to).isEmpty();
+	public boolean isTimeSlotAvailable(LocalDateTime from, LocalDateTime to, long roomId){
+		return getActivitysInTimeInterval(from, to, roomId).isEmpty();
 	}
 
 }

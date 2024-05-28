@@ -95,7 +95,7 @@ public class EventAdministrationController {
 		redirectAttributes.addAttribute("allCinemaHalls", allCinemaHalls);
 		LocalDate date = from.toLocalDate();
 
-		if(!scheduledActivityService.isTimeSlotAvailable(from, to)){
+		if(!scheduledActivityService.isTimeSlotAvailable(from, to, room)){
 			redirectAttributes.addFlashAttribute("errorMessage", "Der ausgewählte Zeitslot ist bereits belegt.");
 
 			return "redirect:/manage/rooms?room=" + room + "&date=" + date;

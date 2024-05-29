@@ -1,11 +1,11 @@
 package de.ufo.cinemasystem.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
+import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
+import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Controller
 public class RentFilmController {
@@ -36,7 +33,7 @@ public class RentFilmController {
 		return "films-rental";
 	}
 
-	@GetMapping("/rent-films/{film}")
+	@GetMapping("/films/{film}")
 	public String getRentFilm(Model model, @PathVariable Film film) {
 		List<YearWeekEntry> allRangeYearWeeks = new ArrayList<>();
 
@@ -52,16 +49,21 @@ public class RentFilmController {
 		addDetailNowAndPastWeeks(film, allRangeYearWeeks, reservedWeeks, nowAndPastWeeks);
 		addDetailFutureWeeks(film, allRangeYearWeeks, reservedWeeks, blockedReservedWeeks);
 
+		int[] totalSeatOccupancyValues = getTotalSeatOccupancyValues(film);
+
 		model.addAttribute("film", film);
 		model.addAttribute("allRangeYearWeeks", allRangeYearWeeks);
 		model.addAttribute("reservedWeeks", reservedWeeks);
 		model.addAttribute("nowAndPastWeeks", nowAndPastWeeks);
 		model.addAttribute("blockedReservedWeeks", blockedReservedWeeks);
+		model.addAttribute("freeSeatCount", totalSeatOccupancyValues[0]);
+		model.addAttribute("reservedSeatCount", totalSeatOccupancyValues[1]);
+		model.addAttribute("boughtSeatCount", totalSeatOccupancyValues[2]);
 
-		return "film-rental-detail";
+		return "film-detail";
 	}
 
-	@PostMapping("/rent-films/{film}")
+	@PostMapping("/films/{film}")
 	public String postRentFilm(Model model, @PathVariable Film film,
 							   @RequestParam(name = "new-selected-rent-weeks", required = false) List<Long> newSelectedRentWeeks,
 							   @RequestParam(name = "new-disabled-checked-rent-weeks", required = false) List<Long> newDisabledCheckedRentWeeks) {
@@ -115,7 +117,7 @@ public class RentFilmController {
 
 		filmRepository.save(film);
 
-		return "redirect:/rent-films/{film}";
+		return "redirect:/films/{film}";
 	}
 
 	/**
@@ -199,5 +201,23 @@ public class RentFilmController {
 
 			currentWeek = currentWeek.nextWeek();
 		}
+	}
+
+	/**
+	 * Gibt alle Sitzplatz-Belegungs-Statistiks-Werte zurück von allen Veranstaltungen für den Film
+	 * @param film Statistiken für diesen Film
+	 * @return [0]: freePlaces, [1]: reservedPlaces, [2]: boughtPlaces
+	 */
+	private int[] getTotalSeatOccupancyValues(Film film) {
+		var cinemaShows = this.cinemaShowRepository.findAllByFilm(film);
+		int freePlaces = 0, reservedPlaces = 0, boughtPlaces = 0;
+
+		for(CinemaShow cinemaShow : cinemaShows) {
+			freePlaces += cinemaShow.getSeatCount(Seat.SeatOccupancy.FREE);
+			reservedPlaces += cinemaShow.getSeatCount(Seat.SeatOccupancy.RESERVED);
+			boughtPlaces += cinemaShow.getSeatCount(Seat.SeatOccupancy.BOUGHT);
+		}
+
+		return new int[]{freePlaces, reservedPlaces, boughtPlaces};
 	}
 }

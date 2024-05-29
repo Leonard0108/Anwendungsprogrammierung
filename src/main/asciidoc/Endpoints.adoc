@@ -46,9 +46,14 @@
 - /commit
 
 == RentFilmController
-- rent-films
+- /rent-films
+- /films/{id}
 
 == ViewProgrammController
+- /cinema-shows/{id}
+- /cinema-shows/{id}/delete (POST)
+- /cinema-shows/{id}/edit (POST)
+
 === Hauptreferenz
 - /current-films
 

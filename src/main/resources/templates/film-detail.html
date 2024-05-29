@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
-            <h1 th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</h1>
+            <h1 th:text="${film.getTitle()}">Filmtitel</h1>
 
             <div class="film-detail-box">
                 <p class="fsk-label.fsk-18">
@@ -17,55 +17,124 @@
                 <div class="film-detail-text">
                     <h2>Inhaltsangabe:</h2>
                     <p>
-                        <span th:text="${cinemaShow.getFilm().getDesc()}">Film-Beschreibung</span>
+                        <span th:text="${film.getDesc()}">Film-Beschreibung</span>
                     </p>
 
                     <h2>Altersfreigabe:</h2>
                     <p>
-                    <span th:class="'fsk-label fsk-' + ${cinemaShow.getFilm().getFskAge()}" class="fsk-label fsk-12"
-                          th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
+                    <span th:class="'fsk-label fsk-' + ${film.getFskAge()}" class="fsk-label fsk-12"
+                          th:text="${'FSK ' + film.getFskAge()}">FSK Y</span>
                     </p>
-                    <h2>Ort:</h2>
+                    <h2>Anbieter:</h2>
                     <p>
-                        <span th:text="${cinemaShow.getCinemaHall().getName()}">Kinosaal</span>
+                        <span th:text="${film.getFilmProvider().getName()}">Anbieter</span>
                     </p>
-                    <h2>Zeit:</h2>
+                    <h2>Basis-Leihkosten:</h2>
                     <p>
-                    <span th:text="${#temporals.format(cinemaShow.getStartDateTime(), 'HH:mm')} + ' Uhr, '
-                                            + ${#temporals.format(cinemaShow.getStartDateTime(), 'dd.MM.yyyy')} + ' - '
-                                            + ${cinemaShow.getFilm().getTimePlaying()} + 'min'">
-                                                HH:mm Uhr, dd.MM.yyyy - mm min
-                    </span>
+                        <span th:text="${film.getBasicRentFee() + ' €'}">Leihkosten</span>
                     </p>
                 </div>
             </div>
 
-            <h2 id="edit-program">Vorführung ändern</h2>
-            <form th:action="'/cinema-shows/' + ${cinemaShow.getId()} + '/edit'" action="/cinema-shows/{id}/edit" method="post">
-                <p>Datum und Uhrzeit: <input type="datetime-local" name="editTime" th:value="${#temporals.format(cinemaShow.startDateTime, 'yyyy-MM-dd''T''HH:mm')}"></p>
-                <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
-                <p>Film: <select name="film">
-                    <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}"
-                     th:selected="${film.equals(cinemaShow.getFilm())}">Film</option>
-                </select></p>
-                <!--<select name="room">
-                    <option th:each="cinemaHall : ${allCinemaHalls}" value="Kinosaal"  th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Kinosaal</option>
-                </select>-->
-                <button name="editProgramPoint">Ändern</button>
-            </form>
-            <p class="change-cinema-show-caution">Achtung: Änderungen an der Veranstaltung sollten nur im Notfall vorgenommen werden.
-            Kunden mit bereits vorhandenen Tickets/Reservierungen, könnten diese Änderungen nicht mitbekommen.</p>
-            <p class="change-cinema-show-hint">Hinweis: Sollte sich der Saal ändern, muss diese Vorführung gelöscht
-            und eine neue erstellt werden, aufgrund einer unterschiedlichen Platzverteilung.</p>
+            <br><hr><br>
+            <h2>Leih-Ansicht</h2>
+            <br>
 
-            <h2 id="delete-program">Vorführung löschen</h2>
-            <form th:action="'/cinema-shows/' + ${cinemaShow.getId()} + '/delete'" action="/cinema-shows/{id}/delete" method="post">
-                <button name="deleteProgramPoint">Löschen</button>
+            <form th:action="@{'/rent-films/' + ${film.getId()}}" method="post">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Leih-Woche</th>
+                        <th>aktueller Leihstatus</th>
+                        <th>neuer Leihstatus</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="week : ${allRangeYearWeeks}">
+                        <td th:text="${week.getWeekRangeFormat()}">...</td>
+
+                        <td>
+                            <input type="checkbox" name="current-selected-rent-weeks" th:value="${week.getId()}"
+                                   th:checked="${reservedWeeks.contains(week)}" disabled>
+                        </td>
+                        <td>
+                            <input type="hidden" name="new-disabled-checked-rent-weeks"
+                                   th:if="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}"
+                                   th:value="${week.getId()}">
+                            <input type="checkbox" name="new-selected-rent-weeks" th:value="${week.getId()}"
+                                   th:checked="${reservedWeeks.contains(week)}"
+                                   th:disabled="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}">
+                            <div class="rent-storno-error" th:if="${nowAndPastWeeks.contains(week)}">
+                                Verleih oder Storno des Films nur für kommende Wochen möglich.
+                            </div>
+                            <div class="rent-storno-error" th:if="${blockedReservedWeeks.contains(week)}">
+                                Storno nur möglich, wenn alle Vorführungen in der Woche für den Film umgelegt oder gelöscht werden.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Summe:</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button type="submit">Speichern</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </form>
-            <p class="change-cinema-show-caution">Achtung: Das Löschen einer Veranstaltung sollte nur im Notfall vorgenommen werden.
-                Sämtliche Reservierungen und Buchungen gehen verloren und müssen manuell wieder eingefegt, bzw. erstattet werden.</p>
+
+            <br><hr><br>
+            <h2>Filmstatistiken</h2>
+            <br>
+            <div id="totalSeatOccupancy" style="width: 900px; height: 500px;"></div>
+
+            <!--Chat GPT 3.5: Wie kann ich die Thymeleaf mit JavaScript verknüpfen? und
+            https://stackoverflow.com/questions/25687816/setting-up-a-javascript-variable-from-spring-model-by-using-thymeleaf-->
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script th:inline="javascript" type="text/javascript">
+                let freeSeatCount = /*[[${freeSeatCount}]]*/ 0;
+                let reservedSeatCount = /*[[${reservedSeatCount}]]*/ 0;
+                let boughtSeatCount = /*[[${boughtSeatCount}]]*/ 0;
+
+                google.charts.load("current", {packages:["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Einnahmequelle', 'Einnahmen'],
+                        ['freie Plätze', freeSeatCount],
+                        ['reservierte Plätze', reservedSeatCount],
+                        ['ausverkaufte Plätze', boughtSeatCount],
+                    ]);
+
+                    var options = {
+                        title: 'Film-Vorführung-Auslastung',
+                        pieHole: 0.4,
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('totalSeatOccupancy'));
+                    chart.draw(data, options);
+                }
+            </script>
 
             <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #333333;
+                }
+
                 .film-detail-box {
                     box-sizing: border-box;
                     display: inline-block;
@@ -85,12 +154,10 @@
                     padding-left: 5%;
                 }
 
-                .change-cinema-show-caution {
+                .rent-storno-error {
                     color:red;
                 }
-                .change-cinema-show-hint {
-                    color:yellow;
-                }
+
                 .fsk-label.fsk-0{
                     color:#FFFFFF;
                 }

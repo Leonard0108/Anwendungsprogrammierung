@@ -9,7 +9,7 @@
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Filme Verleih</h1>
             <div th:each="film : ${allFilms}" class="rent-films-tile-sections">
-                <div class="rent-film-card" th:attr="onclick='location.href=\'/rent-films/' + ${film.getId()} + '\''">
+                <div class="rent-film-card" th:attr="onclick='location.href=\'/films/' + ${film.getId()} + '\''">
                     <!--<a th:href="'/cinema-shows/' + ${cinemaShow.getId()}" href="/current-films/detail/1">-->
                     <img class="rent-film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${film.getTitle()}" alt="Filmtitel">
                     <!--</a>-->

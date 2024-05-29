@@ -151,7 +151,7 @@ public class ViewProgramController {
 		m.addAttribute("cinemaShow", cinemaShow);
 		m.addAttribute("allFilms", filmRepository.findAll());
 
-		return "film-detail";
+		return "cinema-show-detail";
 	}
 
 	@PostMapping("/cinema-shows/{id}/edit")

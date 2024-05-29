@@ -21,6 +21,9 @@ public interface CinemaShowRepository extends CrudRepository<CinemaShow, Long> {
 	@Query("SELECT cs FROM CinemaShow cs WHERE cs.startDateTime BETWEEN :fromDateTime AND :toDateTime AND cs.film = :film")
 	Streamable<CinemaShow> findCinemaShowsInPeriodOfTime(LocalDateTime fromDateTime, LocalDateTime toDateTime, Film film);
 
+	@Query("SELECT cs FROM CinemaShow cs WHERE cs.film = :film")
+	Streamable<CinemaShow> findAllByFilm(Film film);
+
 	default Streamable<CinemaShow> findCinemaShowsInWeek(int year, int week) {
 		return findCinemaShowsInPeriodOfTime(
 			AdditionalDateTimeWorker.getStartWeekDateTime(year, week),

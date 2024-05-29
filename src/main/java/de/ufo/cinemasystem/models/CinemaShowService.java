@@ -203,7 +203,7 @@ public class CinemaShowService {
 		if(updater.film != null)
 			cinemaShow.setFilm(updater.film);
 		for(var entry : updater.seats.entrySet()) {
-			// TODO updateSitzplätze
+			cinemaShow.setOccupancy(entry.getKey(), entry.getValue());
 		}
 		// theoretisch cinemaHall nicht noch mal speichern, da keine Änderungen an der CinemaHall
 		return cinemaShowRepository.save(cinemaShow);

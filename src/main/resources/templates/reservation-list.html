@@ -8,7 +8,7 @@
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Meine Reservierungen</h1>
-            <div th:each="reservation:${reservations}">
+            <div th:each="reservation:${reservations}" class="reservation">
                 <p th:text="${reservation.getCinemaShow().getFilm().getTitle()}">foo</p>
                 <p th:text="'FSK ' + ${reservation.getCinemaShow().getFilm().getFskAge()}" th:class="'fsk-' + ${reservation.getCinemaShow().getFilm().getFskAge()}">0</p>
                 <p th:text="${reservation.getCinemaShow().getStartDateTime()}">0 Uhr, 01.01.1970</p>

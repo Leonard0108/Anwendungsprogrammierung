@@ -38,6 +38,22 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+        
+        /**
+         * This logger object is kept here so we can turn off the annoying 
+         * " Using default formatter for toString()" spam from moneta without needing a 
+         * logging.properties.
+         * 
+         * This is fixed in https://github.com/JavaMoney/jsr354-ri/issues/361 upstream,
+         * but I'm not sure if we can upgrade moneta without breaking salespoint.
+         */
+        private static final java.util.logging.Logger monetaSilencer;
+        
+        static {
+            monetaSilencer = java.util.logging.Logger.getLogger(org.javamoney.moneta.Money.class.getName());
+            monetaSilencer.setLevel(java.util.logging.Level.WARNING);
+            monetaSilencer.setUseParentHandlers(false);
+        }
 
 	@Configuration
 	static class WebSecurityConfiguration {

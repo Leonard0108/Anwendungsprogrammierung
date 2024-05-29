@@ -267,6 +267,8 @@ public class MakeReservationController {
     private void deleteTickets(Reservation rev){
         Ticket[] tickets = rev.getTickets();
         for(Ticket t:tickets){
+            rev.removeTicket(t);
+            rev = repo.save(rev);
             showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat(t.getSeatID() / 100, t.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
             ticketRepo.delete(t);
         }

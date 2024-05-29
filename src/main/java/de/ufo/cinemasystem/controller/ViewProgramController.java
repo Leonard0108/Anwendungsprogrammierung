@@ -4,6 +4,7 @@
  */
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.CinemaShowService;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
@@ -24,7 +25,6 @@ import de.ufo.cinemasystem.repository.FilmRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class ViewProgramController {
         @GetMapping("/current-films")
         public String getCurrentWeekProgram(Model m){
             LocalDateTime now = LocalDateTime.now();
-			return "redirect:/current-films/" + now.getYear() + "/" + getWeekOfYear(now);
+			return "redirect:/current-films/" + now.getYear() + "/" + AdditionalDateTimeWorker.getWeekOfYear(now);
         }
 
     /**
@@ -72,12 +72,24 @@ public class ViewProgramController {
     @GetMapping("/current-films/{year}/{week}")
     public String getCurrentProgram(@PathVariable int year, @PathVariable int week , Model m) {
 
-		LocalDateTime startDateTime = getStartWeekDateTime(year, week);
+		LocalDateTime startDateTime = AdditionalDateTimeWorker.getStartWeekDateTime(year, week);
 		LocalDate dayDate;
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
 		List<CinemaShowDayEntry> oneWeekCinemaShows = new ArrayList<>();
 
-		m.addAttribute("weekRangeFormat", getWeekRangeFormat(year, week));
+		int[] nextYearWeek = AdditionalDateTimeWorker.nextWeek(year, week);
+		int[] lastYearWeek = AdditionalDateTimeWorker.lastWeek(year, week);
+
+		m.addAttribute("lastWeekRangeFormat", AdditionalDateTimeWorker.getWeekRangeFormat(lastYearWeek[0], lastYearWeek[1]));
+		m.addAttribute("lastYear", lastYearWeek[0]);
+		m.addAttribute("lastWeek", lastYearWeek[1]);
+
+		m.addAttribute("currentWeekRangeFormat", AdditionalDateTimeWorker.getWeekRangeFormat(year, week));
+
+		m.addAttribute("nextWeekRangeFormat", AdditionalDateTimeWorker.getWeekRangeFormat(nextYearWeek[0], nextYearWeek[1]));
+		m.addAttribute("nextYear", nextYearWeek[0]);
+		m.addAttribute("nextWeek", nextYearWeek[1]);
+
 		// TODO: Sortierung nach Zeit an einem Tag korrekt implementieren
 		// TODO: effizienter umsetzen:
 		// Alle Wochentage einzeln behandeln
@@ -115,6 +127,11 @@ public class ViewProgramController {
 			// TODO Fehlerbehandlung
 			return "redirect:/current-films/{year}/{week}";
 		}
+		Film filmInst = optFilmInst.get();
+		if(!filmInst.isAvailableAt(addTime)) {
+			// TODO: Fehlerbehandlung
+			return "redirect:/current-films/{year}/{week}";
+		}
 		// TODO: Prüfe ob sich Events oder Filme überlappen, wenn ja Abbruch und Fehler
 		// Erstelle neue Vorführung
 		cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), optFilmInst.get(), optRoomInst.get());
@@ -134,7 +151,7 @@ public class ViewProgramController {
 		m.addAttribute("cinemaShow", cinemaShow);
 		m.addAttribute("allFilms", filmRepository.findAll());
 
-		return "film-detail";
+		return "cinema-show-detail";
 	}
 
 	@PostMapping("/cinema-shows/{id}/edit")
@@ -181,7 +198,7 @@ public class ViewProgramController {
 			// Verhindert Fehler bei nicht vorhandenen Kino-Veranstaltungen an dem Tag
 			if(cinemaShows == null) cinemaShows = Streamable.empty();
 			this.cinemaShows = cinemaShows;
-			this.dayDateHeadline = getDayFormat(dayDate);
+			this.dayDateHeadline = AdditionalDateTimeWorker.getDayFormat(dayDate);
 		}
 
 		public Streamable<CinemaShow> getCinemaShows() {
@@ -194,105 +211,5 @@ public class ViewProgramController {
 		public String getDayDateHeadline() {
 			return this.dayDateHeadline;
 		}
-	}
-
-	// Helper Methoden
-	// TODO: Später in einen Service verschieben
-
-	/**
-	 * @return max. Anzahl an Kalenderwochen, welches ein Jahr hat.
-	 * Es zählen auch die erste und die letzte Woche, auch wenn diese nicht vollständig in dem Jahr liegen.
-	 */
-	public static int getMaxYearWeeks(int year) {
-		return getWeekOfYear(LocalDateTime.of(year, 12, 31, 0, 0));
-	}
-
-	/**
-	 * @return aktuelle Kalenderwoche eines Jahres
-	 */
-	public static int getWeekOfYear(LocalDateTime dateTime) {
-		return dateTime
-			.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
-	}
-
-	// Chat GPT 3.5
-	// Promt: Wie bekomme ich das Start-Datum zu einer bestimmten Woche?
-
-	/**
-	 *
-	 * @param year das Jahr
-	 * @param week die Kalenderwoche zum angegebenen Jahr
-	 * @return Startdatum der Woche (Montag um 00:00)
-	 */
-	public static LocalDateTime getStartWeekDateTime(int year, int week) {
-		WeekFields weekFields = WeekFields.of(Locale.getDefault());
-
-		return LocalDateTime.of(year, 1, 1, 0, 0)
-			.with(weekFields.weekOfYear(), week)
-			.with(weekFields.dayOfWeek(), 1);
-	}
-
-	/**
-	 * @param dateTime beliebiges Datum (+ Zeitpunk)
-	 * siehe {@link #getStartWeekDateTime(int, int)}
-	 */
-	public static LocalDateTime getStartWeekDateTime(LocalDateTime dateTime) {
-		return getStartWeekDateTime(
-			dateTime.getYear(),
-			getWeekOfYear(dateTime)
-		);
-	}
-
-	/**
-	 *
-	 * @param year das Jahr
-	 * @param week die Kalenderwoche zum angegebenen Jahr
-	 * @return Enddatum der Woche (Sonntag um 23:59)
-	 */
-	public static LocalDateTime getEndWeekDateTime(int year, int week) {
-		WeekFields weekFields = WeekFields.of(Locale.getDefault());
-
-		return LocalDateTime.of(year, 1, 1, 23, 59)
-			.with(weekFields.weekOfYear(), week)
-			.with(weekFields.dayOfWeek(), 7);
-	}
-
-	/**
-	 * @param dateTime beliebiges Datum (+ Zeitpunk)
-	 * siehe {@link #getEndWeekDateTime(int, int)}
-	 */
-	public static LocalDateTime getEndWeekDateTime(LocalDateTime dateTime) {
-		return getEndWeekDateTime(
-			dateTime.getYear(),
-			getWeekOfYear(dateTime)
-		);
-	}
-
-	/**
-	 * @return Ausgabe String: "Woche-Von-Datum (dd.MM.yyyy) - Woche-Bis-Datum (dd.MM.yyyy)"
-	 */
-	public static String getWeekRangeFormat(int year, int week) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault());
-
-		String formattedStartDate = getStartWeekDateTime(year, week).format(formatter);
-		String formattedEndDate = getEndWeekDateTime(year, week).format(formatter);
-
-		return formattedStartDate + " - " + formattedEndDate;
-	}
-	/**
-	 * @param dateTime beliebiges Datum (+ Zeitpunk)
-	 * siehe {@link #getWeekRangeFormat(int, int)}
-	 */
-	public static String getWeekRangeFormat(LocalDateTime dateTime) {
-		return getWeekRangeFormat(dateTime.getYear(), getWeekOfYear(dateTime));
-	}
-
-	/**
-	 * @return Ausgabe String: "Wochentag, Datum (dd.MM.yyyy)"
-	 */
-	public static String getDayFormat(LocalDate date) {
-		// EEEE: Wochentag, Sprache hängt von Locale.getDefault() ab
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd.MM.yyyy", Locale.getDefault());
-		return date.format(formatter);
 	}
 }

@@ -4,6 +4,7 @@
  */
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
@@ -64,7 +65,7 @@ public class MakeReservationController {
     public String startReservation(Model m){
         m.addAttribute("title", "Plätze reservieren");
         LocalDateTime now = LocalDateTime.now();
-        List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), ViewProgramController.getWeekOfYear(now)).toList();
+        List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList();
         //unhinge any wannabe-unmodifyables by making a copy to a known-writable list type.
         toOffer=new ArrayList<>(toOffer);
         Iterator<CinemaShow> iterator = toOffer.iterator();

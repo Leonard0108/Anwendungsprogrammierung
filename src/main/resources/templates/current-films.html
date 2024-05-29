@@ -10,20 +10,25 @@
     <div class="main-wrapper" role="main" layout:fragment="content">
         <h1>Programm</h1>
         <div class="week-navigator">
-            <div class="prev">&nbsp;</div>
-            <div class="current" th:text="${weekRangeFormat}">11.04.2024 - 17.04.2024</div>
+            <div class="prev">
+                <a th:text="${lastWeekRangeFormat}"
+                   th:href="'/current-films/' + ${lastYear} + '/' + ${lastWeek}" href="/current-films/2000/1" title="Filmplan | UFO Kinos">01.01.2000 - 07.01.2000</a>
+            </div>
+            <div class="current" th:text="${currentWeekRangeFormat}">01.01.2000 - 07.01.2000</div>
             <div class="next">
-                <a href="/current-films?week=202415" title="Filmplan | UFO Kinos">18.04.2024 - 24.04.2024</a>
+                <a th:text="${nextWeekRangeFormat}"
+                   th:href="'/current-films/' + ${nextYear} + '/' + ${nextWeek}" href="/current-films/2000/1" title="Filmplan | UFO Kinos">01.01.2000 - 07.01.2000</a>
             </div>
         </div>
         <div class="current-films-tile-sections">
             <div th:each="oneDayCinemaShows : ${oneWeekCinemaShows}">
                 <h2 th:text="${oneDayCinemaShows.getDayDateHeadline()}">Wochentag, Datum</h2>
                 <div class="current-film-tile-sections-day">
-                    <div class="film-card" th:each="cinemaShow : ${oneDayCinemaShows.getCinemaShows()}">
-                        <a th:href="'/cinema-shows/' + ${cinemaShow.getId()}" href="/current-films/detail/1">
+                    <div th:each="cinemaShow : ${oneDayCinemaShows.getCinemaShows()}">
+                        <div class="film-card" th:attr="onclick='location.href=\'/cinema-shows/' + ${cinemaShow.getId()} + '\''">
+                        <!--<a th:href="'/cinema-shows/' + ${cinemaShow.getId()}" href="/current-films/detail/1">-->
                             <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${cinemaShow.getFilm().getTitle()}" alt="Filmtitel">
-                        </a>
+                        <!--</a>-->
                         <div class="film-card-main-section">
                             <!--
                             <a class="film-card-film-link" href="/film/info?id=fg4g54g4f54g5454" title="Filmtitel | UFO Kinos"
@@ -43,9 +48,10 @@
                             <p class="reserve-error">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
                         </div>
                         <div class="film-card-reserve-section">
-                            Plätze reservieren
-                            <a href="/current-films?change=1&AMP;id=83490258902890890" style="display: block">ändern</a>
-                            <a href="/current-films?delete=1&AMP;id=83490258902890890" style="display: block">löschen</a>
+                            <a th:href="@{/reserve-spots/reserve/{what}(what=${cinemaShow.getId()})}" href="/reserve-spots/reserve/">Plätze reservieren</a>
+                            <!--<a href="/current-films?change=1&AMP;id=83490258902890890" style="display: block">ändern</a>
+                            <a href="/current-films?delete=1&AMP;id=83490258902890890" style="display: block">löschen</a>-->
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -79,6 +85,10 @@
 
             .film-card{
                 display: flex;
+                cursor: pointer;
+            }
+            .film-card:hover {
+                background-color: #333333;
             }
             .film-card-main-section{
                 flex-grow:1;

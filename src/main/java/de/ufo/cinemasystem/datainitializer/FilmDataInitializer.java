@@ -1,6 +1,7 @@
 package de.ufo.cinemasystem.datainitializer;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.FilmProvider;
@@ -54,14 +55,27 @@ public class FilmDataInitializer implements DataInitializer {
 		// TestDaten:
 		// Speichert 10 Filme mit ansteigender Filmlänge und zufälliger fsk.
 		for(int i = 0; i < 10; i++) {
-			filmRepository.save(new Film(
+			Film film = new Film(
 				"Film " + i,
 				"Film-Beschreibung " + i,
 				90 + i * 10,
 				fsks.get(random.nextInt(fsks.size())),
 				allFilmProviders.get(random.nextInt(allFilmProviders.size())),
 				random.nextInt(1000, 2000)
-			));
+			);
+			film.addRentWeek(new YearWeekEntry(2024, 20));
+			film.addRentWeek(new YearWeekEntry(2024, 21));
+			film.addRentWeek(new YearWeekEntry(2024, 22));
+			film.addRentWeek(new YearWeekEntry(2024, 23));
+			film.addRentWeek(new YearWeekEntry(2024, 24));
+			film.addRentWeek(new YearWeekEntry(2024, 25));
+			if(i <= 5) {
+				film.addRentWeek(new YearWeekEntry(2024, 27));
+				film.addRentWeek(new YearWeekEntry(2024, 28));
+				film.addRentWeek(new YearWeekEntry(2024, 29));
+			}
+
+			filmRepository.save(film);
 		}
 
 		// Gebe alle Filme aus, welche aktuell in der Datenbank liegen:

@@ -4,6 +4,7 @@
  */
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -29,15 +30,15 @@ public class MiscPagesController {
     @GetMapping(value = "/robots.txt",produces = "text/plain")
     public String robotsTxt(Model m, HttpServletResponse response){
         LocalDateTime now = LocalDateTime.now();
-        int week = ViewProgramController.getWeekOfYear(now);
+        int week = AdditionalDateTimeWorker.getWeekOfYear(now);
         LocalDateTime nextNow = now.plusDays(7);
-        int nextWeek = ViewProgramController.getWeekOfYear(nextNow);
+        int nextWeek = AdditionalDateTimeWorker.getWeekOfYear(nextNow);
         m.addAttribute("year", now.getYear());
         m.addAttribute("nextYear", now.getYear());
         m.addAttribute("week", week);
         m.addAttribute("nextWeek", nextWeek);
         //end of week
-        response.setDateHeader("Expires", ViewProgramController.getEndWeekDateTime(now).toInstant(ZonedDateTime.now().getOffset()).toEpochMilli());
+        response.setDateHeader("Expires", AdditionalDateTimeWorker.getEndWeekDateTime(now).toInstant(ZonedDateTime.now().getOffset()).toEpochMilli());
         response.setHeader("Cache-Control", "private,max-age=604800, must-revalidate");
         return "robots.txt";
     }

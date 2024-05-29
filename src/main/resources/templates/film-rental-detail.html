@@ -7,29 +7,53 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
-
-            <table>
-                <thead>
+            <form th:action="@{'/rent-films/' + ${film.getId()}}" method="post">
+                <table>
+                    <thead>
                     <tr>
                         <th>Leih-Woche</th>
                         <th>aktueller Leihstatus</th>
                         <th>neuer Leihstatus</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr th:each="week : ${allRangeYearWeeks}">
                         <td th:text="${week.getWeekRangeFormat()}">...</td>
 
                         <td>
-                            <input type="checkbox" name="checkbox1" value="1" th:checked="${film.isRent(week)}" disabled>
+                            <input type="checkbox" name="current-selected-rent-weeks" th:value="${week.getId()}"
+                                   th:checked="${reservedWeeks.contains(week)}" disabled>
                         </td>
                         <td>
-                            <input type="checkbox" name="checkbox1" value="1" th:checked="${film.isRent(week)}">
+                            <input type="hidden" name="new-disabled-checked-rent-weeks"
+                                   th:if="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}"
+                                   th:value="${week.getId()}">
+                            <input type="checkbox" name="new-selected-rent-weeks" th:value="${week.getId()}"
+                                   th:checked="${reservedWeeks.contains(week)}"
+                                   th:disabled="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}">
+                            <div class="rent-storno-error" th:if="${nowAndPastWeeks.contains(week)}">
+                                Verleih oder Storno des Films nur für kommende Wochen möglich.
+                            </div>
+                            <div class="rent-storno-error" th:if="${blockedReservedWeeks.contains(week)}">
+                                Storno nur möglich, wenn alle Vorführungen in der Woche für den Film umgelegt oder gelöscht werden.
+                            </div>
                         </td>
-
                     </tr>
-                </tbody>
-            </table>
+                    <tr>
+                        <td>Summe:</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button type="submit">Speichern</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
 
             <style>
                 table {
@@ -43,6 +67,10 @@
                 }
                 th {
                     background-color: #333333;
+                }
+
+                .rent-storno-error {
+                    color:red;
                 }
             </style>
         </div>

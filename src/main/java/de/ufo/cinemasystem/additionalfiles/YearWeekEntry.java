@@ -24,6 +24,10 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 		this.week = week;
 	}
 
+	public YearWeekEntry(Long id) {
+		this( (int)(id - 1) / 53, (int)((id - 1) % 53 + 1));
+	}
+
 	protected YearWeekEntry() {
 		this.year = 2000;
 		this.week = 1;

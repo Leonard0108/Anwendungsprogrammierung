@@ -1,0 +1,16 @@
+# robots.txt für das Kinosystem der UFO Kinos.
+
+User-Agent:*
+# unendlicher Kalender
+Disallow:/current-films/
+Allow:/current-films/[(${year})]/[(${week})]
+Allow:/current-films/[(${nextYear})]/[(${nextWeek})]
+
+#Misc. von verschiedenen Produktteams (vgl. https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers?hl=de ),
+# forscht bitte woanders
+User-Agent: GoogleOther
+Disallow:/
+
+# KI-Bot
+User-Agent: Google-Extended
+Disallow:/

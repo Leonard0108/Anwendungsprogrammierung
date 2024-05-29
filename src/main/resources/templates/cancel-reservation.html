@@ -8,7 +8,7 @@
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Reservierung stornieren</h1>
-            <form method="post">
+            <form method="post" class="reservation">
                 <p>Reservierungsnummer: <span th:text="${reservation.getId()}">ijgjgtigtjrijgtrigji</span> <a href="/my-reservations" title="Meine Reservierungen | UFO Kinos">ändern</a></p>
                 <p>Die folgende Reservierung wird gelöscht: </p>
                 <p th:text="${reservation.getCinemaShow().getFilm().getTitle()}">foo</p>

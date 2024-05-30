@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.controller;
 
+import org.salespointframework.order.OrderManagement;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,8 @@ import jakarta.servlet.http.HttpSession;
 public class MakeOrderController {
 
 	public static final String orderSessionKey = "current-reservation";
+
+	private final OrderManagement<Bestellung> orderManagement;
 
 	private @Autowired OrderRepository orderRepo;
 	private @Autowired ReservationRepository reservationRepo;

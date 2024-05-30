@@ -15,60 +15,71 @@
  */
 package de.ufo.cinemasystem;
 
+import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import org.salespointframework.EnableSalespoint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * The main application class.
  */
 @EnableSalespoint
 public class Application {
+	private static final String LOGIN_ROUTE = "/login";
 
 	/**
 	 * The main application method
-	 * 
+	 *
 	 * @param args application arguments
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 
+
+
+
+	@Configuration
+	static class kinoUFO implements WebMvcConfigurer {
+		@Override
+		public void addViewControllers(ViewControllerRegistry registry) {
+			registry.addViewController(LOGIN_ROUTE).setViewName("login");
+			System.out.println(LoginForm.getUserName());
+			registry.addViewController("/").setViewName("welcome");
+		}
+	}
+
+
+
 	@Configuration
 	@EnableWebSecurity
 	static class WebSecurityConfiguration {
-
-		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-			// Konfiguration der Benutzer und ihrer Rollen
-			auth.inMemoryAuthentication()
-				.withUser("boss").password("{noop}password").roles("BOSS")
-				.and()
-				.withUser("employee").password("{noop}password").roles("EMPLOYEE");
-		}
-
-
-
 		@Bean
 		public BCryptPasswordEncoder pwEncoder() {
 			return new BCryptPasswordEncoder();
 		}
 
+
+
+
 		@Bean
-		SecurityFilterChain videoShopSecurity(HttpSecurity http) throws Exception {
+		SecurityFilterChain kinoUFO(HttpSecurity http) throws Exception {
 
 			return http
-					.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
-					.csrf(csrf -> csrf.disable())
-					.formLogin(login -> login.loginProcessingUrl("/login"))
-					.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))
-					.build();
+				.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
+				.csrf(csrf -> csrf.disable())
+				.formLogin(login -> login.loginProcessingUrl("/login"))
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))
+				.build();
 		}
 	}
 }

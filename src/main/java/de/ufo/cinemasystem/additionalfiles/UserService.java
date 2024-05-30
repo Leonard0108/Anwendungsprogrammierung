@@ -4,6 +4,7 @@ package de.ufo.cinemasystem.additionalfiles;
 import de.ufo.cinemasystem.models.UserEntry;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -58,6 +59,14 @@ public class UserService {
 		return userRepository.save(new UserEntry(userAccount, form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
 	}
 
+
+
+
+	public UserEntry createUser(UserAccount userAccount, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
+		return userRepository.save(new UserEntry(userAccount, streetName, streetNumber, city, postalCode, state, country));
+	}
+
+
 	/**
 	 * Returns all {@link UserEntry}s currently available in the system.
 	 *
@@ -74,7 +83,7 @@ public class UserService {
 
 
 		Assert.notNull(form, "Login form must not be null");
-		toCheckUserEntry = userRepository.findByUserAccountEmail(LoginForm.geteMail());
+		toCheckUserEntry = userRepository.findByUserAccountEmail(LoginForm.getUserName());
 
 
 

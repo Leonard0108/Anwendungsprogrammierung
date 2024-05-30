@@ -102,4 +102,21 @@ public class UserService {
 		userAccounts.disable(userAccount.getId()); 		// before delete user account, disable it - if not springs crashes
 		userAccounts.delete(userAccount);
 	}
+
+
+
+
+	public UserEntry getEmployeeById(Long id) {
+		return userRepository.findById(id).orElse(null);
+	}
+
+
+
+
+	public void removeAllRoles(UserAccount userAccount) {
+		for (Role role : userAccount.getRoles()) {
+			userAccount.remove(role);
+		}
+		userAccounts.save(userAccount);
+	}
 }

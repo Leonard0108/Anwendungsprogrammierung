@@ -113,16 +113,6 @@ public class LoginController {
 	{
 		return "redirect:/logout";
 	}
-
-
-
-
-	@PostMapping("/deleteAccount")
-	String deleteAccount()
-	{
-		//userService.deleteEmployee(userRepository.findByUserAccountUsername());
-		return "redirect:/login";
-	}
 }
 
 

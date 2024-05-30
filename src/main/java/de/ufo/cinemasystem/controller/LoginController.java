@@ -46,8 +46,8 @@ public class LoginController {
 
 
 
-		System.out.println("Alles läuft.");
 		userService.createUser(form);
+
 
 		return "redirect:/";
 	}
@@ -62,7 +62,7 @@ public class LoginController {
 
 
 
-	@PostMapping
+	@PostMapping("/login")
 	String login(@Valid LoginForm form, Errors result, HttpSession session) {
 		UserEntry toSignInUser;
 
@@ -85,7 +85,6 @@ public class LoginController {
 
 
 		return "login";
-
 	}
 
 
@@ -115,14 +114,22 @@ public class LoginController {
 
 		model.addAttribute("customerList", userService.findAll());
 
-		return "customers";
+		return "welcome";
 	}
 
 
 
 
-	@PostMapping("/LogOut")
+	@GetMapping("/logOut")
 	String logout (HttpSession session)
+	{
+		session.invalidate();
+		return "redirect:/";
+	}
+
+
+	@GetMapping("/LogOut")
+	String LogOut(HttpSession session)
 	{
 		session.invalidate();
 		return "redirect:/";

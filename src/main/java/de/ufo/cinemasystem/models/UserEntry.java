@@ -27,7 +27,8 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 
 	private @EmbeddedId UserIdentifier id = new UserIdentifier();
 
-	private String streetName, houseNumber, city, state, postalCode, country;
+	private String name;
+	private String eMail, streetName, houseNumber, city, state, postalCode, country;
 
 	// (｡◕‿◕｡)
 	// Jedem Customer ist genau ein UserAccount zugeordnet, um später über den UserAccount an den

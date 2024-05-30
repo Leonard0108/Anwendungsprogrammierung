@@ -13,9 +13,11 @@ import jakarta.persistence.Entity;
 import java.io.Serializable;
 import java.util.UUID;
 
+import org.javamoney.moneta.Money;
 import org.jmolecules.ddd.types.Identifier;
 import org.salespointframework.core.AbstractAggregateRoot;
 import org.salespointframework.useraccount.UserAccount;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @Getter
@@ -29,6 +31,7 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 
 	private String name;
 	private String eMail, streetName, houseNumber, city, state, postalCode, country;
+	private Money  payment;
 
 	// (｡◕‿◕｡)
 	// Jedem Customer ist genau ein UserAccount zugeordnet, um später über den UserAccount an den
@@ -47,6 +50,17 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	}
 
 
+	@PreAuthorize("BOSS")
+	public void setPayment(Money payment) {
+		this.payment = payment;
+	}
+
+
+
+	@PreAuthorize("BOSS")
+	public Money getPayment() {
+		return payment;
+	}
 
 	@Embeddable
 	public static final class UserIdentifier implements Identifier, Serializable {

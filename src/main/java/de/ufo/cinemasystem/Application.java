@@ -23,24 +23,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * The main application class.
- */
+
+
+
 @EnableSalespoint
 public class Application {
 	private static final String LOGIN_ROUTE = "/login";
 
-	/**
-	 * The main application method
-	 *
-	 * @param args application arguments
-	 */
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -53,8 +49,8 @@ public class Application {
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addViewController(LOGIN_ROUTE).setViewName("login");
-			System.out.println(LoginForm.getUserName());
-			registry.addViewController("/").setViewName("welcome");
+			registry.addViewController("/lunar_space_port/test").setViewName("welcome");
+			registry.addViewController("/lunar_space_port/test").setViewName("welcome"); // Fügt die Ansicht für /home hinzu
 		}
 	}
 
@@ -63,22 +59,26 @@ public class Application {
 	@Configuration
 	@EnableWebSecurity
 	static class WebSecurityConfiguration {
-		@Bean
+		/*@Bean
 		public BCryptPasswordEncoder pwEncoder() {
 			return new BCryptPasswordEncoder();
-		}
+		}*/
 
 
 
 
 		@Bean
 		SecurityFilterChain kinoUFO(HttpSecurity http) throws Exception {
-
 			return http
 				.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
 				.csrf(csrf -> csrf.disable())
-				.formLogin(login -> login.loginProcessingUrl("/login"))
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))
+				.formLogin(login -> login
+					.loginPage(LOGIN_ROUTE)
+					.loginProcessingUrl(LOGIN_ROUTE)
+					.defaultSuccessUrl("/", true)) // Leitet nach erfolgreichem Login zu /home weiter
+				.logout(logout -> logout
+					.logoutUrl("/logout")
+					.logoutSuccessUrl("/"))
 				.build();
 		}
 	}

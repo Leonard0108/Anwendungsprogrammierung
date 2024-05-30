@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import de.ufo.cinemasystem.models.UserEntry;
 
 
-
-
 @Repository
 @Transactional(readOnly = true)
 public interface UserRepository extends CrudRepository<UserEntry, Long> {
 	@Override
 	Streamable<UserEntry> findAll();
-	UserEntry findByUserAccountEmail(String email);
+	UserEntry findByUserAccountUsername(String userName);
+	//	UserEntry findByUserAccountUsername(String userName);
+	//Optional<UserEntry> findUserEntriesByUserAccountUsername(Long aLong);
 }

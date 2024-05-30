@@ -1,0 +1,17 @@
+= Protokoll
+
+Datum: 30.5.2024
+Anwesende: Lukas, Yannick, Jannik, Tobias
+Startzeit: 18.30 Uhr
+Endzeit:
+
+
+== UI
+- erfolgreich geupdated,
+
+== Preisgestaltung
+- Preisgestaltung erfolgt erstmal über festgelegten Wert
+
+
+== Order-Klasse
+- von Deutsch zu Englisch umbenannt.

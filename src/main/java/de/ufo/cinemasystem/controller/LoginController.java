@@ -64,27 +64,7 @@ public class LoginController {
 
 	@PostMapping("/login")
 	String login(@Valid LoginForm form, Errors result, HttpSession session) {
-		UserEntry toSignInUser;
-
-
-
-		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
-			return "login";
-		}
-
-
-		toSignInUser = userService.loginBackground(form);
-
-		if(toSignInUser != null)
-		{
-			session.setAttribute("user", form);
-			return "redirect:/";
-		}
-
-
-
-		return "login";
+		return "redirect:/login";
 	}
 
 
@@ -93,7 +73,7 @@ public class LoginController {
 
 	@GetMapping(path = "/login")
 	String login() {
-		return "login";
+		return "redirect:/login";
 	}
 
 
@@ -124,15 +104,24 @@ public class LoginController {
 	String logout (HttpSession session)
 	{
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/logout";
 	}
 
 
 	@GetMapping("/LogOut")
 	String LogOut(HttpSession session)
 	{
-		session.invalidate();
-		return "redirect:/";
+		return "redirect:/logout";
+	}
+
+
+
+
+	@PostMapping("/deleteAccount")
+	String deleteAccount()
+	{
+		//userService.deleteEmployee(userRepository.findByUserAccountUsername());
+		return "redirect:/login";
 	}
 }
 

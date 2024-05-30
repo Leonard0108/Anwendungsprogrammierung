@@ -59,10 +59,10 @@ public class UserAccountInitializer implements DataInitializer {
 		var password = "123";
 
 		List.of(//
-			new RegistrationForm("hans", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),
-			new RegistrationForm("dextermorgan","adf@gmail.de", password, "Miami-Dade County", "asdfasdf", "asdfasfd", "asdfaf", "asdfasfd", "asdfasdf"),
+			new RegistrationForm("hans", "nicht Test", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany")
+			/*new RegistrationForm("dextermorgan","adf@gmail.de", password, "Miami-Dade County", "asdfasdf", "asdfasfd", "asdfaf", "asdfasfd", "asdfasdf"),
 			new RegistrationForm("Anne Panzer", "annep2003@gmx.de", password, "Camden County - Motel", "aslkdjflaksdf", "ajskldfaklsf", "adfladksf", "kljsdfal", "ajdfakfd"),
-			new RegistrationForm("mclovinfogell", "asdf@gmail.com", password, "Los Angeles", "asdfasdf", "asdfasdf", "sdfasdf", "sadfasdf", "asdfasdf")//
+			new RegistrationForm("mclovinfogell", "asdf@gmail.com", password, "Los Angeles", "asdfasdf", "asdfasdf", "sdfasdf", "sadfasdf", "asdfasdf")*/
 		).forEach(userService::createUser);
 
 

@@ -21,18 +21,14 @@ import org.springframework.util.Assert;
 @Service
 @Transactional
 public class UserService {
-	public static final Role                  CUSTOMER_ROLE = Role.of("USER"); //Im Original Customer
+	public static final Role                  USER_ROLE = Role.of("USER"); //Im Original Customer
 	private final       UserRepository        userRepository;
 	private final       UserAccountManagement userAccounts;
 	private final       BCryptPasswordEncoder passwordEncoder;
 
-	/**
-	 * Creates a new {@link UserService} with the given {@link UserRepository} and
-	 * {@link UserAccountManagement}.
-	 *
-	 * @param userRepository must not be {@literal null}.
-	 * @param userAccounts must not be {@literal null}.
-	 */
+
+
+
 	UserService(UserRepository userRepository, UserAccountManagement userAccounts, @Qualifier("passwordEncoder") BCryptPasswordEncoder passwordEncoder) {
 
 		Assert.notNull(userRepository, "CustomerRepository must not be null!");
@@ -43,20 +39,21 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+
+
 	/**
 	 * Creates a new {@link UserEntry} using the information given in the {@link RegistrationForm}.
 	 *
 	 * @param form must not be {@literal null}.
-	 * @return the new {@link UserEntry} instance.
 	 */
-	public UserEntry createUser(RegistrationForm form) {
+	public void createUser(RegistrationForm form) {
 
 		Assert.notNull(form, "Registration form must not be null!");
 
 		var password = Password.UnencryptedPassword.of(form.getPassword());
-		var userAccount = userAccounts.create(form.getName(), password, CUSTOMER_ROLE);
+		var userAccount = userAccounts.create(form.getName(), password, USER_ROLE);
 
-		return userRepository.save(new UserEntry(userAccount, form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
+		userRepository.save(new UserEntry(userAccount, form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
 	}
 
 
@@ -83,7 +80,7 @@ public class UserService {
 
 
 		Assert.notNull(form, "Login form must not be null");
-		toCheckUserEntry = userRepository.findByUserAccountEmail(LoginForm.getUserName());
+		toCheckUserEntry = userRepository.findByUserAccountUsername(LoginForm.getUserName());
 
 
 
@@ -95,5 +92,14 @@ public class UserService {
 
 
 		return toCheckUserEntry;
+	}
+
+
+
+	public void deleteEmployee(UserEntry user) {
+		UserAccount userAccount = user.getUserAccount();
+		userRepository.delete(user);
+		userAccounts.disable(userAccount.getId()); 		// before delete user account, disable it - if not springs crashes
+		userAccounts.delete(userAccount);
 	}
 }

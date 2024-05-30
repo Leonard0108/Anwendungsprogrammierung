@@ -16,10 +16,20 @@ import jakarta.validation.constraints.NotEmpty;
 public class Ticket implements Comparable<Ticket> {
 
     public static enum TicketCategory {
-        normal,
-        reduced,
-        children
-    }
+        normal(1.0),
+        reduced(0.8),
+        children(0.7);
+
+		private final double reduction;
+
+		TicketCategory(double reduction) {
+			this.reduction = reduction;
+		}
+
+		public double getReduction() {
+			return reduction;
+		}
+	}
 
     /**
      * never empty. if null, hibernate will decide one. @SimonBanks42

@@ -166,9 +166,11 @@ public class ViewProgramController {
 		// Erstelle neue Vorführung
 		redirectAttributes.addFlashAttribute("successMessage",
 			"Neue Vorführung wurde erfolgreich erstellt!");
-		cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), filmInst, cinemaHallInst);
+		CinemaShow cinemaShow = cinemaShowService.createCinemaShow(addTime, Money.of(9.99, EURO), filmInst, cinemaHallInst);
 
-		return "redirect:/current-films/{year}/{week}";
+		return "redirect:/current-films/"
+			+ cinemaShow.getStartDateTime().getYear() + "/"
+			+ AdditionalDateTimeWorker.getWeekOfYear(cinemaShow.getStartDateTime());
 	}
 
 	@GetMapping("/cinema-shows/{id}")

@@ -71,7 +71,7 @@
             <p th:text="${infoMessage}"></p>
         </div>
         <form method="post">
-            <p>Datum und Uhrzeit: <input type="datetime-local" name="addTime"></p>
+            <p>Datum und Uhrzeit: <input type="datetime-local" name="addTime" required=""></p>
             <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
             <p>Film: <select name="film">
                 <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}">Film</option>

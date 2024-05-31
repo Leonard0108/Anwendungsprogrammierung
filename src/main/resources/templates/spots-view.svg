@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:th="http://www.thymeleaf.org"
+ width="512.000000pt" height="512.000000pt" 
+ th:width="${width}" th:height="${height}">
+    <rect x="0" y="0" width="512" height="512" th:width="${width}" th:height="${height}"></rect>
+    
+    
+    <line fill="#b5e61d" x1="5" x2="517" y1="5" y2="5" stroke-width="5"></line>
+    <text x="240" y="15" font-size="10">Leinwand</text>
+    
+    <!-- colum header -->
+    <text x="10" y="25" th:each="col : ${cols}" th:text="${col}" th:x="${col} * 15 + 10">1</text>
+    
+    <!-- row header -->
+    <text x="5" y="35" th:each="row : ${rows}" th:text="${row}" th:y="${col} * 15 + 35">1</text>
+    
+    <!-- todo: seat groups -->
+    
+    <!-- seats -->
+    <rect x="45" y="45" width="10" height="10" th:each="seat : ${seats}"></rect>
+</svg>

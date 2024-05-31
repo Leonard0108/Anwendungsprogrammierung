@@ -55,14 +55,15 @@
 
                         <td>
                             <input type="checkbox" name="current-selected-rent-weeks" th:value="${week.getId()}"
-                                   th:checked="${reservedWeeks.contains(week)}" disabled>
+                                   th:checked="${reservedWeeks.containsKey(week)}" disabled>
+                            <div th:text="'Leihkosten: ' + ${reservedWeeks.get(week)[0]} + ' €'" th:if="${reservedWeeks.containsKey(week)}"></div>
                         </td>
                         <td>
                             <input type="hidden" name="new-disabled-checked-rent-weeks"
                                    th:if="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}"
                                    th:value="${week.getId()}">
                             <input type="checkbox" name="new-selected-rent-weeks" th:value="${week.getId()}"
-                                   th:checked="${reservedWeeks.contains(week)}"
+                                   th:checked="${reservedWeeks.containsKey(week)}"
                                    th:disabled="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}">
                             <div class="rent-storno-error" th:if="${nowAndPastWeeks.contains(week)}">
                                 Verleih oder Storno des Films nur für kommende Wochen möglich.
@@ -74,8 +75,8 @@
                     </tr>
                     <tr>
                         <td>Summe:</td>
-                        <td>...</td>
-                        <td>...</td>
+                        <td th:text="${sumRentFee} + ' €'">komplette Leihkosten</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td></td>

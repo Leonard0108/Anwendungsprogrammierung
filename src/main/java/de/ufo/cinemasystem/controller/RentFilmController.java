@@ -6,6 +6,7 @@ import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
+import org.eclipse.jdt.internal.compiler.env.IModule;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,11 @@ public class RentFilmController {
 		List<YearWeekEntry> allRangeYearWeeks = new ArrayList<>();
 
 		// Wochen welche geliehen wurden
-		HashSet<YearWeekEntry> reservedWeeks = new HashSet<>();
+		// value[0]: Leihkosten, welche fest vorgegeben sind und sich für fortschreitende Wochen reduzieren können
+		// TODO: implementieren, Ansatz überlegen (hoher Berechnungsaufwand,
+		//  für jede Woche muss für jede dort stattfindende Veranstaltung alle gekauften Tickets (auch noch abhängig von der Platzgruppe und der Ermäßigung) summiert werden)
+		// value[1]: 30 % der Ticket-Einnahmen durch Vorführungen zu dem Film (Datenquelle: alle gefilterten Bestellungen zum Film)
+		HashMap<YearWeekEntry, Integer[]> reservedWeeks = new HashMap<>();
 		// Wochen, welche in der Vergangenheit liegen und die aktuelle Woche, diese sind geblockt
 		// (können also nicht mehr storniert oder geliehen werden)
 		HashSet<YearWeekEntry> nowAndPastWeeks = new HashSet<>();
@@ -49,6 +54,11 @@ public class RentFilmController {
 		addDetailNowAndPastWeeks(film, allRangeYearWeeks, reservedWeeks, nowAndPastWeeks);
 		addDetailFutureWeeks(film, allRangeYearWeeks, reservedWeeks, blockedReservedWeeks);
 
+		int sumRentFee = 0;
+		for(Integer[] weeklyRentFee : reservedWeeks.values()) {
+			sumRentFee += (weeklyRentFee[0] + weeklyRentFee[1]);
+		}
+
 		int[] totalSeatOccupancyValues = getTotalSeatOccupancyValues(film);
 
 		model.addAttribute("film", film);
@@ -56,9 +66,11 @@ public class RentFilmController {
 		model.addAttribute("reservedWeeks", reservedWeeks);
 		model.addAttribute("nowAndPastWeeks", nowAndPastWeeks);
 		model.addAttribute("blockedReservedWeeks", blockedReservedWeeks);
+
 		model.addAttribute("freeSeatCount", totalSeatOccupancyValues[0]);
 		model.addAttribute("reservedSeatCount", totalSeatOccupancyValues[1]);
 		model.addAttribute("boughtSeatCount", totalSeatOccupancyValues[2]);
+		model.addAttribute("sumRentFee", sumRentFee);
 
 		return "film-detail";
 	}
@@ -130,7 +142,7 @@ public class RentFilmController {
 	 *                        da diese in der Vergangenheit liegen oder in der aktuellen Woche
 	 */
 	private void addDetailNowAndPastWeeks(Film film, List<YearWeekEntry> allRangeYearWeeks,
-										  HashSet<YearWeekEntry> reservedWeeks,
+										  HashMap<YearWeekEntry, Integer[]> reservedWeeks,
 										  HashSet<YearWeekEntry> nowAndPastWeeks) {
 		YearWeekEntry nextWeek = YearWeekEntry.getNowYearWeek().nextWeek();
 		YearWeekEntry currentWeek = getDetailStartYearWeekEntry(film);
@@ -139,8 +151,18 @@ public class RentFilmController {
 		while(currentWeek.compareTo(nextWeek) < 0) {
 			allRangeYearWeeks.add(currentWeek);
 			nowAndPastWeeks.add(currentWeek);
-			if(film.isRent(currentWeek))
-				reservedWeeks.add(currentWeek);
+			if(film.isRent(currentWeek)) {
+				// Value[0]: Aktuelle Woche, welche reserviert wird,
+				// wird indirekt wieder gespiegelt durch reservedWeeks.size() + 1,
+				// da reservedWeeks Einträge von der ersten Woche an richtig sortiert hinzugefügt werden
+				reservedWeeks.put(
+					currentWeek,
+					new Integer[]{
+						film.getBasicRentFee(reservedWeeks.size() + 1),
+						0
+					}
+				);
+			}
 
 			currentWeek = currentWeek.nextWeek();
 		}
@@ -186,7 +208,7 @@ public class RentFilmController {
 	 *                             da dort noch aktive Vorführungen vorliegen und diese erst weggelegt oder gelöscht werden müssen)
 	 */
 	private void addDetailFutureWeeks(Film film, List<YearWeekEntry> allRangeYearWeeks,
-									  HashSet<YearWeekEntry> reservedWeeks,
+									  HashMap<YearWeekEntry, Integer[]> reservedWeeks,
 									  HashSet<YearWeekEntry> blockedReservedWeeks) {
 		final int futureRentWeeks = 8;
 		YearWeekEntry currentWeek = YearWeekEntry.getNowYearWeek().nextWeek();
@@ -196,8 +218,18 @@ public class RentFilmController {
 			allRangeYearWeeks.add(currentWeek);
 			if(!cinemaShowRepository.findCinemaShowsInWeek(currentWeek.getYear(), currentWeek.getWeek(), film).isEmpty())
 				blockedReservedWeeks.add(currentWeek);
-			if(film.isRent(currentWeek))
-				reservedWeeks.add(currentWeek);
+			if(film.isRent(currentWeek)) {
+				// Value[0]: Aktuelle Woche, welche reserviert wird,
+				// wird indirekt wieder gespiegelt durch reservedWeeks.size(),
+				// da reservedWeeks Einträge von der ersten Woche an richtig sortiert hinzugefügt werden
+				reservedWeeks.put(
+					currentWeek,
+					new Integer[]{
+						film.getBasicRentFee(reservedWeeks.size() + 1),
+						0
+					}
+				);
+			}
 
 			currentWeek = currentWeek.nextWeek();
 		}

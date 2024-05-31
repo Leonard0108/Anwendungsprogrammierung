@@ -31,7 +31,6 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 
 	private String name;
 	private String eMail, streetName, houseNumber, city, state, postalCode, country;
-	private Money  payment;
 
 	// (｡◕‿◕｡)
 	// Jedem Customer ist genau ein UserAccount zugeordnet, um später über den UserAccount an den
@@ -49,18 +48,6 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 		this.country     = country;
 	}
 
-
-	@PreAuthorize("BOSS")
-	public void setPayment(Money payment) {
-		this.payment = payment;
-	}
-
-
-
-	@PreAuthorize("BOSS")
-	public Money getPayment() {
-		return payment;
-	}
 
 	@Embeddable
 	public static final class UserIdentifier implements Identifier, Serializable {

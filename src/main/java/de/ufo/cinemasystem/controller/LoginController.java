@@ -5,7 +5,6 @@ package de.ufo.cinemasystem.controller;
 import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
-import de.ufo.cinemasystem.models.UserEntry;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,7 +54,7 @@ public class LoginController {
 
 
 	@GetMapping("/register")
-	String register(Model model, RegistrationForm form) {
+	String register(RegistrationForm form) {
 		return "registration";
 	}
 

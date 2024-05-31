@@ -40,7 +40,7 @@
                                 <option value="disabled">Schwerbehinderter</option>
                             </select> </p>
                         <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
-                        <img src="spots-view-2.png" alt="Saalansicht" th:src="@{/resources/spots-view-2.png}" /><br>
+                        <img src="spots-view-2.png" alt="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" /><br>
                         <button name="addTicket" value="1">Ticket hinzufügen</button>
                     </form>
                     <form id="reserve-spots-form-commit" action="/reserve-spots/commit" method="post">

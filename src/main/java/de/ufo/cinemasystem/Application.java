@@ -23,6 +23,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 /**
  * The main application class.
@@ -30,47 +32,63 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableSalespoint
 public class Application {
 
-	/**
-	 * The main application method
-	 * 
-	 * @param args application arguments
-	 */
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
-        
-        /**
-         * This logger object is kept here so we can turn off the annoying 
-         * " Using default formatter for toString()" spam from moneta without needing a 
-         * logging.properties.
-         * 
-         * This is fixed in https://github.com/JavaMoney/jsr354-ri/issues/361 upstream,
-         * but I'm not sure if we can upgrade moneta without breaking salespoint.
-         */
-        private static final java.util.logging.Logger monetaSilencer;
-        
-        static {
-            monetaSilencer = java.util.logging.Logger.getLogger(org.javamoney.moneta.Money.class.getName());
-            monetaSilencer.setLevel(java.util.logging.Level.WARNING);
-            monetaSilencer.setUseParentHandlers(false);
+    /**
+     * The main application method
+     *
+     * @param args application arguments
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    /**
+     * This logger object is kept here so we can turn off the annoying " Using
+     * default formatter for toString()" spam from moneta without needing a
+     * logging.properties.
+     *
+     * This is fixed in https://github.com/JavaMoney/jsr354-ri/issues/361
+     * upstream, but I'm not sure if we can upgrade moneta without breaking
+     * salespoint.
+     */
+    private static final java.util.logging.Logger monetaSilencer;
+
+    static {
+        monetaSilencer = java.util.logging.Logger.getLogger(org.javamoney.moneta.Money.class.getName());
+        monetaSilencer.setLevel(java.util.logging.Level.WARNING);
+        monetaSilencer.setUseParentHandlers(false);
+    }
+
+    @Configuration
+    static class WebSecurityConfiguration {
+
+        @Bean
+        public BCryptPasswordEncoder pwEncoder() {
+            return new BCryptPasswordEncoder();
         }
 
-	@Configuration
-	static class WebSecurityConfiguration {
-		@Bean
-		public BCryptPasswordEncoder pwEncoder() {
-			return new BCryptPasswordEncoder();
-		}
+        @Bean
+        SecurityFilterChain videoShopSecurity(HttpSecurity http) throws Exception {
 
-		@Bean
-		SecurityFilterChain videoShopSecurity(HttpSecurity http) throws Exception {
+            return http
+                    .headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
+                    .csrf(csrf -> csrf.disable())
+                    .formLogin(login -> login.loginProcessingUrl("/login"))
+                    .logout(logout -> logout.logoutUrl("/lunar_space_port/logOut").logoutSuccessUrl("/"))
+                    .build();
+        }
+    }
 
-			return http
-					.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
-					.csrf(csrf -> csrf.disable())
-					.formLogin(login -> login.loginProcessingUrl("/login"))
-					.logout(logout -> logout.logoutUrl("/lunar_space_port/logOut").logoutSuccessUrl("/"))
-					.build();
-		}
-	}
+    /**
+     * https://stackoverflow.com/questions/31025467/thymeleaf-second-resolver-for-svg-in-spring-boot
+     * @return 
+     */
+    @Bean
+    public ITemplateResolver svgTemplateResolver() {
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+        resolver.setPrefix("classpath:/");
+        resolver.setSuffix(".svg");
+        resolver.setTemplateMode("XML");
+
+        return resolver;
+    }
 }

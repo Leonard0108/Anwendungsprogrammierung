@@ -58,7 +58,18 @@
             </div>
         </div>
 
+        <br><hr><br>
+
         <h2 id="addprogram">Neu hinzufügen</h2>
+        <div th:if="${errorMessage}" class="error">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <div th:if="${successMessage}" class="success">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${infoMessage}" class="info">
+            <p th:text="${infoMessage}"></p>
+        </div>
         <form method="post">
             <p>Datum und Uhrzeit: <input type="datetime-local" name="addTime"></p>
             <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->

@@ -12,20 +12,20 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Order")
-public class Bestellung {
+public class Orders extends Order {
 
-    private @Id @GeneratedValue Long id;
-    private Order order;
+    private @Id @GeneratedValue OrderIdentifier id;
+    private Orders order;
     private Money TicketSumme;
     private Money SnacksSumme;
 
-    public Bestellung(UserAccountIdentifier useraccountidentifier) {
-        this.order = new Order(useraccountidentifier);
+    public Orders(UserAccountIdentifier useraccountidentifier) {
+        this.order = new Orders(useraccountidentifier);
         this.TicketSumme = Money.of(0, "EUR");
         this.SnacksSumme = Money.of(0, "EUR");
     }
 
-    public Long getId() {
+    public OrderIdentifier getId() {
         return id;
     }
 

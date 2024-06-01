@@ -1,8 +1,6 @@
 package de.ufo.cinemasystem.controller;
 
-
 import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManagement;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import de.ufo.cinemasystem.models.Bestellung;
-import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.Orders;
 import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.OrderRepository;
@@ -30,7 +27,7 @@ public class MakeOrderController {
 
 	private final OrderManagement<Order> orderManagement;
 
-	MakeOrderController(OrderManagement orderManagement){
+	public MakeOrderController(OrderManagement orderManagement) {
 		Assert.notNull(orderManagement, "Order cant be Zero!");
 		this.orderManagement = orderManagement;
 	}
@@ -45,12 +42,13 @@ public class MakeOrderController {
 	public String startOrder(Model m, @PathVariable Ticket ticket, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session) {
 
 		if(session.getAttribute(orderSessionKey) == null){
-            session.setAttribute(orderSessionKey, new Bestellung(currentUser));
-        }
-
-		Bestellung bestellung = (Bestellung) session.getAttribute(orderSessionKey);
+			
+            session.setAttribute(orderSessionKey, new  Orders(currentUser));
+         } 
+			
+		Orders bestellung = (Order) session.getAttribute(orderSessionKey);
         m.addAttribute("tickets", bestellung.addTicket(ticket));
 		return "sell-items-1";
-	}
+		
 
 }

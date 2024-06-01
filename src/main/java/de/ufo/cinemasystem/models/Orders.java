@@ -1,7 +1,16 @@
 package de.ufo.cinemasystem.models;
 
+import org.javamoney.moneta.Money;
+import org.salespointframework.order.Order;
+import org.salespointframework.quantity.Quantity;
+import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 @Entity
-@Table( public lass Orders extends Order {
+@Table(name = "Orders")
+public class Orders extends Order {
 
     //      pr      private Money SnacksSumme;
     private CinemaShow show;
@@ -34,10 +43,10 @@ package de.ufo.cinemasystem.models;
         order.addOrderLine(snack, Quantity.of(1));
         SnacksSumme.add(snack.getPrice(
 
-     oney addTicket(Tick
-    o
-
-    return TicketSumme;
+    public Money addTicket(Ticket ticket) {
+        order.addOrderLine(ticket, Quantity.of(1));
+        TicketSumme.add(ticket.getPrice());
+        return TicketSumme;
     }
 }
 

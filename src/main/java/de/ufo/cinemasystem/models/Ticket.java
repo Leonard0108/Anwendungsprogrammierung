@@ -11,20 +11,10 @@ import jakarta.persistence.Table;
 public class Ticket extends Product {
 
     public static enum TicketCategory {
-        normal(1.0),
-        reduced(0.8),
-        children(0.7);
-
-		private final double reduction;
-
-		TicketCategory(double reduction) {
-			this.reduction = reduction;
-		}
-
-		public double getReduction() {
-			return reduction;
-		}
-	}
+        normal,
+        reduced,
+        children
+    }
 
     // private @EmbeddedId ProductIdentifier id =
     // ProductIdentifier.of(UUID.randomUUID().toString());

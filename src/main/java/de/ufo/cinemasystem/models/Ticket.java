@@ -1,16 +1,13 @@
 package de.ufo.cinemasystem.models;
 
-import java.util.Objects;
-import java.util.UUID;
-
-import javax.money.MonetaryAmount;
-
+import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
-import org.springframework.lang.NonNull;
 
-import jakarta.persistence.EmbeddedId;
-import lombok.Getter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "Ticket")
 public class Ticket extends Product {
 
     public static enum TicketCategory {
@@ -19,14 +16,16 @@ public class Ticket extends Product {
         children
     }
 
-    private @EmbeddedId ProductIdentifier id = ProductIdentifier.of(UUID.randomUUID().toString());
-    private @NonNull @Getter String name;
-    private @NonNull @Getter MonetaryAmount TicketPrice;
+    // private @EmbeddedId ProductIdentifier id =
+    // ProductIdentifier.of(UUID.randomUUID().toString());
     private TicketCategory category;
     private CinemaShow show;
     private Reservation reservation;
 
-    Ticket(TicketCategory Category, CinemaShow cinemaShow) {
+    // ToDo
+    public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
+
+        super("Ticket", Money.of(0, "EUR"));
         this.category = Category;
         double reduction;
         switch (this.category) {
@@ -38,43 +37,38 @@ public class Ticket extends Product {
                 reduction = 1;
         }
         this.show = cinemaShow;
-        this.TicketPrice = show.getBasePrice().multiply(reduction);
+
+        this.setPrice(show.getBasePrice().multiply(reduction));
 
     }
 
-    Ticket() {
+    @SuppressWarnings({ "unused", "deprecation" })
+    private Ticket() {
 
-    }
-
-    public ProductIdentifier getId() {
-        return id;
     }
 
     public TicketCategory getCategory() {
         return category;
     }
 
-    public MonetaryAmount getTicketPrice() {
-        return TicketPrice;
-    }
-
     public String getTicketShowName() {
         return show.getFilm().getTitle();
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object)
-            return true;
-
-        if (!(object instanceof Ticket ticket))
-            return false;
-
-        return Objects.equals(getId(), ticket.getId())
-                && Objects.equals(getCategory(), ticket.getCategory())
-                && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
-    }
     /*
+     * @Override
+     * public boolean equals(Object object) {
+     * if (this == object)
+     * return true;
+     * 
+     * if (!(object instanceof Ticket ticket))
+     * return false;
+     * 
+     * return Objects.equals(getId(), ticket.getId())
+     * && Objects.equals(getCategory(), ticket.getCategory())
+     * && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
+     * }
+     * 
      * @Override
      * public int compareTo(Ticket ticket) {
      * return (this.equals(ticket)) ? 0 : 1;

@@ -6,27 +6,25 @@ import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "Orders")
 public class Orders extends Order {
 
-    private @Id @GeneratedValue OrderIdentifier id;
-    private Orders order;
+    // private @Id @GeneratedValue OrderIdentifier id;
+    private Order order;
     private Money TicketSumme;
     private Money SnacksSumme;
 
-    public Orders(UserAccountIdentifier useraccountidentifier) {
-        this.order = new Orders(useraccountidentifier);
-        this.TicketSumme = Money.of(0, "EUR");
-        this.SnacksSumme = Money.of(0, "EUR");
+    @SuppressWarnings({ "unused", "deprecation" })
+    private Orders() {
     }
 
-    public OrderIdentifier getId() {
-        return id;
+    public Orders(UserAccountIdentifier useraccountidentifier) {
+        this.order = new Order(useraccountidentifier);
+        this.TicketSumme = Money.of(0, "EUR");
+        this.SnacksSumme = Money.of(0, "EUR");
     }
 
     public Money getTicketSumme() {
@@ -45,8 +43,7 @@ public class Orders extends Order {
 
     public Money addTicket(Ticket ticket) {
         order.addOrderLine(ticket, Quantity.of(1));
-        TicketSumme.add(ticket.getTicketPrice());
+        TicketSumme.add(ticket.getPrice());
         return TicketSumme;
     }
-
 }

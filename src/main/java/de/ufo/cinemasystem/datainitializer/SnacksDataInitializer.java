@@ -38,7 +38,8 @@ public class SnacksDataInitializer implements DataInitializer {
             snacksrepository.save(new Snacks(
                     "Snack " + i,
                     Money.of(random.nextDouble(3.5, 20), "EUR"),
-                    random.nextInt(10, 50)));
+                    random.nextInt(10, 50),
+                    type));
         }
     }
 

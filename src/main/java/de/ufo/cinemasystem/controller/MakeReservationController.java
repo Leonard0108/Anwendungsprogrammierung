@@ -149,7 +149,7 @@ public class MakeReservationController {
         if(session.getAttribute(reservationSessionKey) == null){
             return "redirect:/reserve-spots/reserve";
         }
-        spot = spot.trim();
+        spot = spot.trim().toUpperCase();
         List<String> errors = new ArrayList<>();
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
         
@@ -289,6 +289,6 @@ public class MakeReservationController {
      */
     private static class PatternHolder {
         
-        public static Pattern validSeat = Pattern.compile("[A-La-l]([0-9]|1[0-8])$",Pattern.CASE_INSENSITIVE);
+        public static Pattern validSeat = Pattern.compile("[A-La-l]([0-9]|1[0-9])$",Pattern.CASE_INSENSITIVE);
     }
 }

@@ -1,16 +1,14 @@
 package de.ufo.cinemasystem.models;
 
-import java.util.UUID;
-
 import javax.money.MonetaryAmount;
 
 import org.salespointframework.catalog.Product;
-import org.salespointframework.quantity.Metric;
-import org.springframework.lang.NonNull;
 
-import jakarta.persistence.EmbeddedId;
-import lombok.Getter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "Snacks")
 public class Snacks extends Product {
 
     public static enum SnackType {
@@ -18,37 +16,29 @@ public class Snacks extends Product {
         Essen
     }
 
-    private @EmbeddedId ProductIdentifier id = ProductIdentifier.of(UUID.randomUUID().toString());
-    private @NonNull @Getter String name;
-    private @NonNull @Getter MonetaryAmount price;
-    private Metric metric;
+    // private @EmbeddedId ProductIdentifier id =
+    // ProductIdentifier.of(UUID.randomUUID().toString());
+    // private Metric metric;
     private SnackType type;
     private int count;
 
-    public Snacks(String name, MonetaryAmount price) {
-        this.name = name;
-        this.price = price;
-        this.count = 0;
-        this.metric = Metric.UNIT;
+    @SuppressWarnings({ "unused", "deprecation" })
+    private Snacks() {
     }
 
-    public Snacks(String name, MonetaryAmount price, int count) {
-        this.name = name;
+    public Snacks(String name, MonetaryAmount price) {
+        super(name, price);
+        this.count = 0;
+    }
+
+    public Snacks(String name, MonetaryAmount price, int count, SnackType type) {
+        super(name, price);
         this.type = type;
-        this.price = price;
         this.count = count;
     }
 
-    public ProductIdentifier getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public MonetaryAmount getPrice() {
-        return price;
+    public String getSnackType() {
+        return this.type.toString();
     }
 
     public int getCount() {

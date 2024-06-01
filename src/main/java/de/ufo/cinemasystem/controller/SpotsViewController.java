@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -26,7 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class SpotsViewController {
     
     
-    @GetMapping(value = "/include/spots-view/{which}", produces = "image/svg+xml")
+    @RequestMapping(value = "/include/spots-view/{which}", produces = "image/svg+xml", method = RequestMethod.GET)
     public String getSpotsView(@PathVariable CinemaShow which, Model m, HttpServletResponse rep){
         Streamable<Map.Entry<Seat, Seat.SeatOccupancy>> seatsAndOccupancy = which.getSeatsAndOccupancy();
         List<Map.Entry<Seat, Seat.SeatOccupancy>> seatsList = seatsAndOccupancy.toList();

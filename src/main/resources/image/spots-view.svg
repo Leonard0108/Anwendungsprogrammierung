@@ -2,9 +2,9 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:th="http://www.thymeleaf.org"
- width="512.000000pt" height="512.000000pt" 
- th:width="${width}" th:height="${height}">
-    <rect x="0" y="0" width="512" height="512" th:width="${width}" th:height="${height}"></rect>
+ width="100%" th:viewBox="'0 0 ' + ${width} + ' ' + ${height}">
+    <!-- https://stackoverflow.com/questions/19484707/how-can-i-make-an-svg-scale-with-its-parent-container -->
+    <rect x="0" y="0" width="512" height="512" th:width="${width}" th:height="${height}" fill="#000000"></rect>
     
     
     <line fill="#b5e61d" x1="5" x2="507" y1="5" y2="5" stroke-width="5" stroke="#b5e61d" th:x2="${width} - 5"></line>
@@ -50,4 +50,5 @@
     <rect x="189" y="420" width="12" height="12" th:y="${legendOffset} + 24" fill="#ffff00"></rect>
     <rect x="190" y="420" width="10" height="10" th:y="${legendOffset} + 25" fill="#000000"></rect>
     <text x="205" y="420" font-size="10" fill="#ffffff" dominant-baseline="hanging" th:y="${legendOffset} + 25">Platzgruppe 3</text>
+    <style>html,body{background-color:black;padding:0;margin:0}</style>
 </svg>

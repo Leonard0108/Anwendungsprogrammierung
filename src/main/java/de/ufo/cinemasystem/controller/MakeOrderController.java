@@ -39,16 +39,16 @@ public class MakeOrderController {
 	private @Autowired UserRepository userRepo;
 
 	@GetMapping("/sell#tickets")
-	public String startOrder(Model m, @PathVariable Ticket ticket, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session) {
+	public String startOrder(Model m, @PathVariable Ticket ticket,
+			@AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session) {
 
-		if(session.getAttribute(orderSessionKey) == null){
-			
-            session.setAttribute(orderSessionKey, new  Orders(currentUser));
-         } 
-			
-		Orders bestellung = (Order) session.getAttribute(orderSessionKey);
-        m.addAttribute("tickets", bestellung.addTicket(ticket));
+		if (session.getAttribute(orderSessionKey) == null) {
+			session.setAttribute(orderSessionKey, new Orders(currentUser));
+		}
+
+		Orders bestellung = (Orders) session.getAttribute(orderSessionKey);
+		m.addAttribute("tickets", bestellung.addTicket(ticket));
 		return "sell-items-1";
-		
 
+	}
 }

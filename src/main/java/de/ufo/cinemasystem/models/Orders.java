@@ -5,54 +5,67 @@ import org.salespointframework.order.Order.OrderIdentifier;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 
-import de.ufo.cinemasystem.models.Order.Orders;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
- @Entity
-    @Table(
-    public class Orders extends Order {
-         
 
-        private Orders order;
-        private Money TicketS
-        private Money SnacksSumme;
-        
+@Entity
 
-               this.order = new Orders(useraccountidentifier);
-        this.TicketSumme = Money.of(0, "EUR");
-        this.SnacksSumme = Money.of(0, "EUR");
-    }
+Table(n
+ic cla
+s
 
+        priate 
+    ate Money SnacksSumme
     
-    public OrderIdentifier getId() {
-        return id;
-    }
+    pressWarnings({ "unused", 
 
-    p
+        pub
 
-        }
-            
-        p
+           
+            this.TicketSumm
+            this.SnacksSumme = Money.of
 
-        }
-            
-        p
-
-            SnacksSumme.add(snack.getPr
-            return SnacksSumme;
-        }
-
-        public Money addTicket(Ticket ticket) 
-            order.addOrderLine(ticket, Quantity.of(1))
-            TicketSumme.add(ticket.getTicketPr
+        
+        public Money getTick
             return TicketSumme;
         }
 
+        public Money getSnacksSumme() {
+            return SnacksS
+        }
+
+    public Money addSnacks(Snacks snack) {
+        order.addOrderLine(snack, Quantity.of(1));
+        SnacksSumme.add(snack.getPrice());
+        return SnacksSumme;
+    }
+
+
+               orde
+
+            return TicketSumme;
+            
+        
+
+        
+
         
             
-            
-            
         
+
+        
+
+    
+
+    
+
+    
+
+      
+    
+
+    
+
+    
+
+     

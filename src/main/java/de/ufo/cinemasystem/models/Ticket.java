@@ -1,14 +1,13 @@
 package de.ufo.cinemasystem.models;
 
-import java.util.Objects;
-
-import javax.money.MonetaryAmount;
-
+import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "Ticket")
 public class Ticket extends Product {
 
     public static enum TicketCategory {
@@ -27,16 +26,16 @@ public class Ticket extends Product {
 		}
 	}
 
-    /**
-     * never empty. if null, hibernate will decide one. @SimonBanks42
-     */
-    private @Id @GeneratedValue Long id;
-
+    // private @EmbeddedId ProductIdentifier id =
+    // ProductIdentifier.of(UUID.randomUUID().toString());
     private TicketCategory category;
     private CinemaShow show;
     private Reservation reservation;
 
-    Ticket(TicketCategory Category, CinemaShow cinemaShow) {
+    // ToDo
+    public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
+
+        super("Ticket", Money.of(0, "EUR"));
         this.category = Category;
         double reduction;
         switch (this.category) {
@@ -48,24 +47,18 @@ public class Ticket extends Product {
                 reduction = 1;
         }
         this.show = cinemaShow;
-        this.TicketPrice = show.getBasePrice().multiply(reduction);
+
+        this.setPrice(show.getBasePrice().multiply(reduction));
 
     }
 
-    public Ticket() {
+    @SuppressWarnings({ "unused", "deprecation" })
+    private Ticket() {
 
-    }
-
-    public ProductIdentifier getId() {
-        return id;
     }
 
     public TicketCategory getCategory() {
         return category;
-    }
-
-    public MonetaryAmount getTicketPrice() {
-        return TicketPrice;
     }
 
     public String getTicketShowName() {
@@ -93,19 +86,41 @@ public class Ticket extends Product {
         };
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object)
-            return true;
-
-        if (!(object instanceof Ticket ticket))
-            return false;
-
-        return Objects.equals(getId(), ticket.getId())
-                && Objects.equals(getCategory(), ticket.getCategory())
-                && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
+    public int getSeatID() {
+        return seatID;
     }
+
+    public void setSeatID(int seatID) {
+        this.seatID = seatID;
+    }
+
+    public String getSeatString() {
+        return ((char) ('A' + this.seatID / 100)) + ("" + this.seatID % 100);
+    }
+
+    public String categoryToLabel() {
+        return switch (this.category) {
+            case normal -> "Erwachsener";
+            case children -> "Kind (Bis 14 Jahre)";
+            case reduced -> "Schwerbehinderter";
+            default -> null;
+        };
+    }
+
     /*
+     * @Override
+     * public boolean equals(Object object) {
+     * if (this == object)
+     * return true;
+     * 
+     * if (!(object instanceof Ticket ticket))
+     * return false;
+     * 
+     * return Objects.equals(getId(), ticket.getId())
+     * && Objects.equals(getCategory(), ticket.getCategory())
+     * && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
+     * }
+     * 
      * @Override
      * public int compareTo(Ticket ticket) {
      * return (this.equals(ticket)) ? 0 : 1;

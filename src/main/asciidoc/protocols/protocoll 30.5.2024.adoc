@@ -1,0 +1,29 @@
+= Protokoll
+
+Datum: 30.5.2024
+
+Anwesende: Lukas, Yannick, Jannik, Tobias, Simon
+
+Startzeit: 18.30 Uhr
+
+Endzeit: 1945
+
+
+
+== UI
+- erfolgreich geupdated,
+
+== Preisgestaltung
+- Preisgestaltung erfolgt erstmal über festgelegten Wert
+
+
+== Order-Klasse
+- von Deutsch zu Englisch umbenannt.
+
+== Geld
+- Verwendung der Salespoint-Bibliotheken.
+
+== Sonstiges
+- vervollständigen der Order-Klassen
+- hinzufügen von Gehältern.
+- Sonntag Panikmeeting gegen 19:00 Uhr

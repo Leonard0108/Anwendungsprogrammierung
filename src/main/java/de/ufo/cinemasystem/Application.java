@@ -15,11 +15,13 @@
  */
 package de.ufo.cinemasystem;
 
+import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import org.salespointframework.EnableSalespoint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,12 +33,17 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 /**
  * The main application class.
  */
 @EnableSalespoint
 public class Application {
+	private static final String LOGIN_ROUTE = "/login";
+
 
     /**
      * The main application method
@@ -65,6 +72,7 @@ public class Application {
     }
 
     @Configuration
+	@EnableWebSecurity
     static class WebSecurityConfiguration {
 /*
         @Bean
@@ -74,7 +82,7 @@ public class Application {
 
  */
 		@Configuration
-		static class VideoShopWebConfiguration implements WebMvcConfigurer {
+		static class UFOCinemasystemConfiguration implements WebMvcConfigurer {
 
 			/**
 			 * We configure {@code /login} to be directly routed to the {@code login} template without any controller
@@ -84,13 +92,13 @@ public class Application {
 			 */
 			@Override
 			public void addViewControllers(ViewControllerRegistry registry) {
-				registry.addViewController("/login").setViewName("login_old");
+				registry.addViewController("/login").setViewName("login");
 				registry.addViewController("/").setViewName("welcome");
 			}
 		}
 
         @Bean
-        SecurityFilterChain videoShopSecurity(HttpSecurity http) throws Exception {
+        SecurityFilterChain UFOCinemasystemSecurity(HttpSecurity http) throws Exception {
 
 			return http
 				.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))

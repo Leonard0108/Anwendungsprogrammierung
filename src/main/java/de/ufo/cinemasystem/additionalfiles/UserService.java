@@ -7,6 +7,7 @@ import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.util.Streamable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.salespointframework.useraccount.UserAccountManagement;
 
@@ -15,7 +16,6 @@ import de.ufo.cinemasystem.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Objects;
 
 
 @Service
@@ -37,12 +37,11 @@ public class UserService {
 		this.userAccounts   = userAccounts;
 	}
 
-
-
 	/**
 	 * Creates a new {@link UserEntry} using the information given in the {@link RegistrationForm}.
 	 *
 	 * @param form must not be {@literal null}.
+	 * @return the new {@link UserEntry} instance.
 	 */
 	public void createUser(RegistrationForm form) {
 

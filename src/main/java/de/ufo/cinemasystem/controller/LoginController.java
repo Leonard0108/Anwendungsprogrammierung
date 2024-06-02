@@ -3,11 +3,16 @@ package de.ufo.cinemasystem.controller;
 
 
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
+import de.ufo.cinemasystem.additionalfiles.LoginForm;
+import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
 import de.ufo.cinemasystem.models.UserEntry;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,16 +73,11 @@ public class LoginController {
 
 		return "redirect:/";
 	}
-	*/
 
 
-
-
-
-	/*
 	@GetMapping(path = "/login")
 	String login() {
-		return "login_old";
+		return "login";
 	}
 	*/
 
@@ -89,10 +89,6 @@ public class LoginController {
 		List<UserEntry> userEntries = userService.findAll().toList();
 		System.out.println(userEntries);
 		model.addAttribute("customerList", userEntries);
-
-		return "welcome";
-	}
-
 
 
 

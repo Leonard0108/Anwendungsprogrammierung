@@ -46,6 +46,7 @@ public class EventAdministrationController {
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
+		m.addAttribute("title","Saalverwaltung");
 
 		List<ScheduledActivity> activitiesOnDate = scheduledActivityService.getActivitysOnDay(date);
 		List<ScheduledActivity> scheduledActivitysOnDateInHall = new ArrayList<>();
@@ -78,6 +79,7 @@ public class EventAdministrationController {
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
+		m.addAttribute("title","Saalverwaltung");
 
 		return "manage-rooms-boss-renderer-empty";
 	}
@@ -93,6 +95,7 @@ public class EventAdministrationController {
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		redirectAttributes.addAttribute("allCinemaHalls", allCinemaHalls);
+		redirectAttributes.addAttribute("title","Saalverwaltung");
 		LocalDate date = from.toLocalDate();
 
 		if(!scheduledActivityService.isTimeSlotAvailable(from, to, room)){

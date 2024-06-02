@@ -89,7 +89,7 @@
         </div>
 
         <div class="formfield">
-            <label for="country">Name</label>
+            <label for="country">Land</label>
             <input id="country" name="country" th:field="*{country}" th:errorclass="fieldError" type="text" required="required"/><br/>
             <div class="ui negative message" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">
                 <p>Das Land darf nicht leer sein.</p>

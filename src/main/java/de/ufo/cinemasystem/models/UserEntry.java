@@ -38,10 +38,11 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	@OneToOne //
 	private UserAccount userAccount;
 
-	public UserEntry(UserAccount userAccount, String name, String streetName, String houseNumber, String city, String postalCode, String state, String country) {
+	public UserEntry(UserAccount userAccount, String name, String eMail,  String streetName, String houseNumber, String city, String postalCode, String state, String country) {
 
-		this.name = name;
 		this.userAccount = userAccount;
+		this.name = name;
+		this.eMail = eMail;
 		this.streetName  = streetName;
 		this.houseNumber = houseNumber;
 		this.city        = city;

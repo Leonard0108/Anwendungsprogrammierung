@@ -9,10 +9,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "ORDERS")
 public class Orders extends Order {
 
-    //      pr      private Money SnacksSumme;
+    // private @Id @GeneratedValue OrderIdentifier id;
+    private Order order;
+    private Money TicketSumme;
+    private Money SnacksSumme;
     private CinemaShow show;
 
     @SuppressWarnings({ "unused", "deprecation" })
@@ -20,7 +23,8 @@ public class Orders extends Order {
     }
 
     public Orders(UserAccountIdentifier useraccountidentifier, CinemaShow show) {
-        super(useraccountide       this.order = new Order(useraccountidentifier);
+        super(useraccountidentifier);
+        this.order = new Order(useraccountidentifier);
         this.TicketSumme = Money.of(0, "EUR");
         this.SnacksSumme = Money.of(0, "EUR");
         this.show = show;
@@ -38,7 +42,7 @@ public class Orders extends Order {
     public CinemaShow getCinemaShow() {
         return show;
     }
-    
+
     public Money addSnacks(Snacks snack) {
         order.addOrderLine(snack, Quantity.of(1));
         SnacksSumme.add(snack.getPrice(

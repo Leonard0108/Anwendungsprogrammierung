@@ -76,27 +76,6 @@ public class Ticket extends Product {
         };
     }
 
-    public int getSeatID() {
-        return seatID;
-    }
-
-    public void setSeatID(int seatID) {
-        this.seatID = seatID;
-    }
-
-    public String getSeatString() {
-        return ((char) ('A' + this.seatID / 100)) + ("" + this.seatID % 100);
-    }
-
-    public String categoryToLabel() {
-        return switch (this.category) {
-            case normal -> "Erwachsener";
-            case children -> "Kind (Bis 14 Jahre)";
-            case reduced -> "Schwerbehinderter";
-            default -> null;
-        };
-    }
-
     /*
      * @Override
      * public boolean equals(Object object) {

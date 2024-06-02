@@ -2,84 +2,93 @@ package de.ufo.cinemasystem.controller;
 
 
 
+import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
-import jakarta.servlet.http.Cookie;
+import de.ufo.cinemasystem.models.UserEntry;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import de.ufo.cinemasystem.repository.UserRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
-@RequestMapping(path = "/lunar_space_port")
 public class LoginController {
 	UserRepository  userRepository;
-	//PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
 	UserService     userService;
 
 
 	public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService) {
 		this.userRepository = userRepository;
-		//this.passwordEncoder = passwordEncoder;
+		this.passwordEncoder = passwordEncoder;
 		this.userService = userService;
 	}
 
 
 
 
-	@GetMapping(path = "/registration")
-	public String registration() {
+	@PostMapping("/registration")
+	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
+
+		if (result.hasErrors()) {
+			System.out.println(result.getAllErrors());
+			return "registration";
+		}
+
+		System.out.println(form);
+
+		userService.createUser(form);
+		redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
+
+		return "redirect:/login";
+	}
+
+
+	@GetMapping("/registration")
+	String register(Model m, RegistrationForm form) {
 		return "registration";
 	}
 
 
-	@PostMapping(path = "/register", consumes = "application/json")
-	String register(@RequestBody RegistrationRequest registrationRequest) {
-		/*userService.signUp(registrationRequest.email, registrationRequest.password, registrationRequest.forename, registrationRequest.name,
-			registrationRequest.streetAddress, registrationRequest.houseNumber, registrationRequest.city, registrationRequest.state, registrationRequest.country,
-			registrationRequest.phoneNumber);*/
-		return "redirect:/lunar_space_port/register";
+
+
+	/*
+	@PostMapping("/login")
+	String login(@Valid LoginForm form, Errors result, HttpSession session, RedirectAttributes redirectAttributes) {
+
+		return "redirect:/";
 	}
+	*/
 
 
+
+
+
+	/*
 	@GetMapping(path = "/login")
 	String login() {
-		return "login";
+		return "login_old";
 	}
+	*/
 
 
 
-
-	@PostMapping(path = "/test")
-	String test() {
-		return "welcome";
-	}
-
-
-
-
-	@PostMapping(path = "/checkLoginData", consumes = {"application/json"})
-	String checkLoginData(@RequestBody SignInRequest signInRequest)
-	{
-		/*if (signInRequest.email == null || signInRequest.password == null)
-		{
-			return "redirect:/lunar_space_port/login";
-		}
-
-		/*if (userRepository.findByEmail(signInRequest.email).isPresent())
-		{
-			System.out.println("User is already logged in.");
-			return "redirect:/lunar_space_port/test";
-		}*/
-
-		//userService.login(signInRequest.email, signInRequest.password);
-		System.out.println("Nutzer wurde angemeldet.");
+	@GetMapping("/customers")
+	//@PreAuthorize("hasRole('BOSS')")
+	String customers(Model model) {
+		List<UserEntry> userEntries = userService.findAll().toList();
+		System.out.println(userEntries);
+		model.addAttribute("customerList", userEntries);
 
 		return "welcome";
 	}
@@ -87,57 +96,14 @@ public class LoginController {
 
 
 
-	@GetMapping(path = "/isLoggedIn", consumes = {"application/json"})
-	String isLoggedIn(SignInRequest signInRequestRequest) {
-		/*if (userRepository.findByEmail(signInRequestRequest.email).isPresent())
-		{
-			System.out.println("User is already logged in.");
-			return "welcome";
-		}*/
-		return "redirect:/lunar_space_port/login";
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) throws ServletException {
+		request.logout();
+		return "redirect:/";
 	}
 
 
 
-
-	@PostMapping(path = "/logOut")
-	String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate(); // Ungültig machen der aktuellen Session
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					cookie.setMaxAge(0); // Löschen aller Cookies
-				}
-			}
-		}
-		return "redirect:/lunar_space_port/login";
-	}
-
-
-
-
-	@Getter
-	static class RegistrationRequest {
-		private String email;
-		private String password;
-		private String forename;
-		private String name;
-		private String streetAddress;
-		private Long   houseNumber;
-		private String city;
-		private String state;
-		private String country;
-		private String phoneNumber;
-	}
-
-
-	@Getter
-	static class SignInRequest {
-		private String email;
-		private String password;
-	}
 }
 
 

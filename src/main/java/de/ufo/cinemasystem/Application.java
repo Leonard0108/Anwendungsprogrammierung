@@ -23,6 +23,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * The main application class.
@@ -54,13 +56,32 @@ public class Application {
             monetaSilencer.setLevel(java.util.logging.Level.WARNING);
             monetaSilencer.setUseParentHandlers(false);
         }
-
+/*
 	@Configuration
 	static class WebSecurityConfiguration {
 		@Bean
 		public BCryptPasswordEncoder pwEncoder() {
 			return new BCryptPasswordEncoder();
+			}
 		}
+		
+ */
+		@Configuration
+		static class VideoShopWebConfiguration implements WebMvcConfigurer {
+
+			/**
+			 * We configure {@code /login} to be directly routed to the {@code login} template without any controller
+			 * interaction.
+			 *
+			 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)
+			 */
+			@Override
+			public void addViewControllers(ViewControllerRegistry registry) {
+				registry.addViewController("/login").setViewName("login_old");
+				registry.addViewController("/").setViewName("welcome");
+			}
+		}
+
 
 		@Bean
 		SecurityFilterChain videoShopSecurity(HttpSecurity http) throws Exception {
@@ -68,9 +89,9 @@ public class Application {
 			return http
 					.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
 					.csrf(csrf -> csrf.disable())
-					.formLogin(login -> login.loginProcessingUrl("/login"))
-					.logout(logout -> logout.logoutUrl("/lunar_space_port/logOut").logoutSuccessUrl("/"))
+					.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login"))
+					.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"))
 					.build();
 		}
 	}
-}
+

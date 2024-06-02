@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Snacks")
+@Table(name = "SNACKS")
 public class Snacks extends Product {
 
     public static enum SnackType {

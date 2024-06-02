@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Ticket")
+@Table(name = "TICKETS")
 public class Ticket extends Product {
 
     public static enum TicketCategory {
@@ -20,9 +20,9 @@ public class Ticket extends Product {
     // ProductIdentifier.of(UUID.randomUUID().toString());
     private TicketCategory category;
     private CinemaShow show;
+    private int seatID;
     private Reservation reservation;
 
-    // ToDo
     public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
 
         super("Ticket", Money.of(0, "EUR"));
@@ -53,6 +53,27 @@ public class Ticket extends Product {
 
     public String getTicketShowName() {
         return show.getFilm().getTitle();
+    }
+
+    public int getSeatID() {
+        return seatID;
+    }
+
+    public void setSeatID(int seatID) {
+        this.seatID = seatID;
+    }
+
+    public String getSeatString() {
+        return ((char) ('A' + this.seatID / 100)) + ("" + this.seatID % 100);
+    }
+
+    public String categoryToLabel() {
+        return switch (this.category) {
+            case normal -> "Erwachsener";
+            case children -> "Kind (Bis 14 Jahre)";
+            case reduced -> "Schwerbehinderter";
+            default -> null;
+        };
     }
 
     /*

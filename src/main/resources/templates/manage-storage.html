@@ -15,6 +15,15 @@
                 </li>
             </ul>
             <h2>Neues Item</h2>
+            <div th:if="${errorMessageNew}" class="error">
+                <p th:text="${errorMessageNew}"></p>
+            </div>
+            <div th:if="${successMessageNew}" class="success">
+                <p th:text="${successMessageNew}"></p>
+            </div>
+            <div th:if="${infoMessageNew}" class="info">
+                <p th:text="${infoMessageNew}"></p>
+            </div>
             <form action="/manage/storage/item/new" method="post">
                 <p>
                     Neues Item? <input name="whatNew" placeholder="Name">
@@ -25,6 +34,15 @@
                 <button name="new">Hinzufügen</button>
             </form>
             <h2>Item hinzufügen</h2>
+            <div th:if="${errorMessageAdd}" class="error">
+                <p th:text="${errorMessageAdd}"></p>
+            </div>
+            <div th:if="${successMessageAdd}" class="success">
+                <p th:text="${successMessageAdd}"></p>
+            </div>
+            <div th:if="${infoMessageAdd}" class="info">
+                <p th:text="${infoMessageAdd}"></p>
+            </div>
             <form action="/manage/storage/item/add" method="post">
                 <p>
                     <input type="number" min="1" name="itemCount"> von
@@ -35,6 +53,15 @@
                 <button name="add">Hinzufügen</button>
             </form>
             <h2>Item entfernen</h2>
+            <div th:if="${errorMessageRemove}" class="error">
+                <p th:text="${errorMessageRemove}"></p>
+            </div>
+            <div th:if="${successMessageRemove}" class="success">
+                <p th:text="${successMessageRemove}"></p>
+            </div>
+            <div th:if="${infoMessageRemove}" class="info">
+                <p th:text="${infoMessageRemove}"></p>
+            </div>
             <form action="/manage/storage/item/remove" method="post">
                 <p>
                     <input type="number" min="1" name="itemCount"> von

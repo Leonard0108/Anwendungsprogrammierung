@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -76,7 +77,7 @@ public class RentFilmController {
 	}
 
 	@PostMapping("/films/{film}")
-	public String postRentFilm(Model model, @PathVariable Film film,
+	public String postRentFilm(RedirectAttributes redirectAttributes, @PathVariable Film film,
 							   @RequestParam(name = "new-selected-rent-weeks", required = false) List<Long> newSelectedRentWeeks,
 							   @RequestParam(name = "new-disabled-checked-rent-weeks", required = false) List<Long> newDisabledCheckedRentWeeks) {
 		Set<Long> allCheckedWeeks = new HashSet<>();
@@ -128,6 +129,7 @@ public class RentFilmController {
 		 */
 
 		filmRepository.save(film);
+		redirectAttributes.addFlashAttribute("successMessage", "Leihzeitraum dieses Films geändert!");
 
 		return "redirect:/films/{film}";
 	}

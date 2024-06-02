@@ -5,9 +5,10 @@
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
-import de.ufo.cinemasystem.models.CinemaShowService;
+import de.ufo.cinemasystem.models.*;
 import de.ufo.cinemasystem.services.ScheduledActivityService;
 import org.javamoney.moneta.Money;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
@@ -102,7 +100,7 @@ public class ViewProgramController {
 		for(int i = 1; i <= 7; i++) {
 			dayDate = startDateTime.with(weekFields.dayOfWeek(), i).toLocalDate();
 			oneWeekCinemaShows.add(
-				new CinemaShowDayEntry(dayDate, this.cinemaShowRepository.findCinemaShowsOnDay(dayDate))
+				new CinemaShowDayEntry(dayDate, this.cinemaShowRepository.findCinemaShowsOnDay(dayDate, Sort.sort(CinemaShow.class).by(CinemaShow::getStartDateTime).ascending()))
 			);
 		}
 		m.addAttribute("oneWeekCinemaShows", oneWeekCinemaShows);

@@ -92,6 +92,11 @@ public class LoginController {
 		return "welcome";
 	}
 
+	@GetMapping("/role")
+	String getRole() {
+		return "roletest";
+	}
+
 
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) throws ServletException {

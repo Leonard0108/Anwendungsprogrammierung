@@ -67,6 +67,19 @@
                         <li><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li>
                     </ul>
                 </div>
+                <br><hr>
+                <div sec:authorize="isAuthenticated()">
+                    <div sec:authentication="name">username</div>
+                    <div sec:authentication="principal.authorities">role</div>
+                    <form action="/logout">
+                        <input type="submit" value="Ausloggen" />
+                    </form>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <form action="/login">
+                        <input type="submit" value="Einloggen" />
+                    </form>
+                </div>
             </nav>
             <div class="main-outer">
                 <div class="head">

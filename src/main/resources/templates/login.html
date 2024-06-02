@@ -9,17 +9,22 @@
 <section layout:fragment="content">
     <form class="ui form" role="form" th:action="@{/login}" method="post">
 
-        <div class="field">
+        <div th:if="${createdUser}" class="success">
+            <p th:text="${createdUser}"></p>
+        </div>
+
+
+        <div class="formfield">
             <label for="username">Nutzername</label>
             <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
         </div>
 
-        <div class="field">
+        <div class="formfield">
             <label for="password">Passwort</label>
             <input type="password" id="password" name="password"/> <br/>
         </div>
 
-        <button type="submit" class="ui button">Log in</button>
+        <button type="submit" class="ui button">Einloggen</button>
     </form>
 </section>
 </body>

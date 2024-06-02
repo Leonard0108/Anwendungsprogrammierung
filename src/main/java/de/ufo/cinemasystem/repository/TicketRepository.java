@@ -5,7 +5,6 @@
 package de.ufo.cinemasystem.repository;
 
 import org.salespointframework.catalog.Catalog;
-import org.springframework.data.repository.CrudRepository;
 
 import de.ufo.cinemasystem.models.Ticket;
 

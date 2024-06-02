@@ -1,33 +1,29 @@
 package de.ufo.cinemasystem.models;
 
-import org.javamoney.moneta.Money;
-import org.salespointframework.quantity.Quantity;
-import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
+import org.javamoney.moneta.Money;import rg.simport jakarta.persistence.Entity;
+import jakarta.persistence.Table; 
 @Entity
-@Table( public lass Orders extends Order {
+@Table(name = "ORDERS")
+public class Orders extends Order {
 
-    //      pr      private Money SnacksSumme;
-    private CinemaShow show;
+    // private @Id @GeneratedValue OrderIdentifier id;
+    private Order order;
+    pri     priate Money SnacksSumme;
+    pr
+iate CinemaShow show;
 
-    @SuppressWarnings({ "unused", "deprecation" })
-    private Orders() {
-    }
-
+@S sW s({ "unused", "deprecation" })
+    pri    } 
     public Orders(UserAccountIdentifier useraccountidentifier, CinemaShow show) {
-        super(useraccountide       this.order = new Order(useraccountidentifier);
+        super(useraccountidentifier);
+        this.order = new Order(useraccountidentifier);
         this.TicketSumme = Money.of(0, "EUR");
-        this.SnacksSumme = Money.of(0, "EUR");
-        this.show = show;
+        this.SnacksSumme = Mon       t his.show = show;
     }
 
     public Money getTicketSumme() {
         return TicketSumme;
     }
-
 
     public Money getSnacksSumme() {
         return SnacksSumme;
@@ -36,21 +32,25 @@ import jakarta.persistence.Table;
     public CinemaShow getCinemaShow() {
         return show;
     }
-    
+
     public Money addSnacks(Snacks snack) {
         order.addOrderLine(snack, Quantity.of(1));
-        SnacksSumme.add(snack.getPrice(
-
-     oney addTicket(Tick
-    o
-
-    return TicketSumme;
+        SnacksSumme.add(snack.getPrice());
+        return SnacksSumme;
     }
-}
+
+    p
+
+           Tick
+
+        }} 
+
+    
+
+    
+
+    
 
 
 
-
-
-
-
+     

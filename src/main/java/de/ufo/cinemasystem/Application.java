@@ -29,6 +29,8 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 /**
  * The main application class.
@@ -101,7 +103,7 @@ public class Application {
 
     /**
      * https://stackoverflow.com/questions/31025467/thymeleaf-second-resolver-for-svg-in-spring-boot
-     * @return 
+     * @return
      */
     @Bean
     public ITemplateResolver svgTemplateResolver() {

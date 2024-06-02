@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Ticket")
+@Table(name = "TICKETS")
 public class Ticket extends Product {
 
     public static enum TicketCategory {
@@ -20,9 +20,9 @@ public class Ticket extends Product {
     // ProductIdentifier.of(UUID.randomUUID().toString());
     private TicketCategory category;
     private CinemaShow show;
+    private int seatID;
     private Reservation reservation;
 
-    // ToDo
     public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
 
         super("Ticket", Money.of(0, "EUR"));

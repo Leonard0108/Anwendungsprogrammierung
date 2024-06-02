@@ -4,13 +4,15 @@
  */
 package de.ufo.cinemasystem.repository;
 
-import de.ufo.cinemasystem.models.Ticket;
+import org.salespointframework.catalog.Catalog;
 import org.springframework.data.repository.CrudRepository;
+
+import de.ufo.cinemasystem.models.Ticket;
 
 /**
  *
  * @author Jannik
  */
-public interface TicketRepository extends CrudRepository<Ticket, Long>{
-    
+public interface TicketRepository extends Catalog<Ticket> {
+
 }

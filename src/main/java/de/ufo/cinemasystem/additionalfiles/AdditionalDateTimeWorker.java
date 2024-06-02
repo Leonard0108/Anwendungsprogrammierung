@@ -19,14 +19,15 @@ public class AdditionalDateTimeWorker {
 
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
-	 * siehe {@link #getWeekRangeFormat(int, int)}
+	 *                 siehe {@link #getWeekRangeFormat(int, int)}
 	 */
 	public static String getWeekRangeFormat(LocalDateTime dateTime) {
 		return getWeekRangeFormat(dateTime.getYear(), getWeekOfYear(dateTime));
 	}
 
 	/**
-	 * @return Ausgabe String: "Woche-Von-Datum (dd.MM.yyyy) - Woche-Bis-Datum (dd.MM.yyyy)"
+	 * @return Ausgabe String: "Woche-Von-Datum (dd.MM.yyyy) - Woche-Bis-Datum
+	 *         (dd.MM.yyyy)"
 	 */
 	public static String getWeekRangeFormat(int year, int week) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.getDefault());
@@ -39,13 +40,12 @@ public class AdditionalDateTimeWorker {
 
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
-	 * siehe {@link #getEndWeekDateTime(int, int)}
+	 *                 siehe {@link #getEndWeekDateTime(int, int)}
 	 */
 	public static LocalDateTime getEndWeekDateTime(LocalDateTime dateTime) {
 		return getEndWeekDateTime(
-			dateTime.getYear(),
-			getWeekOfYear(dateTime)
-		);
+				dateTime.getYear(),
+				getWeekOfYear(dateTime));
 	}
 
 	/**
@@ -58,19 +58,18 @@ public class AdditionalDateTimeWorker {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
 		return LocalDateTime.of(year, 1, 1, 23, 59)
-			.with(weekFields.weekOfYear(), week)
-			.with(weekFields.dayOfWeek(), 7);
+				.with(weekFields.weekOfYear(), week)
+				.with(weekFields.dayOfWeek(), 7);
 	}
 
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
-	 * siehe {@link #getStartWeekDateTime(int, int)}
+	 *                 siehe {@link #getStartWeekDateTime(int, int)}
 	 */
 	public static LocalDateTime getStartWeekDateTime(LocalDateTime dateTime) {
 		return getStartWeekDateTime(
-			dateTime.getYear(),
-			getWeekOfYear(dateTime)
-		);
+				dateTime.getYear(),
+				getWeekOfYear(dateTime));
 	}
 
 	// Chat GPT 3.5
@@ -85,8 +84,8 @@ public class AdditionalDateTimeWorker {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault());
 
 		return LocalDateTime.of(year, 1, 1, 0, 0)
-			.with(weekFields.weekOfYear(), week)
-			.with(weekFields.dayOfWeek(), 1);
+				.with(weekFields.weekOfYear(), week)
+				.with(weekFields.dayOfWeek(), 1);
 	}
 
 	/**
@@ -94,20 +93,23 @@ public class AdditionalDateTimeWorker {
 	 */
 	public static int getWeekOfYear(LocalDateTime dateTime) {
 		return dateTime
-			.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+				.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
 	}
 
 	/**
 	 * Erhalte letzte Woche anhand von Jahr und aktueller Woche nach ISO 8601
+	 * 
 	 * @param year aktuelles Jahr
-	 * @param week aktuelle Woche (1..52 oder 1..53 je nach Jahr, 1. Woche im Jahr, wenn Donnerstag der Woche in diesem Jahr liegt, siehe ISO 8601)
-	 * @return [0]: das letzte Jahr, wenn letzte Woche im alten Jahr liegt (siehe week), sonst unverändert, [1]: vorherige Woche (1..52 oder 1..53)
+	 * @param week aktuelle Woche (1..52 oder 1..53 je nach Jahr, 1. Woche im Jahr,
+	 *             wenn Donnerstag der Woche in diesem Jahr liegt, siehe ISO 8601)
+	 * @return [0]: das letzte Jahr, wenn letzte Woche im alten Jahr liegt (siehe
+	 *         week), sonst unverändert, [1]: vorherige Woche (1..52 oder 1..53)
 	 */
 	public static int[] lastWeek(int year, int week) {
 		int maxYearWeeks = getMaxYearWeeks(year);
-		if(week < 1 || week > maxYearWeeks)
+		if (week < 1 || week > maxYearWeeks)
 			throw new IllegalArgumentException("week muss zwischen 1 und " + maxYearWeeks + " liegen!");
-		return new int[]{(week == 1 ? year - 1 : year), (week == 1 ? getMaxYearWeeks(year - 1) : week - 1)};
+		return new int[] { (week == 1 ? year - 1 : year), (week == 1 ? getMaxYearWeeks(year - 1) : week - 1) };
 	}
 
 	public static YearWeekEntry lastWeekEntry(int year, int week) {
@@ -117,15 +119,18 @@ public class AdditionalDateTimeWorker {
 
 	/**
 	 * Erhalte nächste Woche anhand von Jahr und aktueller Woche nach ISO 8601
+	 * 
 	 * @param year aktuelles Jahr
-	 * @param week aktuelle Woche (1..52 oder 1..53 je nach Jahr, 1. Woche im Jahr, wenn Donnerstag der Woche in diesem Jahr liegt, siehe ISO 8601)
-	 * @return [0]: das nächste Jahr, wenn nächste Woche im neuen Jahr liegt (siehe week), sonst unverändert, [1]: nächste Woche (1..52 oder 1..53)
+	 * @param week aktuelle Woche (1..52 oder 1..53 je nach Jahr, 1. Woche im Jahr,
+	 *             wenn Donnerstag der Woche in diesem Jahr liegt, siehe ISO 8601)
+	 * @return [0]: das nächste Jahr, wenn nächste Woche im neuen Jahr liegt (siehe
+	 *         week), sonst unverändert, [1]: nächste Woche (1..52 oder 1..53)
 	 */
 	public static int[] nextWeek(int year, int week) {
 		int maxYearWeeks = getMaxYearWeeks(year);
-		if(week < 1 || week > maxYearWeeks)
+		if (week < 1 || week > maxYearWeeks)
 			throw new IllegalArgumentException("week muss zwischen 1 und " + maxYearWeeks + " liegen!");
-		return new int[]{((week % maxYearWeeks == 0) ? year + 1 : year), (week % maxYearWeeks) + 1};
+		return new int[] { ((week % maxYearWeeks == 0) ? year + 1 : year), (week % maxYearWeeks) + 1 };
 	}
 
 	public static YearWeekEntry nextWeekEntry(int year, int week) {

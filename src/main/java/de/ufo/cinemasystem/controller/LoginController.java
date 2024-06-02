@@ -89,7 +89,8 @@ public class LoginController {
 		List<UserEntry> userEntries = userService.findAll().toList();
 		System.out.println(userEntries);
 		model.addAttribute("customerList", userEntries);
-
+		return "welcome";
+	}
 
 
 	@RequestMapping("/logout")

@@ -8,6 +8,12 @@
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1 style="visibility:hidden">Startseite</h1>
+            <div sec:authorize="isAuthenticated()">
+                <div class="info">
+                    <p>Herzlich Willkommen <span sec:authentication="name"></span>!</p>
+                </div>
+            </div>
+
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
             <div class="mainpage-tile-sections">
                 <div id="current-films" class="tile-section">

@@ -1,49 +1,103 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
-    <title>Registration</title>
 </head>
 <body>
-<form th:action="@{/lunar_space_port/register}" th:object="${registrationForm}" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" th:field="*{name}" />
-    </div>
-    <div>
-        <label for="eMail">Email:</label>
-        <input type="email" id="eMail" th:field="*{eMail}" />
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" />
-    </div>
-    <div>
-        <label for="streetName">Street Name:</label>
-        <input type="text" id="streetName" th:field="*{streetName}" />
-    </div>
-    <div>
-        <label for="streetNumber">Street Number:</label>
-        <input type="text" id="streetNumber" th:field="*{streetNumber}" />
-    </div>
-    <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" th:field="*{city}" />
-    </div>
-    <div>
-        <label for="postalCode">Postal Code:</label>
-        <input type="text" id="postalCode" th:field="*{postalCode}" />
-    </div>
-    <div>
-        <label for="state">State:</label>
-        <input type="text" id="state" th:field="*{state}" />
-    </div>
-    <div>
-        <label for="country">Country:</label>
-        <input type="text" id="country" th:field="*{country}" />
-    </div>
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
+<section layout:fragment="content">
+    <form method="post" role="form" class="ui form" id="registerForm" th:action="@{/registration}" th:object="${registrationForm}">
+
+        <h3 class="ui dividing header">Nutzerdaten</h3>
+
+        <div class="ui negative message" th:if="${#fields.hasErrors('*')}">
+            <p>Einige Angaben sind nicht korrekt.</p>
+        </div>
+
+
+        <div class="formfield">
+            <label for="username">Nutzername</label>
+            <input id="username" name="username" th:field="*{username}" th:errorclass="fieldError" type="username"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Der Nutzername darf
+                nicht leer sein.</p>
+        </div>
+
+        <div class="formfield">
+            <label for="password">Passwort</label>
+            <input id="password" name="password" th:field="*{password}" th:errorclass="fieldError" type="password"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Das Passwort darf
+                nicht leer sein.</p>
+        </div>
+
+        <div class="formfield">
+            <label for="eMail">E-Mail</label>
+            <input id="eMail" name="eMail" th:field="*{eMail}" th:errorclass="fieldError" type="text"
+                   required="required"/><br/>
+            <p th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}">Die E-Mail Adresse darf
+                nicht leer sein.</p>
+        </div>
+
+        <div class="formfield">
+        <label for="name">Name</label>
+        <input id="name" name="name" th:field="*{name}" th:errorclass="fieldError" type="text" required="required"/><br/>
+        <div class="ui negative message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+            <p>Der Name darf nicht leer sein.</p>
+        </div>
+        </div>
+
+        <div class="formfield">
+            <label for="streetName">Straße</label>
+            <input id="streetName" name="streetName" th:field="*{streetName}" th:errorclass="fieldError" type="text" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}">
+                <p>Die Straße darf nicht leer sein.</p>
+            </div>
+        </div>
+
+        <div class="formfield">
+            <label for="streetNumber">Hausnummer</label>
+            <input id="streetNumber" name="streetNumber" th:field="*{streetNumber}" th:errorclass="fieldError" type="text" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('streetNumber')}" th:errors="*{streetNumber}">
+                <p>Die Hausnummer darf nicht leer sein.</p>
+            </div>
+        </div>
+
+        <div class="formfield">
+            <label for="city">Stadt</label>
+            <input id="city" name="city" th:field="*{city}" th:errorclass="fieldError" type="text" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">
+                <p>Die Stadt darf nicht leer sein.</p>
+            </div>
+        </div>
+
+        <div class="formfield">
+            <label for="postalCode">Postleitzahl</label>
+            <input id="postalCode" name="postalCode" th:field="*{postalCode}" th:errorclass="fieldError" type="number" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">
+                <p>Die Postleitzahl darf nicht leer sein.</p>
+            </div>
+        </div>
+
+        <div class="formfield">
+            <label for="state">Bundesland</label>
+            <input id="state" name="state" th:field="*{state}" th:errorclass="fieldError" type="text" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('state')}" th:errors="*{state}">
+                <p>Das Bundesland darf nicht leer sein.</p>
+            </div>
+        </div>
+
+        <div class="formfield">
+            <label for="country">Land</label>
+            <input id="country" name="country" th:field="*{country}" th:errorclass="fieldError" type="text" required="required"/><br/>
+            <div class="ui negative message" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">
+                <p>Das Land darf nicht leer sein.</p>
+            </div>
+        </div>
+
+        <button type="submit" class="ui button">Registrieren</button>
+    </form>
+</section>
 </body>
 </html>

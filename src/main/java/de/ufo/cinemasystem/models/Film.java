@@ -4,9 +4,13 @@
  */
 package de.ufo.cinemasystem.models;
 
+import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import java.util.Objects;
+import org.springframework.data.util.Streamable;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Represents a film.
@@ -15,17 +19,22 @@ import java.util.Objects;
 @Entity
 @Table(name= "FILMS")
 public class Film  implements Comparable<Film>{
-    
-    private @Id @GeneratedValue Long id;
+
+	@Id
+	@GeneratedValue
+    private Long id;
     private @NotNull String title;
     private @NotNull String desc;
     private int fskAge;
     //in minutes
-    private int timePlaying;
+    private int timePlaying;;
+
+	@ElementCollection
+	private final Set<YearWeekEntry> rentWeeks = new TreeSet<>();
 
 	@ManyToOne
 	private FilmProvider filmProvider;
-    private int basicRentFee;
+    private int basicRentFee = -1;
 
     /**
      * Creates a new film object, with the specified title, (short) description, timePlaying &amp; FSK age restriction
@@ -112,7 +121,61 @@ public class Film  implements Comparable<Film>{
         this.basicRentFee = basicRentFee;
     }
     
-    
+    public boolean addRentWeek(YearWeekEntry entry) {
+		return this.rentWeeks.add(entry);
+	}
+
+	public boolean removeRentWeek(YearWeekEntry entry) {
+		return this.rentWeeks.remove(entry);
+	}
+
+	public Streamable<YearWeekEntry> getRentWeeks() {
+		return Streamable.of(this.rentWeeks);
+	}
+
+	public Optional<YearWeekEntry> getFirstRentWeek() {
+		return this.rentWeeks.stream().min(Comparator.naturalOrder());
+	}
+
+	public Optional<YearWeekEntry> getLastRentWeek() {
+		return this.rentWeeks.stream().max(Comparator.naturalOrder());
+	}
+
+	public boolean isRent(LocalDateTime dateTime) {
+		return this.rentWeeks.stream()
+			.anyMatch(e -> e.isInYearWeek(dateTime));
+	}
+
+	public boolean isRent(YearWeekEntry entry) {
+		return this.rentWeeks.contains(entry);
+	}
+
+	public int getRentWeekCount() {
+		return this.rentWeeks.size();
+	}
+
+	public boolean isRentNow() {
+		return isRent(LocalDateTime.now());
+	}
+
+	/**
+	 * Gibt an, ob der Film zu dem Zeitpunkt im Kino zu dem Zeitpunkt verfügbar ist (z.B. zum Verwenden in einer Veranstaltung)
+	 * TODO: auch hier prüfen, ob Ticket-Preise vom Chef gesetzt wurden
+	 * @param dateTime Zeitpunk
+	 * @return true, wenn Verfügbar, sonst false
+	 */
+	public boolean isAvailableAt(LocalDateTime dateTime) {
+		return isRent(dateTime);
+	}
+
+	/**
+	 * Gibt an, ob der Film aktuell im Kino verfügbar ist (z.B. zum Verwenden in einer Veranstaltung)
+	 * TODO: auch hier prüfen, ob Ticket-Preise vom Chef gesetzt wurden
+	 * @return true, wenn Verfügbar, sonst false
+	 */
+	public boolean isAvailableNow() {
+		return isAvailableAt(LocalDateTime.now());
+	}
 
     /**
      * Generate a hash code for this film. Due to the equals contract, hashcode is calculated from the id only.

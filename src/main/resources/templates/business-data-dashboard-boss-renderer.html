@@ -4,109 +4,112 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
-    <head>
-        <meta charset="utf-8">
-        <title>Saalverwaltung | UFO Kinos</title>
-        <meta name="description" content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
-        <meta name="keywords" content="lorem, ipsum">
-        <meta name="referrer" content="strict-origin-when-cross-origin">
-        <meta name="theme-color" content="#000000">
-        <meta name="color-scheme" content="dark">
-        <meta name="robots" content="index,follow">
-        <!-- <meta name="rating" content="adult"> -->
+<head>
+    <meta charset="utf-8">
+    <title>Saalverwaltung | UFO Kinos</title>
+    <meta name="description"
+          content="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l">
+    <meta name="keywords" content="lorem, ipsum">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark">
+    <meta name="robots" content="index,follow">
+    <!-- <meta name="rating" content="adult"> -->
 
-        <link rel="stylesheet" href="/css/common.css">
 
-        <link rel="icon" href="/assets/branding/icon-48.png">
+    <link rel="icon" href="/assets/branding/icon-48.png">
 
-        <script src="/js/lib/jquery.js?ver=202404"></script>
-        <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
+    <script src="/js/lib/jquery.js?ver=202404"></script>
+    <script src="/js/lib/dsgvo-cookie-choises.js?ver=202404"></script>
 
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Einnahmequelle', 'Einnahmen'],
-                    ['Ticket: Bell im Märchenland',     250],
-                    ['Ticket: Parry Hotter und die Hochschule Merseburg',      200],
-                    ['Snacks: Popcorn',  75],
-                    ['Snacks: Softdrinks', 30],
-                    ['Ticket: Extra 4\'s Jannes Müller',    10]
-                ]);
-
-                var options = {
-                    title: 'Tageseinnahmen',
-                    pieHole: 0.4,
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('dailyIncome'));
-                chart.draw(data, options);
-            }
-        </script>
-        <script type="text/javascript">
-        google.charts.load('current', {packages: ['corechart', 'line']});
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script th:inline="javascript">
+        // Daten aus Thymeleaf in JavaScript-Array umwandeln
+        var dailyIncomeData = /*[[${dailyIncomeData}]]*/ '[]';
+        var revenueData = /*[[${revenueData}]]*/ '[]';
+    </script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawChart);
         google.charts.setOnLoadCallback(drawBasic);
 
+        function drawChart() {
+            //console.log(dailyIncomeData);
+            var dataArray = [];
+            dataArray.push(['Einnahmequelle', 'Einnahmen']);
+            for (var i = 0; i < dailyIncomeData.length; i++) {
+                dataArray.push([dailyIncomeData[i].source, dailyIncomeData[i].amount]);
+            }
+
+            var data = google.visualization.arrayToDataTable(dataArray);
+
+            var options = {
+                title: 'Tageseinnahmen (in €)',
+                pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('dailyIncome'));
+            chart.draw(data, options);
+        }
+
+
         function drawBasic() {
+            //console.log(revenueData);
+            var dataArray = [];
+            for (var i = 0; i < revenueData.length; i++) {
+                dataArray.push([new Date(revenueData[i].date), revenueData[i].revenue]);
+            }
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Day');
+            data.addColumn('number', 'Umsatz in €');
 
-        var data = new google.visualization.DataTable();
-        data.addColumn('date', 'Day');
-        data.addColumn('number', 'Umsatz in €');
+            data.addRows(dataArray);
 
-        data.addRows([
-        [new Date(2024, 4, 1), 10],  [new Date(2024, 4, 2), 23],  [new Date(2024, 4, 3), 17],  [new Date(2024, 4, 4), 18],  [new Date(2024, 4, 5), 9],
-        [new Date(2024, 4, 6), 11],  [new Date(2024, 4, 7), 27],  [new Date(2024, 4, 8), 33],  [new Date(2024, 4, 9), 40],  [new Date(2024, 4, 10), 32], [new Date(2024, 4, 11), 35],
-        [new Date(2024, 4, 12), 30], [new Date(2024, 4, 13), 40], [new Date(2024, 4, 14), 42], [new Date(2024, 4, 15), 47], [new Date(2024, 4, 16), 44], [new Date(2024, 4, 17), 48],
-        [new Date(2024, 4, 18), 52], [new Date(2024, 4, 19), 54], [new Date(2024, 4, 20), 42], [new Date(2024, 4, 21), 55], [new Date(2024, 4, 22), 56], [new Date(2024, 4, 23), 57],
-        [new Date(2024, 4, 24), 60], [new Date(2024, 4, 25), 50], [new Date(2024, 4, 26), 52], [new Date(2024, 4, 27), 51], [new Date(2024, 4, 28), 49], [new Date(2024, 4, 29), 53],
-        [new Date(2024, 4, 30), 55]
-        ]);
+            var options = {
+                hAxis: {
+                    title: 'Tag',
+                    format: 'dd/MM',
+                },
+                vAxis: {
+                    title: 'Umsatz(€)'
+                }
+            };
 
-        var options = {
-        hAxis: {
-            title: 'Tag',
-            format: 'dd/MM',
-        },
-        vAxis: {
-            title: 'Umsatz(€)'
+            var chart = new google.visualization.LineChart(document.getElementById('revenue'));
+
+            chart.draw(data, options);
         }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('revenue'));
-
-        chart.draw(data, options);
-        }
-        </script>
-    </head>
-    <body>
-        <!-- todo:background asset? -->
-        <div class="background"></div>
-        <div class="css-hack">
-            <div class="main-outer">
-                <div class="head">
-                    <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
-                </div>
-                <div class="main-wrapper" role="main" layout:fragment="content">
-                    <h1>Dashboard</h1>
-                    <h2>Tageseinnahmen</h2>
-                    <div id="dailyIncome" style="width: 900px; height: 500px;"></div>
-                    <br><hr><br>
-                    <h2>Umsatz</h2>
-                    <div id="revenue" style="width: 900px; height: 500px;"></div>
-
-
-                </div>
-                <div class="footer">
-                    <span class="copyright">&copy; UFO-Kinos</span>
-                    <ul class="links">
-                        <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
-                        <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
-                        <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
-                    </ul>
-                </div>
-            </div>
+    </script>
+</head>
+<body>
+<!-- todo:background asset? -->
+<div class="background"></div>
+<div class="css-hack">
+    <div class="main-outer">
+        <div class="head">
+            <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
         </div>
-    </body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Dashboard</h1>
+            <h2>Tageseinnahmen</h2>
+            <div id="dailyIncome" style="width: 900px; height: 500px;"></div>
+            <br>
+            <hr>
+            <br>
+            <h2>Umsatz</h2>
+            <div id="revenue" style="width: 900px; height: 500px;"></div>
+
+
+        </div>
+        <div class="footer">
+            <span class="copyright">&copy; UFO-Kinos</span>
+            <ul class="links">
+                <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+                <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+                <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
 </html>

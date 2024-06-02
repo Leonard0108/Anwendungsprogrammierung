@@ -1,5 +1,10 @@
 /* CSS RESET */
 
+/* general */
+html{
+    background-color:#000;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +14,19 @@ body {
     margin: 0 auto;
     width: 940px;
     font: 13px/22px Helvetica, Arial, sans-serif;
+}
+button{
+    padding: 0.25em 0.5em;
+}
+
+nav, .main-wrapper, .footer{
+    background-color: #1c1b22;
+    border:1px solid #3c3b42;
+    border-radius: 5px;
+    padding: 1em 2em;
+}
+.footer{
+    margin-top: 2em;
 }
 
 h1 {
@@ -20,18 +38,23 @@ h1 {
 nav{
     float: left;
     padding-right:0.5em;
+    margin-top:calc(50px + 0.5em);
+}
+nav .nav-section .nav-section-title{
+    font-size: larger;
+}
+nav .nav-section{
+    margin: 0.5em 0;
 }
 nav li,.footer li{
     list-style:none;
 }
-.css-hack{
+.css-hack, .flex{
     display: flex;
 }
 .main-outer{
     flex-grow:1;
-}
-.main-wrapper{
-    margin-top: 1em;
+    margin-left: 1em;
 }
 .footer li{
     display: inline-block;
@@ -44,6 +67,93 @@ nav li,.footer li{
     margin: 0;
 }
 
-.success-message{
-    color: #1d6a1d;
+.grow{
+    flex-grow:1;
+}
+
+.priceList li{
+    margin-left: 2em;
+}
+.already-in-cart{
+    margin: 2em 0;
+    border-top: 1px solid #3c3b42;
+    border-bottom: 1px solid #3c3b42;
+}
+.ticket{
+    border:1px solid #3c3b42;
+    border-radius: 10px;
+    padding: 1em 2em;
+}
+
+/* messages */
+.info, .success, .error {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('https://i.imgur.com/ilgqWuX.png');
+}
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image: url('https://i.imgur.com/Q9BGTuy.png');
+}
+
+.error{
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+
+.deleteButton, button.destructive{
+    background-color: red;
+    border: 1px solid red;
+    cursor: pointer;
+    padding: 0.25em 0.5em;
+}
+.deleteButton:hover, button.destructive:hover{
+    opacity: 0.7;
+}
+
+.reservation li{
+    margin-left: 2em;
+}
+.reservation{
+    border:1px solid #3c3b42;;
+    padding: 1em 2em;
+    border-radius: 10px;
+    margin-bottom: 1em;
+}
+
+.formfield{
+    display: flex;
+    margin: 1em 0;
+}
+.formfield>label{
+    margin-right: 1em;
+}
+.formfield input{
+    flex-grow:1;
+}
+.background{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:-1;
+    background-image: url("/assets/background.png");
+    background-size: 10%;
+}
+.css-hack{
+    z-index:0;
+}
+
+.logo{
+    height:50px;
 }

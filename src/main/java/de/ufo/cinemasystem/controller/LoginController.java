@@ -2,10 +2,14 @@ package de.ufo.cinemasystem.controller;
 
 
 
+import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
 import de.ufo.cinemasystem.models.UserEntry;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +21,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import de.ufo.cinemasystem.repository.UserRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
-@RequestMapping("/lunar_space_port")
 public class LoginController {
 	UserRepository  userRepository;
 	PasswordEncoder passwordEncoder;
@@ -36,104 +42,70 @@ public class LoginController {
 
 
 
-	@PostMapping("/register")
-	String register(@Valid RegistrationForm form, Errors result) {
+	@PostMapping("/registration")
+	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
 
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return "registration";
 		}
 
-
+		System.out.println(form);
 
 		userService.createUser(form);
+		redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
 
-
-		return "redirect:/";
+		return "redirect:/login";
 	}
 
 
-
-	@GetMapping("/register")
-	String register(Model model, RegistrationForm form) {
+	@GetMapping("/registration")
+	String register(Model m, RegistrationForm form) {
 		return "registration";
 	}
 
 
 
 
+	/*
 	@PostMapping("/login")
-	String login(@Valid LoginForm form, Errors result, HttpSession session) {
-		UserEntry toSignInUser;
+	String login(@Valid LoginForm form, Errors result, HttpSession session, RedirectAttributes redirectAttributes) {
 
-
-
-		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
-			return "login";
-		}
-
-
-		toSignInUser = userService.loginBackground(form);
-
-		if(toSignInUser != null)
-		{
-			session.setAttribute("user", form);
-			return "redirect:/";
-		}
-
-
-
-		return "login";
+		return "redirect:/";
 	}
-
-
-
 
 
 	@GetMapping(path = "/login")
 	String login() {
 		return "login";
 	}
-
-
-
-
-	@GetMapping(path = "/test")
-	String test() {
-		return "welcome";
-	}
-
-
+	*/
 
 
 
 	@GetMapping("/customers")
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	String customers(Model model) {
-
-		model.addAttribute("customerList", userService.findAll());
-
+		List<UserEntry> userEntries = userService.findAll().toList();
+		System.out.println(userEntries);
+		model.addAttribute("customerList", userEntries);
 		return "welcome";
 	}
 
+	@GetMapping("/role")
+	String getRole() {
+		return "roletest";
+	}
 
 
-
-	@GetMapping("/logOut")
-	String logout (HttpSession session)
-	{
-		session.invalidate();
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) throws ServletException {
+		request.logout();
 		return "redirect:/";
 	}
 
 
-	@GetMapping("/LogOut")
-	String LogOut(HttpSession session)
-	{
-		session.invalidate();
-		return "redirect:/";
-	}
+
 }
 
 

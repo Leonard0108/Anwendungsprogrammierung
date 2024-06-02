@@ -14,8 +14,8 @@ public class LoginForm {
 	private static @NotEmpty String userName, password;
 
 
-	public LoginForm(String eMail, String password) {
-		LoginForm.userName    = eMail;
+	public LoginForm(String userName, String password) {
+		LoginForm.userName    = userName;
 		LoginForm.password = password;
 	}
 

@@ -1,18 +1,15 @@
 package de.ufo.cinemasystem.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.net.Authenticator;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 @Table(name = "CINEMA_SHOWS")
-public class CinemaShow implements Comparable<CinemaShow>{
+public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -28,7 +25,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	//@JoinColumn(name = "film_id")
 	private Film film;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private final Map<Seat, Seat.SeatOccupancy> seats = new TreeMap<>();
 
 	@ManyToOne
@@ -43,7 +40,8 @@ public class CinemaShow implements Comparable<CinemaShow>{
 
 	public CinemaShow() {}
 
-	public Long getId() {
+	@Override
+	public long getId() {
 		return this.id;
 	}
 
@@ -55,6 +53,7 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		this.film = film;
 	}
 
+	@Override
 	public LocalDateTime getStartDateTime() {
 		return this.startDateTime;
 	}
@@ -67,10 +66,12 @@ public class CinemaShow implements Comparable<CinemaShow>{
 		return this.basePrice;
 	}
 
+
 	void setBasePrice(Money basePrice) {
 		this.basePrice = basePrice;
 	}
 
+	@Override
 	public CinemaHall getCinemaHall() {
 		return this.cinemaHall;
 	}
@@ -143,6 +144,44 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	}
 
 	/**
+	 * @return max. Anzahl an Plätzen in der Vorführung (indirekt abhängig vom Kinosaal)
+	 */
+	public int getSeatCount() {
+		return this.seats.size();
+	}
+
+	/**
+	 * @return Anzahl an Plätzen in der Vorführung nach Belebtheit-Status
+	 */
+	public int getSeatCount(Seat.SeatOccupancy occupancy) {
+		return (int) this.seats.values().stream().filter(o -> o .equals(occupancy)).count();
+	}
+
+	/**
+	 * @return Anzahl an belegten PLätzen (Reserviert + gekauft)
+	 */
+	public int getSeatProvenCount(Seat.SeatOccupancy occupancy) {
+		return getSeatCount() - getSeatCount(Seat.SeatOccupancy.FREE);
+	}
+
+	/**
+	 * @return Prozentualer Belegten-Status-Anteil
+	 */
+	public double getPercentageSeatShare(Seat.SeatOccupancy occupancy) {
+		int seatCount = getSeatCount();
+		if(seatCount == 0) return 0.0;
+
+		return getSeatCount(occupancy) / (double) seatCount;
+	}
+
+	/**
+	 * @return Prozentualer Anteil an belegten Plätzen (Reserviert + gekauft)
+	 */
+	public double getPercentageSeatProvenShare() {
+		return 1.0 - getPercentageSeatShare(Seat.SeatOccupancy.FREE);
+	}
+
+	/**
 	 * Setzt neue Platzbelegung für die Kino-Vorführung
 	 * @param row Reihe des Platzes beginnend bei index 0
 	 * @param pos Position des Platzes in jeder Reihe beginnend bei index 0, max. 99
@@ -177,6 +216,17 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	}
 
 	@Override
+	public int getDuration(){
+		// Kinosaal muss 10 min vor und 10 min nach Filmbeginn gebucht sein
+		return film.getTimePlaying() + 20;
+	}
+
+	@Override
+	public String getName(){
+		return film.getTitle();
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(getId(), getStartDateTime(),
                 getBasePrice(), getFilm());
@@ -198,5 +248,10 @@ public class CinemaShow implements Comparable<CinemaShow>{
 	@Override
 	public int compareTo(CinemaShow cinemaShow) {
 		return this.getStartDateTime().compareTo(cinemaShow.getStartDateTime());
+	}
+
+	@Override
+	public int compareTo(ScheduledActivity scheduledActivity) {
+		return this.getStartDateTime().compareTo(scheduledActivity.getStartDateTime());
 	}
 }

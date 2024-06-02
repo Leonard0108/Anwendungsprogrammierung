@@ -6,20 +6,28 @@
 <head>
 </head>
 <body>
-<div class="main-wrapper" role="main" layout:fragment="content">
-    <h1>Anmelden</h1>
-    <form id="registerForm" action="/lunar_space_port/login" method="post">
-        <input type="hidden" name="token" value="gjitogjiotjgtr+\\">
-        <div class="formfield">
-            <label for="htmlUniqueID1">E-Mail oder Benutzername:</label>
-            <input id="htmlUniqueID1" name="identification" placeholder="john.doe@example.de" type="text" required="">
+<section layout:fragment="content">
+    <h3>Anmelden</h3>
+    <form class="ui form" role="form" th:action="@{/login}" method="post">
+
+        <div th:if="${createdUser}" class="success">
+            <p th:text="${createdUser}"></p>
         </div>
+
+
         <div class="formfield">
-            <label for="htmlUniqueID2">Passwort:</label>
-            <input id="htmlUniqueID2" name="password" placeholder="Passwort" type="password" required="">
+            <label for="username">Nutzername</label>
+            <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
         </div>
-        <button>Anmelden</button>
+
+        <div class="formfield">
+            <label for="password">Passwort</label>
+            <input type="password" id="password" name="password"/> <br/>
+        </div>
+
+        <button type="submit" class="ui button">Einloggen</button>
+        <a href="/registration">Kein Konto? Registrieren</a>
     </form>
-</div>
+</section>
 </body>
 </html>

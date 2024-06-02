@@ -8,14 +8,17 @@
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Reservierung stornieren</h1>
-            <form>
-                <input type="hidden" name="token" value="ijfjiotgjgirioijgoitr+\\">
-                <p>Reservierungsnummer: 8490843294328904239804 <a href="/reserve-spots/cancel" title="Reservierung stornieren | UFO Kinos">ändern</a></p>
+            <form method="post" class="reservation">
+                <p>Reservierungsnummer: <span th:text="${reservation.getId()}">ijgjgtigtjrijgtrigji</span> <a href="/my-reservations" title="Meine Reservierungen | UFO Kinos">ändern</a></p>
                 <p>Die folgende Reservierung wird gelöscht: </p>
-                <p>"Bell im Märchenland", Montag 22.04.2024, 10 Uhr, Saal 2</p>
-                <p> 2 Erwachsene (Platzgruppe 2), 2 Kinder (bis 14 Jahre)(Platzgruppe 2), Gesamtpreis 67,96€</p>
-                <button>Ja, Reservierung löschen</button>
-                <a href="/" class="fakeButton">Nein, Reservierung beibehalten</a>
+                <p th:text="${reservation.getCinemaShow().getFilm().getTitle()}">foo</p>
+                <p th:text="'FSK ' + ${reservation.getCinemaShow().getFilm().getFskAge()}" th:class="'fsk-' + ${reservation.getCinemaShow().getFilm().getFskAge()}">0</p>
+                <p th:text="${reservation.getCinemaShow().getStartDateTime()}">0 Uhr, 01.01.1970</p>
+                <ul>
+                    <li th:each="ticket: ${reservation.getTickets()}" th:text="${ticket.getSeatString()} +' '+ ${ticket.categoryToLabel()} +' '+ ${ticket.getTicketPrice()}"></li>
+                </ul>
+                <button class="destructive">Ja, Reservierung löschen</button>
+                <a href="/my-reservations" class="fakeButton">Nein, Reservierung beibehalten</a>
             </form>
         </div>
 

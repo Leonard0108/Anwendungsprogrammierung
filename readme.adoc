@@ -1,12 +1,13 @@
 image:https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions/workflows/build.yml/badge.svg["CI Build", link="https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions"]
 
 = Kinoverwaltungs- und Reservierungssystem UFO Kinos
-== Vorbereitete Dokumente
+== Wichtige Dokumente
 
-* link:src/main/asciidoc/protocols[Meeting-Protokolle]: eine Vorlage mit der Sie Ihre Meetings und deren Ergebnisse protokollieren können.
+* link:src/main/asciidoc/protocols[Meeting-Protokolle]: Meeting- und Reviewprotokolle.
 * link:src/main/asciidoc/time_recording.adoc[Zeiterfassung]: eine Hilfestellung mit der Sie Ihre individuellen Arbeitszeiten erfassen können.
-* link:src/main/asciidoc/pflichtenheft.adoc[Anforderungsspezifikation (Pflichtenheft)]: ein Template für Ihr Pflichtenheft (Anforderungen).
-* link:src/main/asciidoc/developer_documentation.adoc[Entwicklerdokumentation (Software-Entwurf)]: ein Template mit dem Sie Ihre Entwicklerdokumentation erstellen können.
+* link:src/main/asciidoc/pflichtenheft.adoc[Anforderungsspezifikation (Pflichtenheft)]
+* link:src/main/asciidoc/developer_documentation.adoc[Entwicklerdokumentation (Software-Entwurf)]
+* link:src/main/asciidoc/Endpoints.adoc[Endpunkte-Übersicht]
 
 == Struktur des Repositories
 
@@ -22,7 +23,7 @@ Grundsätzlich entspricht die Projektstruktur dem Maven-Standardlayout. Sie find
 
 Weitere Dateien:
 
-* `.gitignore`          -- Dateien und Verzeichnisse nicht in das Repository eingecheckt werden sollen.
+* `.gitignore`          -- Dateien und Verzeichnisse, die nicht in das Repository eingecheckt werden sollen.
 * `pom.xml`             -- Dies ist die Maven Build-Spezifikation, Informationen zu diesem Format finden Sie in der link:https://maven.apache.org/index.html[Maven-Dokumentation].
 * `.editorconfig`       -- Erlaubt es, verschiedene Editoren mit identischen Grundeinstellungen zu versehen, z.B. bezüglich des Datei-Encodings, welches Sie standardmäßig am Besten auf UTF-8 stellen.
 * `mvnw` und `mvnw.cmd` -- Shell-Skripte, die Maven herunterladen, installieren und ausführen, wenn es sich noch nicht auf Ihrem System befindet.
@@ -34,7 +35,9 @@ Weitere Dateien:
 
 == Paketierung
 
-Java-Anwendungen werden in der Regel als JAR-Dateien gepackt und ausgeliefert. Eine JAR-Datei kann von Javas virtueller Maschine direkt verarbeitet und ausgeführt werden, vorrausgesetzt in der JAR-Datei befindet sich eine Klasse mit einer `main`-Funktion. 
+Java-Anwendungen werden in der Regel als JAR-Dateien gepackt und ausgeliefert. Eine JAR-Datei kann von Javas virtueller Maschine direkt verarbeitet und ausgeführt werden, vorrausgesetzt in der JAR-Datei befindet sich eine Klasse mit einer `main`-Funktion, und diese ist im `Main-Class`-Attribut der Datei `/META-INF/MANIFEST.MF` des JAR's angegeben.
+// vgl. https://stackoverflow.com/questions/9689793/cant-execute-jar-file-no-main-manifest-attribute?rq=2
+// und  https://stackoverflow.com/questions/18093928/what-does-could-not-find-or-load-main-class-mean
 
 Maven unterstützt Sie auch bei der Erstellung solcher Paketierungen:
 

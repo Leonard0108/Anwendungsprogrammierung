@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- https://gist.github.com/piyusht007/9340c16c76bab709d263c0e2d619a54d -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<div>
+    <b>Username:</b>
+    <div sec:authentication="name">
+        The value of the "name" property of the authentication object should appear here.
+    </div>
+</div>
+<div>
+    <b>User Roles: </b>
+    <div sec:authentication="principal.authorities"></div>
+</div>
+<div>
+    <b>Role checking:</b>
+    <div sec:authorize="isAuthenticated()">1. User is authenticated.</div>
+    <div th:if="${#strings.contains(#authentication.principal.authorities, 'BOSS')}">
+        2. User has authority ADMIN.
+    </div>
+    <div th:if="${#authorization.expression('hasAuthority(''BOSS'')')}">
+        3. User has authority ADMIN.
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''USER'')')}">
+        4. User has role USER.
+    </div>
+    <div sec:authorize="hasRole('USER')">5. User has role USER.</div>
+    <div sec:authorize="hasAuthority('BOSS')">6. User has authority ADMIN.</div>
+    <div sec:authorize="hasAuthority('BOSS')">7. User has authority ADMIN.</div>
+</div>
+</html>

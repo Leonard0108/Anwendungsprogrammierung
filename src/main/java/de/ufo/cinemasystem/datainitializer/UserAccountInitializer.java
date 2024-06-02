@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
+
 
 @Component
 public class UserAccountInitializer implements DataInitializer {
@@ -50,19 +52,20 @@ public class UserAccountInitializer implements DataInitializer {
 		LOG.info("Creating default users and customers.");
 
 
-		userAccountManagement.create("boss", Password.UnencryptedPassword.of("123"), Role.of("BOSS"));
-		userAccountManagement.create("user", Password.UnencryptedPassword.of("123"), Role.of("USER"));
+		UserAccount boss_account = userAccountManagement.create("boss", Password.UnencryptedPassword.of("123"), Role.of("BOSS"));
 		userAccountManagement.create("em", Password.UnencryptedPassword.of("123"), Role.of("EMPLOYEE"));
 		userAccountManagement.create("aem", Password.UnencryptedPassword.of("123"), Role.of("AUTHORIZED_EMPLOYEE"));
 
 
 		var password = "123";
 
+		//create BOSS account
+		userService.createUser(boss_account,"Test Boss",  "boss@ufo-cinema.de", "aslkdjflaksdf", "2", "adfladksf", "0000", "ajdfakfd", "Deutschland");
+
 		List.of(//
-			new RegistrationForm("hans", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),
-			new RegistrationForm("dextermorgan","adf@gmail.de", password, "Miami-Dade County", "asdfasdf", "asdfasfd", "asdfaf", "asdfasfd", "asdfasdf"),
-			new RegistrationForm("Anne Panzer", "annep2003@gmx.de", password, "Camden County - Motel", "aslkdjflaksdf", "ajskldfaklsf", "adfladksf", "kljsdfal", "ajdfakfd"),
-			new RegistrationForm("mclovinfogell", "asdf@gmail.com", password, "Los Angeles", "asdfasdf", "asdfasdf", "sdfasdf", "sadfasdf", "asdfasdf")//
+			new RegistrationForm("hans", "nicht Test", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),
+			new RegistrationForm("Test User","user", "user@email.com", password, "asdfasdf", "9", "asdfaf", "0000", "asdfasdf", "Deutschland")
+			/*new RegistrationForm("mclovinfogell", "asdf@gmail.com", password, "Los Angeles", "asdfasdf", "asdfasdf", "sdfasdf", "sadfasdf", "asdfasdf")*/
 		).forEach(userService::createUser);
 
 

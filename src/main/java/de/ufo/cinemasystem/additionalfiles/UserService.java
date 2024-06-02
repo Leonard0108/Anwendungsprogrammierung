@@ -21,26 +21,20 @@ import org.springframework.util.Assert;
 @Service
 @Transactional
 public class UserService {
-	public static final Role                  CUSTOMER_ROLE = Role.of("USER"); //Im Original Customer
+	public static final Role                  USER_ROLE = Role.of("USER"); //Im Original Customer
 	private final       UserRepository        userRepository;
 	private final       UserAccountManagement userAccounts;
-	private final       BCryptPasswordEncoder passwordEncoder;
 
-	/**
-	 * Creates a new {@link UserService} with the given {@link UserRepository} and
-	 * {@link UserAccountManagement}.
-	 *
-	 * @param userRepository must not be {@literal null}.
-	 * @param userAccounts must not be {@literal null}.
-	 */
-	UserService(UserRepository userRepository, UserAccountManagement userAccounts, @Qualifier("passwordEncoder") BCryptPasswordEncoder passwordEncoder) {
+
+
+
+	UserService(UserRepository userRepository, UserAccountManagement userAccounts) {
 
 		Assert.notNull(userRepository, "CustomerRepository must not be null!");
 		Assert.notNull(userAccounts, "UserAccountManagement must not be null!");
 
 		this.userRepository = userRepository;
 		this.userAccounts   = userAccounts;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	/**
@@ -49,21 +43,21 @@ public class UserService {
 	 * @param form must not be {@literal null}.
 	 * @return the new {@link UserEntry} instance.
 	 */
-	public UserEntry createUser(RegistrationForm form) {
+	public void createUser(RegistrationForm form) {
 
 		Assert.notNull(form, "Registration form must not be null!");
 
 		var password = Password.UnencryptedPassword.of(form.getPassword());
-		var userAccount = userAccounts.create(form.getName(), password, CUSTOMER_ROLE);
+		var userAccount = userAccounts.create(form.getUsername(), password, USER_ROLE);
 
-		return userRepository.save(new UserEntry(userAccount, form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
+		userRepository.save(new UserEntry(userAccount,form.getName(), form.getEMail(), form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
 	}
 
 
 
 
-	public UserEntry createUser(UserAccount userAccount, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
-		return userRepository.save(new UserEntry(userAccount, streetName, streetNumber, city, postalCode, state, country));
+	public UserEntry createUser(UserAccount userAccount, String name, String eMail, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
+		return userRepository.save(new UserEntry(userAccount, name, eMail,  streetName, streetNumber, city, postalCode, state, country));
 	}
 
 
@@ -83,17 +77,45 @@ public class UserService {
 
 
 		Assert.notNull(form, "Login form must not be null");
-		toCheckUserEntry = userRepository.findByUserAccountEmail(LoginForm.getUserName());
+		toCheckUserEntry = userRepository.findByUserAccountUsername(LoginForm.getUserName());
+		System.out.println(toCheckUserEntry);
 
 
 
 		//Falls nicht funktionsfähig mal dehashen.
-		if (toCheckUserEntry == null || passwordEncoder.matches(passwordEncoder.encode(LoginForm.getPassword()), String.valueOf(toCheckUserEntry.getUserAccount().getPassword()))) {
+		if (toCheckUserEntry == null || !(LoginForm.getPassword().equals(String.valueOf(toCheckUserEntry.getUserAccount().getPassword()))))
+		{
 			return null;
 		}
 
 
 
 		return toCheckUserEntry;
+	}
+
+
+
+	public void deleteEmployee(UserEntry user) {
+		UserAccount userAccount = user.getUserAccount();
+		userRepository.delete(user);
+		userAccounts.disable(userAccount.getId()); 		// before delete user account, disable it - if not springs crashes
+		userAccounts.delete(userAccount);
+	}
+
+
+
+
+	public UserEntry getEmployeeById(Long id) {
+		return userRepository.findById(id).orElse(null);
+	}
+
+
+
+
+	public void removeAllRoles(UserAccount userAccount) {
+		for (Role role : userAccount.getRoles()) {
+			userAccount.remove(role);
+		}
+		userAccounts.save(userAccount);
 	}
 }

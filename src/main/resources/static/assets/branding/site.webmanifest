@@ -1,0 +1,28 @@
+{
+    "name": "UFO Kinos",
+    "short_name": "UFO Kinos",
+    "icons": [
+        {
+            "src": "/assets/branding/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/branding/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#000000",
+    "start_url": "http://127.0.0.1:8080",
+    "display": "standalone",
+    "description": "Webanwendung der UFO Kinos zur Anzeige des Programms und zur Reservierung von Plätzen.",
+    "display_override": ["fullscreen", "minimal-ui"],
+    "id": "/de-ufo-cinemasystem",
+    "scope": "http://127.0.0.1:8080/",
+    "lang" : "de",
+    "launch_handler": {
+        "client_mode": "focus-existing"
+    }
+}

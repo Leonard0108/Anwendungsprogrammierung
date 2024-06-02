@@ -1,16 +1,16 @@
 package de.ufo.cinemasystem.controller;
 
 
-import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
-import de.ufo.cinemasystem.additionalfiles.ScheduledActivityService;
+import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.services.ScheduledActivityService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Event;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
@@ -30,12 +30,12 @@ public class EventAdministrationController {
 
 	private EventRepository eventRepository;
 	private CinemaHallRepository cinemaHallRepository;
-	private CinemaShowRepository cinemaShowRepository;
+	private ScheduledActivityService scheduledActivityService;
 
 	public EventAdministrationController(EventRepository eventRepository, CinemaHallRepository cinemaHallRepository, CinemaShowRepository cinemaShowRepository) {
 		this.eventRepository = eventRepository;
 		this.cinemaHallRepository = cinemaHallRepository;
-		this.cinemaShowRepository = cinemaShowRepository;
+		this.scheduledActivityService = new ScheduledActivityService(eventRepository, cinemaShowRepository);
 	}
 
 
@@ -47,8 +47,7 @@ public class EventAdministrationController {
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
 
-		ScheduledActivityService scheduledActivityService = new ScheduledActivityService(eventRepository, cinemaShowRepository);
-		List<ScheduledActivity> activitiesOnDate = scheduledActivityService.getOnDayActivitysSorted(date);
+		List<ScheduledActivity> activitiesOnDate = scheduledActivityService.getActivitysOnDay(date);
 		List<ScheduledActivity> scheduledActivitysOnDateInHall = new ArrayList<>();
 		
 		//übernehme nur die Shows und Events für gesuchten Saal
@@ -86,14 +85,22 @@ public class EventAdministrationController {
 
 	@PostMapping("/manage/rooms")
 	//@PreAuthorize("hasRole('BOSS')")
-	public String addEvent(Model m,
+	public String addEvent(RedirectAttributes redirectAttributes,
 						   @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
 						   @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
 						   @RequestParam("room") Long room,
 						   @RequestParam("eventname") String eventname){
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
-		m.addAttribute("allCinemaHalls", allCinemaHalls);
+		redirectAttributes.addAttribute("allCinemaHalls", allCinemaHalls);
+		LocalDate date = from.toLocalDate();
+
+		if(!scheduledActivityService.isTimeSlotAvailable(from, to, room)){
+			redirectAttributes.addFlashAttribute("errorMessage", "Der ausgewählte Zeitslot ist bereits belegt.");
+
+			return "redirect:/manage/rooms?room=" + room + "&date=" + date;
+		}
+
 
 		CinemaHall updateHall = cinemaHallRepository.findById(room).orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + room));
 
@@ -105,7 +112,7 @@ public class EventAdministrationController {
 		cinemaHallRepository.save(updateHall);
 		eventRepository.save(newEvent);
 
-		LocalDate date = from.toLocalDate();
+		redirectAttributes.addFlashAttribute("successMessage", "Das neue Event wurde erfolgreich angelegt");
 
 		return "redirect:/manage/rooms?room=" + room + "&date=" + date;
 	}

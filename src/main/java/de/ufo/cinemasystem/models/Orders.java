@@ -1,7 +1,6 @@
 package de.ufo.cinemasystem.models;
 
 import org.javamoney.moneta.Money;
-import org.salespointframework.order.Order.OrderIdentifier;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 
@@ -9,63 +8,49 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
+@Table( public lass Orders extends Order {
 
-Table(n
-ic cla
-s
+    //      pr      private Money SnacksSumme;
+    private CinemaShow show;
 
-        priate 
-    ate Money SnacksSumme
-    
-    pressWarnings({ "unused", 
+    @SuppressWarnings({ "unused", "deprecation" })
+    private Orders() {
+    }
 
-        pub
+    public Orders(UserAccountIdentifier useraccountidentifier, CinemaShow show) {
+        super(useraccountide       this.order = new Order(useraccountidentifier);
+        this.TicketSumme = Money.of(0, "EUR");
+        this.SnacksSumme = Money.of(0, "EUR");
+        this.show = show;
+    }
 
-           
-            this.TicketSumm
-            this.SnacksSumme = Money.of
-
-        
-        public Money getTick
-            return TicketSumme;
-        }
-
-        public Money getSnacksSumme() {
-            return SnacksS
-        }
-
-    public Money addSnacks(Snacks snack) {
-        order.addOrderLine(snack, Quantity.of(1));
-        SnacksSumme.add(snack.getPrice());
-        return SnacksSumme;
+    public Money getTicketSumme() {
+        return TicketSumme;
     }
 
 
-               orde
+    public Money getSnacksSumme() {
+        return SnacksSumme;
+    }
 
-            return TicketSumme;
-            
-        
-
-        
-
-        
-            
-        
-
-        
-
+    public CinemaShow getCinemaShow() {
+        return show;
+    }
     
+    public Money addSnacks(Snacks snack) {
+        order.addOrderLine(snack, Quantity.of(1));
+        SnacksSumme.add(snack.getPrice(
 
-    
+     oney addTicket(Tick
+    o
 
-    
+    return TicketSumme;
+    }
+}
 
-      
-    
 
-    
 
-    
 
-     
+
+
+

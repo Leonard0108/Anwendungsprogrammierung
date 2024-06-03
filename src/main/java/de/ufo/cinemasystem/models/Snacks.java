@@ -1,5 +1,7 @@
 package de.ufo.cinemasystem.models;
 
+import javax.money.MonetaryAmount;
+
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 
@@ -25,14 +27,14 @@ public class Snacks extends Product implements PriceChange {
 	private Snacks() {
 	}
 
-	public Snacks(String name, Money price) {
-		super(name, price);
-	}
+    public Snacks(String name, MonetaryAmount price) {
+        super(name, price);
+    }
 
-	public Snacks(String name, Money price, SnackType type) {
-		super(name, price);
-		this.type = type;
-	}
+    public Snacks(String name, MonetaryAmount price, SnackType type) {
+        super(name, price);
+        this.type = type;
+    }
 
 	public String getSnackType() {
 		return this.type.toString();

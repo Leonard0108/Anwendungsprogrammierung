@@ -4,6 +4,8 @@ import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,9 +21,11 @@ public class Ticket extends Product {
     // private @EmbeddedId ProductIdentifier id =
     // ProductIdentifier.of(UUID.randomUUID().toString());
     private TicketCategory category;
+    @OneToOne
+    @JoinColumn(name = "cinema_show_id")
     private CinemaShow show;
     private int seatID;
-    private Reservation reservation;
+    
 
     public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
 

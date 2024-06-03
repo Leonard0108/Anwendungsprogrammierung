@@ -1,7 +1,6 @@
 package de.ufo.cinemasystem.models;
 
 
-import de.ufo.cinemasystem.additionalfiles.ScheduledActivity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 

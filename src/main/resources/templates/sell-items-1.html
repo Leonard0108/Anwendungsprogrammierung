@@ -22,11 +22,11 @@
                 <input type="hidden" name="token" value="rgeoirjer+\\">
                 <input type="hidden" name="prevState" value="ijg348j934j89j3g9g4j89">
                 <h2>Aus Reservierung laden</h2>
-                <input name="reserveNumber" placeholder="Reservierungsnummer" required="">
+                <input name="reserveNumber" placeholder="Reservierungsnummer">
                 <button name="loadReservation" formnovalidate="">Reservierung Laden</button>
                 <h2>Ticket hinzufügen</h2>
                 <p><label for="htmlUniqueID1">Film:</label></p>
-                        <select id="htmlUniqueID1" name="event">
+                        <select id="htmlUniqueID1" name="show">
                             <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></option>
                         </select>
                 <p>Preisliste:</p>

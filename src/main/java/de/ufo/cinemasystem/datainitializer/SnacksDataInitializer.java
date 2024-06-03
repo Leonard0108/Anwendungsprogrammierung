@@ -43,6 +43,13 @@ public class SnacksDataInitializer implements DataInitializer {
 				random.nextInt(10, 50)
 			);
         }
+
+        snacksrepository.findAll().forEach(f -> {
+			System.out.println(f.toString());
+			System.out.println("Name: " + f.getName());
+			System.out.println("Preis: " + f.getPrice());
+			System.out.println("=======================================");
+		});
     }
 
 }

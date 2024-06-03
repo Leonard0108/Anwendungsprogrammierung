@@ -1,0 +1,21 @@
+= Meeting 02.06.2024
+
+== Aktuelle Aufgaben
+- grundlegende funktionalitäten Implementieren
+
+
+== Besprochen
+- Inventory speichert Snacks und Anzahl
+- Endpunkte aktualisieren
+- test Nutzer für Mitarbeiter und Autorisierter Mitarbeiter anlegen
+- unterschiedliche Sitz Anzahlen, Sitzreihenlängen in Cineahalls möglich
+- Zugriffsberechtigungen auf jedem Controller ergänzen
+- über Sackservice auf das Lager zugreifen
+
+== AufgabenVerteilung
+
+Lukas: Personalverwaltung
+Jannik: integration Kassensystem, Platzwahl Grafik
+Yannick: Lagerverwaltung, Film ausleihen von autorisierten Mitarbeiter
+Simon: Snack und Ticket Verkauf, Warenkorb, Inventory Verwaltung
+Tobias: Wirtschaftsdaten dynamisch, Preisgestalltung

@@ -73,7 +73,11 @@ public class FilmDataInitializer implements DataInitializer {
 				film.addRentWeek(new YearWeekEntry(2024, 27));
 				film.addRentWeek(new YearWeekEntry(2024, 28));
 				film.addRentWeek(new YearWeekEntry(2024, 29));
+				film.setReducedBasicRentFee(1.0, 1.0, 1.0, 1.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5);
+			}else {
+				film.setReducedBasicRentFee(1.0, 1.0, 1.0, 1.0, 0.8, 0.75, 0.75, 0.6);
 			}
+
 
 			filmRepository.save(film);
 		}

@@ -13,11 +13,9 @@ import jakarta.persistence.Entity;
 import java.io.Serializable;
 import java.util.UUID;
 
-import org.javamoney.moneta.Money;
 import org.jmolecules.ddd.types.Identifier;
 import org.salespointframework.core.AbstractAggregateRoot;
 import org.salespointframework.useraccount.UserAccount;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @Getter
@@ -29,7 +27,7 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 
 	private @EmbeddedId UserIdentifier id = new UserIdentifier();
 
-	private String name;
+	private String firstName, lastName;
 	private String eMail, streetName, houseNumber, city, state, postalCode, country;
 
 	// (｡◕‿◕｡)
@@ -38,11 +36,12 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	@OneToOne //
 	private UserAccount userAccount;
 
-	public UserEntry(UserAccount userAccount, String name, String eMail,  String streetName, String houseNumber, String city, String postalCode, String state, String country) {
+	public UserEntry(UserAccount userAccount, String firstName, String lastName, String eMail, String streetName, String houseNumber, String city, String postalCode, String state, String country) {
 
 		this.userAccount = userAccount;
-		this.name = name;
-		this.eMail = eMail;
+		this.firstName   = firstName;
+		this.lastName    = lastName;
+		this.eMail       = eMail;
 		this.streetName  = streetName;
 		this.houseNumber = houseNumber;
 		this.city        = city;
@@ -73,6 +72,8 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 		UserIdentifier(UUID identifier) {
 			this.identifier = identifier;
 		}
+
+
 
 		/*
 		 * (non-Javadoc)

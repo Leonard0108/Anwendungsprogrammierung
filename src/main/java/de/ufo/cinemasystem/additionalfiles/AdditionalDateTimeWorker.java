@@ -1,5 +1,7 @@
 package de.ufo.cinemasystem.additionalfiles;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +9,7 @@ import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+@Component
 public class AdditionalDateTimeWorker {
 	/**
 	 * @return Ausgabe String: "Wochentag, Datum (dd.MM.yyyy)"

@@ -27,14 +27,17 @@ public class Film  implements Comparable<Film>{
     private @NotNull String desc;
     private int fskAge;
     //in minutes
-    private int timePlaying;;
+    private int timePlaying;
 
 	@ElementCollection
 	private final Set<YearWeekEntry> rentWeeks = new TreeSet<>();
 
 	@ManyToOne
 	private FilmProvider filmProvider;
-    private int basicRentFee = -1;
+    private int basicRentFee;
+
+	@ElementCollection
+	private final List<Double> reducedBasicRentFee = new ArrayList<>();
 
     /**
      * Creates a new film object, with the specified title, (short) description, timePlaying &amp; FSK age restriction
@@ -61,8 +64,6 @@ public class Film  implements Comparable<Film>{
 		this.filmProvider = filmProvider;
         this.basicRentFee = basicRentFee;
     }
-    
-    
 
     /**
      * Hibernate-only constructor. Do not use, you will break things.
@@ -117,6 +118,14 @@ public class Film  implements Comparable<Film>{
         return basicRentFee;
     }
 
+	/**
+	 * @param week die Leihwoche für den der Preis berechnet werden soll
+	 * @return evtl. reduzierten BasicRentFee
+	 */
+	public int getBasicRentFee(int week) {
+		return (int) (getReducedBasicRentFee(week) * this.basicRentFee);
+	}
+
     public void setBasicRentFee(int basicRentFee) {
         this.basicRentFee = basicRentFee;
     }
@@ -156,6 +165,41 @@ public class Film  implements Comparable<Film>{
 
 	public boolean isRentNow() {
 		return isRent(LocalDateTime.now());
+	}
+
+	/**
+	 * @param weeksReduction absteigend sortierte Rabat-Werte zwischen 1.0 und 0.0, erster Wert ist für erste Leihwoche, usw.
+	 *                       Alle hier nicht gesetzten weiteren Wochen verwenden den letzten Wert.
+
+	 */
+	public void setReducedBasicRentFee(double... weeksReduction) {
+		List<Double> reducedBasicRentFee = new ArrayList<>();
+		double max = 1.0;
+		for(double weekReduction : weeksReduction) {
+			if(weekReduction < 0.0 || weekReduction > 1.0 || weekReduction > max)
+				throw new IllegalArgumentException("Die Werte müssen absteigend sortiert vorliegen und alle zwischen 0.0 und 1.0 liegen!");
+			reducedBasicRentFee.add(weekReduction);
+			max = weekReduction;
+		}
+		this.reducedBasicRentFee.addAll(reducedBasicRentFee);
+	}
+
+	/**
+	 * gibt die prozentuale Reduzierung des Basis-Leihpreis für die n. Woche zurück.
+	 * Alle nicht gesetzten weiteren Wochen verwenden den letzten Wert.
+	 * Beispiel: 1.0, 1.0, 0.9, 0.8, 0.7
+	 * Leihpreis 2. Woche: 1.0
+	 * Leihpreis 4. Woche: 0.8
+	 * Leihpreis 5. Woche: 0.7
+	 * Leihpreis 7. Woche: 0.7
+	 */
+	public double getReducedBasicRentFee(int week) {
+		if(week <= 0)
+			throw new IllegalArgumentException("week muss größer gleich 1 sein!");
+		if(this.reducedBasicRentFee.isEmpty()) return 1.0;
+		if(week <= this.reducedBasicRentFee.size())
+			return this.reducedBasicRentFee.get(week - 1);
+		return this.reducedBasicRentFee.get(this.reducedBasicRentFee.size() - 1);
 	}
 
 	/**

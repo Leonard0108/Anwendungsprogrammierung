@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.CinemaShowService;
 import de.ufo.cinemasystem.models.Orders;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
-import de.ufo.cinemasystem.repository.OrderRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
@@ -46,14 +46,15 @@ public class MakeOrderController {
 		this.orderManagement = orderManagement;
 	}
 
-	private @Autowired OrderRepository orderRepo;
+//	private @Autowired OrderRepository orderRepo;
 	private @Autowired ReservationRepository reservationRepo;
 	private @Autowired SnacksRepository snacksRepository;
 	private @Autowired CinemaShowRepository showsRepo;
 	private @Autowired TicketRepository ticketRepo;
 	private @Autowired UserRepository userRepo;
+	private @Autowired CinemaShowService showService;
 
-	@GetMapping("/sell#tickets")
+	@GetMapping("/sell-items")
 	public String startOrder(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session) {
 		m.addAttribute("title", "Kassensystem");
 		LocalDateTime now = LocalDateTime.now();
@@ -71,7 +72,7 @@ public class MakeOrderController {
 		}
 
 		m.addAttribute("shows", toOffer);
-		return "make-reservation-cinema-show-selection";
+		return "sell-items-1";
 	}
 
 	@PostMapping("/sell/ticket")
@@ -120,7 +121,7 @@ public class MakeOrderController {
 			// add ticket
 			Ticket t = new Ticket(toCategoryType(ticketType), show);
 			t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
-			work.addTicket(ticketRepo.save(t));
+			work.addTickets(ticketRepo.save(t));
 			showService.update(work.getCinemaShow()).setSeatOccupancy(
 					new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
 		}

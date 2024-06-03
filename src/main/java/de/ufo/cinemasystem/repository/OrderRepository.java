@@ -1,8 +1,4 @@
 package de.ufo.cinemasystem.repository;
 
-import org.jmolecules.ddd.annotation.Repository;
-
-@Repository
-public class OrderRepository {
-
-}
+//@Repository
+//public interface OrderRepository extends CrudRepository<Orders, OrderIdentifier>{}

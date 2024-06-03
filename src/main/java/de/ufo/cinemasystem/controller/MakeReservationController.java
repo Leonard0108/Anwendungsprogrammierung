@@ -4,9 +4,15 @@
  */
 package de.ufo.cinemasystem.controller;
 
-import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
-import jakarta.servlet.http.HttpSession;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,9 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.CinemaShowService;
-import de.ufo.cinemasystem.models.DummyEntity;
 import de.ufo.cinemasystem.models.Reservation;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Ticket;
@@ -31,14 +37,7 @@ import de.ufo.cinemasystem.repository.DummyEntityRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.regex.Pattern;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -179,7 +178,7 @@ public class MakeReservationController {
         
         if(errors.isEmpty()){
             //add ticket
-            Ticket t = new Ticket(toCategoryType(ticketType));
+            Ticket t = new Ticket(toCategoryType(ticketType),work.getCinemaShow());
             t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
             work.addTicket(ticketRepo.save(t));
             showService.update(work.getCinemaShow()).setSeatOccupancy(new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();

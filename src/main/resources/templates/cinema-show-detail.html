@@ -7,6 +7,9 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
+            <a th:href="'/current-films/' + ${cinemaShow.getStartDateTime().getYear()} + '/'
+            + ${@additionalDateTimeWorker.getWeekOfYear(cinemaShow.getStartDateTime())}" class="back-button">Zurück</a>
+
             <h1 th:text="${cinemaShow.getFilm().getTitle()}">Filmtitel</h1>
 
             <div class="film-detail-box">
@@ -40,9 +43,20 @@
                 </div>
             </div>
 
+            <br><hr><br>
+
             <h2 id="edit-program">Vorführung ändern</h2>
+            <div th:if="${errorMessage}" class="error">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${successMessage}" class="success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${infoMessage}" class="info">
+                <p th:text="${infoMessage}"></p>
+            </div>
             <form th:action="'/cinema-shows/' + ${cinemaShow.getId()} + '/edit'" action="/cinema-shows/{id}/edit" method="post">
-                <p>Datum und Uhrzeit: <input type="datetime-local" name="editTime" th:value="${#temporals.format(cinemaShow.startDateTime, 'yyyy-MM-dd''T''HH:mm')}"></p>
+                <p>Datum und Uhrzeit: <input type="datetime-local" name="editTime" th:value="${#temporals.format(cinemaShow.startDateTime, 'yyyy-MM-dd''T''HH:mm')}" required=""></p>
                 <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
                 <p>Film: <select name="film">
                     <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}"
@@ -105,6 +119,37 @@
                 }
                 .fsk-label.fsk-18{
                     color:#FF6666;
+                }
+
+                /*ChatGPT 3.5: Wie kann ich einen guten zurück Pfeil mit HTML und CSS darstellen?*/
+                .back-button {
+                    text-decoration: none;
+                    color: #000;
+                    font-size: 18px;
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 5px 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    background-color: #f9f9f9;
+                    transition: background-color 0.3s;
+                    position: absolute;
+                }
+
+                .back-button::before {
+                    content: "";
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-top: 2px solid #000;
+                    border-left: 2px solid #000;
+                    transform: rotate(-45deg);
+                    margin-right: 8px;
+                    vertical-align: middle;
+                }
+
+                .back-button:hover {
+                    background-color: #ececec;
                 }
             </style>
         </div>

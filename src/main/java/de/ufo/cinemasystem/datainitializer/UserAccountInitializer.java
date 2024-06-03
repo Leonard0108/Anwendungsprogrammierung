@@ -53,14 +53,16 @@ public class UserAccountInitializer implements DataInitializer {
 
 
 		UserAccount boss_account = userAccountManagement.create("boss", Password.UnencryptedPassword.of("123"), Role.of("BOSS"));
-		userAccountManagement.create("em", Password.UnencryptedPassword.of("123"), Role.of("EMPLOYEE"));
-		userAccountManagement.create("aem", Password.UnencryptedPassword.of("123"), Role.of("AUTHORIZED_EMPLOYEE"));
+		UserAccount employee_account = userAccountManagement.create("em", Password.UnencryptedPassword.of("123"), Role.of("EMPLOYEE"));
+		UserAccount authorized_employee = userAccountManagement.create("aem", Password.UnencryptedPassword.of("123"), Role.of("AUTHORIZED_EMPLOYEE"));
 
 
 		var password = "123";
 
-		//create BOSS account
+		//Personalkonten erstellen
 		userService.createUser(boss_account,"Test Boss",  "boss@ufo-cinema.de", "aslkdjflaksdf", "2", "adfladksf", "0000", "ajdfakfd", "Deutschland");
+		userService.createUser(employee_account, "Test Employee", "employee@ufo-cinema.de", "fdsffs","3","oedje", "11111", "dfsfffdf", "Deutschland");
+		userService.createUser(authorized_employee, "Test Authorized Employee", "aemployee@ufo-cinema.de", "jhfdhjfdhj", "4", "jdjdj", "2222", "kjjkdfkje", "Deutschland");
 
 		List.of(//
 			new RegistrationForm("hans", "nicht Test", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),

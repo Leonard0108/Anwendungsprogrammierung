@@ -5,6 +5,7 @@ import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.ScheduledActivity;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.EventRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-// @Service
+@Service
 public class ScheduledActivityService {
 
 	private EventRepository eventRepository;
@@ -116,6 +117,23 @@ public class ScheduledActivityService {
 	 */
 	public boolean isTimeSlotAvailable(LocalDateTime from, LocalDateTime to, long roomId){
 		return getActivitysInTimeInterval(from, to, roomId).isEmpty();
+	}
+
+	/**
+	 *
+	 * Prüft, ob im angegebenen Zeitintervall und Saal keine Aktivitäten stattfinden.
+	 *
+	 * @param from der Beginn des Zeitintervalls
+	 * @param to das Ende des Zeitintervalls
+	 * @param roomId die ID des betrachteten Kinosaals
+	 * @param withoutActivity zu ignorierende Activity (UseCase: Um die aktuelle Activity aus der Prüfung auszuschließen,
+	 *                        z.B. bei Änderungen an einer bestehenden Activity)
+	 * @return true, wenn keine Aktivitäten im Zeitintervall stattfinden, andernfalls false
+	 */
+	public boolean isTimeSlotAvailable(LocalDateTime from, LocalDateTime to, long roomId, ScheduledActivity withoutActivity){
+		return getActivitysInTimeInterval(from, to, roomId).stream()
+			.filter(a -> !a.equals(withoutActivity))
+			.findAny().isEmpty();
 	}
 
 }

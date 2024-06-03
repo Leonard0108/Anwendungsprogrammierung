@@ -7,6 +7,7 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
+            <a th:href="@{/rent-films}" class="back-button">Zurück</a>
             <h1 th:text="${film.getTitle()}">Filmtitel</h1>
 
             <div class="film-detail-box">
@@ -40,6 +41,9 @@
             <h2>Leih-Ansicht</h2>
             <br>
 
+            <div th:if="${successMessage}" class="success">
+                <p th:text="${successMessage}"></p>
+            </div>
             <form th:action="@{'/films/' + ${film.getId()}}" method="post">
                 <table>
                     <thead>
@@ -55,14 +59,15 @@
 
                         <td>
                             <input type="checkbox" name="current-selected-rent-weeks" th:value="${week.getId()}"
-                                   th:checked="${reservedWeeks.contains(week)}" disabled>
+                                   th:checked="${reservedWeeks.containsKey(week)}" disabled>
+                            <div th:text="'Leihkosten: ' + ${reservedWeeks.get(week)[0]} + ' €'" th:if="${reservedWeeks.containsKey(week)}"></div>
                         </td>
                         <td>
                             <input type="hidden" name="new-disabled-checked-rent-weeks"
                                    th:if="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}"
                                    th:value="${week.getId()}">
                             <input type="checkbox" name="new-selected-rent-weeks" th:value="${week.getId()}"
-                                   th:checked="${reservedWeeks.contains(week)}"
+                                   th:checked="${reservedWeeks.containsKey(week)}"
                                    th:disabled="${nowAndPastWeeks.contains(week) || blockedReservedWeeks.contains(week)}">
                             <div class="rent-storno-error" th:if="${nowAndPastWeeks.contains(week)}">
                                 Verleih oder Storno des Films nur für kommende Wochen möglich.
@@ -74,8 +79,8 @@
                     </tr>
                     <tr>
                         <td>Summe:</td>
-                        <td>...</td>
-                        <td>...</td>
+                        <td th:text="${sumRentFee} + ' €'">komplette Leihkosten</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -172,6 +177,37 @@
                 }
                 .fsk-label.fsk-18{
                     color:#FF6666;
+                }
+
+                /*ChatGPT 3.5: Wie kann ich einen guten zurück Pfeil mit HTML und CSS darstellen?*/
+                .back-button {
+                    text-decoration: none;
+                    color: #000;
+                    font-size: 18px;
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 5px 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    background-color: #f9f9f9;
+                    transition: background-color 0.3s;
+                    position: absolute;
+                }
+
+                .back-button::before {
+                    content: "";
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-top: 2px solid #000;
+                    border-left: 2px solid #000;
+                    transform: rotate(-45deg);
+                    margin-right: 8px;
+                    vertical-align: middle;
+                }
+
+                .back-button:hover {
+                    background-color: #ececec;
                 }
             </style>
         </div>

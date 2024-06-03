@@ -15,6 +15,16 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	private Long id;
 
 	private LocalDateTime startDateTime;
+
+	/**
+	 * Basis-Ticket-Preis für Vorführungen (normale Erwachsene Personen).
+	 * zur Berechnung von reduzierten Preisen (z.B. Kind, ...)
+	 * siehe prozentualen festen Werte in Ticket.TicketCategory#reduction().
+	 * Prozess zur Basis-Ticket-Preisvergabe in Vorführungen:
+	 * Im jeweiligen Film liegt bereits ein vom Chef vordefinierter Preis für manche Filme vor (im Film Objekt).
+	 * Dieser Wert wird im normalfall vom Film in die Vorführung beim Erstellen
+	 * oder Ändern (Eingeschränkt: ??? könnte Ticket-Statistik verfälschen) kopiert.
+	 */
 	private Money basePrice;
 
 	/* Chat GPT 3.5

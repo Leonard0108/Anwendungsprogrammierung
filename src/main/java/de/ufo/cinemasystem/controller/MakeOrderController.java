@@ -15,6 +15,7 @@ import org.salespointframework.order.OrderManagement;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,7 @@ import jakarta.servlet.http.HttpSession;
 
 
 @Controller
+@PreAuthorize("isAuthenticated()")
 @SessionAttributes("cart")
 public class MakeOrderController {
 
@@ -99,7 +101,7 @@ public String getMethodName(Model m) {
 		return "sell-items-1";
 	}
 
-	@PostMapping("/sell-items/ticket")
+	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session,
 			@RequestParam("show") CinemaShow show,
 			@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot) {
@@ -139,7 +141,7 @@ public String getMethodName(Model m) {
 					new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
 		}
 
-
+		
 		return "sell-items-1";
 
 	}

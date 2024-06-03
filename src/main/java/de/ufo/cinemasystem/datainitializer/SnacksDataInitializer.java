@@ -40,6 +40,13 @@ public class SnacksDataInitializer implements DataInitializer {
                     Money.of(random.nextDouble(3.5, 20), "EUR"),
                     type));
         }
+
+        snacksrepository.findAll().forEach(f -> {
+			System.out.println(f.toString());
+			System.out.println("Name: " + f.getName());
+			System.out.println("Preis: " + f.getPrice());
+			System.out.println("=======================================");
+		});
     }
 
 }

@@ -14,7 +14,7 @@
                             <div class="ticket" th:each="ticket : ${tickets}">
                                 <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p>
                                 <p th:text="${ticket.getSeatString()} + ${ticket.categoryToLabel()}"></p>
-                                <p style="text-align: right" th:text="${ticket.getTicketPrice()}"></p>
+                                <p style="text-align: right" th:text="${ticket.getPrice()}"></p>
                                 <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${ticket.getId()}">Löschen</button>
                             </div>
                         </div>

@@ -1,0 +1,38 @@
+= Protokoll
+
+Datum: 30.5.2024
+
+Anwesende: Lukas, Yannick, Jannik, Tobias, Simon
+
+Startzeit: 18.30 Uhr
+
+Endzeit: 1945
+
+== Besprochen
+- FlexGrow und padding(top bottom) in HTML templates damit es nicht so gequetscht aussieht
+- Alle Services in service Ordner verschieben
+- Model Attribut in jedem Controller "title" initialisieren
+- Zugriff auf Preise in Ticket
+- Platzgruppe(Loge / Parkett) ins Ticket
+- Für Geld einheitlich Money oder MonetaryAmount benutzen
+- Für Jannik: Unsere Währung ist €.
+- Gehaltsvarriablen für Mitarbeiter
+
+
+== UI
+- erfolgreich geupdated,
+
+== Preisgestaltung
+- Preisgestaltung erfolgt erstmal über festgelegten Wert
+
+
+== Order-Klasse
+- von Deutsch zu Englisch umbenannt.
+
+== Geld
+- Verwendung der Salespoint-Bibliotheken.
+
+== Sonstiges
+- vervollständigen der Order-Klassen
+- hinzufügen von Gehältern.
+- Sonntag Panikmeeting gegen 19:00 Uhr

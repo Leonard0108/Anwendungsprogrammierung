@@ -50,14 +50,14 @@ public class UserService {
 		var password = Password.UnencryptedPassword.of(form.getPassword());
 		var userAccount = userAccounts.create(form.getUsername(), password, USER_ROLE);
 
-		userRepository.save(new UserEntry(userAccount,form.getName(), form.getEMail(), form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
+		userRepository.save(new UserEntry(userAccount, form.getFirstName(), form.getLastName(), form.getEMail(), form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
 	}
 
 
 
 
-	public UserEntry createUser(UserAccount userAccount, String name, String eMail, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
-		return userRepository.save(new UserEntry(userAccount, name, eMail,  streetName, streetNumber, city, postalCode, state, country));
+	public UserEntry createUser(UserAccount userAccount, String firstName, String lastName, String eMail, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
+		return userRepository.save(new UserEntry(userAccount, firstName, lastName, eMail,  streetName, streetNumber, city, postalCode, state, country));
 	}
 
 

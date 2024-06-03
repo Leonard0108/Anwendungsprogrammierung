@@ -3,9 +3,7 @@ package de.ufo.cinemasystem.datainitializer;
 import com.mysema.commons.lang.Assert;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
-import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
@@ -13,7 +11,6 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -60,13 +57,13 @@ public class UserAccountInitializer implements DataInitializer {
 		var password = "123";
 
 		//Personalkonten erstellen
-		userService.createUser(boss_account,"Test Boss",  "boss@ufo-cinema.de", "aslkdjflaksdf", "2", "adfladksf", "0000", "ajdfakfd", "Deutschland");
-		userService.createUser(employee_account, "Test Employee", "employee@ufo-cinema.de", "fdsffs","3","oedje", "11111", "dfsfffdf", "Deutschland");
-		userService.createUser(authorized_employee, "Test Authorized Employee", "aemployee@ufo-cinema.de", "jhfdhjfdhj", "4", "jdjdj", "2222", "kjjkdfkje", "Deutschland");
+		userService.createUser(boss_account,"Test", "Boss", "boss@ufo-cinema.de", "aslkdjflaksdf", "2", "adfladksf", "0000", "ajdfakfd", "Deutschland");
+		userService.createUser(employee_account, "Test","Employee", "employee@ufo-cinema.de", "fdsffs","3","oedje", "11111", "dfsfffdf", "Deutschland");
+		userService.createUser(authorized_employee, "Test Authorized", "Employee", "aemployee@ufo-cinema.de", "jhfdhjfdhj", "4", "jdjdj", "2222", "kjjkdfkje", "Deutschland");
 
 		List.of(//
-			new RegistrationForm("hans", "nicht Test", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),
-			new RegistrationForm("Test User","user", "user@email.com", password, "asdfasdf", "9", "asdfaf", "0000", "asdfasdf", "Deutschland")
+			new RegistrationForm("hans", "nicht", "Test", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),
+			new RegistrationForm("Test", "User", "user", "user@email.com", password, "asdfasdf", "9", "asdfaf", "0000", "asdfasdf", "Deutschland")
 			/*new RegistrationForm("mclovinfogell", "asdf@gmail.com", password, "Los Angeles", "asdfasdf", "asdfasdf", "sdfasdf", "sadfasdf", "asdfasdf")*/
 		).forEach(userService::createUser);
 

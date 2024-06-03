@@ -9,10 +9,11 @@ import lombok.Getter;
 
 @Getter
 public class RegistrationForm {
-	private final @NotEmpty String name, username, eMail, password, streetName, streetNumber, city, postalCode, state, country;
+	private final @NotEmpty String firstName, lastName, username, eMail, password, streetName, streetNumber, city, postalCode, state, country;
 
-	public RegistrationForm(String name, String username, String eMail, String password, String streetName, String streetNumber, String city, String postalCode, String state, String country ) {
-		this.name = name;
+	public RegistrationForm(String firstName, String lastName, String username, String eMail, String password, String streetName, String streetNumber, String city, String postalCode, String state, String country ) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.username = username;
 		this.eMail = eMail;
 		this.password = password;

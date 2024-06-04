@@ -7,6 +7,7 @@ package de.ufo.cinemasystem.models;
 import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.javamoney.moneta.Money;
 import org.springframework.data.util.Streamable;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.*;
  */
 @Entity
 @Table(name= "FILMS")
-public class Film  implements Comparable<Film>{
+public class Film  implements Comparable<Film>, PriceChange{
 
 	@Id
 	@GeneratedValue
@@ -35,6 +36,7 @@ public class Film  implements Comparable<Film>{
 	@ManyToOne
 	private FilmProvider filmProvider;
     private int basicRentFee;
+	private Money basePrice;
 
 	@ElementCollection
 	private final List<Double> reducedBasicRentFee = new ArrayList<>();
@@ -54,6 +56,7 @@ public class Film  implements Comparable<Film>{
         this.timePlaying = timePlaying;
         this.fskAge = fskAge;
 		this.filmProvider = filmProvider;
+		this.basePrice = Money.of(-1,"EUR");
     }
 
     public Film(String title, String desc, int timePlaying, int fskAge, FilmProvider filmProvider, int basicRentFee) {
@@ -63,6 +66,7 @@ public class Film  implements Comparable<Film>{
         this.timePlaying = timePlaying;
 		this.filmProvider = filmProvider;
         this.basicRentFee = basicRentFee;
+		this.basePrice = Money.of(-1,"EUR");
     }
 
     /**
@@ -78,6 +82,10 @@ public class Film  implements Comparable<Film>{
         return id;
     }
 
+	public String getIdString(){
+		return "film-" + id.toString();
+	}
+
     /**
      * get the title this film represents.
      * @return 
@@ -85,6 +93,15 @@ public class Film  implements Comparable<Film>{
     public String getTitle() {
         return title;
     }
+
+	/**
+	 * Anpassung an Snacks für Preisänderungen
+	 * PriceChange Interface
+	 * @return
+	 */
+	public String getName(){
+		return title;
+	}
 
     /**
      * Get a short description of this film
@@ -201,6 +218,9 @@ public class Film  implements Comparable<Film>{
 			return this.reducedBasicRentFee.get(week - 1);
 		return this.reducedBasicRentFee.get(this.reducedBasicRentFee.size() - 1);
 	}
+
+	public Money getPrice(){return basePrice;}
+	public void setPrice(Money basePrice){this.basePrice = basePrice;}
 
 	/**
 	 * Gibt an, ob der Film zu dem Zeitpunkt im Kino zu dem Zeitpunkt verfügbar ist (z.B. zum Verwenden in einer Veranstaltung)

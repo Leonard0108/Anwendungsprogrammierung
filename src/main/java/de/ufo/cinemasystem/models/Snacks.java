@@ -14,7 +14,8 @@ import javax.money.MonetaryAmount;
 
 @Entity
 @Table(name = "Snacks")
-public class Snacks extends Product {
+public class Snacks extends Product implements PriceChange {
+
 
 	public static enum SnackType {
 		Getränk,
@@ -42,4 +43,19 @@ public class Snacks extends Product {
 	public String getSnackType() {
 		return this.type.toString();
 	}
+
+	public String getIdString(){
+		return "snack-" + super.getId().toString();
+	}
+
+	@Override
+	public void setPrice(Money newPrice) {
+		super.setPrice(newPrice);
+	}
+
+	@Override
+	public Money getPrice(){
+		return (Money) super.getPrice();
+	}
+
 }

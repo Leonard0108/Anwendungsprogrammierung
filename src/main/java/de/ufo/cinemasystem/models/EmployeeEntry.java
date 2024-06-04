@@ -1,27 +1,34 @@
 package de.ufo.cinemasystem.models;
 
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.javamoney.moneta.Money;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-public class EmployeeEntry extends UserEntry {
-	private Money salary;
+
+
+@Getter
+@Setter
+@Entity
+@Table
+public class EmployeeEntry {
+	private Money  salary;
 	private String jobMail;
+	private short  hoursPerWeek;
+	private @EmbeddedId UserEntry.UserIdentifier id;
 
 
 
-	EmployeeEntry(UserEntry userEntry, Money salary, String jobMail)
+	public EmployeeEntry(UserEntry userEntry, Money salary, String jobMail, short hoursPerWeek)
 	{
-		super.setUserAccount(userEntry.getUserAccount());
-		super.setStreetName(userEntry.getStreetName());
-		super.setHouseNumber(userEntry.getHouseNumber());
-		super.setPostalCode(userEntry.getPostalCode());
-		super.setCity(userEntry.getCity());
-		super.setState(userEntry.getState());
-		super.setCountry(userEntry.getCountry());
+		this.id      = userEntry.getId();
 		this.salary  = salary;
 		this.jobMail = jobMail;
+		this.hoursPerWeek = hoursPerWeek;
 	}
-
 
 
 

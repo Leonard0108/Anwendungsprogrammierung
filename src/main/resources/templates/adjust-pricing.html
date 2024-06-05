@@ -28,10 +28,10 @@
     <div th:if="${selected}">
         <fieldset>
             <h3 th:text="${selected.getName()}"></h3>
-            <div th:if="${selected.getPrice()} == -1">
+            <div th:if="${selected.getPrice().getNumber().intValue()} != -1">
                 <p>Jetziger Preis: <span th:text="${selected.getPrice()}"></span>€</p>
             </div>
-                <div th:unless="${selected.getPrice()} == -1">
+                <div th:if="${selected.getPrice().getNumber().intValue()} == -1">
                     <p>Jetziger Preis: <span>Noch nicht festgelegt</span></p>
                 </div>
             <form th:action="@{/manage/pricing}" method="post">

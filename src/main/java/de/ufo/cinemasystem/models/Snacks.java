@@ -4,13 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.javamoney.moneta.Money;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import org.salespointframework.catalog.Product;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
-import javax.money.MonetaryAmount;
 
 @Entity
 @Table(name = "Snacks")
@@ -56,6 +50,10 @@ public class Snacks extends Product implements PriceChange {
 	@Override
 	public Money getPrice(){
 		return (Money) super.getPrice();
+	}
+
+	public boolean isInitialized(){
+		return super.getPrice().getNumber().intValue() != -1;
 	}
 
 }

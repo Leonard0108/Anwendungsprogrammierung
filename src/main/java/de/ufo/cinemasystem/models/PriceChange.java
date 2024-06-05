@@ -10,4 +10,5 @@ public interface PriceChange {
 	String getName();
 	Money getPrice();
 	void setPrice(Money newPrice);
+	boolean isInitialized();
 	}

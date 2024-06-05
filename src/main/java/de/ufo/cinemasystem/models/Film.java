@@ -222,6 +222,10 @@ public class Film  implements Comparable<Film>, PriceChange{
 	public Money getPrice(){return basePrice;}
 	public void setPrice(Money basePrice){this.basePrice = basePrice;}
 
+	public boolean isInitialized(){
+		return basePrice.getNumber().intValue() != -1;
+	}
+
 	/**
 	 * Gibt an, ob der Film zu dem Zeitpunkt im Kino zu dem Zeitpunkt verfügbar ist (z.B. zum Verwenden in einer Veranstaltung)
 	 * TODO: auch hier prüfen, ob Ticket-Preise vom Chef gesetzt wurden
@@ -229,7 +233,7 @@ public class Film  implements Comparable<Film>, PriceChange{
 	 * @return true, wenn Verfügbar, sonst false
 	 */
 	public boolean isAvailableAt(LocalDateTime dateTime) {
-		return isRent(dateTime);
+		return isRent(dateTime) && isInitialized();
 	}
 
 	/**

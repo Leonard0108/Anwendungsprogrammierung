@@ -8,15 +8,8 @@
 
 
 == Endpunkte Login-Controller
-=== Haputadresse
-- /lunar_space_port/
-
-=== Unteradressen
-- /register
 - /registration
 - /login
-- /checkLoginData
-
 
 == BusinessDataDashboardController
 - /statistics
@@ -39,10 +32,10 @@
 
 == EventAdministrationController
 === Hauptreferenz
-- /manage
+- /manage/rooms (GET, POST)
 
-=== Unteradressen
-- /rooms
+== PriceAdjustController
+- /manage/pricing (GET, POST)
 
 == MakeReservationController
 === Hauptreferenz

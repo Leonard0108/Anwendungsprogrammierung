@@ -68,26 +68,26 @@ public class MakeOrderController {
 	private @Autowired UserRepository userRepo;
 	private @Autowired CinemaShowService showService;
 
-@GetMapping("/sell/ticket")
-public String getMethodName(Model m) {
-	m.addAttribute("title", "Kassensystem");
-	LocalDateTime now = LocalDateTime.now();
-	List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList();
-	//unhinge any wannabe-unmodifyables by making a copy to a known-writable list type.
-	toOffer=new ArrayList<>(toOffer);
-	Iterator<CinemaShow> iterator = toOffer.iterator();
-	while(iterator.hasNext()){
-		CinemaShow cs= iterator.next();
-		if(LocalDateTime.now().until(cs.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
-			iterator.remove();
+	@GetMapping("/sell-tickets")
+	public String getMethodName(Model m) {
+		m.addAttribute("title", "Kassensystem");
+		LocalDateTime now = LocalDateTime.now();
+		List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList();
+		//unhinge any wannabe-unmodifyables by making a copy to a known-writable list type.
+		toOffer=new ArrayList<>(toOffer);
+		Iterator<CinemaShow> iterator = toOffer.iterator();
+		while(iterator.hasNext()){
+			CinemaShow cs= iterator.next();
+			if(LocalDateTime.now().until(cs.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
+				iterator.remove();
+			}
 		}
+		m.addAttribute("shows", toOffer);
+		return "sell-itmes-show-selection";
 	}
-	m.addAttribute("shows", toOffer);
-    return "sell-items-1";
-}
 
 
-	@GetMapping("/sell-items/{what}")
+	@GetMapping("/sell-tickets/{what}")
 	public String startOrder(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser,
 		@PathVariable CinemaShow what, HttpSession session) {
 		if (session.getAttribute(orderSessionKey) == null) {
@@ -95,11 +95,31 @@ public String getMethodName(Model m) {
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		m.addAttribute("title", "Kassensystem");
-        m.addAttribute("tickets", work.getOrderLines());
+        m.addAttribute("cart", work.getOrderLines());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotal());
 		return "sell-items-1";
 	}
+
+	@PostMapping("/sell/remove-ticket")
+    public String removeTicketFromReservation(Model m, HttpSession session, @RequestParam("deleteCartEntry") Ticket ticket, @ModelAttribute Cart cart){
+        if(session.getAttribute(orderSessionKey) == null){
+            return "redirect:/sell-tickets";
+        }
+        Orders work = (Orders) session.getAttribute(orderSessionKey);
+        System.out.println("u: " + session.getAttribute("User"));
+        System.out.println("t: " + work.getOrderLines());
+		cart.removeItem(ticket.getId().toString());
+        showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat(ticket.getSeatID() / 100, ticket.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+        m.addAttribute("title", "Plätze reservieren");
+        m.addAttribute("tickets", work.getOrderLines());
+        m.addAttribute("show", work.getCinemaShow());
+        m.addAttribute("price",work.getTotal());
+        if(LocalDateTime.now().until(work.getCinemaShow().getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
+            m.addAttribute("errors", "Reservierungen sind nur bis 30 Minuten vor Vorstellungsbeginn möglich!");
+        }
+        return "sell-items-1";
+    }
 
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session,

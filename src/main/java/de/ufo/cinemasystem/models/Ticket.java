@@ -65,6 +65,7 @@ public class Ticket extends Product {
 
     public void setSeatID(int seatID) {
         this.seatID = seatID;
+        this.setName(getName() + String.valueOf(seatID));
     }
 
     public String getSeatString() {

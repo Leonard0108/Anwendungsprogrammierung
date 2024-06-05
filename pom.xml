@@ -1,186 +1,242 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- Dear students, please *do not* change the following metadata. Thanks! -->
+    <!-- Dear students, please *do not* change the following metadata. Thanks! -->
 
-	<artifactId>cinemasystem</artifactId>
-	<version>4.0.0</version>
+    <artifactId>cinemasystem</artifactId>
+    <version>4.0.0</version>
 
-	<name>UFO CinemaSystem</name>
-	<description>Managementsoftware for UFO Ciname GmbH</description>
-	<url>https://cinemasystem.ufo.de</url>
+    <name>UFO CinemaSystem</name>
+    <description>Managementsoftware for UFO Ciname GmbH</description>
+    <url>https://cinemasystem.ufo.de</url>
 
-	<parent>
-		<groupId>de.tudresden.inf.st.lab</groupId>
-		<artifactId>st-lab-parent</artifactId>
-		<version>4.0.0</version>
-		<relativePath />
-	</parent>
+    <parent>
+        <groupId>de.tudresden.inf.st.lab</groupId>
+        <artifactId>st-lab-parent</artifactId>
+        <version>4.0.0</version>
+        <relativePath />
+    </parent>
 
-	<properties>
-		<java.version>17</java.version>
-		<salespoint.version>9.0.0</salespoint.version>
-		<!-- <sonar.host.url>${env.STLAB_SONAR_HOST_URL}</sonar.host.url>
-		<sonar.token>${env.STLAB_SONAR_LOGIN}</sonar.token>-->
-		<argLine>-Xmx1G</argLine>
-		<kotlin.version>1.9.23</kotlin.version>
-                <start-class>de.ufo.cinemasystem.Application</start-class>
-	</properties>
+    <properties>
+        <java.version>17</java.version>
+        <salespoint.version>9.0.0</salespoint.version>
+        <!-- <sonar.host.url>${env.STLAB_SONAR_HOST_URL}</sonar.host.url>
+        <sonar.token>${env.STLAB_SONAR_LOGIN}</sonar.token>-->
+        <argLine>-Xmx1G</argLine>
+        <kotlin.version>1.9.23</kotlin.version>
+        <start-class>de.ufo.cinemasystem.Application</start-class>
+        <asciidoctor.maven.plugin.version>3.0.0</asciidoctor.maven.plugin.version>
+        <asciidoctorj.pdf.version>2.3.15</asciidoctorj.pdf.version>
+        <asciidoctorj.version>2.5.13</asciidoctorj.version>
+        <jruby.version>9.4.6.0</jruby.version>
+    </properties>
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
-
-		<!--
-			exposes runtime information on the application that can be displayed
-		 	by the Spring Boot Dashboard (VS Code)
-		-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-ldap</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk8</artifactId>
-			<version>${kotlin.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-test</artifactId>
-			<version>${kotlin.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
 
-		<!--
-			Additional project dependencies go here.
+        <!--
+                exposes runtime information on the application that can be displayed
+                by the Spring Boot Dashboard (VS Code)
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-ldap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
 
-			BUT PLEASE NOTE!
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-			The parent pom that is referenced above already includes most libraries
-			necessary for the lab: Spring, Salespoint, Hibernate, JUnit, etc.
 
-			You can list the current dependencies and their versions using the
-			`mvn dependency:list` command.
+        <!--
+                Additional project dependencies go here.
 
-			Use Maven Central for package search (https://search.maven.org/).
-		-->
+                BUT PLEASE NOTE!
 
-	</dependencies>
+                The parent pom that is referenced above already includes most libraries
+                necessary for the lab: Spring, Salespoint, Hibernate, JUnit, etc.
 
-	<repositories>
+                You can list the current dependencies and their versions using the
+                `mvn dependency:list` command.
 
-		<repository>
-			<id>salespointframework</id>
-			<url>https://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
-		</repository>
+                Use Maven Central for package search (https://search.maven.org/).
+        -->
 
-	</repositories>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.jetbrains.kotlin</groupId>
-				<artifactId>kotlin-maven-plugin</artifactId>
-				<version>${kotlin.version}</version>
-				<executions>
-					<execution>
-						<id>compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>test-compile</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<jvmTarget>1.8</jvmTarget>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>default-compile</id>
-						<phase>none</phase>
-					</execution>
-					<execution>
-						<id>default-testCompile</id>
-						<phase>none</phase>
-					</execution>
-					<execution>
-						<id>compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>testCompile</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+    <repositories>
+
+        <repository>
+            <id>salespointframework</id>
+            <url>https://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
+        </repository>
+
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- ascidoc transforming-->
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${asciidoctorj.pdf.version}</version>
+                    </dependency>
+                    <!-- Comment this section to use the default jruby artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
+                    <!-- Attributes common to all output formats -->
+                    <attributes>
+                        <sourcedir>${project.build.sourceDirectory}</sourcedir>
+                    </attributes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-pdf-doc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <attributes>
+                                <source-highlighter>rouge</source-highlighter>
+                                <icons>font</icons>
+                                <pagenums/>
+                                <toc/>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

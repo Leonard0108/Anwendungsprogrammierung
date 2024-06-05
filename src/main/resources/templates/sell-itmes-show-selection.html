@@ -7,8 +7,8 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
-            <h1>Plätze reservieren</h1>
-            <form id="sell-items-form" action="/sell-items" method="post">
+            <h1>Tickets kaufen</h1>
+            <form id="sell-items-form" action="/sell-tickets" method="post">
                         <p><label for="htmlUniqueID6">Film:</label></p>
                         <select id="htmlUniqueID6" name="event">
                             <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></option>

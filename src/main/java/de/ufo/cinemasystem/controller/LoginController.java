@@ -61,6 +61,7 @@ public class LoginController {
 
 	@GetMapping("/registration")
 	String register(Model m, RegistrationForm form) {
+            m.addAttribute("title", "Registrieren");
 		return "registration";
 	}
 
@@ -89,11 +90,13 @@ public class LoginController {
 		List<UserEntry> userEntries = userService.findAll().toList();
 		System.out.println(userEntries);
 		model.addAttribute("customerList", userEntries);
+                model.addAttribute("title", "Registrieren");
 		return "welcome";
 	}
 
 	@GetMapping("/role")
-	String getRole() {
+	String getRole(Model m) {
+                m.addAttribute("title", "Rollencheck");
 		return "roletest";
 	}
 

@@ -59,6 +59,7 @@ public class EventAdministrationController {
 		m.addAttribute("scheduledActivitysOnDate", scheduledActivitysOnDateInHall);
 		m.addAttribute("room", room);
 		m.addAttribute("date", date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                m.addAttribute("title", "Saalverwaltung");
 
 		/*
 		for(CinemaShow show : showsOnDateInHall){
@@ -78,6 +79,7 @@ public class EventAdministrationController {
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
+                m.addAttribute("title", "Saalverwaltung");
 
 		return "manage-rooms-boss-renderer-empty";
 	}

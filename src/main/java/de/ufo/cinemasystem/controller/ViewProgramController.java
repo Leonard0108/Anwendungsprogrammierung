@@ -106,6 +106,7 @@ public class ViewProgramController {
 		m.addAttribute("oneWeekCinemaShows", oneWeekCinemaShows);
 		m.addAttribute("allCinemaHalls", cinemaHallRepository.findAll());
 		m.addAttribute("allFilms", filmRepository.findAll());
+                m.addAttribute("title","Filmplan");
 
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
@@ -182,7 +183,8 @@ public class ViewProgramController {
 
 		m.addAttribute("cinemaShow", cinemaShow);
 		m.addAttribute("allFilms", filmRepository.findAll());
-
+                m.addAttribute("title", cinemaShow.getFilm().getTitle());
+                
 		return "cinema-show-detail";
 	}
 

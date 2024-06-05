@@ -124,7 +124,8 @@ nav li,.footer li{
     margin-left: 2em;
 }
 .reservation{
-    border:1px solid #3c3b42;;
+    border:1px solid #3c3b42;
+    ;
     padding: 1em 2em;
     border-radius: 10px;
     margin-bottom: 1em;
@@ -156,4 +157,19 @@ nav li,.footer li{
 
 .logo{
     height:50px;
+}
+.fsk-0{
+    color:#FFFFFF;
+}
+.fsk-6{
+    color:#FFCC33;
+}
+.fsk-12{
+    color:#01d501;
+}
+.fsk-16{
+    color:#3399FF;
+}
+.fsk-18{
+    color:#FF6666;
 }

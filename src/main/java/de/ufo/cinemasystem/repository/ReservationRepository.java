@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package de.ufo.cinemasystem.repository;
 
 import org.springframework.data.repository.CrudRepository;
@@ -12,11 +9,17 @@ import org.springframework.data.util.Streamable;
 import org.springframework.data.jpa.repository.Query;
 
 /**
- *
- * @author Jannik
+ * Crud repository for saving reservations.
+ * @author Jannik Schwaß
+ * @version 1.0
  */
 public interface ReservationRepository extends CrudRepository<Reservation, Long>{
     
+    /**
+     * Find all reservations by a given user.
+     * @param who the user to retrieve reservations for 
+     * @return a streamable of all reservations
+     */
     @Query("SELECT r FROM Reservation r WHERE r.reservingAccount= :who")
     Streamable<Reservation> findAllByUser(UserEntry who);
 }

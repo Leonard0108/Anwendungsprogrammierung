@@ -22,12 +22,20 @@
 - /statistics
 
 == DeleteReservationController
-- /my-reservations
-- /my-reservations/delete/
-- /cancel-reservation/{id}
+- /my-reservations (GET)
+- /my-reservations/delete/ (POST)
+- /cancel-reservation/{id} (GET, POST)(id:Reservation)
 
 == IndexController
-- /
+- / (GET)
+
+== MiscPagesController
+-/robots.txt (GET)
+-/imprint (GET)
+-/privacy (GET)
+
+== SpotsViewController
+-/include/spots-view/{which} (GET)(which:CinemaShow)
 
 == EventAdministrationController
 === Hauptreferenz
@@ -41,9 +49,11 @@
 - /reserve-spots
 
 === Unteradressen
-- /add-ticket
-- /remove-ticket
-- /commit
+- /reserve/ (GET, POST)
+- /reserve/{what} (POST)(what:CinemaShow)
+- /add-ticket (POST)
+- /remove-ticket (POST)
+- /commit (POST)
 
 == RentFilmController
 - /rent-films

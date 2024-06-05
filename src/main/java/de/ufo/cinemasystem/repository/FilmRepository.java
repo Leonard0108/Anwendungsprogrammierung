@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package de.ufo.cinemasystem.repository;
 
 import org.springframework.data.repository.CrudRepository;
@@ -13,18 +10,26 @@ import de.ufo.cinemasystem.models.Film;
 import java.time.LocalDateTime;
 
 /**
- *
- * @author Jannik
+ * Crud-Repository for saving films.
+ * @author Jannik Schwaß, Yannick Harnisch
  */
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long>{
 
+        /**
+         * Find all films in the system.
+         * @return a streamable of all films
+         */
 	@Override
 	Streamable<Film> findAll();
 	default Streamable<Film> findAvailableAt(LocalDateTime dateTime) {
 		return findAll().filter(f -> f.isAvailableAt(dateTime));
 	}
 
+        /**
+         * find all films that are currently {@link de.ufo.cinemasystem.models.Film#isAvailableNow() available}
+         * @return a streamable of films
+         */
 	default Streamable<Film> findAvailableNow() {
 		return findAll().filter(Film::isAvailableNow);
 	}

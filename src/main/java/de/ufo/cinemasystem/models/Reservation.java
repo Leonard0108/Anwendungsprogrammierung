@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package de.ufo.cinemasystem.models;
 
 import jakarta.persistence.Entity;
@@ -14,14 +11,12 @@ import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.money.CurrencyUnit;
-import javax.money.MonetaryAmount;
-import org.javamoney.moneta.CurrencyUnitBuilder;
 import org.javamoney.moneta.Money;
 
 /**
  * Represents a single reservation in the system. Calling any of the methods of this class with a null argument will result in a NullPointerException.
- * @author Jannik
+ * @author Jannik Schwaß
+ * @version 1.0
  */
 @Entity
 @Table(name= "RESERVATIONS")
@@ -36,7 +31,7 @@ public class Reservation {
     private @NotNull CinemaShow cinemaShow;
     
     /**
-     * TODO: linking
+     * The tickets of this reservation
      */
     @OneToMany
     private List<Ticket> tickets = new ArrayList<>();
@@ -51,8 +46,8 @@ public class Reservation {
     
     /**
      * Create a new reservation, initially containing 0 tickets.
-     * @param reservingAccount
-     * @param cinemaShow 
+     * @param reservingAccount the reserving account
+     * @param cinemaShow the cinemaShow to reserve for
      */
     public Reservation(UserEntry reservingAccount, CinemaShow cinemaShow) {
         this.reservingAccount = Objects.requireNonNull(reservingAccount);
@@ -68,18 +63,34 @@ public class Reservation {
         return id;
     }
 
+    /**
+     * Get the reserving account
+     * @return the reserving account
+     */
     public UserEntry getReservingAccount() {
         return reservingAccount;
     }
 
+    /**
+     * set the reserving account
+     * @param reservingAccount new reserving account
+     */
     public void setReservingAccount(UserEntry reservingAccount) {
         this.reservingAccount = Objects.requireNonNull(reservingAccount);
     }
 
+    /**
+     * get the CinemaShow
+     * @return the CinemaShow
+     */
     public CinemaShow getCinemaShow() {
         return cinemaShow;
     }
 
+    /**
+     * set the cinema show.
+     * @param cinemaShow 
+     */
     public void setCinemaShow(CinemaShow cinemaShow) {
         this.cinemaShow = Objects.requireNonNull(cinemaShow);
     }
@@ -88,7 +99,7 @@ public class Reservation {
      * Allocates a new array containing all the tickets in this reservation. The returned array has exactly as many elements
      * as there are tickets in this reservation. Changes to the returned array will not affect this class or any other already-obtained return value from
      * this class, but modifying the individual tickets in the array will.
-     * @return 
+     * @return ticket array, potentially zero-length, but never null
      */
     public Ticket[] getTickets(){
         return this.tickets.toArray(Ticket[]::new);
@@ -96,7 +107,7 @@ public class Reservation {
     
     /**
      * Add a ticket to this reservation.
-     * @param ticket 
+     * @param ticket the ticket
      */
     public void addTicket(Ticket ticket){
         if(this.tickets.contains(ticket)){
@@ -106,13 +117,17 @@ public class Reservation {
     }
     
     /**
-     * Remove a ticket from this reservation.
-     * @param ticket 
+     * Remove a ticket from this reservation. This method has no effect if it isn't called with a ticket from this reservation (including {@code null}
+     * @param ticket the ticket to remove
      */
     public void removeTicket(Ticket ticket){
         this.tickets.remove(ticket);
     }
     
+    /**
+     * Get the total price for all tickets in this reservation.
+     * @return total price in €
+     */
     public Money getTotalPrice(){
         Money total = Money.of(0, "EUR");
         for(Ticket t:tickets){

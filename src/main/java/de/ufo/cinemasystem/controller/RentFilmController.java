@@ -31,7 +31,8 @@ public class RentFilmController {
 	@GetMapping("/rent-films")
 	public String getRentFilms(Model model) {
 		model.addAttribute("allFilms", filmRepository.findAll());
-
+                model.addAttribute("title", "Filme ausleihen");
+                
 		return "films-rental";
 	}
 
@@ -72,6 +73,7 @@ public class RentFilmController {
 		model.addAttribute("reservedSeatCount", totalSeatOccupancyValues[1]);
 		model.addAttribute("boughtSeatCount", totalSeatOccupancyValues[2]);
 		model.addAttribute("sumRentFee", sumRentFee);
+                model.addAttribute("title", film.getTitle());
 
 		return "film-detail";
 	}

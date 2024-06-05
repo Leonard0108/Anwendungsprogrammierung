@@ -11,7 +11,7 @@
             <form id="reserve-spots-form" action="/reserve-spots/reserve" method="post">
                         <p><label for="htmlUniqueID1">Film:</label></p>
                         <select id="htmlUniqueID1" name="event">
-                            <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></option>
+                            <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')} +' '+ ${show.getFilm().getTitle()}"></option>
                         </select>
                         <p style="color:red">Hinweis: Über dieses Formular können maximal 10 Tickets pro Veranstaltung gebucht werden. Sollten Sie legitimen Bedarf an einer größeren Reservierung haben, sprechen Sie bitte unser Kassenpersonal vor Ort an.</p>
                         <button name="next" value="1">Weiter</button>

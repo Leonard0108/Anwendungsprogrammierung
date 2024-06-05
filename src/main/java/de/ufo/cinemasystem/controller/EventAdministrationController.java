@@ -61,14 +61,7 @@ public class EventAdministrationController {
 		m.addAttribute("room", room);
 		m.addAttribute("date", date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
-		/*
-		for(CinemaShow show : showsOnDateInHall){
-			System.out.println(show.getFilm().getTitle());
-		}
-		if(showsOnDateInHall.isEmpty()) System.out.println("no shows");
-		*/
-
-		return "manage-rooms-boss-renderer";
+		return "manage-rooms";
 	}
 
 
@@ -81,7 +74,7 @@ public class EventAdministrationController {
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
 		m.addAttribute("title","Saalverwaltung");
 
-		return "manage-rooms-boss-renderer-empty";
+		return "manage-rooms";
 	}
 
 
@@ -98,7 +91,11 @@ public class EventAdministrationController {
 		redirectAttributes.addAttribute("title","Saalverwaltung");
 		LocalDate date = from.toLocalDate();
 
-		if(!scheduledActivityService.isTimeSlotAvailable(from, to, room)){
+		if(from.isAfter(to)){
+			redirectAttributes.addFlashAttribute("errorMessage", "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.");
+
+			return "redirect:/manage/rooms";
+		}else if(!scheduledActivityService.isTimeSlotAvailable(from, to, room)){
 			redirectAttributes.addFlashAttribute("errorMessage", "Der ausgewählte Zeitslot ist bereits belegt.");
 
 			return "redirect:/manage/rooms?room=" + room + "&date=" + date;

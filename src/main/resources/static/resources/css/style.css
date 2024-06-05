@@ -61,6 +61,67 @@ nav li,.footer li{
     padding: 0em 1em;
 }
 
+.form-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-control {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group input.form-control {
+    width: auto;
+    flex-grow: 1;
+}
+
+.input-group .input-unit {
+    padding: 8px;
+    margin-left: 5px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #28a745;
+}
+
 .client-nojs .nojs-hide{
     display: none;
     padding: 0;
@@ -87,27 +148,32 @@ nav li,.footer li{
 
 /* messages */
 .info, .success, .error {
-    border: 1px solid;
-    margin: 10px 0px;
-    padding: 15px 10px 15px 50px;
+    border-radius: 5px;
+    padding: 10px 20px 10px 50px;
+    margin-bottom: 10px;
     background-repeat: no-repeat;
     background-position: 10px center;
 }
-.info {
-    color: #00529B;
-    background-color: #BDE5F8;
-    background-image: url('https://i.imgur.com/ilgqWuX.png');
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('https://i.imgur.com/GnyDvKN.png');
+    border: 1px solid #D8000C;
+
 }
+
 .success {
     color: #4F8A10;
     background-color: #DFF2BF;
     background-image: url('https://i.imgur.com/Q9BGTuy.png');
+    border: 1px solid #4F8A10;
 }
 
-.error{
-    color: #D8000C;
-    background-color: #FFBABA;
-    background-image: url('https://i.imgur.com/GnyDvKN.png');
+.info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('https://i.imgur.com/ilgqWuX.png');
+    border: 1px solid #00529B;
 }
 
 .deleteButton, button.destructive{
@@ -129,6 +195,18 @@ nav li,.footer li{
     padding: 1em 2em;
     border-radius: 10px;
     margin-bottom: 1em;
+}
+.current-price {
+    background-color: #21202b;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.new-price {
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
 .formfield{

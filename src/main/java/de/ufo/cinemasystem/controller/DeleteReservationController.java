@@ -19,6 +19,9 @@ import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
+import de.ufo.cinemasystem.repository.UserRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
@@ -30,18 +33,24 @@ public class DeleteReservationController {
     private @Autowired ReservationRepository repo;
     private @Autowired TicketRepository ticketRepo;
     private @Autowired CinemaShowService showService;
+    private @Autowired UserRepository uRepo;
     
     @GetMapping("/my-reservations")
     //@PreAuthorize("USER")
-    public String getReservations(Model m){
+    public String getReservations(Model m, @AuthenticationPrincipal UserDetails currentUser){
         m.addAttribute("title", "Meine Reservierungen");
-        m.addAttribute("reservations", repo.findAll());
+        m.addAttribute("reservations", repo.findAllByUser(uRepo.findByUserAccountUsername(currentUser.getUsername())));
         return "reservation-list";
     }
     
     @PostMapping("/my-reservations/delete/")
     //@PreAuthorize("USER")
-    public String getDeleteForm2(Model m, @RequestParam("reserveNumber") Reservation id){
+    public String getDeleteForm2(Model m, @RequestParam("reserveNumber") Reservation id, @AuthenticationPrincipal UserDetails currentUser){
+        if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
+            //do NOT leak the reservation context
+            return "redirect:/my-reservations";
+        }
+        
         m.addAttribute("title", "Reservierung #"+id.getId());
         m.addAttribute("reservation", id);
         return "cancel-reservation";
@@ -49,7 +58,12 @@ public class DeleteReservationController {
     
     @GetMapping("/cancel-reservation/{id}")
     //@PreAuthorize("USER")
-    public String getDeleteForm(Model m, @PathVariable Reservation id){
+    public String getDeleteForm(Model m, @PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser){
+        if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
+            //do NOT leak the reservation context
+            return "redirect:/my-reservations";
+        }
+        
         m.addAttribute("title", "Reservierung #"+id.getId());
         m.addAttribute("reservation", id);
         return "cancel-reservation";
@@ -57,7 +71,12 @@ public class DeleteReservationController {
     
     @PostMapping("/cancel-reservation/{id}")
     //@PreAuthorize("USER")
-    public String deleteReservation(@PathVariable Reservation id){
+    public String deleteReservation(@PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser){
+        if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
+            //do NOT leak the reservation context
+            return "redirect:/my-reservations";
+        }
+        
         deleteTickets(id);
         repo.delete(id);
         return "redirect:/my-reservations";

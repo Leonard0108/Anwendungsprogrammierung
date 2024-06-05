@@ -25,7 +25,7 @@
                     <form id="reserve-spots-form-add" action="/reserve-spots/add-ticket" method="post">
                         <p class="flex">Derzeitige Zwischensumme: <span class="grow"></span><span th:text="${price}">19.99€</span></p>
                         <h2>Ticket hinzufügen</h2>
-                        <p style="color:red">Hinweis: Über dieses Formular können maximal 10 Tickets pro Veranstaltung gebucht werden. Sollten Sie legitimen Bedarf an einer größeren Reservierung haben, sprechen Sie bitte unser Kassenpersonal vor Ort an.</p>
+                        <p style="color:red" th:unless="${isPrivileged}">Hinweis: Über dieses Formular können maximal 10 Tickets pro Veranstaltung gebucht werden. Sollten Sie legitimen Bedarf an einer größeren Reservierung haben, sprechen Sie bitte unser Kassenpersonal vor Ort an.</p>
                         <p>Preisliste:</p>
                         <ul class="priceList">
                             <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>

@@ -5,6 +5,7 @@
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
+import de.ufo.cinemasystem.additionalfiles.UserService;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
@@ -21,11 +22,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.CinemaShowService;
-import de.ufo.cinemasystem.models.DummyEntity;
 import de.ufo.cinemasystem.models.Reservation;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Ticket;
-import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.DummyEntityRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
@@ -39,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
+import org.salespointframework.useraccount.Role;
 
 /**
  *
@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 public class MakeReservationController {
     
     public static final String reservationSessionKey = "current-reservation";
+    public static final String privilegedReservationKey = "current-reservation-privileged";
     
     private @Autowired ReservationRepository repo;
     private @Autowired CinemaShowRepository showsRepo;
@@ -90,18 +91,21 @@ public class MakeReservationController {
     @GetMapping("/reserve-spots/reserve/{what}")
     public String startReservation(Model m, @PathVariable CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         if(session.getAttribute(reservationSessionKey) == null){
-            session.setAttribute(reservationSessionKey, new Reservation(new UserEntry(), what));
+            session.setAttribute(reservationSessionKey, new Reservation(uRepo.findByUserAccountUsername(currentUser.getUsername()), what));
+            session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
         if(!work.getCinemaShow().equals(what)){
             deleteTickets(work);
             work = new Reservation(work.getReservingAccount(), what);
             session.setAttribute(reservationSessionKey, work);
+            session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         if(LocalDateTime.now().until(what.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 30 Minuten vor Vorstellungsbeginn möglich!");
         }
@@ -118,18 +122,23 @@ public class MakeReservationController {
     @PostMapping("/reserve-spots/reserve")
     public String onShowSelected(Model m, @RequestParam("event") CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         if(session.getAttribute(reservationSessionKey) == null){
-            session.setAttribute(reservationSessionKey, new Reservation(new UserEntry(), what));
+            System.out.println("[MakeReservationController] UserDetails type:" + currentUser.getClass().getName());
+            System.out.println("[MakeReservationController] UserDetails right: " + currentUser.getAuthorities());
+            session.setAttribute(reservationSessionKey, new Reservation(uRepo.findByUserAccountUsername(currentUser.getUsername()), what));
+            session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
         if(!work.getCinemaShow().equals(what)){
             deleteTickets(work);
             work = new Reservation(work.getReservingAccount(), what);
             session.setAttribute(reservationSessionKey, work);
+            session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         if(LocalDateTime.now().until(what.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 30 Minuten vor Vorstellungsbeginn möglich!");
         }
@@ -173,7 +182,10 @@ public class MakeReservationController {
         if(toCategoryType(ticketType) == null){
             errors.add("Nicht existenter Kartentyp");
         }
-        //todo: 10 ticket limit for non-staff
+        //10 ticket limit for non-staff
+        if(work.getTickets().length == 10 && ! ((boolean) session.getAttribute(privilegedReservationKey))){
+            errors.add("Es können nur maximal 10 Tickets im voraus reserviert werden. Sollten Sie legitimen Bedarf an einer größeren Reservierung haben, sprechen Sie bitte unser Kassenpersonal vor Ort an.");
+        }
         System.out.println("u: " + work.getReservingAccount().getUserAccount());
         System.out.println("t: " + Arrays.toString(work.getTickets()));
         
@@ -190,6 +202,7 @@ public class MakeReservationController {
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("errors",errors);
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         return "make-reservation-ticket-adder";
     }
     
@@ -213,6 +226,7 @@ public class MakeReservationController {
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         if(LocalDateTime.now().until(work.getCinemaShow().getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 30 Minuten vor Vorstellungsbeginn möglich!");
         }
@@ -244,10 +258,11 @@ public class MakeReservationController {
         /**
          * todo: remove debug dummy code
          */
-        uRepo.save(work.getReservingAccount());
+        //uRepo.save(work.getReservingAccount());
         redir.addFlashAttribute("ok", "created");
         repo.save(work);
         session.removeAttribute(reservationSessionKey);
+        session.removeAttribute(privilegedReservationKey);
         return "redirect:/my-reservations";
     }
     

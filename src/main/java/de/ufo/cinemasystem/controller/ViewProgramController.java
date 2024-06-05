@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
@@ -34,8 +31,8 @@ import java.util.Optional;
 import static org.salespointframework.core.Currencies.EURO;
 
 /**
- *
- * @author Jannik
+ *Spring MVC Controller for viewing and altering the current program.
+ * @author Jannik Schwaß, Yannick Harnisch
  */
 @Controller
 public class ViewProgramController {
@@ -50,6 +47,14 @@ public class ViewProgramController {
 
 	private ScheduledActivityService scheduledActivityService;
 
+        /**
+         * Construct a new ViewProgramController with the specified autowired dependencies.
+         * @param cinemaShowRepository
+         * @param cinemaShowService
+         * @param cinemaHallRepository
+         * @param filmRepository
+         * @param scheduledActivityService 
+         */
 	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
 								 CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository,
 								 ScheduledActivityService scheduledActivityService) {
@@ -60,6 +65,11 @@ public class ViewProgramController {
 		this.scheduledActivityService = scheduledActivityService;
 	}
         
+        /**
+         * GET-Mapping redirecting to the current week.
+         * @param m
+         * @return a string describing the redirect.
+         */
         @GetMapping("/current-films")
         public String getCurrentWeekProgram(Model m){
             LocalDateTime now = LocalDateTime.now();
@@ -67,6 +77,7 @@ public class ViewProgramController {
         }
 
     /**
+     * GET-Endpoint for viewing the program in the specified year and week.
      * todo: where rights check?
      * @param year
      * @param week
@@ -106,6 +117,7 @@ public class ViewProgramController {
 		m.addAttribute("oneWeekCinemaShows", oneWeekCinemaShows);
 		m.addAttribute("allCinemaHalls", cinemaHallRepository.findAll());
 		m.addAttribute("allFilms", filmRepository.findAll());
+                m.addAttribute("title","Filmplan");
 
 		//System.out.println("Start der Woche: " + getStartWeekDateTime(year, week));
 		//System.out.println("Ende der Woche: " + getEndWeekDateTime(year, week));
@@ -182,7 +194,8 @@ public class ViewProgramController {
 
 		m.addAttribute("cinemaShow", cinemaShow);
 		m.addAttribute("allFilms", filmRepository.findAll());
-
+                m.addAttribute("title", cinemaShow.getFilm().getTitle());
+                
 		return "cinema-show-detail";
 	}
 

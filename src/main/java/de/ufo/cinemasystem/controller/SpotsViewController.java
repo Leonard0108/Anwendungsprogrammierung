@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.models.CinemaShow;
@@ -15,19 +12,26 @@ import java.util.Objects;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- *
- * @author Jannik
+ * Spring MVC Controller for generating an image of the current seat occupation status.
+ * @author Jannik Schwaß
+ * @version 1.0
  */
 @Controller
 public class SpotsViewController {
     
     
+    /**
+     * Generate an svg image of the seat occupation status of the specified cinema show.
+     * @param which cinema show to generate the spots for
+     * @param m current Model
+     * @param rep current response object
+     * @return thymeleaf template name
+     */
     @RequestMapping(value = "/include/spots-view/{which}", produces = "image/svg+xml", method = RequestMethod.GET)
     public String getSpotsView(@PathVariable CinemaShow which, Model m, HttpServletResponse rep){
         Streamable<Map.Entry<Seat, Seat.SeatOccupancy>> seatsAndOccupancy = which.getSeatsAndOccupancy();
@@ -87,14 +91,17 @@ public class SpotsViewController {
         return "" + ((char) (1*row + 'A'));
     }
     
-    
+    /**
+     * Internal class to stash occupation informatioon for gui rendering.
+     */
     private static class SeatWithOccupancy{
 
         /**
          * 
-         * @param x
+         * @param x position
          * @param y row
          * @param occupancy the occupancy
+         * @param placeGroup the place group
          */
         public SeatWithOccupancy(int x, int y, Seat.SeatOccupancy occupancy, Seat.PlaceGroup placeGroup) {
             this.x = x;
@@ -108,19 +115,34 @@ public class SpotsViewController {
         private final Seat.SeatOccupancy occupancy;
         private final Seat.PlaceGroup placeGroup;
 
+        /**
+         * Get the position
+         * @return 
+         */
         public int getX() {
             return x;
         }
 
+        /**
+         * Get the row
+         * @return 
+         */
         public int getY() {
             return y;
         }
 
+        /**
+         * Get the occupancy of this Seat
+         * @return 
+         */
         public Seat.SeatOccupancy getOccupancy() {
             return occupancy;
         }
 
-        
+        /**
+         * Return a color for this seats occupancy status
+         * @return 
+         */
         public String occupancyToColor(){
             switch (occupancy) {
                 case FREE -> {
@@ -136,10 +158,18 @@ public class SpotsViewController {
             }
         }
 
+        /**
+         * get the place group
+         * @return 
+         */
         public Seat.PlaceGroup getPlaceGroup() {
             return placeGroup;
         }
         
+        /**
+         * Return a color for this seats place group
+         * @return 
+         */
         public String placeGroupColor(){
             switch (placeGroup) {
                 case GROUP_1 -> {
@@ -163,6 +193,9 @@ public class SpotsViewController {
         
     }
     
+    /**
+     * Internal class to represent row information during rendering.
+     */
     private static class RowId{
 
         public RowId(int id) {

@@ -43,6 +43,7 @@ public class ManageStorageController {
 		model.addAttribute("allSnacks", allSnacks);
 		// TODO: SnackType auslagern und statisch ueber Thymeleaf aufrufen
 		model.addAttribute("snackTypes", Snacks.SnackType.values());
+                model.addAttribute("title", "Lagerverwaltung");
 
 		return "manage-storage";
 	}

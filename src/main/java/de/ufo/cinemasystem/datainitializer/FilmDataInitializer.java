@@ -1,26 +1,26 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.FilmProvider;
-import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmProviderRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 
-import org.javamoney.moneta.Money;
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
-import static org.salespointframework.core.Currencies.EURO;
 
+/**
+ * Initialises Film Data.
+ * @author Jannik Schwaß, Yannick Harnisch
+ * @version 1.0
+ */
 @Component
 // Testdaten für die Filme werden als erstes erzeugt (Order = 1)
 @Order(2)
@@ -30,6 +30,11 @@ public class FilmDataInitializer implements DataInitializer {
 
 	private final FilmProviderRepository filmProviderRepository;
 
+        /**
+         * Construct a new filmDataInitialiser, using the specified autowired dependencies.
+         * @param filmRepository
+         * @param filmProviderRepository 
+         */
 	FilmDataInitializer(FilmRepository filmRepository, FilmProviderRepository filmProviderRepository) {
 		Assert.notNull(filmRepository, "FilmRepository must not be null!");
 		Assert.notNull(filmProviderRepository, "FilmProviderRepository must not be null!");
@@ -38,6 +43,9 @@ public class FilmDataInitializer implements DataInitializer {
 		this.filmProviderRepository = filmProviderRepository;
 	}
 
+        /**
+         * Initialise the film data.
+         */
 	@Override
 	public void initialize() {
 		// verhindert doppelte Film-Einträge,

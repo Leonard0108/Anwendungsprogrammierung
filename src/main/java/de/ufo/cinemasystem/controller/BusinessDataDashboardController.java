@@ -60,8 +60,7 @@ public class BusinessDataDashboardController {
 			new RevenueData(dailyIncomeData, LocalDate.of(2024, 5, 31))
 		);
 		m.addAttribute("revenueData", revenueData);
-		m.addAttribute("title", "Wirtschaftsdaten");
-
+                m.addAttribute("title", "Wirtschaftsstatistik");
 
 
 

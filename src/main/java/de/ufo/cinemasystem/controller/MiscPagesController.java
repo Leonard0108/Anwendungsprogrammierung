@@ -6,17 +6,16 @@ package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Spring MVC controller for misc pages and documents.
- * @author Jannik
+ * @author Jannik Schwaß
+ * @version 1.0
  */
 @Controller
 public class MiscPagesController {
@@ -39,7 +38,7 @@ public class MiscPagesController {
         m.addAttribute("nextWeek", nextWeek);
         //end of week
         response.setDateHeader("Expires", AdditionalDateTimeWorker.getEndWeekDateTime(now).toInstant(ZonedDateTime.now().getOffset()).toEpochMilli());
-        response.setHeader("Cache-Control", "private,max-age=604800, must-revalidate");
+        response.setHeader("Cache-Control", "private,max-age=86400, must-revalidate");
         return "robots.txt";
     }
     

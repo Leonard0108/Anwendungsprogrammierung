@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller()
 @RequestMapping(path = "/EmployeeControlling")
 public class EmployeeManagementController {
-	@PreAuthorize("BOSS")
+	//PreAuthorize ist eine Annotation, welche der sutomatischen Autorisationserkennung dient.
+	//@PreAuthorize("BOSS")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee() {
 		return "EmployeeControlling";
@@ -21,11 +22,11 @@ public class EmployeeManagementController {
 
 
 
-
-	@PreAuthorize("BOSS")
+	//@PreAuthorize("BOSS")
 	@PostMapping(path = "/createEmployee")
 	public String createEmployee(RegistrationForm registrationForm)
 	{
+
 		return "redirect:/";
 	}
 

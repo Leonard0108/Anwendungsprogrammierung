@@ -55,6 +55,10 @@ public class Ticket extends Product {
         return category;
     }
 
+    public CinemaShow getCinemaShow(){
+        return show;
+    }
+
     public String getTicketShowName() {
         return show.getFilm().getTitle();
     }

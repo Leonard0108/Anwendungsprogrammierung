@@ -10,12 +10,13 @@
             <h1>Verkauf</h1>
 
 
-            <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${show.getStartDateTime()}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/sell-items-show-selesction" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="${show.getFilm().getFskAge()}">FSK 12</span></p>
+            <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${show.getStartDateTime()}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="${show.getFilm().getFskAge()}">FSK 12</span></p>
             <form id="sell-spots-form-delete" action="/sell/remove-ticket" method="post">
                 <div class="already-in-cart">
-                    <div class="ticket" th:each="ticket : ${tickets}">
-                        <p th:text="${ticket.getData()}"></p>
-                        <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${ticket.getId()}">Löschen</button>
+                    <div class="ticket" th:each="item : ${cart}">
+                        <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p><p th:text="${item.productname}"></p>
+                        <p style="text-align: right" th:text="${{item.price}}"></p>
+                        <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${cart.getItem()}">Löschen</button>
                     </div>
                 </div>
             </form>

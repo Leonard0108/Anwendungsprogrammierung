@@ -13,10 +13,10 @@ import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManagement;
 import org.salespointframework.quantity.Quantity;
-import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -88,10 +88,10 @@ public class MakeOrderController {
 
 
 	@GetMapping("/sell-tickets/{what}")
-	public String startOrder(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser,
+	public String startOrder(Model m, @LoggedIn UserAccount currentUser,
 		@PathVariable CinemaShow what, HttpSession session) {
 		if (session.getAttribute(orderSessionKey) == null) {
-			session.setAttribute(orderSessionKey, new Orders(currentUser, what));
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		m.addAttribute("title", "Kassensystem");
@@ -101,33 +101,44 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 
+	@PostMapping("/sell-tickets")
+	public String onShowSelect(Model m, @LoggedIn UserAccount currentUser,
+	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
+		if (session.getAttribute(orderSessionKey) == null) {
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
+		}
+		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		m.addAttribute("ticket-event", what);
+		m.addAttribute("title", "Kassensystem");
+        m.addAttribute("show", what);
+		return "sell-items-1";
+	}
+
 	@PostMapping("/sell/remove-ticket")
-    public String removeTicketFromReservation(Model m, HttpSession session, @RequestParam("deleteCartEntry") Ticket ticket, @ModelAttribute Cart cart){
+    public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") Ticket ticket, @ModelAttribute Cart cart){
         if(session.getAttribute(orderSessionKey) == null){
             return "redirect:/sell-tickets";
         }
-        Orders work = (Orders) session.getAttribute(orderSessionKey);
         System.out.println("u: " + session.getAttribute("User"));
-        System.out.println("t: " + work.getOrderLines());
-		cart.removeItem(ticket.getId().toString());
-        showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat(ticket.getSeatID() / 100, ticket.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
-        m.addAttribute("title", "Plätze reservieren");
-        m.addAttribute("tickets", work.getOrderLines());
-        m.addAttribute("show", work.getCinemaShow());
-        m.addAttribute("price",work.getTotal());
-        if(LocalDateTime.now().until(work.getCinemaShow().getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
+        System.out.println("t: " + cart.get());
+		cart.removeItem(ticket.getName());
+        showService.update(ticket.getCinemaShow().getId()).setSeatOccupancy(new Seat(ticket.getSeatID() / 100, ticket.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+        m.addAttribute("title", "Kassensystem");
+        m.addAttribute("tickets", cart.get().allMatch(null));
+        m.addAttribute("show", ticket.getCinemaShow());
+        m.addAttribute("price",cart.getPrice());
+        if(LocalDateTime.now().until(ticket.getCinemaShow().getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 30 Minuten vor Vorstellungsbeginn möglich!");
         }
         return "sell-items-1";
     }
 
 	@PostMapping("/sell/ticket")
-	public String addTickets(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser, HttpSession session,
-			@RequestParam("show") CinemaShow show,
-			@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot) {
+	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
+			@RequestParam("ticketType") String ticketType,@RequestParam("spot") String spot, @ModelAttribute Cart cart) {
 
 		if (session.getAttribute(orderSessionKey) == null) {
-			session.setAttribute(orderSessionKey, new Orders(currentUser, show));
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
 		}
 
 		spot = spot.trim().toUpperCase();
@@ -154,13 +165,15 @@ public class MakeOrderController {
 		
 		if (errors.isEmpty()) {
 			// add ticket
-			Ticket t = new Ticket(toCategoryType(ticketType), show);
+			Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
 			t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
-			work.addTickets(ticketRepo.save(t));
+			cart.addOrUpdateItem(t, Quantity.of(1));
 			showService.update(work.getCinemaShow()).setSeatOccupancy(
 					new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
 		}
 
+        m.addAttribute("show", work.getCinemaShow());
+        m.addAttribute("price",cart.getPrice());
 		
 		return "sell-items-1";
 
@@ -168,7 +181,7 @@ public class MakeOrderController {
 
 
 	@PostMapping("/sell/snacks")
-	public String addSnacks(Model m, @AuthenticationPrincipal UserAccountIdentifier currentUser, 
+	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
 		HttpSession session, @RequestParam("snack") Snacks snack, @ModelAttribute Cart cart) {
 		
 		cart.addOrUpdateItem(snack, Quantity.of(1));

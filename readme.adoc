@@ -8,6 +8,7 @@ image:https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions/wo
 * link:src/main/asciidoc/pflichtenheft.adoc[Anforderungsspezifikation (Pflichtenheft)]
 * link:src/main/asciidoc/developer_documentation.adoc[Entwicklerdokumentation (Software-Entwurf)]
 * link:src/main/asciidoc/Endpoints.adoc[Endpunkte-Übersicht]
+* link:src/main/asciidoc/Nutzerhandbuch.adoc[Nutzerhandbuch]
 
 == Struktur des Repositories
 

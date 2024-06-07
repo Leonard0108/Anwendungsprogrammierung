@@ -1,0 +1,94 @@
+= Nutzerhandbuch
+
+:toc: left
+:toc-title: Inhaltsverzeichnis
+:numbered:
+
+== Einleitung
+
+...
+
+== Systemanforderungen
+Da das entwickelte System als Webserver im Internet läuft, sind hier sowohl 
+die Anforderungen an den Server, der die Anwendung ausführt, als auch die Anforderungen an sich verbindende Clients angegeben.
+=== Server
+- Quadcore Prozessor mit 2GHz Taktrate
+- 8GB RAM Arbeitsspeicher
+- 4GB freien Festplattenspeicher
+- Internetverbindung mit ausreichender Bandbreite
+- Java 17 (oder eine neuere, abwärtskompatible Java-Version)
+
+=== Clients
+- Prozessor mit 1GHz Taktrate
+- 2GB RAM Arbeitsspeicher
+- 500MB freien Festplattenspeicher
+
+Browser:
+- Edge 124.0 oder neuer
+- Firefox 126.0 oder neuer
+- Google Chrome 126.0 oder neuer
+- Opera 109.0 oder neuer
+
+== Funktionen
+Im nachfolgenden werden die wichtigsten Funktionen erläutert.
+
+=== Loginsystem
+
+...
+
+==== Anmelden
+
+...
+
+==== Registrieren
+
+...
+
+==== Nutzergruppen
+
+[options="header"]
+|===
+|Name    | Zugewiesene Rechte  
+| ...    | ...
+|===
+
+==== Initial angelegte Konten
+[options="header"]
+|===
+|Name    | Passwort | Nutzergruppe
+| ...    | ...      |    
+|===
+
+=== Kundenportal
+
+...
+
+==== Startseite
+
+...
+
+==== Plätze Reservieren
+
+...
+
+==== Reservierung anzeigen
+
+...
+
+==== Reservierung löschen
+
+...
+
+=== Verwaltungssystem
+
+...
+
+=== Operativsystem
+
+...
+
+=== Kassensubsystem
+
+...
+
+

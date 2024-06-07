@@ -9,9 +9,12 @@
 ...
 
 == Systemanforderungen
+
 Da das entwickelte System als Webserver im Internet läuft, sind hier sowohl 
 die Anforderungen an den Server, der die Anwendung ausführt, als auch die Anforderungen an sich verbindende Clients angegeben.
+
 === Server
+
 - Quadcore Prozessor mit 2GHz Taktrate
 - 8GB RAM Arbeitsspeicher
 - 4GB freien Festplattenspeicher
@@ -19,17 +22,26 @@ die Anforderungen an den Server, der die Anwendung ausführt, als auch die Anfor
 - Java 17 (oder eine neuere, abwärtskompatible Java-Version)
 
 === Clients
+
 - Prozessor mit 1GHz Taktrate
 - 2GB RAM Arbeitsspeicher
 - 500MB freien Festplattenspeicher
 
 Browser:
+
 - Edge 124.0 oder neuer
 - Firefox 126.0 oder neuer
 - Google Chrome 126.0 oder neuer
 - Opera 109.0 oder neuer
 
+== Starten der Anwendung
+
+Kopieren Sie das Jar in einen neuen Ordner, zu dem Sie Schreibrechte besitzen. Öffnen Sie ein Terminal im diesem Verzeichnis und führen Sie das jar mittels java -jar jarname.jar aus (Wenn das Jar beispielsweise cooleanwendung.jar heißt führen Sie java -jar cooleanwendung.jar aus).
+
+Der Erststart dauert eventuell etwas länger, weil die Anwendung zusätzliche Bibliotheken herunterlädt.
+
 == Funktionen
+
 Im nachfolgenden werden die wichtigsten Funktionen erläutert.
 
 === Loginsystem
@@ -63,21 +75,32 @@ Im nachfolgenden werden die wichtigsten Funktionen erläutert.
 
 ...
 
-==== Startseite
-
-...
 
 ==== Plätze Reservieren
 
-...
+Im System können sie mit zwei einfachen Schritten Plätze reservieren. Für die Reservierung müssen sie angemeldet sein. Jede logische Reservierung gilt immer nur für eine Veranstaltung (Film).
+Im ersten Schritt müssen sie zunächst die Veranstaltung auswählen. Dazu haben Sie entweder die Möglichkeit, in der Programmverwaltung (http://127.0.0.1:8080/current-films) die für jeden nutzbaren
+Reservieren-Links zu benutzen. Alternativ können Sie auch in der Navigation auf "Plätze reservieren" klicken. Sie landen dann auf einer Auswahlseite, wo sie die gewünschte Veranstaltung auswählen können.
+
+Damit Sie eine Reservierung tätigen können, muss die Veranstaltung in der aktuellen oder kommenden Woche liegen und es müssen noch mindestends 45 Minuten bis zum Start sein.
+
+Wenn Sie eine Veranstaltung ausgewählt haben, landen Sie auf einer Auswahlseite, wo Sie Tickets entfernen und hinzufügen können. Um ein Ticket zu entfernen klicken Sie auf den Löschen-Knopf innerhalb des Tickets. 
+Um ein Ticket hinzuzufügen, wählen Sie aus der Maske den Tickettyp aus und Geben in das Eingabefeld oberhalb der Saalansicht den Platz ein. Gültige Plätze hängen vom Layout des Saals ab, Grundsätzlich sind jedoch 
+A0, B1, C10 oder F1 gültige Plätze, während AA, 0A, 00 und F01 es nicht sind. Anschließend klicken Sie auf "Ticket hinzufügen" um das Ticket der Reservierung hinzuzufügen.
+
+Wenn Sie ein Ticket ändern wollen, müssen Sie es Löschen und neu buchen.
+
+Nicht-Mitarbeiter können maximal 10 Tickets reservieren.
+
+Sobald Sie alle gewünschten Tickets ausgewählt haben, drücken Sie auf "Jetzt Reservieren" um den Reserviervorgang abzuschließen. Reservierungen ohne Tickets lassen sich nicht abschließen. Beachten Sie bitte, dass 45 Minuten vor Start keine Reservierungen mehr möglich sind. Beachten sie ferner, das alle Reservierungen 30 Minuten vor Start verfallen, wenn sie nicht abgeholt wurden.
 
 ==== Reservierung anzeigen
 
-...
+Um Reservierungen anzeigen zu können, müssen Sie im fraglichen Account eingeloggt sein. Sie sehen dann alle Reservierungen unter http://127.0.0.1:8080/my-reservations Es gibt keine URL zum Anzeigen von Reservierungen anderer Konten.
 
 ==== Reservierung löschen
 
-...
+Sie können Reservierungen Löschen, in dem Sie in der Reservierungsansicht den Löschen-Link für die fragliche Reservierung klicken oder die Reservierungsnummer in das Formular unterhalb eingeben. In beiden Fällen wird die Reservierung nach einer Sicherheitsabfrage endgültig gelöscht.
 
 === Verwaltungssystem
 

@@ -60,9 +60,9 @@
                     <ul class="nav-section-content">
                         <li><a href="/current-films" title="Programmverwaltung | UFO Kinos">Programmverwaltung</a></li>
                         <li><a href="/rent-films" title="Filme ausleihen | UFO Kinos">Filme ausleihen</a></li>
-                        <li><a href="/statistics" title="Statistiken | UFO Kinos">Wirtschaftsstatistiken</a></li>
-                        <li><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
-                        <li><a href="/manage/pricing" title="Preisgestaltung | UFO Kinos">Preisgestaltung</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_BOSS')"><a href="/statistics" title="Statistiken | UFO Kinos">Wirtschaftsstatistiken</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_BOSS')"><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_BOSS')"><a href="/manage/pricing" title="Preisgestaltung | UFO Kinos">Preisgestaltung</a></li>
                         <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
                         <!-- <li><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li> -->
                     </ul>

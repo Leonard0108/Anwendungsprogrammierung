@@ -1,6 +1,7 @@
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.models.Order;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ public class BusinessDataDashboardController {
 
 	//Anzeigen von Tageseinnahmen Diagramm, darunter Monatsumsatz Diagramm
 	@GetMapping("/statistics")
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	public String getDashboard(Model m){
 
 		List<FinancialTransaction> dailyIncomeData = List.of(

@@ -6,6 +6,7 @@ import de.ufo.cinemasystem.repository.FilmRepository;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class AdjustPricingController {
 	}
 
 	@GetMapping("/manage/pricing")
+	@PreAuthorize("hasRole('BOSS')")
 	String getAdjustPricing(Model m){
 		List<Film> allFilms = filmRepository.findAll().toList();
 		List<Snacks> allSnacks = snacksRepository.findAll().toList();
@@ -37,6 +39,7 @@ public class AdjustPricingController {
 	}
 
 	@GetMapping(value = "/manage/pricing", params = "ChangePriceOf")
+	@PreAuthorize("hasRole('BOSS')")
 	String getPriceOf(Model m, @RequestParam("ChangePriceOf") String changePriceOf){
 		List<Film> allFilms = filmRepository.findAll().toList();
 		List<Snacks> allSnacks = snacksRepository.findAll().toList();
@@ -59,6 +62,7 @@ public class AdjustPricingController {
 	}
 
 	@PostMapping("/manage/pricing")
+	@PreAuthorize("hasRole('BOSS')")
 	String setPriceOf(RedirectAttributes m, @RequestParam("selectedId") String selectedId, @RequestParam("newPrice") double newPrice){
 		List<Film> allFilms = filmRepository.findAll().toList();
 		List<Snacks> allSnacks = snacksRepository.findAll().toList();

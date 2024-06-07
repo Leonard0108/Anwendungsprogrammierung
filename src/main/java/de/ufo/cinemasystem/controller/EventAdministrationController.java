@@ -4,6 +4,7 @@ package de.ufo.cinemasystem.controller;
 import de.ufo.cinemasystem.models.ScheduledActivity;
 import de.ufo.cinemasystem.services.ScheduledActivityService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class EventAdministrationController {
 
 
 	@GetMapping(value = "/manage/rooms", params = {"room", "date"})
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	public String getEvents(Model m, @RequestParam("room") Long room,
 							  		 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
 
@@ -66,7 +67,7 @@ public class EventAdministrationController {
 
 
 	@GetMapping(value = "/manage/rooms")
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	public String getEventPage(Model m){
 
 
@@ -79,7 +80,7 @@ public class EventAdministrationController {
 
 
 	@PostMapping("/manage/rooms")
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	public String addEvent(RedirectAttributes redirectAttributes,
 						   @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
 						   @RequestParam("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,

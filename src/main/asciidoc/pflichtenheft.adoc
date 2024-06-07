@@ -647,8 +647,8 @@ a|Der Nutzer kann sich ausloggen und verliert damit die Berechtigungen seines Nu
 
 |[[F0023]]<<F0023>>
 |v0.1
-|Verbindungsterminierung
-a|Sicheres beenden der Verbindung im Falle eines unerwarteten Verbindungsabbruchs
+|Sessiontimeout
+a|Die Session wird nach 30 Minuten automatisch beendet.
 |
 
 |[[F0231]]<<F0231>>
@@ -662,14 +662,14 @@ Enthält Snacks und Filmtickets die der Kunde bislang ausgewählt hat.
 |v0.1
 |Hinzufügen zum Warenkorb
 a|
-Nutzer kann Snacks oder Film Tickets zum Warenkorb hinzufügen.
+Mitarbeiter kann Snacks oder Film Tickets zum Warenkorb hinzufügen.
 |
 
 |[[F0233]]<<F0233>>
 |v0.1
 |Anzeigen zum Warenkorb
 a|
-Nutzer kann sich den Warenkorb anzeigen lassen und sieht darin alle zuvor ausgewählten Snacks und Tickets
+Mitarbeiter kann sich den Warenkorb anzeigen lassen und sieht darin alle zuvor ausgewählten Snacks und Tickets
 |
 
 |[[F0121]]<<F0121>>
@@ -705,12 +705,6 @@ Kunden können auf Website zu einer ausgewählten Veranstaltung Plätze reservie
 |Platzreservierung Stornieren
 a|
 Nutzer können auf Website zuvor reservierte Plätze zu jeder Zeit stornieren. Damit gelten die reservierten Plätze wieder als frei.
-|
-
-|[[F0112]]<<F0112>>
-|v0.1
-|Kartentausch
-a|Kunden können die Veranstaltung für die ihr Ticket gültig ist ändern lassen, falls sie den zuvor gebuchten Termin nicht wahrnehmen können.
 |
 
 |[[F0235]]<<F0235>>
@@ -778,6 +772,12 @@ Anforderungen, die das Programm leisten können soll, aber für den korrekten Be
 |Beschreibung
 |Hinweise
 
+|[[F0112]]<<F0112>>
+|v0.1
+|Kartentausch
+a|Kunden können die Veranstaltung für die ihr Ticket gültig ist ändern lassen, falls sie den zuvor gebuchten Termin nicht wahrnehmen können.
+|
+
 |[[F0236]]<<F0236>>
 |v0.1
 |Kauf von Snacks
@@ -803,6 +803,14 @@ So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sin
 |Säle vermieten
 a| Der Chef sollte die Möglichkeit haben Säle für externe Events vermieten zu können.
 |Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
+
+|[[F0238]]<<F0238>>
+|v0.1
+|Änderungen oder Löschen an Cinemashows einschränken
+a|
+Ändern oder löschen von Cinemashows soll nicht möglich sein, wenn bereits Tickets für die Veranstaltung gekauft wurden.
+|
+
 
 |===
 

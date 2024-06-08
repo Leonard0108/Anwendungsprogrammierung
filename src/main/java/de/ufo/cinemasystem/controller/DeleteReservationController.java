@@ -115,7 +115,7 @@ public class DeleteReservationController {
         for(Ticket t:tickets){
             rev.removeTicket(t);
             rev = repo.save(rev);
-            showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat(t.getSeatID() / 100, t.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+            showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (t.getSeatID() / 100), (int) (t.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
             ticketRepo.delete(t);
         }
     }

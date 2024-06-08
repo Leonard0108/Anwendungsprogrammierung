@@ -226,7 +226,7 @@ public class MakeReservationController {
         System.out.println("u: " + work.getReservingAccount().getUserAccount());
         System.out.println("t: " + Arrays.toString(work.getTickets()));
         work.removeTicket(ticket);
-        showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat(ticket.getSeatID() / 100, ticket.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+        showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (ticket.getSeatID() / 100), (int) (ticket.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
@@ -288,7 +288,7 @@ public class MakeReservationController {
         for(Ticket t:tickets){
             rev.removeTicket(t);
             rev = repo.save(rev);
-            showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat(t.getSeatID() / 100, t.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+            showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (t.getSeatID() / 100), (int) (t.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
             ticketRepo.delete(t);
         }
     }

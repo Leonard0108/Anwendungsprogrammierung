@@ -43,7 +43,7 @@ public class Order {
 
     public Money addTicket(Ticket ticket) {
         tickets.add(ticket);
-        SnacksSumme.add(ticket.getTicketPrice());
+        SnacksSumme.add(ticket.getPrice());
         return SnacksSumme;
     }
 

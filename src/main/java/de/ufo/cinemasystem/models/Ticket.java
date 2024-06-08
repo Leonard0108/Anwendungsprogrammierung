@@ -1,18 +1,14 @@
 package de.ufo.cinemasystem.models;
 
+import jakarta.persistence.*;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TICKETS")
 public class Ticket extends Product {
 
-	public static enum TicketCategory {
+	public enum TicketCategory {
 		normal,
 		reduced,
 		children
@@ -21,10 +17,10 @@ public class Ticket extends Product {
 	// private @EmbeddedId ProductIdentifier id =
 	// ProductIdentifier.of(UUID.randomUUID().toString());
 	private TicketCategory category;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "cinema_show_id")
 	private CinemaShow show;
-	private int seatID;
+	private long seatID;
 
 
 	public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
@@ -50,7 +46,6 @@ public class Ticket extends Product {
 	private Ticket() {
 
 	}
-
 	public TicketCategory getCategory() {
 		return category;
 	}
@@ -59,11 +54,15 @@ public class Ticket extends Product {
 		return show.getFilm().getTitle();
 	}
 
-	public int getSeatID() {
+	public CinemaShow getShow() {
+		return show;
+	}
+
+	public long getSeatID() {
 		return seatID;
 	}
 
-	public void setSeatID(int seatID) {
+	public void setSeatID(long seatID) {
 		this.seatID = seatID;
 		this.setName(getName() + String.valueOf(seatID));
 	}

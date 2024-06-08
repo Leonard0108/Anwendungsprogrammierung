@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-@Order(10)
-public class TicketDataInitializer  implements DataInitializer {
+@Order(9)
+public class TicketDataInitializer implements DataInitializer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TicketDataInitializer.class);
 	private TicketRepository ticketRepository;

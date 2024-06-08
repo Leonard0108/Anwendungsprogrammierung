@@ -1,14 +1,13 @@
 package de.ufo.cinemasystem.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import de.ufo.cinemasystem.models.Orders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import de.ufo.cinemasystem.models.Order;
+import java.time.LocalDate;
+import java.util.List;
 
 //benötigte Klassen: Bestellung, (Ausgaben für Personalkosten, Ausgaben für momentan geliehene Filme)
 @Controller
@@ -95,7 +94,7 @@ public class BusinessDataDashboardController {
 		 * @param orders Liste der Bestellungen, aus denen die Daten extrahiert werden.
 		 * @return Eine Liste von FinancialTransaction Objekten.
 		 */
-		public List<FinancialTransaction> extractDataFromOrders(List<Order> orders){
+		public List<FinancialTransaction> extractDataFromOrders(List<Orders> orders){
 			//	TODO: Ticketeinnahmen und Snackeinnahmen aus Order in DailyIncomeData List transformieren
 			return List.of(new FinancialTransaction("Popcorn", 100.0));
 		}

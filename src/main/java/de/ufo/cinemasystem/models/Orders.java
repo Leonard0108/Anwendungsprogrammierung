@@ -8,7 +8,7 @@ import org.javamoney.moneta.Money;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-public class Order {
+public class Orders {
 
     private @Id @GeneratedValue Long id;
     private LocalDateTime Datum;
@@ -17,7 +17,7 @@ public class Order {
     private Money TicketSumme;
     private Money SnacksSumme;
 
-    Order() {
+    Orders() {
         this.Datum = LocalDateTime.now();
         this.TicketSumme = Money.of(0, "EUR");
         this.SnacksSumme = Money.of(0, "EUR");

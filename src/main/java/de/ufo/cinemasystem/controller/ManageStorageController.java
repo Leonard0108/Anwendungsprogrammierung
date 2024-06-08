@@ -10,6 +10,7 @@ import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class ManageStorageController {
 		this.snacksService = snacksService;
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/manage/storage")
 	public String showStorage(Model model) {
 		LinkedHashMap<Snacks, Integer> allSnacks = snacksRepository.findAll(Sort.sort(Snacks.class).by(Snacks::getName).ascending()).stream()
@@ -48,6 +50,7 @@ public class ManageStorageController {
 		return "manage-storage";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/item/new")
 	public String newItem(@RequestParam("whatNew") String newSnack, @RequestParam("itemType") Snacks.SnackType snackType, RedirectAttributes redirectAttributes) {
 		if(snacksRepository.findAll().stream().anyMatch(e -> e.getName().equalsIgnoreCase(newSnack))) {
@@ -61,6 +64,7 @@ public class ManageStorageController {
 		return "redirect:/manage/storage";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/item/add")
 	public String addItem(@RequestParam("itemName") String snackId, @RequestParam("itemCount") int itemCount, RedirectAttributes redirectAttributes) {
 		try {
@@ -73,6 +77,7 @@ public class ManageStorageController {
 		return "redirect:/manage/storage";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/item/remove")
 	public String removeItem(@RequestParam("itemName") String snackId, @RequestParam("itemCount") int itemCount, RedirectAttributes redirectAttributes) {
 		try {

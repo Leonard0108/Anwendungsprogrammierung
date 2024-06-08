@@ -7,6 +7,7 @@ import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 import org.eclipse.jdt.internal.compiler.env.IModule;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class RentFilmController {
 		this.cinemaShowRepository = cinemaShowRepository;
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/rent-films")
 	public String getRentFilms(Model model) {
 		model.addAttribute("allFilms", filmRepository.findAll());
@@ -36,6 +38,7 @@ public class RentFilmController {
 		return "films-rental";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/films/{film}")
 	public String getRentFilm(Model model, @PathVariable Film film) {
 		List<YearWeekEntry> allRangeYearWeeks = new ArrayList<>();
@@ -78,6 +81,7 @@ public class RentFilmController {
 		return "film-detail";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/films/{film}")
 	public String postRentFilm(RedirectAttributes redirectAttributes, @PathVariable Film film,
 							   @RequestParam(name = "new-selected-rent-weeks", required = false) List<Long> newSelectedRentWeeks,

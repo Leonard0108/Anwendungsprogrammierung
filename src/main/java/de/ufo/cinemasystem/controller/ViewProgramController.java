@@ -8,6 +8,7 @@ import org.javamoney.moneta.Money;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -125,6 +126,7 @@ public class ViewProgramController {
 		return "current-films";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/current-films/{year}/{week}")
 	public String postNewProgram(RedirectAttributes redirectAttributes,
 								 @PathVariable int year, @PathVariable int week,
@@ -199,6 +201,7 @@ public class ViewProgramController {
 		return "cinema-show-detail";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/cinema-shows/{id}/edit")
 	public String editCinemaShow(RedirectAttributes redirectAttributes,
 								 @PathVariable Long id,
@@ -258,6 +261,7 @@ public class ViewProgramController {
 		return "redirect:/cinema-shows/{id}";
 	}
 
+	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/cinema-shows/{id}/delete")
 	public String deleteCinemaShow(@PathVariable Long id, Model m) {
 		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);

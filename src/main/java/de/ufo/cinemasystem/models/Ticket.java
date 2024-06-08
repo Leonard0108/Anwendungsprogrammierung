@@ -1,119 +1,103 @@
 package de.ufo.cinemasystem.models;
 
-import jakarta.persistence.Entity;
-import java.util.Objects;
-
 import org.javamoney.moneta.Money;
+import org.salespointframework.catalog.Product;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
-
 
 @Entity
-@Table(name= "TICKETS")
-public class Ticket implements Comparable<Ticket> {
+@Table(name = "TICKETS")
+public class Ticket extends Product {
 
-    public static enum TicketCategory {
-        normal(1.0),
-        reduced(0.8),
-        children(0.7);
-
-		private final double reduction;
-
-		TicketCategory(double reduction) {
-			this.reduction = reduction;
-		}
-
-		public double getReduction() {
-			return reduction;
-		}
+	public static enum TicketCategory {
+		normal,
+		reduced,
+		children
 	}
 
-    /**
-     * never empty. if null, hibernate will decide one. @SimonBanks42
-     */
-    private @Id @GeneratedValue Long id;
+	// private @EmbeddedId ProductIdentifier id =
+	// ProductIdentifier.of(UUID.randomUUID().toString());
+	private TicketCategory category;
+	@OneToOne
+	@JoinColumn(name = "cinema_show_id")
+	private CinemaShow show;
+	private int seatID;
 
-    private TicketCategory category;
-    private Money TicketPrice;
-    /**
-     * temp variable saving the seat id.
-     */
-    private int seatID;
-    // private CinemaShow show;
-    // private Reservation reservation;
 
-    public Ticket(TicketCategory Category/* , CinemaShow cinemaShow */) {
-        this.category = Category;
-        double reduction;
-        switch (this.category) {
-            case reduced:
-                reduction = 0.8;
-            case children:
-                reduction = 0.7;
-            default:
-                reduction = 1;
-        }
-        // this.show = cinemaShow;
-        // this.TicketPreis = show.getBasePrice() * reduction;
+	public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
 
-    }
+		super("Ticket", Money.of(0, "EUR"));
+		this.category = Category;
+		double reduction;
+		switch (this.category) {
+			case reduced:
+				reduction = 0.8;
+			case children:
+				reduction = 0.7;
+			default:
+				reduction = 1;
+		}
+		this.show = cinemaShow;
 
-    public Ticket() {
+		this.setPrice(show.getBasePrice().multiply(reduction));
 
-    }
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	@SuppressWarnings({ "unused", "deprecation" })
+	private Ticket() {
 
-    public TicketCategory getCategory() {
-        return this.category;
-    }
+	}
 
-    public Money getTicketPrice() {
-        return this.TicketPrice;
-    }
+	public TicketCategory getCategory() {
+		return category;
+	}
 
-    public int getSeatID() {
-        return seatID;
-    }
+	public String getTicketShowName() {
+		return show.getFilm().getTitle();
+	}
 
-    public void setSeatID(int seatID) {
-        this.seatID = seatID;
-    }
-    
-    public String getSeatString(){
-        return ((char)('A' + this.seatID / 100)) + ("" + this.seatID % 100);
-    }
-    
-    public String categoryToLabel(){
-        return switch(this.category){
-            case normal -> "Erwachsener";
-            case children -> "Kind (Bis 14 Jahre)";
-            case reduced -> "Schwerbehinderter";
-            default -> null;
-        };
-    }
+	public int getSeatID() {
+		return seatID;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object)
-            return true;
+	public void setSeatID(int seatID) {
+		this.seatID = seatID;
+		this.setName(getName() + String.valueOf(seatID));
+	}
 
-        if (!(object instanceof Ticket ticket))
-            return false;
+	public String getSeatString() {
+		return ((char) ('A' + this.seatID / 100)) + ("" + this.seatID % 100);
+	}
 
-        return Objects.equals(getId(), ticket.getId())
-                && Objects.equals(getCategory(), ticket.getCategory())
-                && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
-    }
+	public String categoryToLabel() {
+		return switch (this.category) {
+			case normal -> "Erwachsener";
+			case children -> "Kind (Bis 14 Jahre)";
+			case reduced -> "Schwerbehinderter";
+			default -> null;
+		};
+	}
 
-    @Override
-    public int compareTo(Ticket ticket) {
-        return (this.equals(ticket)) ? 0 : 1;
-    }
-
+	/*
+	 * @Override
+	 * public boolean equals(Object object) {
+	 * if (this == object)
+	 * return true;
+	 *
+	 * if (!(object instanceof Ticket ticket))
+	 * return false;
+	 *
+	 * return Objects.equals(getId(), ticket.getId())
+	 * && Objects.equals(getCategory(), ticket.getCategory())
+	 * && Objects.equals(getTicketPrice(), ticket.getTicketPrice());
+	 * }
+	 *
+	 * @Override
+	 * public int compareTo(Ticket ticket) {
+	 * return (this.equals(ticket)) ? 0 : 1;
+	 * }
+	 */
 }

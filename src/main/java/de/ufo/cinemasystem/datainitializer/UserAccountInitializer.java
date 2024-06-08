@@ -40,7 +40,7 @@ public class UserAccountInitializer implements DataInitializer {
 
 	@Override
 	public void initialize() {
-		if (userAccountManagement.findByUsername("BOSS").isPresent()) {
+		if (userAccountManagement.findByUsername("boss").isPresent()) {
 			return;
 		}
 

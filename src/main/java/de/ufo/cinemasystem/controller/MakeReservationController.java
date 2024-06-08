@@ -195,7 +195,7 @@ public class MakeReservationController {
         
         if(errors.isEmpty()){
             //add ticket
-            Ticket t = new Ticket(toCategoryType(ticketType));
+            Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
             t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
             work.addTicket(ticketRepo.save(t));
             showService.update(work.getCinemaShow()).setSeatOccupancy(new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();

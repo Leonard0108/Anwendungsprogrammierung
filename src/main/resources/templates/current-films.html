@@ -27,7 +27,8 @@
                     <div th:each="cinemaShow : ${oneDayCinemaShows.getCinemaShows()}">
                         <div class="film-card" th:attr="onclick='location.href=\'/cinema-shows/' + ${cinemaShow.getId()} + '\''">
                         <!--<a th:href="'/cinema-shows/' + ${cinemaShow.getId()}" href="/current-films/detail/1">-->
-                            <img class="film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" th:alt="${cinemaShow.getFilm().getTitle()}" alt="Filmtitel">
+                            <img class="film-poster" th:src="'/assets/film-posters/' + ${cinemaShow.getFilm().getImageSource()}"
+                                 src="/assets/film-posters/no-image.png" th:alt="${cinemaShow.getFilm().getTitle()}" alt="Filmtitel">
                         <!--</a>-->
                         <div class="film-card-main-section">
                             <!--

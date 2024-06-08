@@ -14,7 +14,8 @@
 
             <div class="film-detail-box">
                 <p class="fsk-label.fsk-18">
-                    <img class="big-film-poster" src="/assets/film-posters/fg4g54g4f54g5454.jpg" alt="Filmtitel">
+                    <img class="big-film-poster" th:src="'/assets/film-posters/' + ${cinemaShow.getFilm().getImageSource()}"
+                         src="/assets/film-posters/no-image.png" alt="Filmtitel">
                 </p>
 
                 <div class="film-detail-text">

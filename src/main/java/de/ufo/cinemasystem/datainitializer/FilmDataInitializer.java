@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -60,6 +61,11 @@ public class FilmDataInitializer implements DataInitializer {
 		List<Film> allFilms = filmRepository.findAll().toList();
 		List<FilmProvider> allFilmProviders = filmProviderRepository.findAll().toList();
 
+		// Test und zufällig
+		List<String> filmPostersSource = new ArrayList<>();
+		filmPostersSource.add("br.jpg");
+		filmPostersSource.add("fg4g54g4f54g5454.jpg");
+
 		// TestDaten:
 		// Speichert 10 Filme mit ansteigender Filmlänge und zufälliger fsk.
 		for(int i = 0; i < 10; i++) {
@@ -69,7 +75,8 @@ public class FilmDataInitializer implements DataInitializer {
 				90 + i * 10,
 				fsks.get(random.nextInt(fsks.size())),
 				allFilmProviders.get(random.nextInt(allFilmProviders.size())),
-				random.nextInt(1000, 2000)
+				random.nextInt(1000, 2000),
+				filmPostersSource.get(random.nextInt(filmPostersSource.size()))
 			);
 			film.addRentWeek(new YearWeekEntry(2024, 20));
 			film.addRentWeek(new YearWeekEntry(2024, 21));

@@ -37,6 +37,7 @@ public class Film  implements Comparable<Film>, PriceChange{
 	private FilmProvider filmProvider;
     private int basicRentFee;
 	private Money basePrice;
+	private String imageSource;
 
 	@ElementCollection
 	private final List<Double> reducedBasicRentFee = new ArrayList<>();
@@ -68,6 +69,20 @@ public class Film  implements Comparable<Film>, PriceChange{
         this.basicRentFee = basicRentFee;
 		this.basePrice = Money.of(-1,"EUR");
     }
+
+	/**
+	 * @param imageSource Name und Dateiende des Bildes in "/assets/film-posters/"
+	 */
+	public Film(String title, String desc, int timePlaying, int fskAge, FilmProvider filmProvider, int basicRentFee, String imageSource) {
+		this.title = title;
+		this.desc = desc;
+		this.fskAge = fskAge;
+		this.timePlaying = timePlaying;
+		this.filmProvider = filmProvider;
+		this.basicRentFee = basicRentFee;
+		this.basePrice = Money.of(-1,"EUR");
+		this.imageSource = imageSource;
+	}
 
     /**
      * Hibernate-only constructor. Do not use, you will break things.
@@ -182,6 +197,15 @@ public class Film  implements Comparable<Film>, PriceChange{
 
 	public boolean isRentNow() {
 		return isRent(LocalDateTime.now());
+	}
+
+	/**
+	 * @return erhalte "Dateiname.Endung als Quelle im Ordner "/assets/film-posters/",
+	 * wenn kein Bild gesetzt ist erhalte "no_image.png" Vorlage
+	 */
+	public String getImageSource() {
+		if(imageSource == null) return "no-image.png";
+		return imageSource;
 	}
 
 	/**

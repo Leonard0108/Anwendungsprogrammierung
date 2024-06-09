@@ -82,9 +82,11 @@ public class MakeOrderController {
 	public String getMethodName(Model m) {
 		m.addAttribute("title", "Kassensystem");
 		LocalDateTime now = LocalDateTime.now();
+        LocalDateTime next = now.plusDays(7);
 		List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList();
 		//unhinge any wannabe-unmodifyables by making a copy to a known-writable list type.
 		toOffer=new ArrayList<>(toOffer);
+        toOffer.addAll(showsRepo.findCinemaShowsInWeek(next.getYear(), AdditionalDateTimeWorker.getWeekOfYear(next)).toList());
 		Iterator<CinemaShow> iterator = toOffer.iterator();
 		while(iterator.hasNext()){
 			CinemaShow cs= iterator.next();

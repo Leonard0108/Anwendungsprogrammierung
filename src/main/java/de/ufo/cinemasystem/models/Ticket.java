@@ -1,11 +1,13 @@
 package de.ufo.cinemasystem.models;
 
+import javax.money.MonetaryAmount;
+
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,7 +23,7 @@ public class Ticket extends Product {
     // private @EmbeddedId ProductIdentifier id =
     // ProductIdentifier.of(UUID.randomUUID().toString());
     private TicketCategory category;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cinema_show_id")
     private CinemaShow show;
     private int seatID;
@@ -31,18 +33,20 @@ public class Ticket extends Product {
 
         super("Ticket", Money.of(0, "EUR"));
         this.category = Category;
-        double reduction;
+        MonetaryAmount reduction;
         switch (this.category) {
             case reduced:
-                reduction = 0.8;
+                reduction = Money.of(2, "EUR");
+                break;
             case children:
-                reduction = 0.7;
+                reduction = Money.of(3, "EUR");
+                break;
             default:
-                reduction = 1;
+                reduction = Money.of(0, "EUR");
         }
         this.show = cinemaShow;
 
-        this.setPrice(show.getBasePrice().multiply(reduction));
+        this.setPrice(show.getBasePrice().subtract(reduction));
 
     }
 

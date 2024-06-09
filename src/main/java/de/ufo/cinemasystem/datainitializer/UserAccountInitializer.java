@@ -62,8 +62,8 @@ public class UserAccountInitializer implements DataInitializer {
 		UserEntry employee_entry = new UserEntry(employee_account, "Test","Employee", "employee@ufo-cinema.de", "fdsffs","3","oedje", "11111", "dfsfffdf", "Deutschland");
 		UserEntry authorized_employee_entry = new UserEntry(authorized_employee, "Test Authorized", "Employee", "aemployee@ufo-cinema.de", "jhfdhjfdhj", "4", "jdjdj", "2222", "kjjkdfkje", "Deutschland");
 
-		EmployeeEntry employee_employeeEntry = new EmployeeEntry(employee_entry, Money.of(12,"EUR"),"employee@ufo-cinema.de", (short) 40);
-		EmployeeEntry authorized_employee_employeeEntry = new EmployeeEntry(authorized_employee_entry, Money.of(15,"EUR"),"aemployee@ufo-cinema.de", (short) 40);
+		EmployeeEntry employee_employeeEntry = new EmployeeEntry(employee_entry, Money.of(1200,"EUR"),"employee@ufo-cinema.de", (short) 40);
+		EmployeeEntry authorized_employee_employeeEntry = new EmployeeEntry(authorized_employee_entry, Money.of(1500,"EUR"),"aemployee@ufo-cinema.de", (short) 40);
 		employeeRepository.save(employee_employeeEntry);
 		employeeRepository.save(authorized_employee_employeeEntry);
 

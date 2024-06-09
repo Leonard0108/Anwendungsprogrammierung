@@ -145,6 +145,11 @@ label {
     border-radius: 10px;
     padding: 1em 2em;
 }
+.snacks{
+    border:1px solid #3c3b42;
+    border-radius: 10px;
+    padding: 1em 2em;
+}
 
 /* messages */
 .info, .success, .error {

@@ -1,50 +1,58 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import de.ufo.cinemasystem.services.SnacksService;
+import java.util.Random;
+
+import org.javamoney.moneta.Money;
 import org.salespointframework.core.DataInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Snacks.SnackType;
 import de.ufo.cinemasystem.repository.SnacksRepository;
-
-import java.util.Random;
-
-import org.javamoney.moneta.Money;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+import de.ufo.cinemasystem.services.SnacksService;
 
 @Component
-@Order(10)
+// Testdaten der Snacks werden nach Filmen und Kinosälen
+// erstellt (deshalb: Order = 5)
+@Order(5)
 public class SnacksDataInitializer implements DataInitializer {
-    private final SnacksService snacksService;
-	private final SnacksRepository snacksRepository;
 
-	public SnacksDataInitializer(SnacksService snacksService, SnacksRepository snacksRepository) {
-		Assert.notNull(snacksService, "snacksService darf nicht null sein!");
-		Assert.notNull(snacksRepository, "snacksRepository darf nicht null sein!");
+    private SnacksRepository snacksrepository;
+    private SnacksService snacksService;
+    private static final Logger LOG = LoggerFactory.getLogger(SnacksDataInitializer.class);
 
-		this.snacksService = snacksService;
-		this.snacksRepository = snacksRepository;
-	}
+    SnacksDataInitializer(SnacksRepository snacksRepository, SnacksService snacksService) {
+        this.snacksrepository = snacksRepository;
+        this.snacksService = snacksService;
+    }
 
     @Override
     public void initialize() {
-        if (snacksRepository.findAll().iterator().hasNext()) {
+        if (snacksrepository.findAll().iterator().hasNext()) {
             return;
         }
         Random random = new Random();
 
         for (int i = 0; i < 10; i++) {
             SnackType type = (i % 2 == 0) ? SnackType.Essen : SnackType.Getränk;
+            Snacks s = new Snacks(
+                "Snack " + i,
+                Money.of(random.nextDouble(3.5, 20), "EUR"),
+                type);
+            snacksrepository.save(s);
 
-			snacksService.createSnack(
-				"Snack " + i,
-				Money.of(random.nextDouble(3.5, 20), "EUR"),
-				type,
-				random.nextInt(10, 50)
-			);
+            snacksService.addStock(s.getId(), 5);
         }
+
+        snacksrepository.findAll().forEach(f -> {
+			System.out.println(f.toString());
+			System.out.println("Name: " + f.getName());
+			System.out.println("Preis: " + f.getPrice());
+			System.out.println("=======================================");
+		});
     }
 
 }

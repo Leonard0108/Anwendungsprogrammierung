@@ -13,7 +13,7 @@
                 <p th:text="'FSK ' + ${reservation.getCinemaShow().getFilm().getFskAge()}" th:class="'fsk-' + ${reservation.getCinemaShow().getFilm().getFskAge()}">0</p>
                 <p th:text="${#temporals.format(reservation.getCinemaShow().getStartDateTime(), 'dd.MM.yyyy HH:mm')}">0 Uhr, 01.01.1970</p>
                 <ul>
-                    <li th:each="ticket: ${reservation.getTickets()}" th:text="${ticket.getSeatString()} +' '+ ${ticket.categoryToLabel()} +' '+ ${ticket.getTicketPrice()}"></li>
+                    <li th:each="ticket: ${reservation.getTickets()}" th:text="${ticket.getSeatString()} +' '+ ${ticket.categoryToLabel()} +' '+ ${ticket.getPrice()}"></li>
                 </ul>
                 <a th:href="'/cancel-reservation/' + ${reservation.getId()}" class="fakeButton" title="Reservierung stornieren | UFO Kinos">Stornieren</a>
             </div>

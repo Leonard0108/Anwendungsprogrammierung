@@ -1,20 +1,18 @@
 package de.ufo.cinemasystem.additionalfiles;
 
 
-import de.ufo.cinemasystem.models.UserEntry;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.util.Streamable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.salespointframework.useraccount.UserAccountManagement;
-
-
-import de.ufo.cinemasystem.repository.UserRepository;
+import org.springframework.data.util.Streamable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import de.ufo.cinemasystem.models.UserEntry;
+import de.ufo.cinemasystem.models.UserEntry.UserIdentifier;
+import de.ufo.cinemasystem.repository.UserRepository;
 
 
 
@@ -101,6 +99,7 @@ public class UserService {
 		userAccounts.disable(userAccount.getId()); 		// before delete user account, disable it - if not springs crashes
 		userAccounts.delete(userAccount);
 	}
+
 
 
 

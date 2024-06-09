@@ -12,9 +12,9 @@
                     <form id="reserve-spots-form-delete" action="/reserve-spots/remove-ticket" method="post">
                         <div class="already-in-cart">
                             <div class="ticket" th:each="ticket : ${tickets}">
-                                <p th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')} +' '+ ${show.getFilm().getTitle()}"></p>
-                                <p th:text="${ticket.getSeatString()} + ' '+ ${ticket.categoryToLabel()}"></p>
-                                <p style="text-align: right" th:text="${ticket.getTicketPrice()}"></p>
+                                <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p>
+                                <p th:text="${ticket.getSeatString()} + ${ticket.categoryToLabel()}"></p>
+                                <p style="text-align: right" th:text="${ticket.getPrice()}"></p>
                                 <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${ticket.getId()}">Löschen</button>
                             </div>
                         </div>

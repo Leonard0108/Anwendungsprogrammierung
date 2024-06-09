@@ -1,11 +1,18 @@
 
 package de.ufo.cinemasystem.controller;
 
-import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
-import de.ufo.cinemasystem.additionalfiles.UserService;
-import jakarta.servlet.http.HttpSession;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
+import org.salespointframework.inventory.UniqueInventory;
+import org.salespointframework.inventory.UniqueInventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
+import de.ufo.cinemasystem.additionalfiles.UserService;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.CinemaShowService;
 import de.ufo.cinemasystem.models.Reservation;
@@ -26,14 +35,7 @@ import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.regex.Pattern;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Spring MVC Controller for making reservations.
@@ -52,6 +54,12 @@ public class MakeReservationController {
      */
     public static final String privilegedReservationKey = "current-reservation-privileged";
     
+	private final UniqueInventory<UniqueInventoryItem> inventory;
+    
+    public MakeReservationController(UniqueInventory<UniqueInventoryItem> inventory){        
+		this.inventory = inventory;
+    }
+
     private @Autowired ReservationRepository repo;
     private @Autowired CinemaShowRepository showsRepo;
     private @Autowired UserRepository uRepo;
@@ -195,7 +203,9 @@ public class MakeReservationController {
         
         if(errors.isEmpty()){
             //add ticket
+
             Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
+
             t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
             work.addTicket(ticketRepo.save(t));
             showService.update(work.getCinemaShow()).setSeatOccupancy(new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
@@ -286,6 +296,7 @@ public class MakeReservationController {
     private void deleteTickets(Reservation rev){
         Ticket[] tickets = rev.getTickets();
         for(Ticket t:tickets){
+			this.inventory.delete(inventory.findByProduct(t).get());
             rev.removeTicket(t);
             rev = repo.save(rev);
             showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (t.getSeatID() / 100), (int) (t.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();

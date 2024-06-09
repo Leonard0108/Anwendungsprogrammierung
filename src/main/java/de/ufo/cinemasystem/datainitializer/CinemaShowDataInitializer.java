@@ -1,18 +1,22 @@
 package de.ufo.cinemasystem.datainitializer;
 
+
 import de.ufo.cinemasystem.models.*;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
+
 
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
+
 
 @Component
 // Testdaten der Kinoveranstaltungen werden nach den Testdaten für die Filme und der Kinosäle erstellt (deshalb: Order = 3)

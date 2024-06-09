@@ -1,29 +1,21 @@
 package de.ufo.cinemasystem.controller;
 
-import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.Film;
-import de.ufo.cinemasystem.models.Snacks;
-import de.ufo.cinemasystem.repository.SnacksRepository;
-import de.ufo.cinemasystem.services.SnacksService;
+import java.util.LinkedHashMap;
+import java.util.stream.Collectors;
+
 import org.javamoney.moneta.Money;
-import org.salespointframework.catalog.Product;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static org.salespointframework.core.Currencies.EURO;
+import de.ufo.cinemasystem.models.Snacks;
+import de.ufo.cinemasystem.repository.SnacksRepository;
+import de.ufo.cinemasystem.services.SnacksService;
 
 @Controller
 public class ManageStorageController {

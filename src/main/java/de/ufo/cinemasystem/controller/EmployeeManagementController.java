@@ -8,6 +8,7 @@ import de.ufo.cinemasystem.models.EmployeeEntry;
 import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.EmployeeRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -38,7 +39,7 @@ public class EmployeeManagementController {
 	}
 
 	//PreAuthorize ist eine Annotation, welche der automatischen Autorisationserkennung dient.
-	//@PreAuthorize("BOSS")
+	@PreAuthorize("BOSS")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee(Model m, EmployeeRegistrationForm form) {
 		return "EmployeeRegistration";
@@ -46,7 +47,7 @@ public class EmployeeManagementController {
 
 
 
-	//@PreAuthorize("BOSS")
+	@PreAuthorize("BOSS")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {

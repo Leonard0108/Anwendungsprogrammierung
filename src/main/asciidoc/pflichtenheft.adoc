@@ -741,19 +741,24 @@ a|Um die aktuellen Performance Ergebnisse der einzelnen Filme sehen zu können i
 a|Dem Chef ist es möglich die Grundpreise der einzelnen Filme sowie die Rabattierung der unterschiedlichen Ticketarten anzupassen.
 |
 
-|[[F0451]]<<F0451>>
+|[[F0331]]<<F0331>>
 |v0.1
-|Umsatzstatistiken einsehen
-a|Der Chef kann sich Statistiken zu Tageseinnahmen sowie Monatsumsätzen anzeigen lassen. Kann ggf auch als Hilfe für die Erstellung des Jahresabschlusses
-  genutzt werden
+|Zentrallagerverwaltung
+a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
+So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
 |
 
-|[[F0421]]<<F0421>>
+|[[F0311]]<<F0311>>
 |v0.1
-|Personal verwalten
-a|Der Chef kann die Nutzerkonten der Mitarbeiter erstellen und verwalten sowie ihre Berechtigungen ändern.
-|
+|Säle vermieten
+a| Der Chef sollte die Möglichkeit haben Säle für externe Events vermieten zu können.
+|Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
 
+|[[F0236]]<<F0236>>
+|v0.1
+|Kauf von Snacks
+a|Kunden können die Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
+|
 
 
 |===
@@ -778,11 +783,6 @@ Anforderungen, die das Programm leisten können soll, aber für den korrekten Be
 a|Kunden können die Veranstaltung für die ihr Ticket gültig ist ändern lassen, falls sie den zuvor gebuchten Termin nicht wahrnehmen können.
 |
 
-|[[F0236]]<<F0236>>
-|v0.1
-|Kauf von Snacks
-a|Kunden können die Snacks im Warenkorb an den jeweiligen Kassen bezahlen.
-|
 
 |[[F0237]]<<F0237>>
 |v0.1
@@ -791,24 +791,26 @@ a|
 Mitarbeiter sucht außerdem über den Nutzernamen oder E-Mail des Kunden nach seiner Reservierung.
 |
 
-|[[F0331]]<<F0331>>
-|v0.1
-|Zentrallagerverwaltung
-a|Autorisierte Mitarbeiter sollten die Möglichkeit haben auf das Lagerinventar zuzugreifen.
-So könnte überprüft werden, ob beispielsweise noch genug Snacks vorhanden sind.
-|
 
-|[[F0311]]<<F0311>>
-|v0.1
-|Säle vermieten
-a| Der Chef sollte die Möglichkeit haben Säle für externe Events vermieten zu können.
-|Er sollte der Einzige Mitarbeiter mit dieser Berechtigung sein.
 
 |[[F0238]]<<F0238>>
 |v0.1
 |Änderungen oder Löschen an Cinemashows einschränken
 a|
 Ändern oder löschen von Cinemashows soll nicht möglich sein, wenn bereits Tickets für die Veranstaltung gekauft wurden.
+|
+
+|[[F0451]]<<F0451>>
+|v0.1
+|Umsatzstatistiken einsehen
+a|Der Chef kann sich Statistiken zu Tageseinnahmen sowie Monatsumsätzen anzeigen lassen. Kann ggf auch als Hilfe für die Erstellung des Jahresabschlusses
+  genutzt werden
+|
+
+|[[F0421]]<<F0421>>
+|v0.1
+|Personal verwalten
+a|Der Chef kann die Nutzerkonten der Mitarbeiter erstellen und verwalten sowie ihre Berechtigungen ändern.
 |
 
 

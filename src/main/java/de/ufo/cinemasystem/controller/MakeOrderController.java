@@ -266,7 +266,7 @@ public class MakeOrderController {
 			orderManagement.completeOrder(work);
 
 			cart.clear();
-
+			session.removeAttribute(orderSessionKey);
 			return "redirect:/sell-tickets";
 		}).orElse("sell-items-1");
 

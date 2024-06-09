@@ -21,9 +21,12 @@ public interface UserRepository extends CrudRepository<UserEntry, UserIdentifier
 	Streamable<UserEntry> findAll();
 	@NotNull
 	Optional<UserEntry> findById(@NotNull UserIdentifier id);
+	@NotNull
+	UserEntry findByIdAndFirstName(@NotNull UserIdentifier id, String firstName);
 	UserEntry findByUserAccountUsername(String userName);
 	UserEntry findByUserAccountEmail(String email);
 	UserEntry findByeMail(String email);
+
 	//	UserEntry findByUserAccountUsername(String userName);
 	//Optional<UserEntry> findUserEntriesByUserAccountUsername(Long aLong);
 	Optional<UserEntry> findByIdIdentifier(UUID identifier);

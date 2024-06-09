@@ -53,14 +53,17 @@ public class EmployeeService {
 				return;
 			}
 
-			UserAccount userAccount = userAccountManagement.create(employeeRegistrationForm.getUsername(), Password.UnencryptedPassword.of(employeeRegistrationForm.getPassword()), Role.of("EMPLOYEE"));
-			userAccount.setFirstname(employeeRegistrationForm.getFirstName());
-			userAccount.setLastname(employeeRegistrationForm.getLastName());
-			userAccount.setEmail(employeeRegistrationForm.getEMail());
 
-			UserEntry userEntry = new UserEntry(userAccount, employeeRegistrationForm.getFirstName(), employeeRegistrationForm.getLastName(), employeeRegistrationForm.getEMail(), employeeRegistrationForm.getStreetName(), employeeRegistrationForm.getHouseNumber(), employeeRegistrationForm.getCity(), employeeRegistrationForm.getPostalCode(), employeeRegistrationForm.getState(), employeeRegistrationForm.getCountry());
+			UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
 
-			if (userRepository.findByeMail(employeeRegistrationForm.getEMail()) == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {
+			if (userEntry == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {
+				UserAccount userAccount = userAccountManagement.create(employeeRegistrationForm.getUsername(), Password.UnencryptedPassword.of(employeeRegistrationForm.getPassword()), Role.of("EMPLOYEE"));
+				userAccount.setFirstname(employeeRegistrationForm.getFirstName());
+				userAccount.setLastname(employeeRegistrationForm.getLastName());
+				userAccount.setEmail(employeeRegistrationForm.getEMail());
+
+				userEntry = new UserEntry(userAccount, employeeRegistrationForm.getFirstName(), employeeRegistrationForm.getLastName(), employeeRegistrationForm.getEMail(), employeeRegistrationForm.getStreetName(), employeeRegistrationForm.getHouseNumber(), employeeRegistrationForm.getCity(), employeeRegistrationForm.getPostalCode(), employeeRegistrationForm.getState(), employeeRegistrationForm.getCountry());
+
 				userRepository.save(userEntry);
 			}
 
@@ -71,38 +74,40 @@ public class EmployeeService {
 
 
 
-		public void editEmployee(UserEntry.UserIdentifier id, String firstName, String lastName, String email, String job, String salary, String hours)
+	public void editEmployee(UserEntry.UserIdentifier id, String firstName, String lastName, String email, String job, String salary, String hours)
+	{
+		UserEntry     userEntry     = userRepository.findByIdAndFirstName(id, firstName);
+		EmployeeEntry employeeEntry = employeeRepository.findById(id);
+
+		if (firstName != null && !firstName.isEmpty()) {
+			userEntry.setFirstName(firstName);
+		}
+		if (lastName != null && !lastName.isEmpty()) {
+			userEntry.setLastName(lastName);
+		}
+		if (email != null && !email.isEmpty()) {
+			userEntry.setEMail(email);
+		}
+		if (job.contains("EMPLOYEE"))
 		{
-			UserEntry     userEntry     = userRepository.findById(id).orElseThrow();
-			EmployeeEntry employeeEntry = employeeRepository.findById(id);
+			userEntry.getUserAccount().add(Role.of("EMPLOYEE"));
+		}
+		if (job.contains("AUTHORIZED_EMPLOYEE"))
+		{
+			userEntry.getUserAccount().add(Role.of("AUTHORIZED_EMPLOYEE"));
+		}
+		if (salary != null && !salary.isEmpty()) {
+			String salaryCleaned = salary.replaceAll("[€,]", "");
+			Long salaryLong = Long.parseLong(salaryCleaned);
+			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
+			CurrencyUnit currency = Monetary.getCurrency("EUR");
+			Money finishedSalary = Money.of(salaryAmount, currency);
 
-			if (firstName != null && !firstName.isEmpty()) {
-				userEntry.setFirstName(firstName);
-			}
-			if (lastName != null && !lastName.isEmpty()) {
-				userEntry.setLastName(lastName);
-			}
-			if (email != null && !email.isEmpty()) {
-				userEntry.setEMail(email);
-			}
-			if (job.contains("EMPLOYEE"))
-			{
-				userEntry.getUserAccount().add(Role.of("EMPLOYEE"));
-			}
-			if (job.contains("AUTHORIZED_EMPLOYEE"))
-			{
-				userEntry.getUserAccount().add(Role.of("AUTHORIZED_EMPLOYEE"));
-			}
-			if (salary != null && !salary.isEmpty()) {
-				String salaryCleaned = salary.replaceAll("[€,]", "");
-				Long salaryLong = Long.parseLong(salaryCleaned);
-				BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
-				CurrencyUnit currency = Monetary.getCurrency("EUR");
-				Money finishedSalary = Money.of(salaryAmount, currency);
-
-				employeeEntry.setSalary(finishedSalary);
-
-			}
+			employeeEntry.setSalary(finishedSalary);
+		}
+		if (hours != null && !hours.isEmpty()) {
+			employeeEntry.setHoursPerWeek(Short.parseShort(hours));
 		}
 	}
+}
 

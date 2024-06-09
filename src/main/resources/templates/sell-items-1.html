@@ -13,10 +13,11 @@
             <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${show.getStartDateTime()}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="${show.getFilm().getFskAge()}">FSK 12</span></p>
             <form id="sell-spots-form-delete" action="/sell/remove-ticket" method="post">
                 <div class="already-in-cart">
-                    <div class="ticket" th:each="item : ${cart}">
-                        <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p><p th:text="${item.productname}"></p>
-                        <p style="text-align: right" th:text="${{item.price}}"></p>
-                        <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${cart.getItem()}">Löschen</button>
+                    <div class="ticket" th:each="item : ${cart.get().toList()}">
+                        <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p>
+                        <p th:text="${item.getProductName()}"></p>
+                        <p style="text-align: right" th:text="${item.getPrice()}"></p>
+                        <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${item.getId()}">Löschen</button>
                     </div>
                 </div>
             </form>
@@ -43,6 +44,8 @@
                 <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
                 <button name="addTicket" value="1">Ticket hinzufügen</button>
                 <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
+            </form>
+            <form id="sell-form-snack-adder" action="/sell/snacks" method="post">
                 <h2>Snacks Hinzufügen</h2>
                 <p><label for="htmlUniqueID3">Snacks:</label></p>
                         <select id="htmlUniqueID3" name="snack">
@@ -53,6 +56,7 @@
                 <p class="flex">Gesamtsumme: <span class="grow"></span> 0.00€</p>
                 <button name="doBuy" value="1">Kaufvorgang abschließen</button>
             </form>
+
         </div>
 
     </body>

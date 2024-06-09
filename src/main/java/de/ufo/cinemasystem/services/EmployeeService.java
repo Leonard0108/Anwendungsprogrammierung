@@ -1,10 +1,10 @@
 package de.ufo.cinemasystem.services;
 
-import de.ufo.cinemasystem.additionalfiles.EmployeeRegistrationForm;
-import de.ufo.cinemasystem.models.EmployeeEntry;
-import de.ufo.cinemasystem.models.UserEntry;
-import de.ufo.cinemasystem.repository.EmployeeRepository;
-import de.ufo.cinemasystem.repository.UserRepository;
+import java.math.BigDecimal;
+
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+
 import org.javamoney.moneta.Money;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
@@ -13,10 +13,11 @@ import org.salespointframework.useraccount.UserAccountManagement;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.money.CurrencyUnit;
-import javax.money.Monetary;
-import java.math.BigDecimal;
-import java.util.NoSuchElementException;
+import de.ufo.cinemasystem.additionalfiles.EmployeeRegistrationForm;
+import de.ufo.cinemasystem.models.EmployeeEntry;
+import de.ufo.cinemasystem.models.UserEntry;
+import de.ufo.cinemasystem.repository.EmployeeRepository;
+import de.ufo.cinemasystem.repository.UserRepository;
 
 
 @Service
@@ -77,7 +78,7 @@ public class EmployeeService {
 	public void editEmployee(UserEntry.UserIdentifier id, String firstName, String lastName, String email, String job, String salary, String hours)
 	{
 		UserEntry     userEntry     = userRepository.findByIdAndFirstName(id, firstName);
-		EmployeeEntry employeeEntry = employeeRepository.findById(id);
+		EmployeeEntry employeeEntry = employeeRepository.findById(id).orElseThrow();
 
 		if (firstName != null && !firstName.isEmpty()) {
 			userEntry.setFirstName(firstName);

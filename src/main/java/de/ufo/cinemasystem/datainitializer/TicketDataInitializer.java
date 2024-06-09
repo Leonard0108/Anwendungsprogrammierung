@@ -1,9 +1,8 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import de.ufo.cinemasystem.models.*;
-import de.ufo.cinemasystem.repository.CinemaShowRepository;
-import de.ufo.cinemasystem.repository.SeatRepository;
-import de.ufo.cinemasystem.repository.TicketRepository;
+import java.util.List;
+import java.util.Random;
+
 import org.salespointframework.core.DataInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +10,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.List;
-import java.util.Random;
+import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.CinemaShowService;
+import de.ufo.cinemasystem.models.Seat;
+import de.ufo.cinemasystem.models.Ticket;
+import de.ufo.cinemasystem.repository.CinemaShowRepository;
+import de.ufo.cinemasystem.repository.SeatRepository;
+import de.ufo.cinemasystem.repository.TicketRepository;
 
 @Component
 @Order(9)
@@ -68,7 +72,7 @@ public class TicketDataInitializer implements DataInitializer {
 				ticketCategorys[random.nextInt(4)],
 				cinemaShow
 			);
-			ticket.setSeatID(seat.getId());
+			ticket.setSeatID(seat.getId().intValue());
 
 
 			ticketRepository.save(ticket);
@@ -79,7 +83,7 @@ public class TicketDataInitializer implements DataInitializer {
 			System.out.println("Kategorie: " + t.getCategory());
 			System.out.println("Vorführung: " + t.getTicketShowName());
 			System.out.println("ID: " + t.getId());
-			System.out.println("Saal: " + t.getShow().getCinemaHall().getName());
+			System.out.println("Saal: " + t.getCinemaShow().getCinemaHall().getName());
 			System.out.println("Sitzplatz: " + t.getSeatID());
 			System.out.println("Preis: " + t.getPrice());
 			System.out.println("=======================================");

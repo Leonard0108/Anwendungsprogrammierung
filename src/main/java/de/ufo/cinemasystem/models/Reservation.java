@@ -131,7 +131,7 @@ public class Reservation {
      * @return total price in €
      */
     public Money getTotalPrice(){
-        Money total = Money.of(0, "EUR")
+        Money total = Money.of(0, "EUR");
         for(Ticket t:tickets){
             total = total.add(t.getPrice() != null? t.getPrice():total);
         }

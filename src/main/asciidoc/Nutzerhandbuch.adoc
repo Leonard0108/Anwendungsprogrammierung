@@ -50,25 +50,32 @@ Im nachfolgenden werden die wichtigsten Funktionen erläutert.
 
 ==== Anmelden
 
-...
+Um sich anzumelden, gehen sie auf http://127.0.0.1:8080/login tragen ihren Nutzernamen und Passwort in die jeweiligen Felder ein und drücken auf Anmelden.
 
 ==== Registrieren
 
-...
+Um sich als Kunde zu registrieren gehen sie auf http://127.0.0.1:8080/registration füllen sie alle Felder aus und drücken sie auf registrieren. E-Mail und Nutzername dürfen noch nicht vergeben sein.
 
 ==== Nutzergruppen
 
 [options="header"]
 |===
-|Name    | Zugewiesene Rechte  
-| ...    | ...
+|Name                 | Zugewiesene Rechte  
+| Customer            | Reservierung anlegen, eigene Reservierung löschen, eigene Reservierungen anzeigen.
+| EMPLOYEE            | Zusätzlich zum Customer: Tickets/Snacks verkaufen
+| AUTHORIZED_EMPLOYEE | Zusätzlich zu EMPLOYEE: Programm verwalten, Filme ausleihen, Lager verwalten
+| BOSS                | Zusätzlich zu AUTHORIZED_EMPLOYEE: Wirtschaftsstatistik einsehen, Saalverwaltung benutzen, Preise anpassen, Personal verwalten
 |===
 
 ==== Initial angelegte Konten
 [options="header"]
 |===
 |Name    | Passwort | Nutzergruppe
-| ...    | ...      |    
+| boss    | 123      | BOSS
+| em    | 123      | EMPLOYEE 
+| aem    | 123      | AUTHORIZED_EMPLOYEE
+| Test    | 123      | Customer
+| user    | 123      | Customer 
 |===
 
 === Kundenportal
@@ -102,16 +109,69 @@ Um Reservierungen anzeigen zu können, müssen Sie im fraglichen Account eingelo
 
 Sie können Reservierungen Löschen, in dem Sie in der Reservierungsansicht den Löschen-Link für die fragliche Reservierung klicken oder die Reservierungsnummer in das Formular unterhalb eingeben. In beiden Fällen wird die Reservierung nach einer Sicherheitsabfrage endgültig gelöscht.
 
+==== Programm ansehen
+
+Um das aktuelle Programm einzusehen, gehen Sie auf http://127.0.0.1:8080/current-films Um das Programm einer anderen Woche einzusehen, benutzen Sie bitte schriitweise die Mit Wochendaten beschrifteten Links für die Gewünschte Richtung.
+
+
 === Verwaltungssystem
 
 ...
+
+==== Programm verwalten
+
+Um das Programm verwalten zu können, müssen sie als AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Gehen sie zum hinzufügen von Programmpunkten auf http://127.0.0.1:8080/current-films
+Um Programmpunkte zu ändern oder zu löschen, gehen sie auf obiger Seite auf den fraglichen Programmpunkt. Der Saal kann nur durch löschen und neuanlegen geändert werden, damit die Platzzuordnung funktioniert.
+Wenn sie einen Programmpunkt löschen, beachten sie bitte, dass dadurch jegliche Reservierungen und gekaufte Tickets unwiederufflich gelöscht werden. Sie können erst dann Veranstaltungen für einen
+Film anlegen, wenn der Ticketpreis festgelegt wurde. Veranstaltungen dürfen sich einschließlich eines 10 min. Puffers davor und danach nicht überschneiden. Sie können keine 
+Vorführung anlegen, wenn der Film im Fraglichen Zeitpunkt nicht entliehen wurde.
+
+==== Filme ausleihen
+
+Um Filme ausleihen zu können, müssen sie als AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/rent-films 
+Sie können den Verleihstatus nur für kommende Wochen ändern, und nur solange keine Vorführungen für den Fraglichen Film in der fraglichen Woche existieren.
+
+==== Lagerverwaltung
+
+Um das Lager verwalten zu können, müssen sie als AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/manage/storage
 
 === Operativsystem
 
 ...
 
+==== Saalverwaltung 
+
+Um Säle verwalten zu können, müssen sie als BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/manage/rooms
+Kinoprogramm wird über die Programmverwaltung verwaltet.
+
+==== Wirtschaftsstatistik einsehen
+
+Um die Wirtschaftsstatistik einsehen, müssen sie als BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/statistics
+
+
+==== Preise anpassen
+
+Um die Preise anpassen zu können, müssen sie als BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/manage/pricing
+
+
+==== Personalverwaltung 
+
+Um das Personal zu verwalten, müssen sie als BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/manage/staff
+
 === Kassensubsystem
 
 ...
 
+==== Tickets verkaufen
 
+Um Tickets zu verkaufen, müssen sie als EMPLOYEE, AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/sell-tickets wählen aus dem Dropdown die Gewünschte Veranstaltung aus und klicken Sie auf Weiter.
+Sie können nur für Veranstaltungen dieser oder nächster Woche Tickets verkaufen. 
+
+Wenn der Kunde ihnen eine Reservierungsnummer gibt, geben sie diese Nummer in das Eingabefeld "Reservierungsnummer" ein und drücken sie auf "Reservierung Laden",
+um die Tickets dieser Reservierung zu laden.
+
+Um ein Ticket zu entfernen klicken Sie auf den Löschen-Knopf innerhalb des Tickets. 
+Um ein Ticket hinzuzufügen, wählen Sie aus der Maske den Tickettyp aus und Geben in das Eingabefeld oberhalb der Saalansicht den Platz ein. Gültige Plätze hängen vom Layout des Saals ab, Grundsätzlich sind jedoch 
+A0, B1, C10 oder F1 gültige Plätze, während AA, 0A, 00 und F01 es nicht sind. Anschließend klicken Sie auf "Ticket hinzufügen" um das Ticket dem Warenkorb hinzuzufügen. Bereits belegte Plätze lassen sich nicht erneut verkaufen.
+
+Zum Abschluss des Bezahlvorgangs klicken Sie auf "Kaufvorgang abschließen".

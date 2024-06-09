@@ -105,7 +105,7 @@ public class UserService {
 
 
 
-	public UserEntry getEmployeeById(Long id) {
+	public UserEntry getEmployeeById(UserEntry.UserIdentifier id) {
 		return userRepository.findById(id).orElse(null);
 	}
 

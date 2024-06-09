@@ -16,6 +16,7 @@ import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -39,7 +40,7 @@ public class DeleteReservationController {
      * @return 
      */
     @GetMapping("/my-reservations")
-    //@PreAuthorize("USER")
+    @PreAuthorize("isAuthenticated()")
     public String getReservations(Model m, @AuthenticationPrincipal UserDetails currentUser){
         m.addAttribute("title", "Meine Reservierungen");
         m.addAttribute("reservations", repo.findAllByUser(uRepo.findByUserAccountUsername(currentUser.getUsername())));
@@ -54,7 +55,7 @@ public class DeleteReservationController {
      * @return 
      */
     @PostMapping("/my-reservations/delete/")
-    //@PreAuthorize("USER")
+    @PreAuthorize("isAuthenticated()")
     public String getDeleteForm2(Model m, @RequestParam("reserveNumber") Reservation id, @AuthenticationPrincipal UserDetails currentUser){
         if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
             //do NOT leak the reservation context
@@ -74,7 +75,7 @@ public class DeleteReservationController {
      * @return 
      */
     @GetMapping("/cancel-reservation/{id}")
-    //@PreAuthorize("USER")
+    @PreAuthorize("isAuthenticated()")
     public String getDeleteForm(Model m, @PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser){
         if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
             //do NOT leak the reservation context
@@ -93,7 +94,7 @@ public class DeleteReservationController {
      * @return 
      */
     @PostMapping("/cancel-reservation/{id}")
-    //@PreAuthorize("USER")
+    @PreAuthorize("isAuthenticated()")
     public String deleteReservation(@PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser){
         if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
             //do NOT leak the reservation context

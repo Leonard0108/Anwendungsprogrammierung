@@ -36,6 +36,7 @@ import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Spring MVC Controller for making reservations.
@@ -71,6 +72,7 @@ public class MakeReservationController {
      * @param m
      * @return 
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reserve-spots/reserve")
     public String startReservation(Model m){
         m.addAttribute("title", "Plätze reservieren");
@@ -99,6 +101,7 @@ public class MakeReservationController {
      * @param session
      * @return 
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/reserve-spots/reserve/{what}")
     public String startReservation(Model m, @PathVariable CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         if(session.getAttribute(reservationSessionKey) == null){
@@ -131,6 +134,7 @@ public class MakeReservationController {
      * @param session 
      * @return the view name
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/reserve")
     public String onShowSelected(Model m, @RequestParam("event") CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         if(session.getAttribute(reservationSessionKey) == null){
@@ -165,6 +169,7 @@ public class MakeReservationController {
      * @param ticketType
      * @return 
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/add-ticket")
     public String addTicketToReservation(Model m, HttpSession session, @RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot){
         if(session.getAttribute(reservationSessionKey) == null){
@@ -227,6 +232,7 @@ public class MakeReservationController {
      * @param ticket
      * @return model name or redirect url
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/remove-ticket")
     public String removeTicketFromReservation(Model m, HttpSession session, @RequestParam("deleteCartEntry") Ticket ticket){
         if(session.getAttribute(reservationSessionKey) == null){
@@ -254,6 +260,7 @@ public class MakeReservationController {
      * @param session
      * @return 
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/commit")
     public String commitReservation(RedirectAttributes redir, HttpSession session){
         if(session.getAttribute(reservationSessionKey) == null){

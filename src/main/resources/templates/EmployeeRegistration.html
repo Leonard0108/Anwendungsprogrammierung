@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Registration Form</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <form method="post" role="form" class="ui form" id="registerForm" th:action="@{/EmployeeControlling/createEmployee}" th:object="${employeeRegistrationForm}">
+
+        <h3 class="ui dividing header">Nutzerdaten</h3>
+
+        <div class="ui negative message" th:if="${#fields.hasErrors('*')}">
+            <p>Einige Angaben sind nicht korrekt.</p>
+        </div>
+
+        <div class="formfield">
+            <label for="username">Nutzername</label>
+            <input id="username" name="username" th:field="*{username}" th:errorclass="fieldError" type="text"
+                   required="required"/>
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="password">Passwort</label>
+            <input id="password" name="password" th:field="*{password}" th:errorclass="fieldError" type="password"
+                   required="required"/>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="eMail">E-Mail</label>
+            <input id="eMail" name="eMail" th:field="*{eMail}" th:errorclass="fieldError" type="text"
+                   required="required"/>
+            <p th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="firstName">Vorname</label>
+            <input id="firstName" name="firstName" th:field="*{firstName}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="lastName">Nachname</label>
+            <input id="lastName" name="lastName" th:field="*{lastName}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="streetName">Straße</label>
+            <input id="streetName" name="streetName" th:field="*{streetName}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="houseNumber">Hausnummer</label>
+            <input id="houseNumber" name="houseNumber" th:field="*{houseNumber}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('houseNumber')}" th:errors="*{houseNumber}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="city">Stadt</label>
+            <input id="city" name="city" th:field="*{city}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="postalCode">Postleitzahl</label>
+            <input id="postalCode" name="postalCode" th:field="*{postalCode}" th:errorclass="fieldError" type="number" required="required"/>
+            <p th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="state">Bundesland</label>
+            <input id="state" name="state" th:field="*{state}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="country">Land</label>
+            <input id="country" name="country" th:field="*{country}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="jobMail">Job E-Mail</label>
+            <input id="jobMail" name="jobMail" th:field="*{jobMail}" th:errorclass="fieldError" type="text" required="required"/>
+            <p th:if="${#fields.hasErrors('jobMail')}" th:errors="*{jobMail}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="salary">Gehalt</label>
+            <input id="salary" name="salary" th:field="*{salary}" th:errorclass="fieldError" type="number" required="required"/>
+            <p th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></p>
+        </div>
+
+        <div class="formfield">
+            <label for="hoursPerWeek">Stunden pro Woche</label>
+            <input id="hoursPerWeek" name="hoursPerWeek" th:field="*{hoursPerWeek}" th:errorclass="fieldError" type="number" required="required"/>
+            <p th:if="${#fields.hasErrors('hoursPerWeek')}" th:errors="*{hoursPerWeek}"></p>
+        </div>
+
+        <button type="submit" class="ui button">Registrieren</button>
+    </form>
+</section>
+</body>
+</html>

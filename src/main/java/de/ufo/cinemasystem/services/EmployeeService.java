@@ -1,0 +1,108 @@
+package de.ufo.cinemasystem.services;
+
+import de.ufo.cinemasystem.additionalfiles.EmployeeRegistrationForm;
+import de.ufo.cinemasystem.models.EmployeeEntry;
+import de.ufo.cinemasystem.models.UserEntry;
+import de.ufo.cinemasystem.repository.EmployeeRepository;
+import de.ufo.cinemasystem.repository.UserRepository;
+import org.javamoney.moneta.Money;
+import org.salespointframework.useraccount.Password;
+import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManagement;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import java.math.BigDecimal;
+import java.util.NoSuchElementException;
+
+
+@Service
+public class EmployeeService {
+		EmployeeRepository employeeRepository;
+		UserAccountManagement userAccountManagement;
+		UserRepository userRepository;
+
+
+
+		public EmployeeService(EmployeeRepository employeeRepository, UserAccountManagement userAccountManagement, UserRepository userRepository) {
+			this.employeeRepository = employeeRepository;
+			this.userAccountManagement = userAccountManagement;
+			this.userRepository = userRepository;
+		}
+
+
+		public void createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
+		{
+			Assert.notNull(employeeRegistrationForm, "Registration form must not be null!");
+
+			short hoursPerWeek = Short.parseShort(employeeRegistrationForm.getHoursPerWeek());
+			String salaryCleaned = employeeRegistrationForm.getSalary().replaceAll("[€,]", "");
+			Long salaryLong = Long.parseLong(salaryCleaned);
+			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
+			CurrencyUnit currency = Monetary.getCurrency("EUR");
+			Money salary = Money.of(salaryAmount, currency);
+
+			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero() || salary.divide(hoursPerWeek * 4).isLessThan(Money.of(12, salary.getCurrency()))) {
+				return;
+			}
+
+			if (!employeeRegistrationForm.getJobMail().endsWith("@ufo-kino.de") || employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent()) {
+				return;
+			}
+
+			UserAccount userAccount = userAccountManagement.create(employeeRegistrationForm.getUsername(), Password.UnencryptedPassword.of(employeeRegistrationForm.getPassword()), Role.of("EMPLOYEE"));
+			userAccount.setFirstname(employeeRegistrationForm.getFirstName());
+			userAccount.setLastname(employeeRegistrationForm.getLastName());
+			userAccount.setEmail(employeeRegistrationForm.getEMail());
+
+			UserEntry userEntry = new UserEntry(userAccount, employeeRegistrationForm.getFirstName(), employeeRegistrationForm.getLastName(), employeeRegistrationForm.getEMail(), employeeRegistrationForm.getStreetName(), employeeRegistrationForm.getHouseNumber(), employeeRegistrationForm.getCity(), employeeRegistrationForm.getPostalCode(), employeeRegistrationForm.getState(), employeeRegistrationForm.getCountry());
+
+			if (userRepository.findByeMail(employeeRegistrationForm.getEMail()) == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {
+				userRepository.save(userEntry);
+			}
+
+			EmployeeEntry employeeEntry = new EmployeeEntry(userEntry, salary, employeeRegistrationForm.getJobMail(), hoursPerWeek);
+			employeeRepository.save(employeeEntry);
+		}
+
+
+
+
+		public void editEmployee(UserEntry.UserIdentifier id, String firstName, String lastName, String email, String job, String salary, String hours)
+		{
+			UserEntry     userEntry     = userRepository.findById(id).orElseThrow();
+			EmployeeEntry employeeEntry = employeeRepository.findById(id);
+
+			if (firstName != null && !firstName.isEmpty()) {
+				userEntry.setFirstName(firstName);
+			}
+			if (lastName != null && !lastName.isEmpty()) {
+				userEntry.setLastName(lastName);
+			}
+			if (email != null && !email.isEmpty()) {
+				userEntry.setEMail(email);
+			}
+			if (job.contains("EMPLOYEE"))
+			{
+				userEntry.getUserAccount().add(Role.of("EMPLOYEE"));
+			}
+			if (job.contains("AUTHORIZED_EMPLOYEE"))
+			{
+				userEntry.getUserAccount().add(Role.of("AUTHORIZED_EMPLOYEE"));
+			}
+			if (salary != null && !salary.isEmpty()) {
+				String salaryCleaned = salary.replaceAll("[€,]", "");
+				Long salaryLong = Long.parseLong(salaryCleaned);
+				BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
+				CurrencyUnit currency = Monetary.getCurrency("EUR");
+				Money finishedSalary = Money.of(salaryAmount, currency);
+
+				employeeEntry.setSalary(finishedSalary);
+
+			}
+		}
+	}
+

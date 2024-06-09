@@ -3,75 +3,74 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
-    <head>
-    </head>
-    <body>
-        <div class="main-wrapper" role="main" layout:fragment="content">
-            <h1>Personalverwaltung</h1>
-            <h2>Mitarbeiter</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>E-Mail</th>
-                        <th>Name</th>
-                        <th>Job</th>
-                        <th>Monatsgehalt</th>
-                        <th>Wochenstunden</th>
-                        <th>Zugang</th>
-                        <th>Aktionen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>boss@ufo-kinos.de</td>
-                        <td>Boss, Der</td>
-                        <td>Big Boss</td>
-                        <td>5000€</td>
-                        <td>Zu viele :p</td>
-                        <td>Boss</td>
-                        <th>
-                            <a href="/manage/staff?change=1&AMP;id=78324748324732844" style="display: block">bearbeiten</a>
-                            <a href="/manage/staff?delete=1&AMP;id=78324748324732844" style="display: block">entlassen</a>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-            <h2>Mitarbeiter einstellen</h2>
-            <form action="/manage/staff">
-                <input type="hidden" name="action" value="enroll">
-                <p>E-Mail: <input type="email" name="email" required="" placeholder="john.doe@example.com"></p>
-                <p>Name: <input type="text" placeholder="Doe, John" name="name"></p>
-                <p>Jobbezeichnung: <input type="text" name="job" required=""></p>
-                <p>Monatsgehalt: <input type="number" min="1" required="" name="monthlyWage"></p>
-                <p>Wochenstunden: <input type="number" min="1" required="" name="weekHours"></p>
-                <p>Zugang: <select name="accessLevel">
-                        <option value="staff">Mitarbeiter</option>
-                        <option value="authorised-staff">Autorisierter Mitarbeiter</option>
-                        <option value="boss">Boss</option>
-                    </select></p>
-                <button>Einstellen</button>
-            </form>
-            <h2>Schichten</h2>
-            <form action="/manage/staff" method="get">
-                <p>am <input type="date" name="date" placeholder="19.04.2024"></p>
-                <button>Anzeigen</button>
-            </form>
-            <table>
-                <tr>
-                    <th>Wer?</th>
-                    <th>Von</th>
-                    <th>Bis</th>
-                </tr>
-            </table>
-            <h2>Mitarbeiter einteilen</h2>
-            <form action="/manage/staff">
-                <input type="hidden" name="action" value="enrollToShift">
-                <p>E-Mail: <input type="email" name="email" required="" placeholder="john.doe@example.com"></p>
-                <p>Von: <input type="datetime-local" required="" name="from"></p>
-                <p>Bis: <input type="datetime-local" required="" name="until"></p>
-                <button>Einteilen</button>
-            </form>
-        </div>
+<head>
+</head>
+<body>
+<div class="main-wrapper" role="main" layout:fragment="content">
+    <h1>Personalverwaltung</h1>
+    <h2>Mitarbeiter</h2>
+    <!--<table>
+        <thead>
+        <tr>
+            <th>E-Mail</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Job</th>
+            <th>Monatsgehalt</th>
+            <th>Wochenstunden</th>
+            <th>Zugang</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>boss@ufo-kinos.de</td>
+            <td>Der</td>
+            <td>Boss</td>
+            <td>Big Boss</td>
+            <td>5000€</td>
+            <td>Zu viele :p</td>
+            <td>Boss</td>
+            <td>
+                <a href="/manage/staff?change=1&id=78324748324732844" style="display: block">bearbeiten</a>
+                <a href="/manage/staff?delete=1&id=78324748324732844" style="display: block">entlassen</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>-->
+    <h2>Schichten</h2>
+    <form action="/manage/staff" method="get">
+        <p>am <input type="date" name="date" placeholder="19.04.2024"></p>
+        <button>Anzeigen</button>
+    </form>
+    <table>
+        <tr>
+            <th>Wer?</th>
+            <th>Von</th>
+            <th>Bis</th>
+        </tr>
+    </table>
+    <h2>Mitarbeiter einteilen</h2>
+    <form action="/manage/staff">
+        <input type="hidden" name="action" value="enrollToShift">
+        <p>E-Mail: <input type="email" name="email" required="" placeholder="john.doe@example.com"></p>
+        <p>Von: <input type="datetime-local" required="" name="from"></p>
+        <p>Bis: <input type="datetime-local" required="" name="until"></p>
+        <button>Einteilen</button>
+    </form>
 
-    </body>
+    <!-- Edit User Form -->
+    <h2>Mitarbeiter bearbeiten</h2>
+    <form th:action="@{/editUser(id=${employee.getId().getId()})}" method="post">
+        <input type="hidden" name="id" th:value="${employee.getId().getId()}" required>
+        <p>Vorname: <input type="text" name="firstName" th:value="${user.getFirstName()}"></p>
+        <p>Nachname: <input type="text" name="lastName" th:value="${user.getLastName()}"></p>
+        <p>E-Mail: <input type="email" name="email" th:value="${user.getEMail()}"></p>
+        <p>Job: <input type="text" name="job" th:value="${employee.getJobMail()}"></p>
+        <p>Monatsgehalt: <input type="text" name="salary" th:value="${employee.getSalary()}"></p>
+        <p>Wochenstunden: <input type="text" name="hours" th:value="${employee.getHoursPerWeek()}"></p>
+        <button type="submit">Speichern</button>
+    </form>
+</div>
+</body>
 </html>

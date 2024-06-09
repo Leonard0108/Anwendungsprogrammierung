@@ -64,7 +64,7 @@
                         <li sec:authorize="hasAuthority('ROLE_BOSS')"><a href="/manage/rooms" title="Saalverwaltung | UFO Kinos">Saalverwaltung</a></li>
                         <li sec:authorize="hasAuthority('ROLE_BOSS')"><a href="/manage/pricing" title="Preisgestaltung | UFO Kinos">Preisgestaltung</a></li>
                         <li><a href="/manage/storage" title="Lagerverwaltung | UFO Kinos">Lagerverwaltung</a></li>
-                        <!-- <li><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li> -->
+                         <li sec:authorize="hasAuthority('ROLE_BOSS')"><a href="/manage/staff" title="Personalverwaltung | UFO Kinos">Personalverwaltung</a></li>
                     </ul>
                 </div>
                 <br><hr><br>

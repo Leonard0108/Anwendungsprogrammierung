@@ -7,6 +7,7 @@ import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import de.ufo.cinemasystem.additionalfiles.UserService;
 import de.ufo.cinemasystem.models.UserEntry;
+import de.ufo.cinemasystem.repository.EmployeeRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -29,13 +30,12 @@ import java.util.List;
 @Controller
 public class LoginController {
 	UserRepository  userRepository;
-	PasswordEncoder passwordEncoder;
+
 	UserService     userService;
 
 
-	public LoginController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserService userService) {
+	public LoginController(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
 		this.userService = userService;
 	}
 

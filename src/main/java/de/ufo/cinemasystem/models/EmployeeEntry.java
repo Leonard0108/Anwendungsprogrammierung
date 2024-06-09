@@ -30,7 +30,9 @@ public class EmployeeEntry {
 		this.hoursPerWeek = hoursPerWeek;
 	}
 
+	public EmployeeEntry() {
 
+	}
 
 
 	@PreAuthorize("BOSS")

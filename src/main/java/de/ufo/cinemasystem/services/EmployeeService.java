@@ -88,7 +88,7 @@ public class EmployeeService {
 		if (email != null && !email.isEmpty()) {
 			userEntry.setEMail(email);
 		}
-		if (job.contains("EMPLOYEE"))
+		if (job.contains("EMPLOYEE") && !job.contains("AUTHORIZED_EMPLOYEE"))
 		{
 			userEntry.getUserAccount().add(Role.of("EMPLOYEE"));
 		}

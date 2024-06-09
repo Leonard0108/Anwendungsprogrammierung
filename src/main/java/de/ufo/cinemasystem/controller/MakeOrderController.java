@@ -11,15 +11,17 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.salespointframework.catalog.Product.ProductIdentifier;
+import org.salespointframework.inventory.UniqueInventory;
+import org.salespointframework.inventory.UniqueInventoryItem;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManagement;
+import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Streamable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,17 +50,19 @@ import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-@PreAuthorize("isAuthenticated()")
+@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 @SessionAttributes("cart")
 public class MakeOrderController {
 
 	public static final String orderSessionKey = "current-order";
 
 	private final OrderManagement<Order> orderManagement;
+	private final UniqueInventory<UniqueInventoryItem> inventory;
 
-	public MakeOrderController(OrderManagement orderManagement) {
+	public MakeOrderController(OrderManagement orderManagement, UniqueInventory<UniqueInventoryItem> inventory) {
 		Assert.notNull(orderManagement, "Order cant be Zero!");
 		this.orderManagement = orderManagement;
+		this.inventory = inventory;
 	}
 	@ModelAttribute("cart")
 		Cart initializeCart() {
@@ -102,9 +106,10 @@ public class MakeOrderController {
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		m.addAttribute("title", "Kassensystem");
-        m.addAttribute("cart", work.getOrderLines());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotal());
+		m.addAttribute("snacks", getAvailableSnacks());
+
 		return "sell-items-1";
 	}
 
@@ -118,41 +123,59 @@ public class MakeOrderController {
 		m.addAttribute("ticket-event", what);
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);
-		List<Snacks> SnackstoOffer = snacksRepository.findAll().toList();
-		SnackstoOffer= new ArrayList<>(SnackstoOffer);
-		Iterator<Snacks> snacksiterator = SnackstoOffer.iterator();
-		while(snacksiterator.hasNext()){
-			Snacks snack= snacksiterator.next();
-			if(snacksService.getStock(snack.getId()) == 0){
-				snacksiterator.remove();
-			}
-		}
-		m.addAttribute("snack", SnackstoOffer);
+		m.addAttribute("snacks", getAvailableSnacks());
+
 		return "sell-items-1";
 	}
 
 	@PostMapping("/sell/remove-ticket")
-    public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier ticketId, @ModelAttribute Cart cart){
+    public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier cartItemId, @ModelAttribute Cart cart){
         if(session.getAttribute(orderSessionKey) == null){
             return "redirect:/sell-tickets";
         }
-		Optional<CartItem> toRemove = cart.getItem(ticketId.toString());
-		Streamable<Ticket> t1 = ticketRepo.findByName(toRemove.get().getProductName());
-		List<Ticket> ticket = ticketRepo.findByName(toRemove.get().getProductName()).toList();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-        System.out.println("u: " + session.getAttribute("User"));
-        System.out.println("t: " + cart.get());
-		cart.removeItem(ticketId.toString());
-		ticketRepo.deleteById(ticket.get(0).getId());
-        showService.update(ticket.get(0).getCinemaShow().getId()).setSeatOccupancy(new Seat(ticket.get(0).getSeatID() / 100, ticket.get(0).getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
-        m.addAttribute("title", "Kassensystem");
-        m.addAttribute("tickets", cart.get().toList());
-        m.addAttribute("show", ticket.get(0).getCinemaShow());
-        m.addAttribute("price",cart.getPrice());
+		Optional<CartItem> toRemove = cart.getItem(cartItemId.toString());
+		if(toRemove.get().getProductName().contains("Ticket")){
+			List<Ticket> cartItem = ticketRepo.findByName(toRemove.get().getProductName()).toList();
+			this.inventory.delete(inventory.findByProduct(cartItem.get(0)).get());
+			cart.removeItem(cartItemId.toString());
+			ticketRepo.deleteById(cartItem.get(0).getId());
+			showService.update(cartItem.get(0).getCinemaShow().getId()).setSeatOccupancy(new Seat(cartItem.get(0).getSeatID() / 100, cartItem.get(0).getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+		}else{
+			cart.removeItem(cartItemId.toString());
+		}
+		
+		
+		m.addAttribute("title", "Kassensystem");
+        m.addAttribute("show", work.getCinemaShow());
+		m.addAttribute("snacks", getAvailableSnacks());
+		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+
         
         return "sell-items-1";
     }
+	
+	@PostMapping("/add-reservation")
+	public String addTicketsperReservation(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
+			@RequestParam("reserveNumber") String reservationId, @ModelAttribute Cart cart) {
+		
+		if (session.getAttribute(orderSessionKey) == null) {
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
+		}
+		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
+		for (Ticket ticket : tickets) {
+			cart.addOrUpdateItem(ticket, Quantity.of(1));
+		}
+		m.addAttribute("show", work.getCinemaShow());
+		m.addAttribute("snacks", getAvailableSnacks());
+		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 
+		
+		return "sell-items-1";		
+	}
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 			@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
@@ -188,13 +211,18 @@ public class MakeOrderController {
 			// add ticket
 			Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
 			t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
-			if(!ticketRepo.existsById(t.getId()))ticketRepo.save(t);
+			if(!ticketRepo.existsById(t.getId())){
+				ticketRepo.save(t);
+				this.inventory.save(new UniqueInventoryItem(t, Quantity.of(1)));
+				}
 			cart.addOrUpdateItem(t, Quantity.of(1));
 			showService.update(work.getCinemaShow()).setSeatOccupancy(
-					new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
+					new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.BOUGHT).save();
 		}
         m.addAttribute("show", work.getCinemaShow());
-        m.addAttribute("price",cart.getPrice());
+		m.addAttribute("snacks", getAvailableSnacks());
+		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 
 		
 		return "sell-items-1";
@@ -204,13 +232,44 @@ public class MakeOrderController {
 
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
-		HttpSession session, @RequestParam("snack") Snacks snack, @ModelAttribute Cart cart) {
+		HttpSession session, @RequestParam("snack-adder") Snacks snack, @ModelAttribute Cart cart) {
+		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		
 		cart.addOrUpdateItem(snack, Quantity.of(1));
 		
+		m.addAttribute("show", work.getCinemaShow());
+		m.addAttribute("snacks", getAvailableSnacks());
+		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		return "sell-items-1";
 	}
 	
+
+	@PostMapping("/buy")
+	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
+		HttpSession session, @ModelAttribute Cart cart) {
+		Orders work = (Orders) session.getAttribute(orderSessionKey);
+
+		return currentUser.map(account -> {
+
+			// (｡◕‿◕｡)
+			// Mit completeOrder(…) wird der Warenkorb in die Order überführt, diese wird
+			// dann bezahlt und abgeschlossen.
+			// Orders können nur abgeschlossen werden, wenn diese vorher bezahlt wurden.
+			work.setPaymentMethod(Cash.CASH);
+
+			cart.addItemsTo(work);
+			sumFinalCartItems(cart,work);
+			orderManagement.payOrder(work);
+			orderManagement.completeOrder(work);
+
+			cart.clear();
+
+			return "redirect:/sell-tickets";
+		}).orElse("sell-items-1");
+
+	}
+
 	private static int toRowID(String spot) {
 		char rowChar = spot.charAt(0);
 		return rowChar - 'A';
@@ -225,9 +284,53 @@ public class MakeOrderController {
 		};
 	}
 
+	private List<CartItem> getCurrentCartTickets(@ModelAttribute Cart cart){
+		List<CartItem> cartTickets = new ArrayList<>();
+		for (CartItem cartItem : cart.get().toList()) {
+			if(cartItem.getProductName().contains("Ticket")){
+				cartTickets.add(cartItem);
+			}
+		}
+		return cartTickets;
+	}
+	private List<CartItem> getCurrentCartSnacks(@ModelAttribute Cart cart){
+		List<CartItem>cartSnacks = new ArrayList<>();
+		for (CartItem cartItem :  cart.get().toList()) {
+			if(cartItem.getProductName().contains("Snack")){
+				cartSnacks.add(cartItem);
+			}
+			
+		}
+		return cartSnacks;
+	}
+		
+	private void sumFinalCartItems(@ModelAttribute Cart cart, Orders order){
+		for (CartItem cartItem :  cart.get().toList()) {
+			if(cartItem.getProductName().contains("Snack")){
+				order.addSnacks(cartItem.getPrice());
+			}else{
+				order.addTickets(cartItem.getPrice());
+			}
+		}
+	}
+
+	private List<Snacks> getAvailableSnacks(){
+		List<Snacks> SnackstoOffer = this.snacksRepository.findAll().toList();
+		SnackstoOffer= new ArrayList<>(SnackstoOffer);
+		Iterator<Snacks> snacksiterator = SnackstoOffer.iterator();
+		while(snacksiterator.hasNext()){
+			Snacks snack= snacksiterator.next();
+			if(this.snacksService.getStock(snack.getId()) == 0){
+				snacksiterator.remove();
+			}
+		}
+		return SnackstoOffer;
+	}
+
 	private static class PatternHolder {
 
 		public static Pattern validSeat = Pattern.compile("[A-La-l]([0-9]|1[0-9])$", Pattern.CASE_INSENSITIVE);
 	}
+
 
 }

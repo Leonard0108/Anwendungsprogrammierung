@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
+import org.salespointframework.inventory.UniqueInventory;
+import org.salespointframework.inventory.UniqueInventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,6 +54,12 @@ public class MakeReservationController {
      */
     public static final String privilegedReservationKey = "current-reservation-privileged";
     
+	private final UniqueInventory<UniqueInventoryItem> inventory;
+    
+    public MakeReservationController(UniqueInventory<UniqueInventoryItem> inventory){        
+		this.inventory = inventory;
+    }
+
     private @Autowired ReservationRepository repo;
     private @Autowired CinemaShowRepository showsRepo;
     private @Autowired UserRepository uRepo;
@@ -286,6 +294,7 @@ public class MakeReservationController {
     private void deleteTickets(Reservation rev){
         Ticket[] tickets = rev.getTickets();
         for(Ticket t:tickets){
+			this.inventory.delete(inventory.findByProduct(t).get());
             rev.removeTicket(t);
             rev = repo.save(rev);
             showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat(t.getSeatID() / 100, t.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();

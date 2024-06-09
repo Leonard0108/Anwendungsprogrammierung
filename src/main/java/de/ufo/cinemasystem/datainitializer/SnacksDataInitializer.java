@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Snacks.SnackType;
 import de.ufo.cinemasystem.repository.SnacksRepository;
+import de.ufo.cinemasystem.services.SnacksService;
 
 @Component
 // Testdaten der Snacks werden nach Filmen und Kinosälen
@@ -20,10 +21,12 @@ import de.ufo.cinemasystem.repository.SnacksRepository;
 public class SnacksDataInitializer implements DataInitializer {
 
     private SnacksRepository snacksrepository;
+    private SnacksService snacksService;
     private static final Logger LOG = LoggerFactory.getLogger(SnacksDataInitializer.class);
 
-    SnacksDataInitializer(SnacksRepository snacksRepository) {
+    SnacksDataInitializer(SnacksRepository snacksRepository, SnacksService snacksService) {
         this.snacksrepository = snacksRepository;
+        this.snacksService = snacksService;
     }
 
     @Override
@@ -35,10 +38,13 @@ public class SnacksDataInitializer implements DataInitializer {
 
         for (int i = 0; i < 10; i++) {
             SnackType type = (i % 2 == 0) ? SnackType.Essen : SnackType.Getränk;
-            snacksrepository.save(new Snacks(
-                    "Snack " + i,
-                    Money.of(random.nextDouble(3.5, 20), "EUR"),
-                    type));
+            Snacks s = new Snacks(
+                "Snack " + i,
+                Money.of(random.nextDouble(3.5, 20), "EUR"),
+                type);
+            snacksrepository.save(s);
+
+            snacksService.addStock(s.getId(), 5);
         }
 
         snacksrepository.findAll().forEach(f -> {

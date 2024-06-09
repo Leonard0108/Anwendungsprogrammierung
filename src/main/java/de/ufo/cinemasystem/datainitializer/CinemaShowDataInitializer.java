@@ -1,25 +1,24 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import de.ufo.cinemasystem.models.*;
-import de.ufo.cinemasystem.repository.CinemaHallRepository;
-import de.ufo.cinemasystem.repository.CinemaShowRepository;
-import de.ufo.cinemasystem.repository.FilmRepository;
-
-import org.javamoney.moneta.Money;
-import org.salespointframework.core.DataInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.util.Streamable;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+import static org.salespointframework.core.Currencies.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
-import static org.salespointframework.core.Currencies.EURO;
+import org.javamoney.moneta.Money;
+import org.salespointframework.core.DataInitializer;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import de.ufo.cinemasystem.models.CinemaHall;
+import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.CinemaShowService;
+import de.ufo.cinemasystem.models.Film;
+import de.ufo.cinemasystem.repository.CinemaHallRepository;
+import de.ufo.cinemasystem.repository.CinemaShowRepository;
+import de.ufo.cinemasystem.repository.FilmRepository;
 
 @Component
 // Testdaten der Kinoveranstaltungen werden nach den Testdaten für die Filme und der Kinosäle erstellt (deshalb: Order = 3)
@@ -67,7 +66,7 @@ public class CinemaShowDataInitializer implements DataInitializer {
 		// Der Basis-Preis ist konstant.
 		for(int i = 0; i < 10; i++) {
 			cinemaShowService.createCinemaShow(
-				LocalDateTime.now().plusDays(i),
+				LocalDateTime.now().plusDays(i).plusHours(2),
 				Money.of(10.99, EURO),
 				allFilms.get(random.nextInt(allFilms.size())),
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))

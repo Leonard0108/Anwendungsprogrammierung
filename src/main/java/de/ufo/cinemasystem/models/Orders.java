@@ -1,8 +1,9 @@
 package de.ufo.cinemasystem.models;
 
+import javax.money.MonetaryAmount;
+
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
-import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount.UserAccountIdentifier;
 
 import jakarta.persistence.Entity;
@@ -46,14 +47,12 @@ public class Orders extends Order{
         return show;
     }
 
-    public void addTickets(Ticket ticket) {
-        addOrderLine(ticket, Quantity.of(1));
-        TicketSumme.add(ticket.getPrice());
+    public void addTickets(MonetaryAmount price) {
+        TicketSumme.add(price);
     }
 
-    public void addSnacks(Snacks snack) {
-        addOrderLine(snack, Quantity.of(1));
-        SnacksSumme.add(snack.getPrice());
+    public void addSnacks(MonetaryAmount price) {
+        SnacksSumme.add(price);
     }
 }
 

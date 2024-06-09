@@ -1,27 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="de" class="client-nojs"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
-    <title>All Employees</title>
+    <link rel="stylesheet" type="text/css" href="/assets/styles.css">
 </head>
 <body>
-<h1>All Employees</h1>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Job Mail</th>
-        <th>Salary</th>
-        <th>Hours Per Week</th>
-        <th>Action</th>
-    </tr>
-    <tr th:each="employee : ${employees}">
-        <td th:text="${employee.id.getId()}">ID</td>
-        <td th:text="${employee.jobMail}">Job Mail</td>
-        <td th:text="${employee.salary}">Salary</td>
-        <td th:text="${employee.hoursPerWeek}">Hours Per Week</td>
-        <td>
-            <a th:href="@{/EmployeeControlling/editUser(id=${employee.id.getId()})}">Edit</a>
-        </td>
-    </tr>
-</table>
+<div class="background"></div>
+<div class="css-hack">
+    <div class="main-outer">
+        <div class="head">
+            <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
+        </div>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Alle Mitarbeiter</h1>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Job E-Mail</th>
+                    <th>Gehalt</th>
+                    <th>Wochenstunden</th>
+                    <th>Aktion</th>
+                </tr>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.id.getId()}">ID</td>
+                    <td th:text="${employee.jobMail}">Job Mail</td>
+                    <td th:text="${employee.salary}">Salary</td>
+                    <td th:text="${employee.hoursPerWeek}">Hours Per Week</td>
+                    <td>
+                        <a th:href="@{/EmployeeControlling/editUser(id=${employee.id.getId()})}">Edit</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <span class="copyright">&copy; UFO-Kinos</span>
+            <ul class="links">
+                <li><a href="/imprint" title="Impressum | UFO Kinos">Impressum</a></li>
+                <li><a href="/privacy" title="Datenschutz | UFO Kinos">Datenschutz</a></li>
+                <li><a href="#" title="Cookie-Einstellungen | UFO Kinos" class="nojs-hide">Cookie-Einstellungen</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>

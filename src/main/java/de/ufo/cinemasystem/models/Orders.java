@@ -32,12 +32,12 @@ public class Orders extends Order{
         this.TicketSumme = Money.of(0, "EUR");
         this.SnacksSumme = Money.of(0, "EUR");
         this.show = show;
+
     }
 
     public Money getTicketSumme() {
         return TicketSumme;
     }
-
 
     public Money getSnacksSumme() {
         return SnacksSumme;
@@ -55,10 +55,3 @@ public class Orders extends Order{
         SnacksSumme.add(price);
     }
 }
-
-
-
-
-
-
-

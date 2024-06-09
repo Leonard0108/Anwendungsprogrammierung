@@ -14,18 +14,22 @@
             <p th:text="${createdUser}"></p>
         </div>
 
-
-        <div class="formfield">
+        <div th:if="${param.error}" class="error">
+            <p>Benutzername oder Passwort falsch.</p>
+        </div>
+        <div class="form-container">
+        <div class="form-group">
             <label for="username">Nutzername</label>
-            <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
+            <input class="form-control" type="text" id="username" name="username" autofocus="autofocus"/> <br/>
         </div>
 
-        <div class="formfield">
+        <div class="form-group">
             <label for="password">Passwort</label>
-            <input type="password" id="password" name="password"/> <br/>
+            <input class="form-control" type="password" id="password" name="password"/> <br/>
+        </div>
         </div>
 
-        <button type="submit" class="ui button">Einloggen</button>
+        <button type="submit" class="btn btn-primary">Einloggen</button>
         <a href="/registration">Kein Konto? Registrieren</a>
     </form>
 </section>

@@ -7,6 +7,7 @@ import de.ufo.cinemasystem.models.FilmProvider;
 import de.ufo.cinemasystem.repository.FilmProviderRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 
+import org.javamoney.moneta.Money;
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -93,6 +94,8 @@ public class FilmDataInitializer implements DataInitializer {
 				film.setReducedBasicRentFee(1.0, 1.0, 1.0, 1.0, 0.8, 0.75, 0.75, 0.6);
 			}
 
+			//Initialisierte Filme bereits mit Preis festlegt durch den Boss
+			film.setPrice(Money.of(12.00 + random.nextInt(10), "EUR"));
 
 			filmRepository.save(film);
 		}

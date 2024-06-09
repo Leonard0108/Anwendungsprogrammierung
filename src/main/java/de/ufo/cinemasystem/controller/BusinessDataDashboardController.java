@@ -1,23 +1,47 @@
 package de.ufo.cinemasystem.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import de.ufo.cinemasystem.models.EmployeeEntry;
+import de.ufo.cinemasystem.models.Film;
+import de.ufo.cinemasystem.models.Orders;
+import de.ufo.cinemasystem.repository.EmployeeRepository;
+import de.ufo.cinemasystem.repository.FilmRepository;
+import org.javamoney.moneta.Money;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManagement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import de.ufo.cinemasystem.models.Orders;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 //benötigte Klassen: Bestellung, (Ausgaben für Personalkosten, Ausgaben für momentan geliehene Filme)
 @Controller
 public class BusinessDataDashboardController {
 
-	//Anzeigen von Tageseinnahmen Diagramm, darunter Monatsumsatz Diagramm
+	@Autowired
+	FilmRepository filmRepository;
+
+	@Autowired
+	EmployeeRepository employeeRepository;
+	private final OrderManagement<Order> orderManagement;
+
+    public BusinessDataDashboardController(OrderManagement<Order> orderManagement) {
+		Assert.notNull(orderManagement, "Order darf nicht Null sein!");
+        this.orderManagement = orderManagement;
+    }
+
+
+    //Anzeigen von Tageseinnahmen Diagramm, darunter Monatsumsatz Diagramm
 	@GetMapping("/statistics")
 	@PreAuthorize("hasRole('BOSS')")
-	public String getDashboard(Model m){
+	public String getDashboard(Model m) {
 
 		List<FinancialTransaction> dailyIncomeData = List.of(
 			new FinancialTransaction("Ticket: Bell im Märchenland", 250),
@@ -28,45 +52,47 @@ public class BusinessDataDashboardController {
 		);
 		m.addAttribute("dailyIncomeData", dailyIncomeData);
 
-		List<RevenueData> revenueData = List.of(
-			new RevenueData(100.0, LocalDate.of(2024, 5, 1)),
-			new RevenueData(230.0, LocalDate.of(2024, 5, 2)),
-			new RevenueData(170.0, LocalDate.of(2024, 5, 3)),
-			new RevenueData(180.0, LocalDate.of(2024, 5, 4)),
-			new RevenueData(90.0, LocalDate.of(2024, 5, 5)),
-			new RevenueData(110.0, LocalDate.of(2024, 5, 6)),
-			new RevenueData(270.0, LocalDate.of(2024, 5, 7)),
-			new RevenueData(330.0, LocalDate.of(2024, 5, 8)),
-			new RevenueData(400.0, LocalDate.of(2024, 5, 9)),
-			new RevenueData(320.0, LocalDate.of(2024, 5, 10)),
-			new RevenueData(350.0, LocalDate.of(2024, 5, 11)),
-			new RevenueData(300.0, LocalDate.of(2024, 5, 12)),
-			new RevenueData(400.0, LocalDate.of(2024, 5, 13)),
-			new RevenueData(420.0, LocalDate.of(2024, 5, 14)),
-			new RevenueData(470.0, LocalDate.of(2024, 5, 15)),
-			new RevenueData(440.0, LocalDate.of(2024, 5, 16)),
-			new RevenueData(480.0, LocalDate.of(2024, 5, 17)),
-			new RevenueData(520.0, LocalDate.of(2024, 5, 18)),
-			new RevenueData(540.0, LocalDate.of(2024, 5, 19)),
-			new RevenueData(420.0, LocalDate.of(2024, 5, 20)),
-			new RevenueData(550.0, LocalDate.of(2024, 5, 21)),
-			new RevenueData(560.0, LocalDate.of(2024, 5, 22)),
-			new RevenueData(570.0, LocalDate.of(2024, 5, 23)),
-			new RevenueData(600.0, LocalDate.of(2024, 5, 24)),
-			new RevenueData(500.0, LocalDate.of(2024, 5, 25)),
-			new RevenueData(520.0, LocalDate.of(2024, 5, 26)),
-			new RevenueData(510.0, LocalDate.of(2024, 5, 27)),
-			new RevenueData(490.0, LocalDate.of(2024, 5, 28)),
-			new RevenueData(530.0, LocalDate.of(2024, 5, 29)),
-			new RevenueData(550.0, LocalDate.of(2024, 5, 30)),
-			new RevenueData(dailyIncomeData, LocalDate.of(2024, 5, 31))
-		);
+
+		List<RevenueData> revenueData = new ArrayList<>();
+		for (LocalDate day = LocalDate.now().minusDays(30); !day.isAfter(LocalDate.now()); day = day.plusDays(1)) {
+
+		// Ausgaben berechnen
+		Money dailyExpenses = Money.of(0, "EUR");
+
+		//Mitarbeiter Kosten
+			for(EmployeeEntry employee : employeeRepository.findAll()){
+				Money employeeCost = employee.getSalary().multiply( 7.0 / employee.getHoursPerWeek());
+				dailyExpenses = dailyExpenses.add(employeeCost);
+
+			}
+
+			//FilmLeih Kosten
+			for(Film film : filmRepository.findAll()){
+				if(film.isRent(day.atStartOfDay())){
+					Money filmRentCost = Money.of(film.getBasicRentFee() / 7.0,"EUR");
+					dailyExpenses = dailyExpenses.add(filmRentCost);
+				}
+			}
+
+			//Einnahmen
+			Money dailyIncome = Money.of(0, "EUR");
+
+			//Abhängigkeit Orders fehlt
+			dailyIncome = dailyIncome.add(Money.of(1000, "EUR"));
+
+
+			Money dailyRevenue = dailyIncome.subtract(dailyExpenses);
+
+			revenueData.add(new RevenueData(dailyRevenue.getNumber().doubleValueExact() , day));
+	}
+
+
 		m.addAttribute("revenueData", revenueData);
                 m.addAttribute("title", "Wirtschaftsstatistik");
 
 
 
-		return "business-data-dashboard-boss-renderer";
+		return "business-data-dashboard";
 	}
 
 	/**

@@ -1,24 +1,22 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import static org.salespointframework.core.Currencies.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
+import de.ufo.cinemasystem.models.*;
+import de.ufo.cinemasystem.repository.CinemaHallRepository;
+import de.ufo.cinemasystem.repository.CinemaShowRepository;
+import de.ufo.cinemasystem.repository.FilmRepository;
 
-import org.javamoney.moneta.Money;
+
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.CinemaShowService;
-import de.ufo.cinemasystem.models.Film;
-import de.ufo.cinemasystem.repository.CinemaHallRepository;
-import de.ufo.cinemasystem.repository.CinemaShowRepository;
-import de.ufo.cinemasystem.repository.FilmRepository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Random;
+
 
 @Component
 // Testdaten der Kinoveranstaltungen werden nach den Testdaten für die Filme und der Kinosäle erstellt (deshalb: Order = 3)
@@ -55,8 +53,6 @@ public class CinemaShowDataInitializer implements DataInitializer {
 		}
 
 		Random random = new Random();
-		CinemaShow show;
-		CinemaHall hall;
 		List<Film> allFilms = filmRepository.findAll().toList();
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
 
@@ -65,10 +61,11 @@ public class CinemaShowDataInitializer implements DataInitializer {
 		// Filme werden zufällig aus den aktuellen bestehenden Filmen ausgewählt.
 		// Der Basis-Preis ist konstant.
 		for(int i = 0; i < 10; i++) {
+			Film film = allFilms.get(random.nextInt(allFilms.size()));
 			cinemaShowService.createCinemaShow(
-				LocalDateTime.now().plusDays(i).plusHours(2),
-				Money.of(10.99, EURO),
-				allFilms.get(random.nextInt(allFilms.size())),
+				LocalDateTime.now().plusDays(i),
+				film.getPrice(),
+				film,
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
 			);
 		}

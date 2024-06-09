@@ -220,7 +220,7 @@
                         <id>generate-pdf-doc</id>
                         <phase>generate-resources</phase>
                         <goals>
-                            <goal>process-asciidoc</goal>
+                            <!--<goal>process-asciidoc</goal>-->
                         </goals>
                         <configuration>
                             <backend>pdf</backend>

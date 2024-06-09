@@ -8,12 +8,10 @@ import org.salespointframework.catalog.Catalog;
 
 import de.ufo.cinemasystem.models.Ticket;
 
-
 /**
  *
  * @author Jannik
  */
 public interface TicketRepository extends Catalog<Ticket> {
-
 
 }

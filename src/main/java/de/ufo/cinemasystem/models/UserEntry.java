@@ -55,6 +55,7 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	public static final class UserIdentifier implements Identifier, Serializable {
 
 		private static final long serialVersionUID = 7740660930809051850L;
+
 		private final UUID identifier;
 
 		/**
@@ -73,7 +74,9 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 			this.identifier = identifier;
 		}
 
-
+		public UUID getId() {
+			return this.identifier;
+		}
 
 		/*
 		 * (non-Javadoc)

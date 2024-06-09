@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Employees</title>
+</head>
+<body>
+<h1>All Employees</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Job Mail</th>
+        <th>Salary</th>
+        <th>Hours Per Week</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.id.getId()}">ID</td>
+        <td th:text="${employee.jobMail}">Job Mail</td>
+        <td th:text="${employee.salary}">Salary</td>
+        <td th:text="${employee.hoursPerWeek}">Hours Per Week</td>
+        <td>
+            <a th:href="@{/EmployeeControlling/editUser(id=${employee.id.getId()})}">Edit</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

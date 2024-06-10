@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import de.ufo.cinemasystem.models.*;
 import org.salespointframework.catalog.Product.ProductIdentifier;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
@@ -35,6 +34,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
+import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.Orders;
+import de.ufo.cinemasystem.models.Reservation;
+import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.models.Seat;
+import de.ufo.cinemasystem.models.Snacks;
+import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.SnacksRepository;
@@ -161,10 +167,19 @@ public class MakeOrderController {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
-		for (Ticket ticket : tickets) {
-			cart.addOrUpdateItem(ticket, Quantity.of(1));
+		Reservation reserve = reservationRepo.findById(Long.parseLong(reservationId)).orElseThrow();
+		if (reserve.getCinemaShow() == work.getCinemaShow()){
+			Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
+			for (Ticket ticket : tickets) {
+				cart.addOrUpdateItem(ticket, Quantity.of(1));
+			}	
+			
+		} else {
+			List<String> errors = new ArrayList<>();
+			errors.add("Reservierung für einen anderen Film! Bitte Film wechseln oder passende Reservierung nehmen.");
+			m.addAttribute(errors);
 		}
+		
 		m.addAttribute("show", work.getCinemaShow());
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));

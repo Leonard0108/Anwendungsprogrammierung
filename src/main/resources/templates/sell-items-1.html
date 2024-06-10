@@ -15,7 +15,7 @@
                 <div class="already-in-cart">
                     <div class="ticket" th:each="item : ${cartTickets}">
                         <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p>
-                        <p th:text="${item.getProductName()}"></p>
+                        <p th:text="${item.getProductName()} + 'Reihe:' + ${item.getSeatString()} " ></p>
                         <p style="text-align: right" th:text="${item.getPrice()}"></p>
                         <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${item.getId()}">Löschen</button>
                     </div>

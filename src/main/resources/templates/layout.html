@@ -39,11 +39,11 @@
                     <span class="nav-section-title">Kundenorientiert</span>
                     <ul class="nav-section-content">
                         <li><a href="/current-films" title="Filmplan | UFO Kinos">Filmplan</a></li>
-                        <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos">Plätze reservieren</a></li>
-                        <li><a href="/my-reservations" title="Meine Reservierungen | UFO Kinos">Meine Reservierungen</a></li>
-                        <!--<li sec:authorize="hasAnyRole(USER,STAFF,TRUSTEDSTAFF,BOSS)"><a href="/lunar_space_port/logOut" title="Abmelden | UFO Kinos">Abmelden</a></li>-->
-                        <li><a href="/login" title="Anmelden | UFO Kinos">Anmelden</a></li>
-                        <li><a href="/registration" title="Registrieren | UFO Kinos">Registrieren</a></li>
+                        <li><a href="/reserve-spots/reserve" title="Plätze reservieren | UFO Kinos" sec:authorize="isAuthenticated()">Plätze reservieren</a></li>
+                        <li><a href="/my-reservations" title="Meine Reservierungen | UFO Kinos" sec:authorize="isAuthenticated()">Meine Reservierungen</a></li>
+                        <li sec:authorize="isAuthenticated()"><a href="/lunar_space_port/logOut" title="Abmelden | UFO Kinos">Abmelden</a></li>
+                        <li sec:authorize="isAnonymous()"><a href="/login" title="Anmelden | UFO Kinos">Anmelden</a></li>
+                        <li sec:authorize="isAnonymous()"><a href="/registration" title="Registrieren | UFO Kinos">Registrieren</a></li>
                     </ul>
                 </div>
                 <div id="checkout-stuff" class="nav-section" sec:authorize="hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')">

@@ -87,7 +87,8 @@ public class Application {
             /**
              * We configure {@code /login} to be directly routed to the
              * {@code login} template without any controller interaction.
-             *
+             * No other login needed.
+			 *
              * @see
              * org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)
              */

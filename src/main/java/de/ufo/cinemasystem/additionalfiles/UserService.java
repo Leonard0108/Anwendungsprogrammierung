@@ -41,14 +41,26 @@ public class UserService {
 	 * @param form must not be {@literal null}.
 	 * @return the new {@link UserEntry} instance.
 	 */
-	public void createUser(RegistrationForm form) {
+	public short createUser(RegistrationForm form) {
 
 		Assert.notNull(form, "Registration form must not be null!");
+
+		if (userRepository.findByeMail(form.getEMail()) != null || userRepository.findByUserAccountEmail(form.getEMail()) != null)
+		{
+			return 1;
+		}
+		if (userRepository.findByUserAccountUsername(form.getUsername()) != null) {
+			return 2;
+		}
 
 		var password = Password.UnencryptedPassword.of(form.getPassword());
 		var userAccount = userAccounts.create(form.getUsername(), password, USER_ROLE);
 
+
 		userRepository.save(new UserEntry(userAccount, form.getFirstName(), form.getLastName(), form.getEMail(), form.getStreetName(), form.getStreetNumber(), form.getCity(), form.getPostalCode(), form.getState(), form.getCountry()));
+
+
+		return 0;
 	}
 
 

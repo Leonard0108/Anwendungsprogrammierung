@@ -30,7 +30,6 @@ import java.util.List;
 @Controller
 public class LoginController {
 	UserRepository  userRepository;
-
 	UserService     userService;
 
 
@@ -44,6 +43,9 @@ public class LoginController {
 
 	@PostMapping("/registration")
 	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
+		short creationResult;
+
+
 
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
@@ -52,8 +54,22 @@ public class LoginController {
 
 		System.out.println(form);
 
-		userService.createUser(form);
-		redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
+		creationResult = userService.createUser(form);
+
+		if (creationResult == 0)
+		{
+			redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
+		}
+		if (creationResult == 1)
+		{
+			redirectAttributes.addFlashAttribute("createdUser", "User creation failed. E-mail already exists.");
+		}
+		if (creationResult == 2)
+		{
+			redirectAttributes.addFlashAttribute("createdUser", "User name already exists.");
+		}
+
+
 
 		return "redirect:/login";
 	}

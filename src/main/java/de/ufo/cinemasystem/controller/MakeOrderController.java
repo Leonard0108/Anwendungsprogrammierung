@@ -37,6 +37,7 @@ import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.CinemaShowService;
 import de.ufo.cinemasystem.models.Orders;
+import de.ufo.cinemasystem.models.Reservation;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Ticket;
@@ -166,10 +167,19 @@ public class MakeOrderController {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
-		for (Ticket ticket : tickets) {
-			cart.addOrUpdateItem(ticket, Quantity.of(1));
+		Reservation reserve = reservationRepo.findById(Long.parseLong(reservationId)).orElseThrow();
+		if (reserve.getCinemaShow() == work.getCinemaShow()){
+			Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
+			for (Ticket ticket : tickets) {
+				cart.addOrUpdateItem(ticket, Quantity.of(1));
+			}	
+			
+		} else {
+			List<String> errors = new ArrayList<>();
+			errors.add("Reservierung für einen anderen Film! Bitte Film wechseln oder passende Reservierung nehmen.");
+			m.addAttribute(errors);
 		}
+		
 		m.addAttribute("show", work.getCinemaShow());
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));

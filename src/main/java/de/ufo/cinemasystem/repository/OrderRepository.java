@@ -1,4 +1,12 @@
 package de.ufo.cinemasystem.repository;
+/* 
+import org.salespointframework.order.Order.OrderIdentifier;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-//@Repository
-//public interface OrderRepository extends CrudRepository<Orders, OrderIdentifier>{}
+import de.ufo.cinemasystem.models.Orders;
+
+@Repository
+public interface OrderRepository extends CrudRepository<Orders, OrderIdentifier>{
+
+}*/

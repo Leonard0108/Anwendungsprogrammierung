@@ -92,10 +92,12 @@ public class EmployeeService {
 		if (job.contains("EMPLOYEE") && !job.contains("AUTHORIZED_EMPLOYEE"))
 		{
 			userEntry.getUserAccount().add(Role.of("EMPLOYEE"));
+			userEntry.getUserAccount().remove(Role.of("AUTHORIZED_EMPLOYEE"));
 		}
 		if (job.contains("AUTHORIZED_EMPLOYEE"))
 		{
 			userEntry.getUserAccount().add(Role.of("AUTHORIZED_EMPLOYEE"));
+			userEntry.getUserAccount().remove(Role.of("EMPLOYEE"));
 		}
 		if (salary != null && !salary.isEmpty()) {
 			String salaryCleaned = salary.replaceAll("[€,]", "");

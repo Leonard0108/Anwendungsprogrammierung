@@ -62,11 +62,11 @@ public class LoginController {
 		}
 		if (creationResult == 1)
 		{
-			redirectAttributes.addFlashAttribute("createdUser", "User creation failed. E-mail already exists.");
+			redirectAttributes.addFlashAttribute("error", "User creation failed. E-mail already exists.");
 		}
 		if (creationResult == 2)
 		{
-			redirectAttributes.addFlashAttribute("createdUser", "User name already exists.");
+			redirectAttributes.addFlashAttribute("error", "User name already exists.");
 		}
 
 

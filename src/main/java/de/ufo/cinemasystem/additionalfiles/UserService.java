@@ -40,6 +40,7 @@ public class UserService {
 	 *
 	 * @param form must not be {@literal null}.
 	 * @return the new {@link UserEntry} instance.
+	 * return 0 for success 1 for existing mail and 2 for existing username
 	 */
 	public short createUser(RegistrationForm form) {
 

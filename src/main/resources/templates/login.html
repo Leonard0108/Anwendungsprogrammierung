@@ -13,6 +13,9 @@
         <div th:if="${createdUser}" class="success">
             <p th:text="${createdUser}"></p>
         </div>
+        <div th:if="${error}" class="error">
+            <p th:text="${error}"></p>
+        </div>
 
         <div th:if="${param.error}" class="error">
             <p>Benutzername oder Passwort falsch.</p>

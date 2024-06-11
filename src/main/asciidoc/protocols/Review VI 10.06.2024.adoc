@@ -1,0 +1,14 @@
+== 6. Review - MUSS
+
+== Priorität
+- Personalverwaltung
+- Wirtschaftsdashboard
+- Registrierung: Validierungen und Fehlerbeldungen einfügen
+- Kassensystem nach Kaufabschluss, ausgabe der Ticketdaten
+- Kassensystem: Reservierungsnummer angeben in der Filmauswahl Seite + Probleme mit Reservierung laden beheben
+- Reservieren: Fehler Meldung bei belegtem Platz css error Klasse hinzufügen
+- Reservieren: Rservierungsnummer in der Übersich anzeigen
+- Cinemahall id und Name angleichen
+
+== nächstes Meeting
+- Do 13.06 17:00

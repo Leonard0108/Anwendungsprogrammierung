@@ -56,17 +56,16 @@ public class LoginController {
 
 		creationResult = userService.createUser(form);
 
-		if (creationResult == 0)
-		{
-			redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
-		}
-		if (creationResult == 1)
-		{
-			redirectAttributes.addFlashAttribute("error", "User creation failed. E-mail already exists.");
-		}
-		if (creationResult == 2)
-		{
-			redirectAttributes.addFlashAttribute("error", "User name already exists.");
+		switch (creationResult) {
+			case 0:
+				redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
+				break;
+			case 1:
+				redirectAttributes.addFlashAttribute("error", "User creation failed. E-mail already exists.");
+				break;
+			case 2:
+				redirectAttributes.addFlashAttribute("error", "User name already exists.");
+				break;
 		}
 
 

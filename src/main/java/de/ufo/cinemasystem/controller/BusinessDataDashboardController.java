@@ -5,9 +5,11 @@ import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.Orders;
 import de.ufo.cinemasystem.repository.EmployeeRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
+import de.ufo.cinemasystem.repository.OrdersRepository;
 import org.javamoney.moneta.Money;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManagement;
+import org.salespointframework.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,11 @@ public class BusinessDataDashboardController {
 
 	@Autowired
 	EmployeeRepository employeeRepository;
+
+	@Autowired
+	OrdersRepository ordersRepository;
 	private final OrderManagement<Order> orderManagement;
+
 
     public BusinessDataDashboardController(OrderManagement<Order> orderManagement) {
 		Assert.notNull(orderManagement, "Order darf nicht Null sein!");
@@ -43,14 +50,17 @@ public class BusinessDataDashboardController {
 	@PreAuthorize("hasRole('BOSS')")
 	public String getDashboard(Model m) {
 
-		List<FinancialTransaction> dailyIncomeData = List.of(
-			new FinancialTransaction("Ticket: Bell im Märchenland", 250),
-			new FinancialTransaction("Ticket: Parry Hotter und die Hochschule Merseburg", 200),
-			new FinancialTransaction("Snacks: Popcorn", 75),
-			new FinancialTransaction("Snacks: Softdrinks", 30),
-			new FinancialTransaction("Ticket: Extra 4's Jannes Müller", 10)
-		);
-		m.addAttribute("dailyIncomeData", dailyIncomeData);
+		List<FinancialTransaction> dailyIncomeData = new ArrayList<>();
+		List<Orders> allOrders = ordersRepository.findAll().toList();
+		List<Orders> todayOrders = new ArrayList<>();
+		for(Orders order : allOrders){
+			if(order.getDateCreated().toLocalDate() == LocalDate.now()){
+				todayOrders.add(order);
+			}
+		}
+
+		// einzelne Snacks und Tickets aus den Ordern bekommen
+
 
 
 		List<RevenueData> revenueData = new ArrayList<>();
@@ -76,19 +86,24 @@ public class BusinessDataDashboardController {
 
 			//Einnahmen
 			Money dailyIncome = Money.of(0, "EUR");
+			Interval wholeDay = Interval.from(day.atStartOfDay()).to(day.atTime(23,59));
+			List<Order> ordersAtDay = orderManagement.findBy(wholeDay).toList();
+			if(!ordersAtDay.isEmpty()){
+				System.out.println("order gefunden");
+			}
 
-			//Abhängigkeit Orders fehlt
-			dailyIncome = dailyIncome.add(Money.of(1000, "EUR"));
-
+			for(Order order : ordersAtDay){
+				dailyIncome = dailyIncome.add(order.getTotal());
+			}
 
 			Money dailyRevenue = dailyIncome.subtract(dailyExpenses);
 
 			revenueData.add(new RevenueData(dailyRevenue.getNumber().doubleValueExact() , day));
 	}
 
-
+		m.addAttribute("dailyIncomeData", dailyIncomeData);
 		m.addAttribute("revenueData", revenueData);
-                m.addAttribute("title", "Wirtschaftsstatistik");
+		m.addAttribute("title", "Wirtschaftsstatistik");
 
 
 
@@ -121,7 +136,7 @@ public class BusinessDataDashboardController {
 		 * @param orders Liste der Bestellungen, aus denen die Daten extrahiert werden.
 		 * @return Eine Liste von FinancialTransaction Objekten.
 		 */
-		public List<FinancialTransaction> extractDataFromOrders(List<Orders> orders){
+		public static List<FinancialTransaction> extractDataFromOrders(List<Orders> orders){
 			//	TODO: Ticketeinnahmen und Snackeinnahmen aus Order in DailyIncomeData List transformieren
 			return List.of(new FinancialTransaction("Popcorn", 100.0));
 		}

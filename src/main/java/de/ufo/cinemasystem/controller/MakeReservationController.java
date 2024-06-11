@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
-import de.ufo.cinemasystem.models.*;
+import org.javamoney.moneta.Money;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
+import org.salespointframework.quantity.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -26,14 +28,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
-import de.ufo.cinemasystem.services.UserService;
+import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.Reservation;
+import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.models.Seat;
+import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
+import de.ufo.cinemasystem.services.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.javamoney.moneta.Money;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Spring MVC Controller for making reservations.
@@ -221,6 +226,7 @@ public class MakeReservationController {
 
             t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
             work.addTicket(ticketRepo.save(t));
+            this.inventory.save(new UniqueInventoryItem(t, Quantity.of(1)));
             showService.update(work.getCinemaShow()).setSeatOccupancy(new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
         }
         // else we had errors, do not add
@@ -250,6 +256,7 @@ public class MakeReservationController {
         System.out.println("u: " + work.getReservingAccount().getUserAccount());
         System.out.println("t: " + Arrays.toString(work.getTickets()));
         work.removeTicket(ticket);
+        this.inventory.delete(inventory.findByProduct(ticket).orElseThrow());
         if (showsRepo.findById(work.getCinemaShow().getId()).isPresent()) {
             showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (ticket.getSeatID() / 100), (int) (ticket.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
             addPricesToModel(m, showsRepo.findById(work.getCinemaShow().getId()).orElseThrow());

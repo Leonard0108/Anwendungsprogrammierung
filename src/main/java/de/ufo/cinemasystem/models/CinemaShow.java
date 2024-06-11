@@ -1,6 +1,8 @@
 package de.ufo.cinemasystem.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Objects;
@@ -79,6 +81,9 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	@Override
 	public LocalDateTime getStartDateTime() {
 		return this.startDateTime;
+	}
+	public String getShortStartDateTime(){
+		return startDateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
 	}
 
 	void setStartDateTime(LocalDateTime startDateTime) {

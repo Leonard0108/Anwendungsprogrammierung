@@ -13,7 +13,9 @@ import java.util.regex.Pattern;
 
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
+import org.salespointframework.quantity.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,6 @@ import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Spring MVC Controller for making reservations.
@@ -213,6 +214,7 @@ public class MakeReservationController {
 
             t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
             work.addTicket(ticketRepo.save(t));
+            this.inventory.save(new UniqueInventoryItem(t, Quantity.of(1)));
             showService.update(work.getCinemaShow()).setSeatOccupancy(new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
         }
         // else we had errors, do not add
@@ -242,6 +244,7 @@ public class MakeReservationController {
         System.out.println("u: " + work.getReservingAccount().getUserAccount());
         System.out.println("t: " + Arrays.toString(work.getTickets()));
         work.removeTicket(ticket);
+        this.inventory.delete(inventory.findByProduct(ticket).orElseThrow());
         showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (ticket.getSeatID() / 100), (int) (ticket.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());

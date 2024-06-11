@@ -10,12 +10,12 @@
             <h1>Verkauf</h1>
 
 
-            <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${show.getStartDateTime()}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="${show.getFilm().getFskAge()}">FSK 12</span></p>
+            <p><span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span> , <span th:text="${show.getShortStartDateTime()}">Montag 22.04.2024, 10 Uhr</span> , <span th:text="${show.getCinemaHall().getName()}">Saal 2.</span><span class="fsk-label" th:text=" ' FSK: ' + ${show.getFilm().getFskAge()}">FSK 12</span> <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a></p>
             <form id="sell-spots-form-delete" action="/sell/remove-ticket" method="post">
                 <div class="already-in-cart">
                     <div class="ticket" th:each="item : ${cartTickets}">
-                        <p th:text="${show.getStartDateTime()} + ${show.getFilm().getTitle()}"></p>
-                        <p th:text="${item.getProductName()} + 'Reihe:' + ${item.getSeatString()} " ></p>
+                        <p th:text="${item.getCinemaShow().getShortStartDateTime()} + ' ' + ${item.getCinemaShow().getFilm().getTitle()}"></p>
+                        <p th:text="${item.getName()} + ' Reihe: ' + ${item.getSeatString()} " ></p>
                         <p style="text-align: right" th:text="${item.getPrice()}"></p>
                         <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${item.getId()}">Löschen</button>
                     </div>
@@ -26,31 +26,42 @@
                     </div>
                 </div>
             </form>
-            <form id="sell-form-reservation-adder" action="/add-reservation" method="post">
-                <input name="reserveNumber"required="" placeholder="Reservierungsnummer">
-                <button name="loadReservation" formnovalidate="">Reservierung Laden</button>
-            </form>
-            <form id="sell-form-ticket-adder" action="/sell/ticket" method="post">
-                <input type="hidden" name="token" value="rgeoirjer+\\">
-                <input type="hidden" name="prevState" value="ijg348j934j89j3g9g4j89">
-                <h2>Aus Reservierung laden</h2>
-                <h2>Ticket hinzufügen</h2>
-                <p>Preisliste:</p>
-                <ul>
-                    <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
-                    <li>Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
-                    <li>Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
-                </ul>
-                <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType">
-                        <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
-                        <option value="adult">Erwachsender</option>
-                        <option value="child">Kind (Bis 14 Jahre)</option>
-                        <option value="disabled">Schwerbehinderter</option>
-                    </select> </p>
-                <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
-                <button name="addTicket" value="1">Ticket hinzufügen</button>
-                <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
-            </form>
+            
+            <div th:unless="${errors.isEmpty()}">
+                <div class="error" th:each="err : ${errors}">
+                    <p th:text="${err.toString()}"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <h2 class="form-group">Aus Reservierung laden</h2>
+                <form id="sell-form-reservation-adder" action="/add-reservation" method="post">
+                    <input name="reserveNumber"required="" placeholder="Reservierungsnummer">
+                    <button name="loadReservation" formnovalidate="">Reservierung Laden</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form id="sell-form-ticket-adder" action="/sell/ticket" method="post">
+                    <input type="hidden" name="token" value="rgeoirjer+\\">
+                    <input type="hidden" name="prevState" value="ijg348j934j89j3g9g4j89">
+                    
+                    <h2>Ticket hinzufügen</h2>
+                    <p>Preisliste:</p>
+                    <ul>
+                        <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
+                        <li>Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
+                        <li>Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
+                    </ul>
+                    <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType">
+                            <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                            <option value="adult">Erwachsender</option>
+                            <option value="child">Kind (Bis 14 Jahre)</option>
+                            <option value="disabled">Schwerbehinderter</option>
+                        </select> </p>
+                    <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
+                    <button name="addTicket" value="1">Ticket hinzufügen</button>
+                    <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
+                </form>
+            </div>
             <form id="sell-form-snack-adder" action="/sell/snacks" method="post">
                 <h2>Snacks Hinzufügen</h2>
                 <p><label for="htmlUniqueID3">Snacks:</label></p>

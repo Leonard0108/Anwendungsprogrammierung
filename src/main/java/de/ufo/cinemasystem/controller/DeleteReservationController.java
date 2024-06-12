@@ -16,6 +16,7 @@ import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,9 +42,13 @@ public class DeleteReservationController {
      */
     @GetMapping("/my-reservations")
     @PreAuthorize("isAuthenticated()")
-    public String getReservations(Model m, @AuthenticationPrincipal UserDetails currentUser){
+    public String getReservations(Model m, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         m.addAttribute("title", "Meine Reservierungen");
         m.addAttribute("reservations", repo.findAllByUser(uRepo.findByUserAccountUsername(currentUser.getUsername())));
+        if(session.getAttribute("error")!= null){
+            m.addAttribute("error", session.getAttribute("error"));
+            session.removeAttribute("error");
+        }
         return "reservation-list";
     }
     
@@ -52,13 +57,19 @@ public class DeleteReservationController {
      * @param m
      * @param id
      * @param currentUser
+     * @param session
      * @return 
      */
     @PostMapping("/my-reservations/delete/")
     @PreAuthorize("isAuthenticated()")
-    public String getDeleteForm2(Model m, @RequestParam("reserveNumber") Reservation id, @AuthenticationPrincipal UserDetails currentUser){
+    public String getDeleteForm2(Model m, @RequestParam(name = "reserveNumber",required = false) Reservation id, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+        if(id == null){
+            session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + id + ")");
+            return "redirect:/my-reservations";
+        }
         if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
             //do NOT leak the reservation context
+            session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + "null" + ")");
             return "redirect:/my-reservations";
         }
         
@@ -72,13 +83,19 @@ public class DeleteReservationController {
      * @param m
      * @param id
      * @param currentUser
+     * @param session
      * @return 
      */
     @GetMapping("/cancel-reservation/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String getDeleteForm(Model m, @PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser){
+    public String getDeleteForm(Model m, @PathVariable(name = "id", required = false) Reservation id, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+        if(id == null){
+            session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + id + ")");
+            return "redirect:/my-reservations";
+        }
         if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
             //do NOT leak the reservation context
+            session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + "null" + ")");
             return "redirect:/my-reservations";
         }
         
@@ -89,15 +106,22 @@ public class DeleteReservationController {
     
     /**
      * post mapping to actually delete a reservation.
+     * @param m
      * @param id
      * @param currentUser
+     * @param session
      * @return 
      */
     @PostMapping("/cancel-reservation/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String deleteReservation(@PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser){
+    public String deleteReservation(Model m,@PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+        if(id == null){
+            session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + id + ")");
+            return "redirect:/my-reservations";
+        }
         if(!id.getReservingAccount().getId().equals(uRepo.findByUserAccountUsername(currentUser.getUsername()).getId())){
             //do NOT leak the reservation context
+            session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + "null" + ")");
             return "redirect:/my-reservations";
         }
         

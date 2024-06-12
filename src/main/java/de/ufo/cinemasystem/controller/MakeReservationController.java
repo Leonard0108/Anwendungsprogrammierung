@@ -103,7 +103,11 @@ public class MakeReservationController {
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reserve-spots/reserve/{what}")
-    public String startReservation(Model m, @PathVariable CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+    public String startReservation(Model m, @PathVariable(required = false) CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+        if(what == null){
+            m.addAttribute("errors", new String[]{"Bitte wählen sie eine Veranstaltung aus der Liste!"});
+            return startReservation(m);
+        }
         if(session.getAttribute(reservationSessionKey) == null){
             session.setAttribute(reservationSessionKey, new Reservation(uRepo.findByUserAccountUsername(currentUser.getUsername()), what));
             session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
@@ -136,10 +140,15 @@ public class MakeReservationController {
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/reserve")
-    public String onShowSelected(Model m, @RequestParam("event") CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+    public String onShowSelected(Model m, @RequestParam(name = "event",required = false) CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+        if(what == null){
+            m.addAttribute("errors", new String[]{"Bitte wählen sie eine Veranstaltung aus der Liste!"});
+            return startReservation(m);
+        }
+        //
         if(session.getAttribute(reservationSessionKey) == null){
-            System.out.println("[MakeReservationController] UserDetails type:" + currentUser.getClass().getName());
-            System.out.println("[MakeReservationController] UserDetails right: " + currentUser.getAuthorities());
+            //System.out.println("[MakeReservationController] UserDetails type:" + currentUser.getClass().getName());
+            //System.out.println("[MakeReservationController] UserDetails right: " + currentUser.getAuthorities());
             session.setAttribute(reservationSessionKey, new Reservation(uRepo.findByUserAccountUsername(currentUser.getUsername()), what));
             session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
@@ -171,7 +180,7 @@ public class MakeReservationController {
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/add-ticket")
-    public String addTicketToReservation(Model m, HttpSession session, @RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot){
+    public String addTicketToReservation(Model m, HttpSession session, @RequestParam(name = "ticketType", required = false) String ticketType, @RequestParam(name = "spot",required = false) String spot){
         if(session.getAttribute(reservationSessionKey) == null){
             return "redirect:/reserve-spots/reserve";
         }
@@ -317,6 +326,12 @@ public class MakeReservationController {
      * @return real enum type or null
      */
     private static Ticket.TicketCategory toCategoryType(String ticketType) {
+        /**
+         * explicit null check, because switch(null) throws a npe
+         */
+        if(ticketType == null){
+            return null;
+        }
         return switch (ticketType) {
             case "adult" -> Ticket.TicketCategory.normal;
             case "child" -> Ticket.TicketCategory.children;

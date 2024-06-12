@@ -8,8 +8,8 @@
 <body>
 <div class="main-wrapper" role="main" layout:fragment="content">
     <h1>Personalverwaltung</h1>
-    <h2>Mitarbeiter</h2>
-    <!--<table>
+    <!--<h2>Mitarbeiter</h2>
+    <table>
         <thead>
         <tr>
             <th>E-Mail</th>
@@ -37,7 +37,7 @@
             </td>
         </tr>
         </tbody>
-    </table>-->
+    </table>
     <h2>Schichten</h2>
     <form action="/manage/staff" method="get">
         <p>am <input type="date" name="date" placeholder="19.04.2024"></p>
@@ -57,11 +57,11 @@
         <p>Von: <input type="datetime-local" required="" name="from"></p>
         <p>Bis: <input type="datetime-local" required="" name="until"></p>
         <button>Einteilen</button>
-    </form>
+    </form>-->
 
     <!-- Edit User Form -->
     <h2>Mitarbeiter bearbeiten</h2>
-    <form th:action="@{/editUser(id=${employee.getId().getId()})}" method="post">
+    <form th:action="@{/employeeControlling/editUser(id=${employee.getId().getId()})}" method="post">
         <input type="hidden" name="id" th:value="${employee.getId().getId()}" required>
         <p>Vorname: <input type="text" name="firstName" th:value="${user.getFirstName()}"></p>
         <p>Nachname: <input type="text" name="lastName" th:value="${user.getLastName()}"></p>

@@ -35,9 +35,19 @@ public class EmployeeService {
 		}
 
 
-		public void createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
+		public short createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
 		{
 			Assert.notNull(employeeRegistrationForm, "Registration form must not be null!");
+
+
+			UserEntry     testUserEntry = new UserEntry();
+			EmployeeEntry testEmployeeEntry = new EmployeeEntry();
+
+
+			if (employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent())
+			{
+				return 1;
+			}
 
 			short hoursPerWeek = Short.parseShort(employeeRegistrationForm.getHoursPerWeek());
 			String salaryCleaned = employeeRegistrationForm.getSalary().replaceAll("[€,]", "");
@@ -46,13 +56,14 @@ public class EmployeeService {
 			CurrencyUnit currency = Monetary.getCurrency("EUR");
 			Money salary = Money.of(salaryAmount, currency);
 
-			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero() || salary.divide(hoursPerWeek * 4).isLessThan(Money.of(12, salary.getCurrency()))) {
-				return;
+			if (!employeeRegistrationForm.getJobMail().endsWith("@ufo-kino.de") || employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent()) {
+				return 2;
 			}
 
-			if (!employeeRegistrationForm.getJobMail().endsWith("@ufo-kino.de") || employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent()) {
-				return;
+			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero() || salary.divide(hoursPerWeek * 4).isLessThan(Money.of(12, salary.getCurrency()))) {
+				return 3;
 			}
+
 
 
 			UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
@@ -70,6 +81,9 @@ public class EmployeeService {
 
 			EmployeeEntry employeeEntry = new EmployeeEntry(userEntry, salary, employeeRegistrationForm.getJobMail(), hoursPerWeek);
 			employeeRepository.save(employeeEntry);
+
+
+			return 0;
 		}
 
 

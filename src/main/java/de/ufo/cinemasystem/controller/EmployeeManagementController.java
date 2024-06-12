@@ -50,6 +50,9 @@ public class EmployeeManagementController {
 	//@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
+		short creationResult;
+
+
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return "EmployeeRegistration";
@@ -57,7 +60,9 @@ public class EmployeeManagementController {
 
 		System.out.println(form);
 
-		employeeService.createEmployee(form);
+		creationResult = employeeService.createEmployee(form);
+		//if ()
+
 		redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
 		System.out.println("createdUser: " + form);
 

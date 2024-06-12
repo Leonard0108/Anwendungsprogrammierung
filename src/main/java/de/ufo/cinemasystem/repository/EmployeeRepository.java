@@ -18,6 +18,7 @@ public interface EmployeeRepository extends CrudRepository<EmployeeEntry, UserId
 	@Override
 	List<EmployeeEntry> findAll();
 	Optional<EmployeeEntry> findByJobMail(String jobMail);
-	Optional<EmployeeEntry> findById(UserEntry.UserIdentifier id);
+	@NotNull
+	Optional<EmployeeEntry> findById(@NotNull UserEntry.UserIdentifier id);
 	Optional<EmployeeEntry> findByIdIdentifier(UUID identifier);
 }

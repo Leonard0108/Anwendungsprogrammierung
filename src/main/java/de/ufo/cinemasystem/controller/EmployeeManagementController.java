@@ -61,12 +61,24 @@ public class EmployeeManagementController {
 		System.out.println(form);
 
 		creationResult = employeeService.createEmployee(form);
-		//if ()
 
-		redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
+
+		switch (creationResult) {
+			case 0: redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
+				return "redirect:/login";
+			case 1:
+				redirectAttributes.addFlashAttribute("error", "Mitarbeiter existiert bereits: Job-Mail gefunden.");
+				break;
+			case 2:
+				redirectAttributes.addFlashAttribute("error", "Leider ist die E-Mail-Endung fehlerhaft.");
+				break;
+			case 3: redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich oder wird zu schlecht bezahlt.");
+				break;
+		}
+
 		System.out.println("createdUser: " + form);
 
-		return "redirect:/login";
+		return "redirect:/EmployeeControlling/showAllEmployees";
 	}
 
 

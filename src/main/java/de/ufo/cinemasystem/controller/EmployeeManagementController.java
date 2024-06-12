@@ -39,7 +39,7 @@ public class EmployeeManagementController {
 	}
 
 	//PreAuthorize ist eine Annotation, welche der automatischen Autorisationserkennung dient.
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee(Model m, EmployeeRegistrationForm form) {
 		return "EmployeeRegistration";
@@ -47,7 +47,7 @@ public class EmployeeManagementController {
 
 
 
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
@@ -67,7 +67,7 @@ public class EmployeeManagementController {
 
 
 
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/showAllEmployees")
 	public String showAllEmployees(Model m) {
 		List<EmployeeEntry> employees = employeeRepo.findAll();
@@ -79,26 +79,33 @@ public class EmployeeManagementController {
 
 
 
-	@PreAuthorize("hasRole('BOSS')")
+	/*@PostMapping(path = "/showAllEmployees")
+	public String showAllEmployeesRedirect(Model m) {
+		return "redirect::/EmployeeControlling/showAllEmployees";
+	}*/
+
+
+
+
+	//@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/editUser")
 	String editUser(@RequestParam("id") UUID id, Model model) {
-		// Retrieve employee by id and add to model
 		Optional<EmployeeEntry> employeeOpt = employeeRepo.findByIdIdentifier(id);
 		Optional<UserEntry> userOpt = userRepo.findByIdIdentifier(id);
-		if(employeeOpt.isPresent() && userOpt.isPresent()) {
+		if (employeeOpt.isPresent() && userOpt.isPresent()) {
 			model.addAttribute("employee", employeeOpt.get());
 			model.addAttribute("user", userOpt.get());
+			model.addAttribute("title", "Edit User - UFO Kinos"); // Setzen Sie den Titel hier
 			return "manage-staff";
-		}else {
-			// Handle the case where the employee was not found
-			return "redirect:/errorPage"; // Redirect to an error page or another appropriate page
+		} else {
+			return "redirect:/errorPage";
 		}
 	}
 
 
 
 
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	@PostMapping (path = "/editUser")
 	String editUser(@RequestParam("id") UserEntry.UserIdentifier id,
 					@RequestParam("name") String firstName,
@@ -111,7 +118,6 @@ public class EmployeeManagementController {
 
 
 		return "redirect:/";
-
 	}
 
 

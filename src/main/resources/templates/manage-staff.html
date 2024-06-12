@@ -66,7 +66,12 @@
         <p>Vorname: <input type="text" name="firstName" th:value="${user.getFirstName()}"></p>
         <p>Nachname: <input type="text" name="lastName" th:value="${user.getLastName()}"></p>
         <p>E-Mail: <input type="email" name="email" th:value="${user.getEMail()}"></p>
-        <p>Job: <input type="text" name="job" th:value="${employee.getJobMail()}"></p>
+        <p>Job:
+            <select name="job" required>
+                <option value="EMPLOYEE" th:selected="${employee.getJobMail()} == 'EMPLOYEE'">Mitarbeiter</option>
+                <option value="AUTHORIZED_EMPLOYEE" th:selected="${employee.getJobMail()} == 'AUTHORIZED_EMPLOYEE'">Authorisierter Mitarbeiter</option>
+            </select>
+        </p>
         <p>Monatsgehalt: <input type="text" name="salary" th:value="${employee.getSalary()}"></p>
         <p>Wochenstunden: <input type="text" name="hours" th:value="${employee.getHoursPerWeek()}"></p>
         <button type="submit">Speichern</button>

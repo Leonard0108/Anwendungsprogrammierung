@@ -61,7 +61,7 @@
 
     <!-- Edit User Form -->
     <h2>Mitarbeiter bearbeiten</h2>
-    <form th:action="@{/employeeControlling/editUser(id=${employee.getId().getId()})}" method="post">
+    <form th:action="@{/manage/editUser}" method="post">
         <input type="hidden" name="id" th:value="${employee.getId().getId()}" required>
         <p>Vorname: <input type="text" name="firstName" th:value="${user.getFirstName()}"></p>
         <p>Nachname: <input type="text" name="lastName" th:value="${user.getLastName()}"></p>
@@ -72,7 +72,7 @@
                 <option value="AUTHORIZED_EMPLOYEE" th:selected="${employee.getJobMail()} == 'AUTHORIZED_EMPLOYEE'">Authorisierter Mitarbeiter</option>
             </select>
         </p>
-        <p>Monatsgehalt: <input type="text" name="salary" th:value="${employee.getSalary()}"></p>
+        <p>Monatsgehalt: <input type="text" name="salary" th:value="${employee.getSalary().getNumber()} "></p>
         <p>Wochenstunden: <input type="text" name="hours" th:value="${employee.getHoursPerWeek()}"></p>
         <button type="submit">Speichern</button>
     </form>

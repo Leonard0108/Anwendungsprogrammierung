@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.repository;
 
+import de.ufo.cinemasystem.models.EmployeeEntry;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.util.Streamable;

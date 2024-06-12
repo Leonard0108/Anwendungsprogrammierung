@@ -15,6 +15,7 @@
         </div>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Alle Mitarbeiter</h1>
+            <a href="/manage/createEmployee">+ Mitarbeiter</a>
             <table border="1">
                 <tr>
                     <th>ID</th>
@@ -29,7 +30,7 @@
                     <td th:text="${employee.salary}">Salary</td>
                     <td th:text="${employee.hoursPerWeek}">Hours Per Week</td>
                     <td>
-                        <a th:href="@{/EmployeeControlling/editUser(id=${employee.id.getId()})}">Edit</a>
+                        <a th:href="@{/manage/editUser(id=${employee.id.getId()})}">Edit</a>
                     </td>
                 </tr>
             </table>

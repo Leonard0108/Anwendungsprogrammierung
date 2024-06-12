@@ -24,7 +24,7 @@ import java.util.UUID;
 
 
 @Controller
-@RequestMapping(path = "/EmployeeControlling")
+@RequestMapping(path = "/manage")
 public class EmployeeManagementController {
 	EmployeeRepository employeeRepo;
 
@@ -73,7 +73,7 @@ public class EmployeeManagementController {
 
 
 	//@PreAuthorize("hasRole('BOSS')")
-	@GetMapping(path = "/showAllEmployees")
+	@GetMapping(path = "/staff")
 	public String showAllEmployees(Model m) {
 		List<EmployeeEntry> employees = employeeRepo.findAll();
 
@@ -95,8 +95,18 @@ public class EmployeeManagementController {
 	//@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/editUser")
 	String editUser(@RequestParam("id") UUID id, Model model) {
-		Optional<EmployeeEntry> employeeOpt = employeeRepo.findByIdIdentifier(id);
-		Optional<UserEntry> userOpt = userRepo.findByIdIdentifier(id);
+		Optional<EmployeeEntry> employeeOpt = employeeRepo.findByIdIdentifier(id); //	.findAll().stream().toList();
+		Optional<UserEntry> userOpt = userRepo.findByIdIdentifier(id); // 		.findAll().stream().toList();
+		/*
+		for(EmployeeEntry employee : employeeOpt){
+			System.out.println("employee: " + employee.getId().getId());
+		}
+		for(UserEntry user : userOpt){
+			System.out.println("user: " + user.getId().getId());
+			System.out.println(user.getFirstName());
+		}
+		*/
+
 		if (employeeOpt.isPresent() && userOpt.isPresent()) {
 			model.addAttribute("employee", employeeOpt.get());
 			model.addAttribute("user", userOpt.get());
@@ -113,8 +123,8 @@ public class EmployeeManagementController {
 	//@PreAuthorize("hasRole('BOSS')")
 	@PostMapping (path = "/editUser")
 	String editUser(@RequestParam("id") UserEntry.UserIdentifier id,
-					@RequestParam("name") String firstName,
-					@RequestParam("name") String lastName,
+					@RequestParam("firstName") String firstName,
+					@RequestParam("lastName") String lastName,
 					@RequestParam("email") String email,
 					@RequestParam("job") String job,
 					@RequestParam("salary") String salary,
@@ -122,7 +132,7 @@ public class EmployeeManagementController {
 		employeeService.editEmployee(id, firstName, lastName, email, job, salary, hours);
 
 
-		return "redirect:/";
+		return "redirect:/manage/staff";
 	}
 
 

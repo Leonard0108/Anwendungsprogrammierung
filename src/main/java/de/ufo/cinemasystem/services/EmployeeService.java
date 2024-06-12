@@ -91,7 +91,7 @@ public class EmployeeService {
 
 	public void editEmployee(UserEntry.UserIdentifier id, String firstName, String lastName, String email, String job, String salary, String hours)
 	{
-		UserEntry     userEntry     = userRepository.findByIdAndFirstName(id, firstName);
+		UserEntry     userEntry     = userRepository.findById(id).orElseThrow();
 		EmployeeEntry employeeEntry = employeeRepository.findById(id).orElseThrow();
 
 		if (firstName != null && !firstName.isEmpty()) {
@@ -125,6 +125,7 @@ public class EmployeeService {
 		if (hours != null && !hours.isEmpty()) {
 			employeeEntry.setHoursPerWeek(Short.parseShort(hours));
 		}
+		employeeRepository.save(employeeEntry);
 	}
 }
 

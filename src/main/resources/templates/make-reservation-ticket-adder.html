@@ -8,7 +8,7 @@
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Plätze reservieren</h1>
-            <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/current-films" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="${show.getFilm().getFskAge()}">FSK 12</span></p>
+            <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/current-films" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="'FSK ' + ${show.getFilm().getFskAge()}" th:class="'fsk-label fsk-' + ${show.getFilm().getFskAge()}">FSK 12</span></p>
                     <form id="reserve-spots-form-delete" action="/reserve-spots/remove-ticket" method="post">
                         <div class="already-in-cart">
                             <div class="ticket" th:each="ticket : ${tickets}">
@@ -20,7 +20,7 @@
                         </div>
                     </form>
             <div class="formErrors">
-                <p th:if="${errors != null}" th:each="error : ${errors}" th:text="${error}"></p>
+                <p th:if="${errors != null}" th:each="error : ${errors}" th:text="${error}" class="error"></p>
             </div>
                     <form id="reserve-spots-form-add" action="/reserve-spots/add-ticket" method="post">
                         <p class="flex">Derzeitige Zwischensumme: <span class="grow"></span><span th:text="${price}">19.99€</span></p>
@@ -34,7 +34,7 @@
                         </ul>
 
                         <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType" required="">
-                                <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
+                                <option value="" disabled="" selected="">(Bitte wählen)</option>
                                 <option value="adult">Erwachsender</option>
                                 <option value="child">Kind (Bis 14 Jahre)</option>
                                 <option value="disabled">Schwerbehinderter</option>

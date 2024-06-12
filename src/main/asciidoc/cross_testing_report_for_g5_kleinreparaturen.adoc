@@ -2,8 +2,8 @@
 
 = Cross-Testing Feedback
 
-__Durchführende Gruppe:__
-__Anwendung von Gruppe:__
+__Durchführende Gruppe:__ Gruppe 4 (Kino)
+__Anwendung von Gruppe:__ Gruppe 5 (Kleinreparaturen)
 
 == Getestetes System
 Welche Aufgabe/Problemstellung löst die Anwendung.

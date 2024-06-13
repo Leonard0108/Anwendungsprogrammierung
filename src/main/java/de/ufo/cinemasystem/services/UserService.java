@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.services;
 
 import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
+import de.ufo.cinemasystem.repository.EmployeeRepository;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -15,15 +16,19 @@ import org.springframework.util.Assert;
 import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.UserRepository;
 
+import java.util.Arrays;
+import java.util.List;
 
 
 @Service
 @Transactional
 public class UserService {
-	public static final Role                  USER_ROLE = Role.of("USER"); //Im Original Customer
-	private final       UserRepository        userRepository;
-	private final       UserAccountManagement userAccounts;
-
+	public static final  Role                  USER_ROLE = Role.of("USER"); //Im Original Customer
+	private final        UserRepository        userRepository;
+	private final        UserAccountManagement userAccounts;
+	private static final List<String>          KNOWN_EMAIL_PROVIDERS = Arrays.asList(
+											   "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "aol.com",
+											   "icloud.com", "mail.com", "gmx.com", "yandex.com", "protonmail.com");
 
 
 
@@ -36,6 +41,14 @@ public class UserService {
 		this.userAccounts   = userAccounts;
 	}
 
+
+
+	private boolean isKnownEmailProvider(String email) {
+		return KNOWN_EMAIL_PROVIDERS.stream().anyMatch(email::endsWith);
+	}
+
+
+
 	/**
 	 * Creates a new {@link UserEntry} using the information given in the {@link RegistrationForm}.
 	 *
@@ -46,6 +59,11 @@ public class UserService {
 	public short createUser(RegistrationForm form) {
 
 		Assert.notNull(form, "Registration form must not be null!");
+
+		if (!isKnownEmailProvider(form.getEMail())) {
+			return 3;  // Return a new code for unknown email providers
+		}
+
 
 		if (userRepository.findByeMail(form.getEMail()) != null || userRepository.findByUserAccountEmail(form.getEMail()) != null)
 		{

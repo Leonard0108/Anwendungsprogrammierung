@@ -1,6 +1,8 @@
 package de.ufo.cinemasystem.services;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
@@ -20,28 +22,35 @@ import de.ufo.cinemasystem.repository.EmployeeRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
 
 
+
 @Service
 public class EmployeeService {
 		EmployeeRepository employeeRepository;
 		UserAccountManagement userAccountManagement;
 		UserRepository userRepository;
+		private static final List<String> KNOWN_EMAIL_PROVIDERS = Arrays.asList(
+		"gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "aol.com",
+		"icloud.com", "mail.com", "gmx.com", "yandex.com", "protonmail.com"
+		);
 
+	public EmployeeService(EmployeeRepository employeeRepository, UserAccountManagement userAccountManagement, UserRepository userRepository) {
+		this.employeeRepository = employeeRepository;
+		this.userAccountManagement = userAccountManagement;
+		this.userRepository = userRepository;
+	}
 
-
-		public EmployeeService(EmployeeRepository employeeRepository, UserAccountManagement userAccountManagement, UserRepository userRepository) {
-			this.employeeRepository = employeeRepository;
-			this.userAccountManagement = userAccountManagement;
-			this.userRepository = userRepository;
-		}
+	private boolean isKnownEmailProvider(String email) {
+		return KNOWN_EMAIL_PROVIDERS.stream().anyMatch(email::endsWith);
+	}
 
 
 		public short createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
 		{
 			Assert.notNull(employeeRegistrationForm, "Registration form must not be null!");
 
-
-			UserEntry     testUserEntry = new UserEntry();
-			EmployeeEntry testEmployeeEntry = new EmployeeEntry();
+			if (!isKnownEmailProvider(employeeRegistrationForm.getEMail())) {
+				return 4;  // Return a new code for unknown email providers
+			}
 
 
 			if (employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent())

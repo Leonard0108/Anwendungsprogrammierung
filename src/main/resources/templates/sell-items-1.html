@@ -68,8 +68,8 @@
                         <select id="htmlUniqueID3" name="snack-adder">
                             <option th:each="snack: ${snacks}" th:value="${snack.getId()}" th:text="${snack.getName()} + ${snack.getPrice()}"></option>
                         </select>
+                        <p>Menge: <input name="amount" required="" pattern="([0-2]|1[0-8])$"></p>
                 <button name="addSnack">Snack hinzufügen</button>
-                
             </form>
             <hr>
             <form id="sell-form-checkout" action="/buy" method="post">

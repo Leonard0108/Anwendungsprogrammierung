@@ -15,12 +15,11 @@
                 <div class="already-in-cart">
                     <div class="ticket" th:each="item : ${cartTickets}">
                         <p th:text="${item.getCinemaShow().getShortStartDateTime()} + ' ' + ${item.getCinemaShow().getFilm().getTitle()}"></p>
-                        <p th:text="${item.getName()} + ' Reihe: ' + ${item.getSeatString()} " ></p>
-                        <p style="text-align: right" th:text="${item.getPrice()}"></p>
+                        <p class="flex"><span th:text="${item.getName()} + ' Platz: ' + ${item.getSeatString()} + ' Tickettyp: ' + ${item.getCategory().toString()} " class="grow" ></span> <span style="text-align: right" th:text="${item.getPrice()}"></span></p>
                         <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${item.getId()}">Löschen</button>
                     </div>
                     <div class="snacks" th:each="item : ${cartSnacks}">
-                        <p th:text="${item.getProductName()}"></p> <p style="text-align: right" th:text="${item.getQuantity()}">10</p>
+                        <p class="flex"><span th:text="${item.getProductName()}" class="grow"></span> <span class="sum" th:text="${item.getQuantity()}">10</span></p>
                         <p style="text-align: right" th:text="${item.getPrice()}"></p>
                         <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${item.getId()}">Löschen</button>
                     </div>

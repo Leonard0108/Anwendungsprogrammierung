@@ -5,6 +5,9 @@ import java.util.Random;
 
 import de.ufo.cinemasystem.models.ScheduledActivity;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.inventory.UniqueInventory;
+import org.salespointframework.inventory.UniqueInventoryItem;
+import org.salespointframework.quantity.Quantity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -28,15 +31,21 @@ public class TicketDataInitializer implements DataInitializer {
 	private ScheduledActivity.CinemaShowService cinemaShowService;
 	private SeatRepository seatRepository;
 
-	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService, SeatRepository seatRepository) {
+	private final UniqueInventory<UniqueInventoryItem> inventory;
+
+
+	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService, SeatRepository seatRepository, UniqueInventory<UniqueInventoryItem> inventory) {
+
 		Assert.notNull(ticketRepository, "ticketRepository must not be null!");
 		Assert.notNull(cinemaShowRepository, "cinemaShowRepository must not be null!");
 		Assert.notNull(seatRepository, "seatRepository must not be null!");
+		Assert.notNull(inventory, "inventory must not be null!");
 
 		this.cinemaShowRepository = cinemaShowRepository;
 		this.ticketRepository = ticketRepository;
 		this.cinemaShowService = cinemaShowService;
 		this.seatRepository = seatRepository;
+		this.inventory = inventory;
 	}
 
 	@Override
@@ -76,6 +85,7 @@ public class TicketDataInitializer implements DataInitializer {
 
 
 			ticketRepository.save(ticket);
+			this.inventory.save(new UniqueInventoryItem(ticket, Quantity.of(1)));
 
 		}
 

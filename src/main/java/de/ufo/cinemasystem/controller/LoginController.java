@@ -60,6 +60,8 @@ public class LoginController {
 			case 2:
 				redirectAttributes.addFlashAttribute("error", "User name already exists.");
 				break;
+			case 3:
+				redirectAttributes.addFlashAttribute("error", "E-mail provider could not be found");
 		}
 
 

@@ -223,6 +223,7 @@ public class MakeOrderController {
 					showService.update(work.getCinemaShow()).setSeatOccupancy(
 						new Seat(toRowID(ticket.getSeatString()), Integer.parseInt(ticket.getSeatString().substring(1))), Seat.SeatOccupancy.BOUGHT).save();
 				}
+				reservationRepo.delete(reserve);
 			} else {
 				this.errors.add("Reservierung für einen anderen Film! Bitte Film wechseln oder passende Reservierung nehmen.");
 				m.addAttribute("errors", this.errors);

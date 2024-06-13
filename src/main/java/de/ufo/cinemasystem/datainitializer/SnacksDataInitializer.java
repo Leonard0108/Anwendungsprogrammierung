@@ -44,7 +44,7 @@ public class SnacksDataInitializer implements DataInitializer {
                 type);
             snacksrepository.save(s);
 
-            snacksService.addStock(s.getId(), 15);
+            snacksService.addStock(s.getId(), 50);
         }
 
         snacksrepository.findAll().forEach(f -> {

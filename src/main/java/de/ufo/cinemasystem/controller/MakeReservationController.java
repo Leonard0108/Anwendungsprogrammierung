@@ -228,6 +228,9 @@ public class MakeReservationController {
             work.addTicket(ticketRepo.save(t));
             this.inventory.save(new UniqueInventoryItem(t, Quantity.of(1)));
             showService.update(work.getCinemaShow()).setSeatOccupancy(new Seat(toRowID(spot), Integer.parseInt(spot.substring(1))), Seat.SeatOccupancy.RESERVED).save();
+        } else if(showsRepo.findById(work.getCinemaShow().getId()).isPresent()){
+            //some other error, probbably bad input
+            addPricesToModel(m,showsRepo.findById(work.getCinemaShow().getId()).orElseThrow());
         }
         // else we had errors, do not add
         m.addAttribute("title", "Plätze reservieren");
@@ -351,7 +354,7 @@ public class MakeReservationController {
         };
     }
 
-    private void addPricesToModel(Model m, CinemaShow theShow) {
+    private static void addPricesToModel(Model m, CinemaShow theShow) {
         Money basePrice = theShow.getBasePrice();
         m.addAttribute("p1n", basePrice);
         if (basePrice.isGreaterThanOrEqualTo(Money.of(3, "EUR"))) {

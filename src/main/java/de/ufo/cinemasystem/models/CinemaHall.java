@@ -16,7 +16,7 @@ public class CinemaHall {
 	private Long id;
 	private String name;
 	private int numberOfPlaces = 0;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private final Map<Seat, Seat.PlaceGroup> seats = new TreeMap<>();
 
 	@OneToMany(mappedBy = "cinemaHall", cascade =  CascadeType.ALL)

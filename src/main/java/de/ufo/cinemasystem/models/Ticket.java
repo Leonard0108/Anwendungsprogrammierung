@@ -73,7 +73,28 @@ public class Ticket extends Product {
 
     public void setSeatID(int seatID) {
         this.seatID = seatID;
-        this.setName(getName() + String.valueOf(seatID));
+        this.setName(getName() +" "+ String.valueOf(seatID));
+        //deduct seatPlace difference
+        Seat.PlaceGroup group = this.show.getCinemaHall().getPlaceGroup(this.seatID / 100, this.seatID % 100).orElseThrow();
+        if(group != Seat.PlaceGroup.GROUP_1){
+            MonetaryAmount price = this.getPrice();
+            switch (group) {
+                case GROUP_2:
+                    price = price.subtract(Money.of(2, "EUR"));
+                    break;
+                case GROUP_3:
+                    price = price.subtract(Money.of(4, "EUR"));
+                    break;
+                default:
+                    throw new AssertionError("unrecognized group");
+            }
+            this.setPrice(price);
+        }
+        
+        if(this.getPrice().isLessThan(Money.of(0, "EUR"))){
+            //sanity check
+            this.setPrice(Money.of(0, "EUR"));
+        }
     }
 
     public String getSeatString() {

@@ -40,8 +40,8 @@
                                 <option value="disabled">Schwerbehinderter</option>
                             </select> </p>
                         <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-9])$"></p>
-                        <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
                         <button name="addTicket" value="1">Ticket hinzufügen</button>
+                        <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
                     </form>
                     <form id="reserve-spots-form-commit" action="/reserve-spots/commit" method="post">
                         <hr>

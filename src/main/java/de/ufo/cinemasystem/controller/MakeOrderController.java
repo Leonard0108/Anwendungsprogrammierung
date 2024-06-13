@@ -300,11 +300,13 @@ public class MakeOrderController {
 
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
-		HttpSession session, @RequestParam("snack-adder") Snacks snack, @ModelAttribute Cart cart) {
+		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") Long amount , @ModelAttribute Cart cart) {
 		this.errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		if(this.inventory.findByProduct(snack).get().getQuantity().isGreaterThan(Quantity.of(amount))){
+			cart.addOrUpdateItem(snack, Quantity.of(1));
+		}
 		
-		cart.addOrUpdateItem(snack, Quantity.of(1));
 		
 		m.addAttribute("show", work.getCinemaShow());
 		m.addAttribute("snacks", getAvailableSnacks());

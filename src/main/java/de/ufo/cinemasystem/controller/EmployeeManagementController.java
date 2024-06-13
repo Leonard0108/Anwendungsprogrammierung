@@ -8,7 +8,6 @@ import de.ufo.cinemasystem.models.EmployeeEntry;
 import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.EmployeeRepository;
 import jakarta.validation.Valid;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -74,6 +73,8 @@ public class EmployeeManagementController {
 				break;
 			case 3: redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich oder wird zu schlecht bezahlt.");
 				break;
+			case 4:
+				redirectAttributes.addFlashAttribute("error", "E-mail provider could not be found.");
 		}
 
 		System.out.println("createdUser: " + form);

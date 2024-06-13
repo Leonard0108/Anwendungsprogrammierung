@@ -3,7 +3,6 @@ package de.ufo.cinemasystem.services;
 
 import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
-import de.ufo.cinemasystem.repository.EmployeeRepository;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -60,10 +59,6 @@ public class UserService {
 
 		Assert.notNull(form, "Registration form must not be null!");
 
-		if (!isKnownEmailProvider(form.getEMail())) {
-			return 3;  // Return a new code for unknown email providers
-		}
-
 
 		if (userRepository.findByeMail(form.getEMail()) != null || userRepository.findByUserAccountEmail(form.getEMail()) != null)
 		{
@@ -72,6 +67,17 @@ public class UserService {
 		if (userRepository.findByUserAccountUsername(form.getUsername()) != null) {
 			return 2;
 		}
+		if (!isKnownEmailProvider(form.getEMail())) {
+			return 3;  // Return a new code for unknown email providers
+		}
+
+		long postalCode= Long.parseLong(form.getPostalCode());
+
+		if ((postalCode < 1067 && !form.getPostalCode().startsWith("0")) || postalCode > 99998)
+		{
+			return 4;
+		}
+
 
 		var password = Password.UnencryptedPassword.of(form.getPassword());
 		var userAccount = userAccounts.create(form.getUsername(), password, USER_ROLE);

@@ -62,6 +62,10 @@ public class LoginController {
 				break;
 			case 3:
 				redirectAttributes.addFlashAttribute("error", "E-mail provider could not be found");
+				break;
+			case 4:
+				redirectAttributes.addFlashAttribute("error", "Invalid postal code");
+				return "registration";
 		}
 
 

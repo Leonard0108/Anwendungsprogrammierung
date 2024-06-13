@@ -18,9 +18,7 @@ import org.salespointframework.inventory.UniqueInventoryItem;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManagement;
-import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
@@ -301,14 +299,18 @@ public class MakeOrderController {
 
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
-		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") Long amount , @ModelAttribute Cart cart) {
+		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") int amount , @ModelAttribute Cart cart) {
 		this.errors = new ArrayList<>();
+		int check = amount;
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		if(snacksService.getStock(snack.getId()) >= amount){
+		if(checkSpecificCartSnacks(cart, snack)){
+			check += cart.getQuantity(snack).getAmount().intValue();
+		}
+		if(snacksService.getStock(snack.getId()) >= check){
 			cart.addOrUpdateItem(snack, Quantity.of(amount));
-			snacksService.removeStock(snack.getId(), cart.getQuantity(snack).getAmount().intValue());
+			//snacksService.removeStock(snack.getId(), cart.getQuantity(snack).getAmount().intValue());
 		}else{
-			m.addAttribute("errors", "Nicht genügend Snacks im Lager!");
+			this.errors.add("Nicht genügend Snacks im Lager!");
 		}
 		
 		
@@ -326,13 +328,12 @@ public class MakeOrderController {
 		HttpSession session, @ModelAttribute Cart cart) {
 		this.errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		
+		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 
 		return currentUser.map(account -> {
 
-			// (｡◕‿◕｡)
-			// Mit completeOrder(…) wird der Warenkorb in die Order überführt, diese wird
-			// dann bezahlt und abgeschlossen.
-			// Orders können nur abgeschlossen werden, wenn diese vorher bezahlt wurden.
 			work.setPaymentMethod(Cash.CASH);
 
 			cart.addItemsTo(work);
@@ -350,14 +351,6 @@ public class MakeOrderController {
 	@GetMapping("/checkout")
 	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
-		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		
-		List<Order> test = orderManagement.findBy(OrderStatus.COMPLETED).toList();
-		List<OrderLine> blub = test.get(0).getOrderLines().get().toList();
-		ProductIdentifier t = blub.get(0).getProductIdentifier();
-		Ticket t1 = ticketRepo.findById(t).orElse(null);
-
-
 		return "redirect:/";
 	}
 
@@ -392,6 +385,14 @@ public class MakeOrderController {
 			if(cartItem.getProductName().contains("Snack")){cartSnacks.add(cartItem);}
 		}
 		return cartSnacks;
+	}
+
+	private boolean checkSpecificCartSnacks(@ModelAttribute Cart cart, Snacks snack){
+		new ArrayList<>();
+		for (CartItem cartItem :  cart.get().toList()) {
+			if(cartItem.getProductName().contentEquals(snack.getName()))return true;
+		}
+		return false;
 	}
 		
 	private void sumFinalCartItems(@ModelAttribute Cart cart, Orders order){

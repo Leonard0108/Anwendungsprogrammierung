@@ -7,10 +7,19 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
-            <h1>Tickets kaufen</h1>
+            <h1></h1>
             <form id="sell-items-form" action="/checkout" method="get">
-                        
-                        <button name="next" value="1">Weiter</button>
-                    </form>
+                <div class="already-in-cart">
+                    <div class="ticket" th:each="item : ${cartTickets}">
+                        <p th:text="${item.getCinemaShow().getShortStartDateTime()} + ' ' + ${item.getCinemaShow().getFilm().getTitle()}"></p>
+                        <p class="flex"><span th:text="${item.getName()} + ' Platz: ' + ${item.getSeatString()} + ' Tickettyp: ' + ${item.getCategory().toString()} " class="grow" ></span> <span style="text-align: right" th:text="${item.getPrice()}"></span></p>
+                    </div>
+                    <div class="snacks" th:each="item : ${cartSnacks}">
+                        <p class="flex"><span th:text="${item.getProductName()}" class="grow"></span> <span class="sum" th:text="${item.getQuantity()}">10</span></p>
+                        <p style="text-align: right" th:text="${item.getPrice()}"></p>
+                    </div>
+                </div>
+                    <button name="next" value="1">Weiter</button>
+            </form>
         </div>
 </html>

@@ -18,7 +18,9 @@ import org.salespointframework.inventory.UniqueInventoryItem;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManagement;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
@@ -126,9 +128,9 @@ public class MakeOrderController {
 	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser,
 	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
 		this.errors = new ArrayList<>();
-		if (session.getAttribute(orderSessionKey) == null) {
+//		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
-		}
+//		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);
@@ -218,6 +220,8 @@ public class MakeOrderController {
 				Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
 				for (Ticket ticket : tickets) {
 					cart.addOrUpdateItem(ticket, Quantity.of(1));
+					showService.update(work.getCinemaShow()).setSeatOccupancy(
+						new Seat(toRowID(ticket.getSeatString()), Integer.parseInt(ticket.getSeatString().substring(1))), Seat.SeatOccupancy.BOUGHT).save();
 				}
 			} else {
 				this.errors.add("Reservierung für einen anderen Film! Bitte Film wechseln oder passende Reservierung nehmen.");
@@ -336,15 +340,21 @@ public class MakeOrderController {
 
 	}
 
-	@PostMapping("/checkout")
+	@GetMapping("/checkout")
 	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		
-		
-		
+		List<Order> test = orderManagement.findBy(OrderStatus.COMPLETED).toList();
+		List<OrderLine> blub = test.get(0).getOrderLines().get().toList();
+		ProductIdentifier t = blub.get(0).getProductIdentifier();
+		Ticket t1 = ticketRepo.findById(t).orElse(null);
+
+
 		return "redirect:/";
 	}
+
+	
 
 	private static int toRowID(String spot) {
 		char rowChar = spot.charAt(0);

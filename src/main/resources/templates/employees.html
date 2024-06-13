@@ -13,6 +13,7 @@
         <div class="head">
             <img class="logo" src="/assets/branding/logo.png" alt="UFO Kinos Logo">
         </div>
+        <div class="main-wrapper" role="main" layout:fragment="content">
             <h1>Alle Mitarbeiter</h1>
             <div th:if="${error}" class="error">
                 <p th:text="${error}"></p>

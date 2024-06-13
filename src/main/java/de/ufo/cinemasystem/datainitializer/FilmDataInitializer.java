@@ -1,6 +1,6 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
+import de.ufo.cinemasystem.models.YearWeekEntry;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.FilmProvider;

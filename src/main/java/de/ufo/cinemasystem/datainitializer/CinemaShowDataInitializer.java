@@ -25,13 +25,13 @@ public class CinemaShowDataInitializer implements DataInitializer {
 
 	private final CinemaShowRepository cinemaShowRepository;
 
-	private final CinemaShowService cinemaShowService;
+	private final ScheduledActivity.CinemaShowService cinemaShowService;
 
 	private final CinemaHallRepository cinemaHallRepository;
 
 	private final FilmRepository filmRepository;
 
-	CinemaShowDataInitializer(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
+	CinemaShowDataInitializer(CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService,
 							  CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository) {
 		Assert.notNull(cinemaShowRepository, "CinemaShowRepository must not be null!");
 		Assert.notNull(cinemaShowService, "CinemaShowService must not be null!");

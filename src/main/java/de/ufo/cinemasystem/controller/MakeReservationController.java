@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
+import de.ufo.cinemasystem.models.*;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
-import de.ufo.cinemasystem.additionalfiles.UserService;
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.CinemaShowService;
-import de.ufo.cinemasystem.models.Reservation;
-import de.ufo.cinemasystem.models.Seat;
-import de.ufo.cinemasystem.models.Ticket;
+import de.ufo.cinemasystem.services.UserService;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
@@ -65,7 +61,7 @@ public class MakeReservationController {
     private @Autowired CinemaShowRepository showsRepo;
     private @Autowired UserRepository uRepo;
     private @Autowired TicketRepository ticketRepo;
-    private @Autowired CinemaShowService showService;
+    private @Autowired ScheduledActivity.CinemaShowService showService;
     
     /**
      * Entry point from the main nav menu.

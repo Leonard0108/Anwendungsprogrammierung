@@ -7,6 +7,7 @@ import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+import de.ufo.cinemasystem.models.YearWeekEntry;
 import org.springframework.stereotype.Component;
 
 @Component

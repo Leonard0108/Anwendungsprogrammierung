@@ -1,7 +1,7 @@
 package de.ufo.cinemasystem.datainitializer;
 
 import de.ufo.cinemasystem.models.Seat;
-import de.ufo.cinemasystem.models.CinemaHallService;
+import de.ufo.cinemasystem.models.Snacks;
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -16,9 +16,9 @@ import java.util.AbstractMap;
 public class CinemaHallDataInitializer implements DataInitializer {
 
 	private final CinemaHallRepository cinemaHallRepository;
-	private final CinemaHallService cinemaHallService;
+	private final Snacks.CinemaHallService cinemaHallService;
 
-	public CinemaHallDataInitializer(CinemaHallService cinemaHallService, CinemaHallRepository cinemaHallRepository) {
+	public CinemaHallDataInitializer(Snacks.CinemaHallService cinemaHallService, CinemaHallRepository cinemaHallRepository) {
 		Assert.notNull(cinemaHallService, "cinemaHallService must not be null!");
 		Assert.notNull(cinemaHallRepository, "cinemaHallRepository must not be null!");
 

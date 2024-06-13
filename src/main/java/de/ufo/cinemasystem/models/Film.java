@@ -4,7 +4,6 @@
  */
 package de.ufo.cinemasystem.models;
 
-import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.javamoney.moneta.Money;

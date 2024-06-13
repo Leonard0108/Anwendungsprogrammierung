@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.datainitializer;
 import java.util.List;
 import java.util.Random;
 
+import de.ufo.cinemasystem.models.ScheduledActivity;
 import org.salespointframework.core.DataInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.CinemaShowService;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
@@ -25,10 +25,10 @@ public class TicketDataInitializer implements DataInitializer {
 	private static final Logger LOG = LoggerFactory.getLogger(TicketDataInitializer.class);
 	private TicketRepository ticketRepository;
 	private CinemaShowRepository cinemaShowRepository;
-	private CinemaShowService cinemaShowService;
+	private ScheduledActivity.CinemaShowService cinemaShowService;
 	private SeatRepository seatRepository;
 
-	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService, SeatRepository seatRepository) {
+	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService, SeatRepository seatRepository) {
 		Assert.notNull(ticketRepository, "ticketRepository must not be null!");
 		Assert.notNull(cinemaShowRepository, "cinemaShowRepository must not be null!");
 		Assert.notNull(seatRepository, "seatRepository must not be null!");
@@ -63,7 +63,7 @@ public class TicketDataInitializer implements DataInitializer {
 
 			//random TicketCategory und CinemaShow generieren
 			Seat seat = seatRepository.findByRowPos(random.nextInt(seatRowCount),random.nextInt(seatPositionCount)).orElseThrow(() -> new IllegalArgumentException("Invalid Seat ID generated in: TicketDataInitializer"));
-			CinemaShowService.CinemaShowUpdater cinemaShowUpdater = cinemaShowService.update(allCinemaShow.get(random.nextInt(allCinemaShow.size())));
+			ScheduledActivity.CinemaShowService.CinemaShowUpdater cinemaShowUpdater = cinemaShowService.update(allCinemaShow.get(random.nextInt(allCinemaShow.size())));
 			cinemaShowUpdater.setSeatOccupancy(seat,
 												Seat.SeatOccupancy.BOUGHT);
 			CinemaShow cinemaShow = cinemaShowUpdater.save();

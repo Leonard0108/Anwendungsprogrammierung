@@ -1,11 +1,10 @@
-package de.ufo.cinemasystem.additionalfiles;
+package de.ufo.cinemasystem.models;
 
-import jakarta.persistence.Embeddable;
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import jakarta.persistence.Id;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {

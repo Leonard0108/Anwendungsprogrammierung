@@ -40,7 +40,7 @@ public class ViewProgramController {
 
 	private CinemaShowRepository cinemaShowRepository;
 
-	private CinemaShowService cinemaShowService;
+	private ScheduledActivity.CinemaShowService cinemaShowService;
 
 	private CinemaHallRepository cinemaHallRepository;
 
@@ -56,7 +56,7 @@ public class ViewProgramController {
          * @param filmRepository
          * @param scheduledActivityService 
          */
-	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService,
 								 CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository,
 								 ScheduledActivityService scheduledActivityService) {
 		this.cinemaShowRepository = cinemaShowRepository;

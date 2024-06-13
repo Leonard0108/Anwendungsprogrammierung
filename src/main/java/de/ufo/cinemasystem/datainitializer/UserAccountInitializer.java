@@ -2,7 +2,7 @@ package de.ufo.cinemasystem.datainitializer;
 
 import com.mysema.commons.lang.Assert;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
-import de.ufo.cinemasystem.additionalfiles.UserService;
+import de.ufo.cinemasystem.services.UserService;
 import de.ufo.cinemasystem.models.EmployeeEntry;
 import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.EmployeeRepository;
@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
 
 
 @Component

@@ -1,6 +1,8 @@
-package de.ufo.cinemasystem.additionalfiles;
+package de.ufo.cinemasystem.services;
 
 
+import de.ufo.cinemasystem.additionalfiles.LoginForm;
+import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -11,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import de.ufo.cinemasystem.models.UserEntry;
-import de.ufo.cinemasystem.models.UserEntry.UserIdentifier;
 import de.ufo.cinemasystem.repository.UserRepository;
 
 

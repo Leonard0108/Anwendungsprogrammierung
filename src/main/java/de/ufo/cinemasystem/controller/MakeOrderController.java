@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import de.ufo.cinemasystem.models.*;
 import org.salespointframework.catalog.Product.ProductIdentifier;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
@@ -34,12 +35,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.CinemaShowService;
-import de.ufo.cinemasystem.models.Orders;
-import de.ufo.cinemasystem.models.Seat;
-import de.ufo.cinemasystem.models.Snacks;
-import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.SnacksRepository;
@@ -76,7 +71,7 @@ public class MakeOrderController {
 	private @Autowired CinemaShowRepository showsRepo;
 	private @Autowired TicketRepository ticketRepo;
 	private @Autowired UserRepository userRepo;
-	private @Autowired CinemaShowService showService;
+	private @Autowired ScheduledActivity.CinemaShowService showService;
 
 	@GetMapping("/sell-tickets")
 	public String getMethodName(Model m) {

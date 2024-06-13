@@ -3,7 +3,7 @@ package de.ufo.cinemasystem.controller;
 
 
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
-import de.ufo.cinemasystem.additionalfiles.UserService;
+import de.ufo.cinemasystem.services.UserService;
 import de.ufo.cinemasystem.models.UserEntry;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

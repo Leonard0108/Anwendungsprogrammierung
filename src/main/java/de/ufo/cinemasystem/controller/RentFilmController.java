@@ -1,12 +1,11 @@
 package de.ufo.cinemasystem.controller;
 
-import de.ufo.cinemasystem.additionalfiles.YearWeekEntry;
+import de.ufo.cinemasystem.models.YearWeekEntry;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
-import org.eclipse.jdt.internal.compiler.env.IModule;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

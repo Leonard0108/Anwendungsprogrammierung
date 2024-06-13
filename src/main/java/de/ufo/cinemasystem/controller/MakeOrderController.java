@@ -185,6 +185,7 @@ public class MakeOrderController {
 		} else if(cart.getItem(cartItemId.toString()).isPresent()){
 			CartItem toRemove = cart.getItem(cartItemId.toString()).orElseThrow();
 			cart.removeItem(cartItemId.toString());
+			snacksService.addStock(toRemove.getProduct().getId(), toRemove.getQuantity().getAmount().intValue());
 		}else {
 			this.errors.add("Kein Item zum Löschen im Warenkorb gefunden. ItemId: " + cartItemId);
 			m.addAttribute("show", work.getCinemaShow());
@@ -303,8 +304,11 @@ public class MakeOrderController {
 		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") Long amount , @ModelAttribute Cart cart) {
 		this.errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		if(this.inventory.findByProduct(snack).get().getQuantity().isGreaterThan(Quantity.of(amount))){
-			cart.addOrUpdateItem(snack, Quantity.of(1));
+		if(snacksService.getStock(snack.getId()) >= amount){
+			cart.addOrUpdateItem(snack, Quantity.of(amount));
+			snacksService.removeStock(snack.getId(), cart.getQuantity(snack).getAmount().intValue());
+		}else{
+			m.addAttribute("errors", "Nicht genügend Snacks im Lager!");
 		}
 		
 		

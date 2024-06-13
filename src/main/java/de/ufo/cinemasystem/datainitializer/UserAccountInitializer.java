@@ -15,14 +15,15 @@ import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
 
 
 @Component
+@Order(10)
 public class UserAccountInitializer implements DataInitializer {
 	private static UserAccountManagement userAccountManagement;
 	private static UserService userService;

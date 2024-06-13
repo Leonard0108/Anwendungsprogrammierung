@@ -20,12 +20,28 @@
         google.charts.setOnLoadCallback(drawBasic);
 
         function drawChart() {
-            //console.log(dailyIncomeData);
-            var dataArray = [];
-            dataArray.push(['Einnahmequelle', 'Einnahmen']);
-            for (var i = 0; i < dailyIncomeData.length; i++) {
-                dataArray.push([dailyIncomeData[i].source, dailyIncomeData[i].amount]);
+            console.log(dailyIncomeData);
+
+            // Summiert die Einnahmen für gleiche Quellen
+            let incomeSummary = [];
+            for (let i = 0; i < dailyIncomeData.length; i++) {
+                let source = dailyIncomeData[i].source;
+                let amount = dailyIncomeData[i].amount;
+
+                if (incomeSummary[source]) {
+                    incomeSummary[source] += amount;
+                } else {
+                    incomeSummary[source] = amount;
+                }
             }
+
+            let dataArray = [];
+            dataArray.push(['Einnahmequelle', 'Einnahmen']);
+            for (let source in incomeSummary) {
+                dataArray.push([source, incomeSummary[source]]);
+            }
+
+
 
             var data = google.visualization.arrayToDataTable(dataArray);
 
@@ -40,7 +56,7 @@
 
 
         function drawBasic() {
-            console.log(revenueData);
+            //console.log(revenueData);
             var dataArray = [];
             for (var i = 0; i < revenueData.length; i++) {
                 dataArray.push([new Date(revenueData[i].date), revenueData[i].revenue]);

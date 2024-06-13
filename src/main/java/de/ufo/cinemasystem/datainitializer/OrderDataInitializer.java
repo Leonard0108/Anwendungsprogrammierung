@@ -1,38 +1,49 @@
 package de.ufo.cinemasystem.datainitializer;
 
-import de.ufo.cinemasystem.models.Orders;
-import de.ufo.cinemasystem.models.Snacks;
-import de.ufo.cinemasystem.models.Ticket;
+import de.ufo.cinemasystem.models.*;
+import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.order.OrderManagement;
+import org.salespointframework.payment.Cash;
+import org.salespointframework.quantity.Quantity;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-/*
+
 @Component
-@org.springframework.core.annotation.Order(10)
+@org.springframework.core.annotation.Order(11)
 public class OrderDataInitializer implements DataInitializer{
 
 	private static final Logger LOG = LoggerFactory.getLogger(OrderDataInitializer.class);
 
 	private final OrderManagement<Orders> orderManagement;
+	private final UserAccountManagement userAccountManagement;
 	private TicketRepository ticketRepository;
 	private SnacksRepository snacksRepository;
 
-	public OrderDataInitializer(OrderManagement orderManagement, TicketRepository ticketRepository, SnacksRepository snacksRepository) {
-		Assert.notNull(ticketRepository, "ticketRepository must not be null!");
+	@Autowired
+	private CinemaShowRepository cinemaShowRepository;
+
+	public OrderDataInitializer(OrderManagement orderManagement, UserAccountManagement userAccountManagement, TicketRepository ticketRepository, SnacksRepository snacksRepository) {
+
+        Assert.notNull(ticketRepository, "ticketRepository must not be null!");
 		Assert.notNull(snacksRepository, "snacksRepository must not be null!");
-		Assert.notNull(orderManagement, "Order cant be Zero!");
+		Assert.notNull(orderManagement, "Orders cant be Zero!");
+		Assert.notNull(userAccountManagement, "Users cant be Zero!");
 
 		this.orderManagement = orderManagement;
+		this.userAccountManagement = userAccountManagement;
 		this.ticketRepository = ticketRepository;
 		this.snacksRepository = snacksRepository;
 	}
@@ -40,7 +51,7 @@ public class OrderDataInitializer implements DataInitializer{
 	@Override
 	public void initialize() {
 
-		if (ticketRepository.findAll().iterator().hasNext()) {
+		if (orderManagement.findAll(Pageable.ofSize(1)).iterator().hasNext()) {
 			return;
 		}
 
@@ -49,40 +60,45 @@ public class OrderDataInitializer implements DataInitializer{
 		Random random = new Random();
 		List<Ticket> allTickets = ticketRepository.findAll().toList();
 		List<Snacks> allSnacks = snacksRepository.findAll().toList();
+		List<CinemaShow> allShows = cinemaShowRepository.findAll().toList();
+		UserAccount.UserAccountIdentifier userId = userAccountManagement.findAll().toList().get(3).getId();
 
-		int generatedOrderCount = 40;
+		int generatedOrderCount = allShows.size();
 		Orders[] allOrders = new Orders[generatedOrderCount];
+
+		//Orders[] initialisieren: jede Order hat eine unterschiedliche CinemaShow
+		int j = 0;
+		for(CinemaShow show : allShows){
+			allOrders[j] = new Orders(userId,show);
+				j++;
+		}
 
 		//Teilt zufällig Tickets und Snacks auf alle neu generierten Orders auf
 		for( int orderIndex = 0; orderIndex < generatedOrderCount; orderIndex++){
 
-			//0-4 Tickets hinzufügen
-			for(int i = 0; i < random.nextInt(4); i++){
-				//kann eine Order Tickets für verschiedene Vorstellungen enthalten?
-				Ticket ticket = allTickets.get(0);
-				allOrders[orderIndex].addTicket(ticket);
-				allTickets.remove(0);
+			//fügt alle Tickets mit gleicher CinemaShow wie Order hinzu
+			for(Ticket ticket : allTickets){
+				if(allOrders[orderIndex].getCinemaShow().equals(ticket.getCinemaShow())){
+					allOrders[orderIndex].addOrderLine(ticket, Quantity.of(1));
+				}
 			}
 
-			//0-3 Snacks hinzufügen
-			for(int i = 0; i < random.nextInt(3); i++){
+			//5-15 Snacks hinzufügen
+			for(int i = 0; i < random.nextInt(5,16); i++){
 				Snacks snack = allSnacks.get(random.nextInt(allSnacks.size()));
-				allOrders[orderIndex].addSnacks(snack);
+				allOrders[orderIndex].addOrderLine(snack, Quantity.of(1));
 			}
 		}
 
-		//Verteilt alle noch nicht einer Order zugewiesenen Tickets auf erstellte Order auf
-		while(!allTickets.isEmpty()){
-			allOrders[random.nextInt(generatedOrderCount)].addTicket(allTickets.get(0));
-			allTickets.remove(0);
-		}
 
-		//Order in DB speichern
-		for (Orders order : allOrders) {
-			orderManagement.save(order);
+
+		//Order abschließen
+		for( int orderIndex = 0; orderIndex < generatedOrderCount; orderIndex++){
+			allOrders[orderIndex].setPaymentMethod(Cash.CASH);
+			orderManagement.payOrder(allOrders[orderIndex]);
+			orderManagement.completeOrder(allOrders[orderIndex]);
 		}
 
 	}
 
 }
-*/

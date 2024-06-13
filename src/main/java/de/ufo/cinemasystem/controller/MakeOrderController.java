@@ -10,14 +10,17 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import de.ufo.cinemasystem.models.*;
+import org.javamoney.moneta.Money;
+import org.salespointframework.catalog.Product;
 import org.salespointframework.catalog.Product.ProductIdentifier;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManagement;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.useraccount.UserAccount;
@@ -35,6 +38,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
+import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.models.Orders;
+import de.ufo.cinemasystem.models.Reservation;
+import de.ufo.cinemasystem.models.ScheduledActivity.CinemaShowService;
+import de.ufo.cinemasystem.models.Seat;
+import de.ufo.cinemasystem.models.Snacks;
+import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.SnacksRepository;
@@ -53,6 +63,7 @@ public class MakeOrderController {
 
 	private final OrderManagement<Order> orderManagement;
 	private final UniqueInventory<UniqueInventoryItem> inventory;
+	private List<String> errors = new ArrayList<>();
 
 	public MakeOrderController(OrderManagement orderManagement, UniqueInventory<UniqueInventoryItem> inventory) {
 		Assert.notNull(orderManagement, "Order cant be Zero!");
@@ -71,10 +82,12 @@ public class MakeOrderController {
 	private @Autowired CinemaShowRepository showsRepo;
 	private @Autowired TicketRepository ticketRepo;
 	private @Autowired UserRepository userRepo;
-	private @Autowired ScheduledActivity.CinemaShowService showService;
+	private @Autowired CinemaShowService showService;
+	
 
 	@GetMapping("/sell-tickets")
-	public String getMethodName(Model m) {
+	public String onShowSelect(Model m) {
+		this.errors = new ArrayList<>();
 		m.addAttribute("title", "Kassensystem");
 		LocalDateTime now = LocalDateTime.now();
         LocalDateTime next = now.plusDays(7);
@@ -90,7 +103,8 @@ public class MakeOrderController {
 			}
 		}
 		m.addAttribute("shows", toOffer);
-
+		m.addAttribute("errors", this.errors);
+		
 		return "sell-itmes-show-selection";
 	}
 
@@ -111,44 +125,83 @@ public class MakeOrderController {
 	}
 
 	@PostMapping("/sell-tickets")
-	public String onShowSelect(Model m, @LoggedIn UserAccount currentUser,
+	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser,
 	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
-		if (session.getAttribute(orderSessionKey) == null) {
+		this.errors = new ArrayList<>();
+//		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
-		}
+//		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		m.addAttribute("ticket-event", what);
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);
 		m.addAttribute("snacks", getAvailableSnacks());
-
+		m.addAttribute("errors", this.errors);
 		return "sell-items-1";
 	}
 
 	@PostMapping("/sell/remove-ticket")
     public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier cartItemId, @ModelAttribute Cart cart){
+		this.errors = new ArrayList<>();
         if(session.getAttribute(orderSessionKey) == null){
             return "redirect:/sell-tickets";
         }
+		List<CartItem> cartList = cart.toList();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		Optional<CartItem> toRemove = cart.getItem(cartItemId.toString());
-		if(toRemove.get().getProductName().contains("Ticket")){
-			List<Ticket> cartItem = ticketRepo.findByName(toRemove.get().getProductName()).toList();
-			this.inventory.delete(inventory.findByProduct(cartItem.get(0)).get());
+		if(ticketRepo.findById(cartItemId).isPresent()){
+			CartItem toRemove = cart.addOrUpdateItem(new Product("Test", Money.of(0, "EUR")), Quantity.of(1)).orElseThrow();
+			try {
+				for (CartItem cartItem : cartList) {
+					if(cartItem.getProductName().equals(ticketRepo.findById(cartItemId).orElseThrow().getName())) {
+						toRemove = cartItem;
+						break;
+					}
+					
+				}
+				if (toRemove.getProductName().equals("Test")){
+					this.errors.add("Kein Ticket zum Löschen gefunden. TicketId: " + cartItemId);
+					cart.removeItem(toRemove.getId());
+					m.addAttribute("show", work.getCinemaShow());
+					m.addAttribute("snacks", getAvailableSnacks());
+					m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+					m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+					m.addAttribute("errors", this.errors);
+					return "sell-items-1";
+				}
+				deleteTestItems(cart);
+			} catch (Exception e) {
+				this.errors.add("Kein Ticket zum Löschen gefunden. TicketId: " + cartItemId);
+				m.addAttribute("show", work.getCinemaShow());
+				m.addAttribute("snacks", getAvailableSnacks());
+				m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+				m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+				m.addAttribute("errors", this.errors);
+				return "sell-items-1";
+			}
+			Ticket cartItem = ticketRepo.findById(cartItemId).orElseThrow();
+			this.inventory.delete(inventory.findByProduct(cartItem).orElseThrow());
+			cart.removeItem(toRemove.getId());
+			ticketRepo.deleteById(cartItem.getId());
+			showService.update(cartItem.getCinemaShow().getId()).setSeatOccupancy(new Seat(cartItem.getSeatID() / 100, cartItem.getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
+		} else if(cart.getItem(cartItemId.toString()).isPresent()){
+			CartItem toRemove = cart.getItem(cartItemId.toString()).orElseThrow();
 			cart.removeItem(cartItemId.toString());
-			ticketRepo.deleteById(cartItem.get(0).getId());
-			showService.update(cartItem.get(0).getCinemaShow().getId()).setSeatOccupancy(new Seat(cartItem.get(0).getSeatID() / 100, cartItem.get(0).getSeatID() % 100), Seat.SeatOccupancy.FREE).save();
-		}else{
-			cart.removeItem(cartItemId.toString());
+			snacksService.addStock(toRemove.getProduct().getId(), toRemove.getQuantity().getAmount().intValue());
+		}else {
+			this.errors.add("Kein Item zum Löschen im Warenkorb gefunden. ItemId: " + cartItemId);
+			m.addAttribute("show", work.getCinemaShow());
+			m.addAttribute("snacks", getAvailableSnacks());
+			m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+			m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+			m.addAttribute("errors", this.errors);
+			return "sell-items-1";
 		}
-		
-		
+				
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", work.getCinemaShow());
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
-
+		m.addAttribute("errors", this.errors);
         
         return "sell-items-1";
     }
@@ -156,54 +209,72 @@ public class MakeOrderController {
 	@PostMapping("/add-reservation")
 	public String addTicketsperReservation(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 			@RequestParam("reserveNumber") String reservationId, @ModelAttribute Cart cart) {
-		
+		this.errors = new ArrayList<>();
 		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
-		for (Ticket ticket : tickets) {
-			cart.addOrUpdateItem(ticket, Quantity.of(1));
+		Reservation reserve = new Reservation();
+		try {
+			reserve = reservationRepo.findById(Long.parseLong(reservationId)).orElseThrow();
+			if (reserve.getCinemaShow().getId() == work.getCinemaShow().getId() && this.errors.isEmpty()){
+				Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
+				for (Ticket ticket : tickets) {
+					cart.addOrUpdateItem(ticket, Quantity.of(1));
+					showService.update(work.getCinemaShow()).setSeatOccupancy(
+						new Seat(toRowID(ticket.getSeatString()), Integer.parseInt(ticket.getSeatString().substring(1))), Seat.SeatOccupancy.BOUGHT).save();
+				}
+				reservationRepo.delete(reserve);
+			} else {
+				this.errors.add("Reservierung für einen anderen Film! Bitte Film wechseln oder passende Reservierung nehmen.");
+				m.addAttribute("errors", this.errors);
+			}	
+		} catch (Exception e) {
+			this.errors.add(e.getMessage());
+			m.addAttribute("error", this.errors);
 		}
+		
+		
 		m.addAttribute("show", work.getCinemaShow());
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+		m.addAttribute("errors", this.errors);
 
 		
-		return "sell-items-1";		
+		return "sell-items-1";
 	}
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
-			@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
+		@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
+		this.errors = new ArrayList<>();
 
 		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
 		}
 
 		spot = spot.trim().toUpperCase();
-		List<String> errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 
 		if (!PatternHolder.validSeat.matcher(spot).matches()) {
-			errors.add("Ungültiger Sitzplatz: " + spot);
+			this.errors.add("Ungültiger Sitzplatz: " + spot);
 		}
-		if (errors.isEmpty()
+		if (this.errors.isEmpty()
 				&& !work.getCinemaShow().containsSeat(toRowID(spot), Integer.parseInt(spot.substring(1)))) {
-			errors.add("Ungültiger Sitzplatz: " + spot);
+					this.errors.add("Ungültiger Sitzplatz: " + spot);
 		}
 		try {
-			if (errors.isEmpty() && showsRepo.findById(work.getCinemaShow().getId()).orElseThrow()
+			if (this.errors.isEmpty() && showsRepo.findById(work.getCinemaShow().getId()).orElseThrow()
 					.getOccupancy(toRowID(spot), Integer.parseInt(spot.substring(1)))
 					.orElseThrow() != Seat.SeatOccupancy.FREE) {
-				errors.add("Sitzplatz nicht mehr verfügbar: " + spot);
+						this.errors.add("Sitzplatz nicht mehr verfügbar: " + spot);
 			}
 		} catch (NoSuchElementException ex) {
 			// CinemaShow no longer exists.
-			errors.add("Diese Veranstaltung wurde abgesagt");
+			this.errors.add("Diese Veranstaltung wurde abgesagt");
 		}
 		
-		if (errors.isEmpty()) {
+		if (this.errors.isEmpty()) {
 			
 			// add ticket
 			Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
@@ -220,6 +291,7 @@ public class MakeOrderController {
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+		m.addAttribute("errors", this.errors);
 
 		
 		return "sell-items-1";
@@ -229,15 +301,22 @@ public class MakeOrderController {
 
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
-		HttpSession session, @RequestParam("snack-adder") Snacks snack, @ModelAttribute Cart cart) {
+		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") Long amount , @ModelAttribute Cart cart) {
+		this.errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		if(snacksService.getStock(snack.getId()) >= amount){
+			cart.addOrUpdateItem(snack, Quantity.of(amount));
+			snacksService.removeStock(snack.getId(), cart.getQuantity(snack).getAmount().intValue());
+		}else{
+			m.addAttribute("errors", "Nicht genügend Snacks im Lager!");
+		}
 		
-		cart.addOrUpdateItem(snack, Quantity.of(1));
 		
 		m.addAttribute("show", work.getCinemaShow());
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+		m.addAttribute("errors", this.errors);
 		return "sell-items-1";
 	}
 	
@@ -245,6 +324,7 @@ public class MakeOrderController {
 	@PostMapping("/buy")
 	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
+		this.errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 
 		return currentUser.map(account -> {
@@ -261,11 +341,27 @@ public class MakeOrderController {
 			orderManagement.completeOrder(work);
 
 			cart.clear();
-			session.removeAttribute(orderSessionKey);
-			return "redirect:/sell-tickets";
+			m.addAttribute("show", work.getCinemaShow());
+			return "checkout";
 		}).orElse("sell-items-1");
 
 	}
+
+	@GetMapping("/checkout")
+	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 
+		HttpSession session, @ModelAttribute Cart cart) {
+		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		
+		List<Order> test = orderManagement.findBy(OrderStatus.COMPLETED).toList();
+		List<OrderLine> blub = test.get(0).getOrderLines().get().toList();
+		ProductIdentifier t = blub.get(0).getProductIdentifier();
+		Ticket t1 = ticketRepo.findById(t).orElse(null);
+
+
+		return "redirect:/";
+	}
+
+	
 
 	private static int toRowID(String spot) {
 		char rowChar = spot.charAt(0);
@@ -281,11 +377,11 @@ public class MakeOrderController {
 		};
 	}
 
-	private List<CartItem> getCurrentCartTickets(@ModelAttribute Cart cart){
-		List<CartItem> cartTickets = new ArrayList<>();
+	private List<Ticket> getCurrentCartTickets(@ModelAttribute Cart cart){
+		List<Ticket> cartTickets = new ArrayList<>();
 		for (CartItem cartItem : cart.get().toList()) {
 			if(cartItem.getProductName().contains("Ticket")){
-				cartTickets.add(cartItem);
+				cartTickets.add((Ticket)cartItem.getProduct());
 			}
 		}
 		return cartTickets;
@@ -293,10 +389,7 @@ public class MakeOrderController {
 	private List<CartItem> getCurrentCartSnacks(@ModelAttribute Cart cart){
 		List<CartItem>cartSnacks = new ArrayList<>();
 		for (CartItem cartItem :  cart.get().toList()) {
-			if(cartItem.getProductName().contains("Snack")){
-				cartSnacks.add(cartItem);
-			}
-			
+			if(cartItem.getProductName().contains("Snack")){cartSnacks.add(cartItem);}
 		}
 		return cartSnacks;
 	}
@@ -309,6 +402,15 @@ public class MakeOrderController {
 				order.addTickets(cartItem.getPrice());
 			}
 		}
+	}
+
+
+	private Boolean deleteTestItems(@ModelAttribute Cart cart){
+		List<CartItem> toDelete = cart.toList();
+		for (CartItem cartItem : toDelete) {
+			if(cartItem.getProductName().equals("Test"))cart.removeItem(cartItem.getId());
+		}
+		return true;
 	}
 
 	private List<Snacks> getAvailableSnacks(){

@@ -46,6 +46,7 @@ public class EventAdministrationController {
 							  		 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date){
 
 		List<CinemaHall> allCinemaHalls = cinemaHallRepository.findAll().toList();
+		CinemaHall cinemaHall = cinemaHallRepository.findById(room).orElseThrow(() -> new IllegalArgumentException("Invalid room ID: " + room));
 		m.addAttribute("allCinemaHalls", allCinemaHalls);
 		m.addAttribute("title","Saalverwaltung");
 
@@ -59,7 +60,7 @@ public class EventAdministrationController {
 			}
 		}
 		m.addAttribute("scheduledActivitysOnDate", scheduledActivitysOnDateInHall);
-		m.addAttribute("room", room);
+		m.addAttribute("room", cinemaHall);
 		m.addAttribute("date", date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 
 		return "manage-rooms";

@@ -31,7 +31,7 @@
 
                     <div th:if="${scheduledActivitysOnDate}">
                         <br>
-                        <h2>Saal [[${room}]] am [[${date}]]</h2>
+                        <h2>[[${room.getName()}]] am [[${date}]]</h2>
                         <ul th:each="activity : ${scheduledActivitysOnDate}">
                             <li>
                                 <span th:text="${#temporals.format(activity.getStartDateTime(), 'HH:mm')}"></span>

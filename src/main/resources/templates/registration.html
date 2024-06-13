@@ -14,6 +14,9 @@
         <div class="ui negative message" th:if="${#fields.hasErrors('*')}">
             <p>Einige Angaben sind nicht korrekt.</p>
         </div>
+        <div th:if="${error}" class="error">
+            <p th:text="${error}"></p>
+        </div>
 
         <div class="formfield">
             <label for="username">Nutzername</label>

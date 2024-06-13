@@ -32,6 +32,7 @@ import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.javamoney.moneta.Money;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
@@ -115,6 +116,7 @@ public class MakeReservationController {
             session.setAttribute(reservationSessionKey, work);
             session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
+        addPricesToModel(m,showsRepo.findById(work.getCinemaShow().getId()).orElseThrow());
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
@@ -155,6 +157,7 @@ public class MakeReservationController {
             session.setAttribute(reservationSessionKey, work);
             session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
         }
+        addPricesToModel(m,showsRepo.findById(work.getCinemaShow().getId()).orElseThrow());
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
@@ -213,7 +216,7 @@ public class MakeReservationController {
         
         if(errors.isEmpty()){
             //add ticket
-
+            addPricesToModel(m,showsRepo.findById(work.getCinemaShow().getId()).orElseThrow());
             Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
 
             t.setSeatID(100 * toRowID(spot) + Integer.parseInt(spot.substring(1)));
@@ -247,7 +250,12 @@ public class MakeReservationController {
         System.out.println("u: " + work.getReservingAccount().getUserAccount());
         System.out.println("t: " + Arrays.toString(work.getTickets()));
         work.removeTicket(ticket);
-        showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (ticket.getSeatID() / 100), (int) (ticket.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
+        if (showsRepo.findById(work.getCinemaShow().getId()).isPresent()) {
+            showService.update(work.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (ticket.getSeatID() / 100), (int) (ticket.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();
+            addPricesToModel(m, showsRepo.findById(work.getCinemaShow().getId()).orElseThrow());
+        }else{
+            m.addAttribute("errors", "Diese Veranstaltung wurde abgesagt");
+        }
         m.addAttribute("title", "Plätze reservieren");
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
@@ -334,6 +342,53 @@ public class MakeReservationController {
             case "disabled" -> Ticket.TicketCategory.reduced;
             default -> null;
         };
+    }
+
+    private void addPricesToModel(Model m, CinemaShow theShow) {
+        Money basePrice = theShow.getBasePrice();
+        m.addAttribute("p1n", basePrice);
+        if (basePrice.isGreaterThanOrEqualTo(Money.of(3, "EUR"))) {
+            m.addAttribute("p1c", basePrice.subtract(Money.of(3, "EUR")));
+        } else {
+            m.addAttribute("p1c", Money.of(0, "EUR"));
+        }
+        if (basePrice.isGreaterThanOrEqualTo(Money.of(2, "EUR"))) {
+            m.addAttribute("p1r", basePrice.subtract(Money.of(2, "EUR")));
+        } else {
+            m.addAttribute("p1r", Money.of(0, "EUR"));
+        }
+        //p2
+        if(basePrice.isGreaterThanOrEqualTo(Money.of(2, "EUR"))){
+            m.addAttribute("p2n", basePrice.subtract(Money.of(2, "EUR")));
+        }else{
+            m.addAttribute("p2n", Money.of(0, "EUR"));
+        }
+        if (basePrice.isGreaterThanOrEqualTo(Money.of(5, "EUR"))) {
+            m.addAttribute("p2c", basePrice.subtract(Money.of(5, "EUR")));
+        } else {
+            m.addAttribute("p2c", Money.of(0, "EUR"));
+        }
+        if (basePrice.isGreaterThanOrEqualTo(Money.of(4, "EUR"))) {
+            m.addAttribute("p2r", basePrice.subtract(Money.of(4, "EUR")));
+        } else {
+            m.addAttribute("p2r", Money.of(0, "EUR"));
+        }
+        //p3
+        if(basePrice.isGreaterThanOrEqualTo(Money.of(4, "EUR"))){
+            m.addAttribute("p3n", basePrice.subtract(Money.of(4, "EUR")));
+        }else{
+            m.addAttribute("p3n", Money.of(0, "EUR"));
+        }
+        if (basePrice.isGreaterThanOrEqualTo(Money.of(7, "EUR"))) {
+            m.addAttribute("p3c", basePrice.subtract(Money.of(7, "EUR")));
+        } else {
+            m.addAttribute("p3c", Money.of(0, "EUR"));
+        }
+        if (basePrice.isGreaterThanOrEqualTo(Money.of(6, "EUR"))) {
+            m.addAttribute("p3r", basePrice.subtract(Money.of(6, "EUR")));
+        } else {
+            m.addAttribute("p3r", Money.of(0, "EUR"));
+        }
     }
     
     /**

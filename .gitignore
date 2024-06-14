@@ -5,6 +5,7 @@ target/
 
 # Un-ignore maven wrapper jar
 !/.mvn/wrapper/maven-wrapper.jar
+!/Crosstesting Kleinreperaturbetrieb/Kleinreparatur.jar
 
 # Eclipse
 bin/

@@ -79,7 +79,7 @@ public class EmployeeManagementController {
 
 		System.out.println("createdUser: " + form);
 
-		return "redirect:/EmployeeControlling/showAllEmployees";
+		return "redirect:/manage/staff";
 	}
 
 

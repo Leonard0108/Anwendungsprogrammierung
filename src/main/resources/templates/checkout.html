@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
-            <h1></h1>
+            <h1>Bestellung</h1>
             <form id="sell-items-form" action="/checkout" method="get">
                 <div class="already-in-cart">
                     <div class="ticket" th:each="item : ${cartTickets}">
@@ -19,7 +19,7 @@
                         <p style="text-align: right" th:text="${item.getPrice()}"></p>
                     </div>
                 </div>
-                    <button name="next" value="1">Weiter</button>
+                    <button name="next" value="1">Ok</button>
             </form>
         </div>
 </html>

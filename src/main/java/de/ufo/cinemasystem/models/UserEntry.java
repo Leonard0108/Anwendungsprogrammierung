@@ -18,6 +18,15 @@ import org.salespointframework.core.AbstractAggregateRoot;
 import org.salespointframework.useraccount.UserAccount;
 
 
+/**
+ * Entry, der die Daten des Nutzers speichert. Name und E-Mail könnte noch in UserAccount gepackt werden. Variablen sind< dort
+ * bereits vorhanden.
+ * Weitere enthaltene Variablen:
+ * streetName, houseNumber, city, state, postalCode und country, alles Strings, da so auch die Korrektheit besser überprüft werden
+ * kann.
+ * Des Weiteren ist eine eingebettete Klasse vorhanden, welche eine Nutzer-ID generiert, welche gleichzeitig der Primär-
+ * schlüssel ist.
+ */
 @Getter
 @Setter
 @Entity

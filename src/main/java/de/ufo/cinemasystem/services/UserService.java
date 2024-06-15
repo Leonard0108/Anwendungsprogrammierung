@@ -107,28 +107,6 @@ public class UserService {
 	}
 
 
-	public UserEntry loginBackground(LoginForm form)
-	{
-		UserEntry toCheckUserEntry;
-
-
-		Assert.notNull(form, "Login form must not be null");
-		toCheckUserEntry = userRepository.findByUserAccountUsername(LoginForm.getUserName());
-		System.out.println(toCheckUserEntry);
-
-
-
-		//Falls nicht funktionsfähig mal dehashen.
-		if (toCheckUserEntry == null || !(LoginForm.getPassword().equals(String.valueOf(toCheckUserEntry.getUserAccount().getPassword()))))
-		{
-			return null;
-		}
-
-
-
-		return toCheckUserEntry;
-	}
-
 
 
 	public void deleteEmployee(UserEntry user) {

@@ -10,7 +10,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
-
+/**
+ * Entity, welche als Erweiterung zum User-Entry dient und noch diverse Daten für die Mitarbeiter bereit hält.
+ * Hierzu gehören das Gehalt, eine Firmen-E-Mail, Wochenstunden, ob der Mitarbeiter noch eingestellt ist oder nicht u.e.m..
+ */
 @Getter
 @Setter
 @Entity

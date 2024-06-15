@@ -21,10 +21,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 
+/**
+ * Controller, welcher Logins und Nutzerregistrierungen entgegennimmt.
+ */
 @Controller
 public class LoginController {
-	UserRepository  userRepository;
-	UserService     userService;
+	UserRepository  userRepository; //Repository, welches die Datenbankschnittstelle darstellt.
+	UserService     userService;    //Service, welcher das Backend, also check der eingegebenen Daten und entsprechenden
+	                                //Rückgabewert liefert.
 
 
 	public LoginController(UserRepository userRepository, UserService userService) {
@@ -50,6 +54,7 @@ public class LoginController {
 
 		creationResult = userService.createUser(form);
 
+		//Fehlerbehandlung des Rückgabewerts des Services.
 		switch (creationResult) {
 			case 0:
 				redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
@@ -80,22 +85,6 @@ public class LoginController {
 		return "registration";
 	}
 
-
-
-
-	/*
-	@PostMapping("/login")
-	String login(@Valid LoginForm form, Errors result, HttpSession session, RedirectAttributes redirectAttributes) {
-
-		return "redirect:/";
-	}
-
-
-	@GetMapping(path = "/login")
-	String login() {
-		return "login";
-	}
-	*/
 
 
 

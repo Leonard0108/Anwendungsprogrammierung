@@ -61,6 +61,7 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 | http://127.0.0.1:8080/depot | - | Zugangsbeschränkung fehlt | 
 | http://127.0.0.1:8080/finance | - | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/register | - | Zugangsbeschränkung fehlt | 
+| http://localhost:8080/items/receipt | GET | Errorcode 500, dispatcherServlet |
 | 
 |===
 
@@ -114,6 +115,8 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
    im HTML-Formular enthalten sein?
 ** Unklar, wie Bestellungen bearbeitet werden, also wann ist eine Station belegt(Kann-Kriterium: welcher Mitarbeiter führt die aus)
 ** Unklar, wo der Unterschied zwischen Mitarbeiter und Nutzer ist. Kann man einen Coworker anlegen?
+** Itemauswahl in der Bestellung als Liste angeben(Vielleicht mit Namen als Anzeige) und ID vereinheitlichen, entweder aufsteigend oder random
+
 
 == Verbesserungsvorschläge
 * Was kann noch weiter verbessert werden?

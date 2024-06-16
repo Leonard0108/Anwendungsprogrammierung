@@ -5,7 +5,7 @@
 __Durchführende Gruppe:__ Gruppe 4 (Kino)
 __Anwendung von Gruppe:__ Gruppe 5 (Kleinreparaturen)
 
-== Getestetes System
+== Getestetes System: Kleinreparaturen
 Aus https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/blob/main/Crosstesting%20Kleinreperaturbetrieb/pflichtenheft.pdf
 
 "Der Auftraggeber, die Miss-Mint-Kette, ist an einen Softwaresystem interessiert, welches die
@@ -62,11 +62,7 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 |===
 
 == Sonstiges
-* Usability
-** Vielleicht sollte bei der Bestellung die E-Mail-Adresse anstelle der ID genutzt werden. Die weiß der Nutzer
-   eher auswendig als seine ID.
-** Wieso muss bei der Bestellung in http://localhost:8080/cart die Produkt-ID angegeben werden? sollte die nicht
-   im HTML-Formular enthalten sein?
+
 * Pflichtenheft
 ** In Abschnitt 3 währe es eventuell sinnvoll, auf nutzbare Browser-Versionen einzugehen.
 ** Das Sequenzdiagramm in Abschnitt 6.3 ist - anders als der Rest des Dokuments - Schwarz mit Weißer Schrift
@@ -104,6 +100,23 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 ** ID003: Linking mit Lager suboptimal
 ** http://127.0.0.1:8080/materials/delete/{idd}: keine Sicherheitsabfrage
 ** http://127.0.0.1:8080/management zeigt uneingeloggt einen soft-403
+** Vielleicht sollte bei der Bestellung die E-Mail-Adresse anstelle der ID genutzt werden. Die weiß der Nutzer
+   eher auswendig als seine ID.
+** Wieso muss bei der Bestellung in http://localhost:8080/cart die Produkt-ID angegeben werden? sollte die nicht
+   im HTML-Formular enthalten sein?
+* kleinreparatur_service.users : Passwortspeicherung im Klartext?! 
 
 == Verbesserungsvorschläge
 * Was kann noch weiter verbessert werden?
+** Verwendungen der alten java.util.Date-Klasse durch modernere Alternativen aus java.time ersetzen (betrifft u. a. kleinreparatur_service.customer.Customer
+** Denglisch in kleinreparatur_service.order.CustomOrder.OrderStatus beseitigen
+** Warum benutzt kleinreparatur_service.resources.coworkers.Coworker einen Double für Geld, wenn wir Moneta haben?
+** Warum benutzt kleinreparatur_service.resources.workingstation.Workingstation einen Double für Geld, wenn wir Moneta haben?
+** Bitte kleinreparatur_service.resources.workingstation.Workingstation an Namenskonventionen anpassen (btw, richtig währe Workstation - https://de.pons.com/%C3%BCbersetzung/englisch-deutsch/workstation )
+** Denglisch in kleinreparatur_service.servicecatalog (u.a. ServiceTypes-Enum, @RequestMappings) beseitigen
+** kleinreparatur_service.users.user: an Namenskonventionen anpassen
+
+
+== TODO:
+
+* kleinreparatur_service.servicecatalog.Service.image: Existenz prüfen

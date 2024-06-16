@@ -22,12 +22,20 @@ Grundsätzlich entspricht die Projektstruktur dem Maven-Standardlayout. Sie find
   └── test/
       └── java/       -- Die automatischen Unit- und Integrationstests werden in einem separatem Verzeichnis abgelegt. Das ermöglicht es uns, die Testfälle sauber von der eigentlichen Anwendung zu trennen. Die Testfälle werden am Besten mit dem link:https://junit.org/junit5/[JUnit-Framework] erstellt.
 
-Weitere Dateien:
+=== Weitere Dateien:
 
 * `.gitignore`          -- Dateien und Verzeichnisse, die nicht in das Repository eingecheckt werden sollen.
 * `pom.xml`             -- Dies ist die Maven Build-Spezifikation, Informationen zu diesem Format finden Sie in der link:https://maven.apache.org/index.html[Maven-Dokumentation].
 * `.editorconfig`       -- Erlaubt es, verschiedene Editoren mit identischen Grundeinstellungen zu versehen, z.B. bezüglich des Datei-Encodings, welches Sie standardmäßig am Besten auf UTF-8 stellen.
 * `mvnw` und `mvnw.cmd` -- Shell-Skripte, die Maven herunterladen, installieren und ausführen, wenn es sich noch nicht auf Ihrem System befindet.
+
+=== Cross-Testing
+
+* link:Crosstesting%20Kleinreperaturbetrieb[Erhaltene Dateien]
+** link:Crosstesting%20Kleinreperaturbetrieb/Kleinreparatur.jar[Kleinreparatur.jar]
+** link:Crosstesting%20Kleinreperaturbetrieb/pflichtenheft.pdf[pflichtenheft.pdf]
+** link:Crosstesting%20Kleinreperaturbetrieb/TestingManual.pdf[TestingManual.pdf]
+* link:src/main/asciidoc/cross_testing_report_for_g5_kleinreparaturen.adoc[Report]
 
 == Ausführen der Anwendung
 

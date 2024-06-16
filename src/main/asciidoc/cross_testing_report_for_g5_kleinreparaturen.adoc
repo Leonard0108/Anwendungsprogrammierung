@@ -62,14 +62,19 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 |===
 
 == Sonstiges
+* Usability
+** Vielleicht sollte bei der Bestellung die E-Mail-Adresse anstelle der ID genutzt werden. Die weiß der Nutzer
+   eher auswendig als seine ID.
+** Wieso muss bei der Bestellung in http://localhost:8080/cart die Produkt-ID angegeben werden? sollte die nicht
+   im HTML-Formular enthalten sein?
 * Pflichtenheft
-** In Abschnitt 3 währe es eventuell sinvoll, auf nutzbare Browser-Versionen einzugehen.
+** In Abschnitt 3 währe es eventuell sinnvoll, auf nutzbare Browser-Versionen einzugehen.
 ** Das Sequenzdiagramm in Abschnitt 6.3 ist - anders als der Rest des Dokuments - Schwarz mit Weißer Schrift
-** 8.1. Qualitätsanforderungen - Anforderung "efficency/ automation " hat keine verständliche Beschreibung
+** 8.1. Qualitätsanforderungen - Anforderung "efficiency/ automation" hat keine verständliche Beschreibung
 ** GUI-Entwurf: Figur 11 (Wirtschaftsstatistiken) hat nichtfunktionale Bilder
 ** ID002: Label der Bedienelemente Nachziehen
 ** ID002: Ich sehe keine Schaltflächen zum festlegen der Rolle oder des Passworts (letzteres ist gut so, muss aber im Pflichtenheft nachgebessert werden - Mitarbeiter sollten das Passwort von anderen nicht kennen!)
-** ID003: Ist nicht auswertbar, Da die Schaltflächen so nicht existieren
+** ID003: Ist nicht auswertbar, da die Schaltflächen so nicht existieren
 * TestingManual.pdf
 ** Java Runtime Environment (JRE) installieren: JRE's gibt es zumindest bei Oracle nicht mehr, Zudem währe hier eine Angabe zur Minimalen Version wünschenswert (warum das wichtig ist, siehe https://stackoverflow.com/q/10382929/23162960 ) Außerdem weiß ich nicht, ob das so sinvoll ist, Nutzer auf die nur noch Kostenpflichtig (mit aktuellen Bugfixes) zu erhaltene Version 8 zu verweisen
 ** "jar Datei extrahieren": Gemeint ist vermutlich, dass man die erhaltene .7z öffnen und alle Dateien daraus zu extrahieren. Technisch versiertere Personen könnten hier jedoch auf die Idee kommen, das JAR als ZIP-Archiv zu behandeln und die Klassendateien zu extrahieren.
@@ -79,7 +84,7 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 ** Die 404-Seite Zeigt zumindest für http://127.0.0.1:8080/robots.txtejfjfioejfewijfiijwefjifeewjiijfewjiew unter dem Abschnitt Fehlermeldung nichts an. Unter Nachricht wird das fehlerhafte Servlet eingetragen - dass ist aber bei Spring eigentlich immer das dispatcherServlet.
 ** Keine FavIcons, kein Logo
 * Fehlende Features
-** Das Loginformular Zeigt keine Fehlermeldung an, wenn man versucht, sich mit falschen Zugangsdaten einzuloggen
+** Das Loginformular zeigt keine Fehlermeldung an, wenn man versucht, sich mit falschen Zugangsdaten einzuloggen
 ** http://127.0.0.1:8080/cart ebenfalls keine Fehlermeldung
 ** http://127.0.0.1:8080/materials keine Fehlermeldung bei ungültigen Parametern
 ** Das Pflichtenheft spricht von einer "Passwort vergessen"-Funktion - ich habe keine solche gefunden
@@ -89,7 +94,7 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 * Interaktion mit der Anwendung (Usability)
 ** Ich (Jannik) halte das Navigationsmenü für suboptimal - es ist bspsw. beim Katalog UI-Mäßig nicht vorgesehen, dass der Nutzer eine Seite zurückgeht. Wenn er das will, muss er auf die Zurück-Taste des Browsers vertrauen oder sich neu von oben durchklicken.
 ** Bitte den Moneta-Spam "Using default formatter for toString()." abstellen, damit das Log übersichtlich bleibt
-** Der Versurch, folgendes mit ungültigen Eingabeparametern zu tun, führt auf einen harten 400 (hier währe es vermutlich sinvoller, dasselbe Template wie bei einer GET-Anfrage zu benutzen & eine Fehlermeldung anzuzeigen
+** Der Versuch, folgendes mit ungültigen Eingabeparametern zu tun, führt auf einen harten 400 (hier währe es vermutlich sinvoller, dasselbe Template wie bei einer GET-Anfrage zu benutzen & eine Fehlermeldung anzuzeigen
 *** Materialien anlegen
 *** Mitarbeiter anlegen
 *** http://127.0.0.1:8080/coworkers/update

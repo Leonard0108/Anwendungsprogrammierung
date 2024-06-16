@@ -43,21 +43,21 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 |===
 |Pfad |Parameter |Beschreibung |Rückgabe
 | http://127.0.0.1:8080/coworkers/resources/css/style.css | - | Der Link aufs Stylesheet führt nur für (virtuelle) Inhalte des Wurzelordners zum Ziel (Verweisseite: http://127.0.0.1:8080/coworkers/create)| 404 not found 
-| http://127.0.0.1:8080/coworkers | name=irjejgij&hourlyRate=-12 | Das System erlaubt es, Mitarbeiter mit negativem Stundenlohn anzulegen | keine 
-| http://127.0.0.1:8080/materials | name=fdfd&price=-12821&stock=213321 | Das System erlaubt es, Materialien mit negativem Preis anzulegen | keine 
-| http://127.0.0.1:8080/coworkers | name=Alice&hourlyRate=20 | Die Duplikaterkennung funktioniert nicht richtig |
-| http://127.0.0.1:8080/register  | name=boss&password=123&address=12312 | Der Versuch, Benutzer mit bereits existierendem Benutzername anzulegen, führt in einen 500 | 500 Internal Server Error
+| http://127.0.0.1:8080/coworkers | `name=irjejgij&hourlyRate=-12` | Das System erlaubt es, Mitarbeiter mit negativem Stundenlohn anzulegen | keine 
+| http://127.0.0.1:8080/materials | `name=fdfd&price=-12821&stock=213321` | Das System erlaubt es, Materialien mit negativem Preis anzulegen | keine 
+| http://127.0.0.1:8080/coworkers | `name=Alice&hourlyRate=20` | Die Duplikaterkennung funktioniert nicht richtig |
+| http://127.0.0.1:8080/register  | `name=boss&password=123&address=12312` | Der Versuch, Benutzer mit bereits existierendem Benutzername anzulegen, führt in einen 500 | 500 Internal Server Error
 | http://127.0.0.1:8080/materials | - | Deutsche Umlaute (ä, ö, ü, ß), werden nicht korrekt dargestellt | -
 | http://127.0.0.1:8080/finance   | - | Wenn man auf "Detailed Data analytics" geht, kommt ein 405 | 405 Method Not Allowed
-| http://127.0.0.1:8080/finance   | - | Keine  | -
+// ???| http://127.0.0.1:8080/finance   | - | Keine  | -
 | http://127.0.0.1:8080/orders    | - | Das View heißt "Completed Orders", enthält aber auch noch unfertige bestellungen |-
 | http://127.0.0.1:8080/orders    | - | Neu angelegte Bestellungen haben keine korrekten Uhrzeit-Informationen und sind sofort mit Fertigstellungs- und Abholdaten versehen | -
 | http://127.0.0.1:8080/materials/delete/1 | - | GET-Anfrage ist nicht Idempotent und nicht Safe (vgl. dazu https://httpwg.org/specs/rfc9110.html#safe.methods ) |-
-| http://127.0.0.1:8080/materials/delete/{id} | {id}: material.id | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/materials/delete/{id} | `{id}: material.id` | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/coworkers | - | Zugangsbeschränkung fehlt |
-| http://127.0.0.1:8080/coworkers/delete/{id} | {id}: coworkers.id | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/coworkers/delete/{id} | `{id}: coworkers.id` | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/workingstations | - | Zugangsbeschränkung fehlt |
-| http://127.0.0.1:8080/workstations/delete/{id} | {id}: workstations.id | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/workstations/delete/{id} | `{id}: workstations.id` | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/depot | - | Zugangsbeschränkung fehlt | 
 | http://127.0.0.1:8080/finance | - | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/register | - | Zugangsbeschränkung fehlt | 
@@ -71,16 +71,17 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 ** Das Sequenzdiagramm in Abschnitt 6.3 ist - anders als der Rest des Dokuments - Schwarz mit Weißer Schrift
 ** 8.1. Qualitätsanforderungen - Anforderung "efficiency/ automation" hat keine verständliche Beschreibung
 ** GUI-Entwurf: Figur 11 (Wirtschaftsstatistiken) hat nichtfunktionale Bilder
-** ID002: Label der Bedienelemente Nachziehen
-** ID002: Ich sehe keine Schaltflächen zum festlegen der Rolle oder des Passworts (letzteres ist gut so, muss aber im Pflichtenheft nachgebessert werden - Mitarbeiter sollten das Passwort von anderen nicht kennen!)
+** ID002: Label der Bedienelemente nachziehen
+** ID002: Ich sehe keine Schaltflächen zum festlegen der Rolle oder des Passworts (letzteres ist gut so, muss aber im Pflichtenheft nachgebessert werden - Mitarbeiter __sollten__ das Passwort von anderen nicht kennen!)
 ** ID003: Ist nicht auswertbar, da die Schaltflächen so nicht existieren
+** ID003 zudem Doppelt vorhanden (Passwort zurücksetzen / Order overview)
 * TestingManual.pdf
-** Java Runtime Environment (JRE) installieren: JRE's gibt es zumindest bei Oracle nicht mehr, Zudem währe hier eine Angabe zur Minimalen Version wünschenswert (warum das wichtig ist, siehe https://stackoverflow.com/q/10382929/23162960 ) Außerdem weiß ich nicht, ob das so sinvoll ist, Nutzer auf die nur noch Kostenpflichtig (mit aktuellen Bugfixes) zu erhaltene Version 8 zu verweisen
+** Java Runtime Environment (JRE) installieren: JRE's gibt es zumindest bei Oracle nicht mehr, Zudem währe hier eine Angabe zur Minimalen Version wünschenswert (warum das wichtig ist, siehe https://stackoverflow.com/q/10382929/23162960 ) Außerdem weiß ich nicht, ob das so sinvoll ist, Nutzer auf die nur noch Kostenpflichtig (mit aktuellen Bugfixes) zu erhaltene, 10 Jahre alten Version 8 zu verweisen
 ** "jar Datei extrahieren": Gemeint ist vermutlich, dass man die erhaltene .7z öffnen und alle Dateien daraus zu extrahieren. Technisch versiertere Personen könnten hier jedoch auf die Idee kommen, das JAR als ZIP-Archiv zu behandeln und die Klassendateien zu extrahieren.
 ** Wünschenswert währen hier noch Anleitungen, wie Einzelproesse funktionieren
 * Optik der Anwendung
 ** der Inhalt von div.main und section[fragment="content"] (Startseite, Login) könnte etwas Padding vertragen, damit er etwas Abstand vom Fensterrand einhält
-** Die 404-Seite Zeigt zumindest für http://127.0.0.1:8080/robots.txtejfjfioejfewijfiijwefjifeewjiijfewjiew unter dem Abschnitt Fehlermeldung nichts an. Unter Nachricht wird das fehlerhafte Servlet eingetragen - dass ist aber bei Spring eigentlich immer das dispatcherServlet.
+** Die 404-Seite Zeigt zumindest für http://127.0.0.1:8080/robots.txtejfjfioejfewijfiijwefjifeewjiijfewjiew unter dem Abschnitt Fehlermeldung nichts an. Unter Nachricht wird das fehlerhafte Servlet eingetragen - dass ist aber bei Spring eigentlich immer das `dispatcherServlet`.
 ** Keine FavIcons, kein Logo
 * Fehlende Features
 ** Das Loginformular zeigt keine Fehlermeldung an, wenn man versucht, sich mit falschen Zugangsdaten einzuloggen
@@ -96,8 +97,8 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 ** Keine Ausgabe der Abhol-/Bestellnummer oder einer Bestellübersicht
 * Interaktion mit der Anwendung (Usability)
 ** Ich (Jannik) halte das Navigationsmenü für suboptimal - es ist bspsw. beim Katalog UI-Mäßig nicht vorgesehen, dass der Nutzer eine Seite zurückgeht. Wenn er das will, muss er auf die Zurück-Taste des Browsers vertrauen oder sich neu von oben durchklicken.
-** Bitte den Moneta-Spam "Using default formatter for toString()." abstellen, damit das Log übersichtlich bleibt
-** Der Versuch, folgendes mit ungültigen Eingabeparametern zu tun, führt auf einen harten 400 (hier währe es vermutlich sinvoller, dasselbe Template wie bei einer GET-Anfrage zu benutzen & eine Fehlermeldung anzuzeigen
+** Bitte den Moneta-Spam "`Using default formatter for toString().`" abstellen, damit das Log übersichtlich bleibt
+** Der Versuch, folgendes mit ungültigen Eingabeparametern zu tun, führt auf einen harten 400 (hier währe es vermutlich sinvoller, auf das Formular zurückzuleiten und mittels `RedirectAttributes.addFlashAttribute` eine ordentliche Fehlermeldung mitzugeben)
 *** Materialien anlegen
 *** Mitarbeiter anlegen
 *** http://127.0.0.1:8080/coworkers/update
@@ -105,7 +106,7 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 ** http://127.0.0.1:8080/cart : was ist "Item Condition"? Was ist die "Item-ID"?
 ** Es gibt keine Möglichkeit, einem aktiven Warenkorb weitere Elemente hinzuzufügen, und keine UI-Möglichkeit, zum aktiven Warenkorb zurückzukehren, wenn man weggeklickt hat
 ** ID003: Linking mit Lager suboptimal
-** http://127.0.0.1:8080/materials/delete/{idd}: keine Sicherheitsabfrage
+** http://127.0.0.1:8080/materials/delete/{id}: keine Serverseitige Sicherheitsabfrage, Clientabfrage mind. in Firefox 127.0 defekt
 ** http://127.0.0.1:8080/management zeigt uneingeloggt einen soft-403
 ** Vielleicht sollte bei der Bestellung die E-Mail-Adresse anstelle der ID genutzt werden. Die weiß der Nutzer
    eher auswendig als seine ID.
@@ -113,17 +114,16 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
    im HTML-Formular enthalten sein?
 ** Unklar, wie Bestellungen bearbeitet werden, also wann ist eine Station belegt(Kann-Kriterium: welcher Mitarbeiter führt die aus)
 ** Unklar, wo der Unterschied zwischen Mitarbeiter und Nutzer ist. Kann man einen Coworker anlegen?
-* kleinreparatur_service.users : Passwortspeicherung im Klartext?! 
 
 == Verbesserungsvorschläge
 * Was kann noch weiter verbessert werden?
-** Verwendungen der alten java.util.Date-Klasse durch modernere Alternativen aus java.time ersetzen (betrifft u. a. kleinreparatur_service.customer.Customer
-** Denglisch in kleinreparatur_service.order.CustomOrder.OrderStatus beseitigen
-** Warum benutzt kleinreparatur_service.resources.coworkers.Coworker einen Double für Geld, wenn wir Moneta haben?
-** Warum benutzt kleinreparatur_service.resources.workingstation.Workingstation einen Double für Geld, wenn wir Moneta haben?
-** Bitte kleinreparatur_service.resources.workingstation.Workingstation an Namenskonventionen anpassen (btw, richtig währe Workstation - https://de.pons.com/%C3%BCbersetzung/englisch-deutsch/workstation )
-** Denglisch in kleinreparatur_service.servicecatalog (u.a. ServiceTypes-Enum, @RequestMappings) beseitigen
-** kleinreparatur_service.users.user: an Namenskonventionen anpassen
+** Verwendungen der alten `java.util.Date`-Klasse durch modernere Alternativen aus `java.time` ersetzen (betrifft u. a. `kleinreparatur_service.customer.Customer`)
+** Denglisch in `kleinreparatur_service.order.CustomOrder.OrderStatus` beseitigen
+** Warum benutzt `kleinreparatur_service.resources.coworkers.Coworker` einen `Double` für Geld, wenn wir Moneta haben?
+** Warum benutzt `kleinreparatur_service.resources.workingstation.Workingstation` einen `Double` für Geld, wenn wir Moneta haben?
+** Bitte `kleinreparatur_service.resources.workingstation.Workingstation` an Namenskonventionen anpassen (btw, richtig währe Workstation - https://de.pons.com/%C3%BCbersetzung/englisch-deutsch/workstation )
+** Denglisch in `kleinreparatur_service.servicecatalog` (u.a. ServiceTypes-Enum, @RequestMappings) beseitigen
+** `kleinreparatur_service.users.user`: an Namenskonventionen anpassen
 
 
 == TODO:

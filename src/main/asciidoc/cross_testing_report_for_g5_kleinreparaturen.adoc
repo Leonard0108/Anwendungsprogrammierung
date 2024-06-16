@@ -6,20 +6,99 @@ __Durchführende Gruppe:__ Gruppe 4 (Kino)
 __Anwendung von Gruppe:__ Gruppe 5 (Kleinreparaturen)
 
 == Getestetes System
-Welche Aufgabe/Problemstellung löst die Anwendung.
+Aus https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/blob/main/Crosstesting%20Kleinreperaturbetrieb/pflichtenheft.pdf
+
+"Der Auftraggeber, die Miss-Mint-Kette, ist an einen Softwaresystem interessiert, welches die
+Annahme, Reparaturplanung, Ausgabe und Lagerung von Waren sowie die Verwaltung von
+Ressourcen (Personal, Material, Arbeitsplätzen) unterstützt und außerdem dem Filialmanagement
+laufende und akkumulierte Bilanzen zur Verfügung stellt.
+Das Ziel dieses Projekts ist die Entwicklung einer umfassenden Softwarelösung für die Verwaltung
+von Kleinreparaturbetrieben im Rahmen der Miss Mint Mending Points Kette. Die Software soll alle
+Aspekte des Betriebs unterstützen, angefangen von der Erstellung und Annahme von Aufträgen
+über die Reparaturplanung bis hin zur Ausgabe und Lagerung. Darüber hinaus soll sie das
+Filialmanagement bei der Ressourcenverwaltung unterstützen und Bilanzen liefern können.
+Konkret sollen folgende Funktionen umgesetzt werden:
+1. Annahme und Abwicklung von Aufträgen: Die Software soll es ermöglichen, Kundenanfragen
+entgegenzunehmen, den gewünschten Service zu erfassen und den Preis sofort zu ermitteln.
+Nach Zahlungseingang erhält der Kunde eine Auftragsbestätigung mit einer eindeutigen
+Auftragsnummer und dem Fertigstellungstermin.
+2. Reparaturplanung und -ausführung: Die Software soll die Ressourcenplanung für die
+verschiedenen Services unterstützen und die Zuweisung von Personal und Arbeitsplätzen
+ermöglichen.
+3. Lagerverwaltung: Die Software soll die Lagerung der Waren und die Verwaltung von
+Aufbewahrungszeiträumen sowie Gebühren unterstützen. Nicht abgeholte Waren sollen
+automatisch als "Zum Spenden bereit" gekennzeichnet werden und dann in Verantwortlichkeit
+des Filialmanagements an eine karitative Organisation gespendet werden.
+4. Ressourcenmanagement: Die Software soll dem Filialmanagement bei der Verwaltung von
+Personal, Arbeitsplätzen und Material helfen.
+5. Berichterstattung und Bilanzierung: Die Software soll dem Filialmanagement laufende und
+akkumulierte Bilanzen zur Verfügung stellen, um eine effektive Geschäftsplanung und -analyse
+zu ermöglichen.
+Zusammenfassend soll die zu entwickelnde Softwarelösung eine effiziente Betriebsführung
+ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 
 == Fehler-Report
 // See http://asciidoctor.org/docs/user-manual/#tables
 [options="header"]
 |===
 |Pfad |Parameter |Beschreibung |Rückgabe
-| … | … | … | … |
+| http://127.0.0.1:8080/coworkers/resources/css/style.css | - | Der Link aufs Stylesheet führt nur für (virtuelle) Inhalte des Wurzelordners zum Ziel (Verweisseite: http://127.0.0.1:8080/coworkers/create)| 404 not found 
+| http://127.0.0.1:8080/coworkers | name=irjejgij&hourlyRate=-12 | Das System erlaubt es, Mitarbeiter mit negativem Stundenlohn anzulegen | keine 
+| http://127.0.0.1:8080/materials | name=fdfd&price=-12821&stock=213321 | Das System erlaubt es, Materialien mit negativem Preis anzulegen | keine 
+| http://127.0.0.1:8080/coworkers | name=Alice&hourlyRate=20 | Die Duplikaterkennung funktioniert nicht richtig |
+| http://127.0.0.1:8080/register  | name=boss&password=123&address=12312 | Der Versuch, Benutzer mit bereits existierendem Benutzername anzulegen, führt in einen 500 | 500 Internal Server Error
+| http://127.0.0.1:8080/materials | - | Deutsche Umlaute (ä, ö, ü, ß), werden nicht korrekt dargestellt | -
+| http://127.0.0.1:8080/finance   | - | Wenn man auf "Detailed Data analytics" geht, kommt ein 405 | 405 Method Not Allowed
+| http://127.0.0.1:8080/orders    | - | Das View heißt "Completed Orders", enthält aber auch noch unfertige bestellungen |-
+| http://127.0.0.1:8080/orders    | - | Neu angelegte Bestellungen haben keine korrekten Uhrzeit-Informationen und sind sofort mit Fertigstellungs- und Abholdaten versehen | -
+| http://127.0.0.1:8080/materials/delete/1 | - | GET-Anfrage ist nicht Idempotent und nicht Safe (vgl. dazu https://httpwg.org/specs/rfc9110.html#safe.methods ) |-
+| http://127.0.0.1:8080/materials/delete/{id} | {id}: material.id | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/coworkers | - | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/workingstations | - | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/depot | - | Zugangsbeschränkung fehlt | 
+| http://127.0.0.1:8080/finance | - | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/register | - | Zugangsbeschränkung fehlt | 
+| 
 |===
 
 == Sonstiges
+* Pflichtenheft
+** In Abschnitt 3 währe es eventuell sinvoll, auf nutzbare Browser-Versionen einzugehen.
+** Das Sequenzdiagramm in Abschnitt 6.3 ist - anders als der Rest des Dokuments - Schwarz mit Weißer Schrift
+** 8.1. Qualitätsanforderungen - Anforderung "efficency/ automation " hat keine verständliche Beschreibung
+** GUI-Entwurf: Figur 11 (Wirtschaftsstatistiken) hat nichtfunktionale Bilder
+** ID002: Label der Bedienelemente Nachziehen
+** ID002: Ich sehe keine Schaltflächen zum festlegen der Rolle oder des Passworts (letzteres ist gut so, muss aber im Pflichtenheft nachgebessert werden - Mitarbeiter sollten das Passwort von anderen nicht kennen!)
+** ID003: Ist nicht auswertbar, Da die Schaltflächen so nicht existieren
+* TestingManual.pdf
+** Java Runtime Environment (JRE) installieren: JRE's gibt es zumindest bei Oracle nicht mehr, Zudem währe hier eine Angabe zur Minimalen Version wünschenswert (warum das wichtig ist, siehe https://stackoverflow.com/q/10382929/23162960 ) Außerdem weiß ich nicht, ob das so sinvoll ist, Nutzer auf die nur noch Kostenpflichtig (mit aktuellen Bugfixes) zu erhaltene Version 8 zu verweisen
+** "jar Datei extrahieren": Gemeint ist vermutlich, dass man die erhaltene .7z öffnen und alle Dateien daraus zu extrahieren. Technisch versiertere Personen könnten hier jedoch auf die Idee kommen, das JAR als ZIP-Archiv zu behandeln und die Klassendateien zu extrahieren.
+** Wünschenswert währen hier noch Anleitungen, wie Einzelproesse funktionieren
 * Optik der Anwendung
+** der Inhalt von div.main und section[fragment="content"] (Startseite, Login) könnte etwas Padding vertragen, damit er etwas Abstand vom Fensterrand einhält
+** Die 404-Seite Zeigt zumindest für http://127.0.0.1:8080/robots.txtejfjfioejfewijfiijwefjifeewjiijfewjiew unter dem Abschnitt Fehlermeldung nichts an. Unter Nachricht wird das fehlerhafte Servlet eingetragen - dass ist aber bei Spring eigentlich immer das dispatcherServlet.
+** Keine FavIcons, kein Logo
 * Fehlende Features
+** Das Loginformular Zeigt keine Fehlermeldung an, wenn man versucht, sich mit falschen Zugangsdaten einzuloggen
+** http://127.0.0.1:8080/cart ebenfalls keine Fehlermeldung
+** http://127.0.0.1:8080/materials keine Fehlermeldung bei ungültigen Parametern
+** Das Pflichtenheft spricht von einer "Passwort vergessen"-Funktion - ich habe keine solche gefunden
+** ID006, ID008 scheint so nicht zu existieren
+** ID007 existiert im Menü, zeigt aber keine Daten an und hat keine <select>-Einträge
+** ID023 kein Link oder Knopf zum anlegen neuer Bestellungen
 * Interaktion mit der Anwendung (Usability)
+** Ich (Jannik) halte das Navigationsmenü für suboptimal - es ist bspsw. beim Katalog UI-Mäßig nicht vorgesehen, dass der Nutzer eine Seite zurückgeht. Wenn er das will, muss er auf die Zurück-Taste des Browsers vertrauen oder sich neu von oben durchklicken.
+** Bitte den Moneta-Spam "Using default formatter for toString()." abstellen, damit das Log übersichtlich bleibt
+** Der Versurch, folgendes mit ungültigen Eingabeparametern zu tun, führt auf einen harten 400 (hier währe es vermutlich sinvoller, dasselbe Template wie bei einer GET-Anfrage zu benutzen & eine Fehlermeldung anzuzeigen
+*** Materialien anlegen
+*** Mitarbeiter anlegen
+*** http://127.0.0.1:8080/coworkers/update
+*** http://127.0.0.1:8080/workingstations/create
+** http://127.0.0.1:8080/cart : was ist "Item Condition"?
+** Es gibt keine Möglichkeit, einem aktiven Warenkorb weitere Elemente hinzuzufügen, und keine UI-Möglichkeit, zum aktiven Warenkorb zurückzukehren, wenn man weggeklickt hat
+** ID003: Linking mit Lager suboptimal
+** http://127.0.0.1:8080/materials/delete/{idd}: keine Sicherheitsabfrage
+** http://127.0.0.1:8080/management zeigt uneingeloggt einen soft-403
 
 == Verbesserungsvorschläge
 * Was kann noch weiter verbessert werden?

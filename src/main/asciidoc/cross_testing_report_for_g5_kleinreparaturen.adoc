@@ -49,12 +49,15 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 | http://127.0.0.1:8080/register  | name=boss&password=123&address=12312 | Der Versuch, Benutzer mit bereits existierendem Benutzername anzulegen, führt in einen 500 | 500 Internal Server Error
 | http://127.0.0.1:8080/materials | - | Deutsche Umlaute (ä, ö, ü, ß), werden nicht korrekt dargestellt | -
 | http://127.0.0.1:8080/finance   | - | Wenn man auf "Detailed Data analytics" geht, kommt ein 405 | 405 Method Not Allowed
+| http://127.0.0.1:8080/finance   | - | Keine  | -
 | http://127.0.0.1:8080/orders    | - | Das View heißt "Completed Orders", enthält aber auch noch unfertige bestellungen |-
 | http://127.0.0.1:8080/orders    | - | Neu angelegte Bestellungen haben keine korrekten Uhrzeit-Informationen und sind sofort mit Fertigstellungs- und Abholdaten versehen | -
 | http://127.0.0.1:8080/materials/delete/1 | - | GET-Anfrage ist nicht Idempotent und nicht Safe (vgl. dazu https://httpwg.org/specs/rfc9110.html#safe.methods ) |-
 | http://127.0.0.1:8080/materials/delete/{id} | {id}: material.id | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/coworkers | - | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/coworkers/delete/{id} | {id}: coworkers.id | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/workingstations | - | Zugangsbeschränkung fehlt |
+| http://127.0.0.1:8080/workstations/delete/{id} | {id}: workstations.id | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/depot | - | Zugangsbeschränkung fehlt | 
 | http://127.0.0.1:8080/finance | - | Zugangsbeschränkung fehlt |
 | http://127.0.0.1:8080/register | - | Zugangsbeschränkung fehlt | 
@@ -87,6 +90,10 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 ** ID006, ID008 scheint so nicht zu existieren
 ** ID007 existiert im Menü, zeigt aber keine Daten an und hat keine <select>-Einträge
 ** ID023 kein Link oder Knopf zum anlegen neuer Bestellungen
+** Usernamen sind casesensitiv, User können mehrfach angelegt werden
+** Keine Rückmeldung beim Erstellen von Nutzern
+** Unklarer Verbrauch von Materialien, beim Abschließen von Bestellungen wird die Materialanzahl nicht anktualisiert
+** Keine Ausgabe der Abhol-/Bestellnummer oder einer Bestellübersicht
 * Interaktion mit der Anwendung (Usability)
 ** Ich (Jannik) halte das Navigationsmenü für suboptimal - es ist bspsw. beim Katalog UI-Mäßig nicht vorgesehen, dass der Nutzer eine Seite zurückgeht. Wenn er das will, muss er auf die Zurück-Taste des Browsers vertrauen oder sich neu von oben durchklicken.
 ** Bitte den Moneta-Spam "Using default formatter for toString()." abstellen, damit das Log übersichtlich bleibt
@@ -95,7 +102,7 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
 *** Mitarbeiter anlegen
 *** http://127.0.0.1:8080/coworkers/update
 *** http://127.0.0.1:8080/workingstations/create
-** http://127.0.0.1:8080/cart : was ist "Item Condition"?
+** http://127.0.0.1:8080/cart : was ist "Item Condition"? Was ist die "Item-ID"?
 ** Es gibt keine Möglichkeit, einem aktiven Warenkorb weitere Elemente hinzuzufügen, und keine UI-Möglichkeit, zum aktiven Warenkorb zurückzukehren, wenn man weggeklickt hat
 ** ID003: Linking mit Lager suboptimal
 ** http://127.0.0.1:8080/materials/delete/{idd}: keine Sicherheitsabfrage
@@ -104,6 +111,8 @@ ermöglichen, Arbeitsabläufe optimieren und die Kundenzufriedenheit steigern."
    eher auswendig als seine ID.
 ** Wieso muss bei der Bestellung in http://localhost:8080/cart die Produkt-ID angegeben werden? sollte die nicht
    im HTML-Formular enthalten sein?
+** Unklar, wie Bestellungen bearbeitet werden, also wann ist eine Station belegt(Kann-Kriterium: welcher Mitarbeiter führt die aus)
+** Unklar, wo der Unterschied zwischen Mitarbeiter und Nutzer ist. Kann man einen Coworker anlegen?
 * kleinreparatur_service.users : Passwortspeicherung im Klartext?! 
 
 == Verbesserungsvorschläge

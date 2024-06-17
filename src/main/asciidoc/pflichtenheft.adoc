@@ -14,6 +14,7 @@
 |0.1     | In Arbeit   | 01.04.2023          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll  | Initiale Version
 |0.3     | In Arbeit   | 21.04.2024          | diverse     | Nachtrag Versionierung
 |1.0     | Meilenstein | 03.05.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll  | Pflichtenheft
+|1.1     | Anforderungen angepasst | 13.06.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll  | MUSS-Kriterien
 |===
 
 == Zusammenfassung

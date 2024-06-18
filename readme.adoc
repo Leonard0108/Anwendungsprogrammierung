@@ -35,7 +35,8 @@ Grundsätzlich entspricht die Projektstruktur dem Maven-Standardlayout. Sie find
 ** link:Crosstesting%20Kleinreperaturbetrieb/Kleinreparatur.jar[Kleinreparatur.jar]
 ** link:Crosstesting%20Kleinreperaturbetrieb/pflichtenheft.pdf[pflichtenheft.pdf]
 ** link:Crosstesting%20Kleinreperaturbetrieb/TestingManual.pdf[TestingManual.pdf]
-* link:src/main/asciidoc/cross_testing_report_for_g5_kleinreparaturen.adoc[Report]
+* link:src/main/asciidoc/cross_testing_report_for_g5_kleinreparaturen.adoc[Report für Gruppe Kleinreperaturen]
+* link:src/main/asciidoc/cross_testing_report_for_Kino.adoc[Feedback von Autohaus zum Kinoprojekt]
 
 == Ausführen der Anwendung
 

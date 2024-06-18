@@ -40,7 +40,23 @@ public class EmployeeService {
 	}
 
 	private boolean isKnownEmailProvider(String email) {
-		return KNOWN_EMAIL_PROVIDERS.stream().anyMatch(email::endsWith);
+		if (email != null && email.contains("@") && !email.endsWith("@"))
+		{
+			if (KNOWN_EMAIL_PROVIDERS.stream().anyMatch(email::endsWith)) {
+				return true;
+			}
+
+			String host = email.substring(email.lastIndexOf("@") + 1);
+
+			try {
+				java.net.InetAddress.getByName(host);
+				return true;
+			}
+			catch (java.net.UnknownHostException e) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 

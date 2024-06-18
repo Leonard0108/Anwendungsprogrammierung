@@ -1,0 +1,51 @@
+// Bogen, den Sie für das Cross-Testing verwenden können
+
+= Cross-Testing Feedback
+
+__Durchführende Gruppe: Autohaus Kracher__
+
+__Anwendung von Gruppe: Kinobetreiber UFO __
+
+== Getestetes System
+Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genutzt. Diese enthält
+Teilsysteme zur Verwaltung, ein Kassensubsystem für den Verkauf sowie ein Kundenportal für
+Kunden. Diese Software wird von der Kinobetreibergesellschaft UFO in all ihren Standorten
+eingesetzt. Sie soll auf einem Server laufen und ist über das Internet (via Browser) für interessierte
+Kunden und der Kinobetreibergesellschaft UFO erreichbar.
+
+== Fehler-Report
+// See http://asciidoctor.org/docs/user-manual/#tables
+[options="header"]
+|===
+|Pfad |Parameter |Beschreibung |Rückgabe
+| http://localhost:8080/manage/staff  | - | - | Whitelabel Error 
+| http://localhost:8080/lunar_space_port/logOut| - | - | Whitelabel Error  
+| http://localhost:8080/registration | Nutzername: 'boss' | Versuch sich mit schon verwendetem Nutzernamen zu Registrieren führt zu Error | Whitelabel Error 
+| http://localhost:8080/manage/storage (auch bei anderen Seiten) | Tastendruck ohne Eingabe | Betätigen der Knöpfe ohne Eingabewert führt zu Errorpage | Whitelabel Error 
+| http://localhost:8080/manage/rooms  | Eingabe für ein neues Event in Saal 0 | Saal Nummer nach Erstellung immer +1 | Neues Event wird für Saal 1 erzeugt
+| http://localhost:8080/manage/rooms  | Event wird gebucht im Jahr 2015 | Buchung von Events in der Vergangenheit möglich | Buchung erfolgreich 
+|http://localhost:8080/sell-tickets | Tickettyp: Erw., Film 4, Platz A0, 'Ticket hinzufügen'| initiale Auswahl des Films lässt sich nicht mehr änderns | Platzbuchung für Film 2
+| http://localhost:8080/sell-tickets  | Buchung für Tickets für reservierte Plätze & hinzufügen von mehr Snacks als im Lager vorhanden | ... | Whitelabelerror
+| http://localhost:8080/cinema-shows/4/delete  | ... | ... | Whitelabel Error
+| http://localhost:8080/current-films/2024/25  | Aufruf nach löschen einer Vorstellung | ... | Schwarzer Bildschirm (eventuell schwerwiegendere Probleme bei löschen einer laufenden Vorstellung)
+
+|===
+
+== Sonstiges
+====  Optik der Anwendung
+* Funktionell 
+* etwas unmodern
+
+==== Fehlende Features
+* Personalverwaltung
+* [UC0440] Übersicht zu Tageseinnahmen
+
+==== Interaktion mit der Anwendung (Usability)
+* nicht intuitiv 
+* Designelemente und Funktionen wenig Nutzerorientiert
+
+== Verbesserungsvorschläge
+* GUI Farbpalette überarbeiten (statt schwarz auf schwarz Komplimentärfarben   o.ä. verwenden)
+
+* Bedienelemente näher an modernen Anwendungen orientieren 
+

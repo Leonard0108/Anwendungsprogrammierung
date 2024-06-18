@@ -1,0 +1,24 @@
+= 7. Meeting 18.06.2024
+
+== Priorität
+- Rückmeldung von Karol implementieren
+- Unit Tests macht jeder für sein Teilsystem
+- Vorüberlegungen zu den einzelnen Vortrags Punkte (sich zu jedem Punkt Gedanken machen und Stichpunkte aufschrieben)
+
+== Besprochen
+- 403 Error Page muss angepasst werden
+- Cross-Testing Protokoll kann abgegeben werden
+- Wirtschaftsdaten Problem der langen Ladezieten finden -Yannick
+- [F0237] extra Seite für Mitarbeiter: durch E-Mail des Kunden können alle reservierungen mit ReservierungsId des Kunden angezeigt werden
+- Fehlerbehandlung für [F0238] muss noch gemacht werden
+- aufteilung in Reservierungszeitraum(keine Reservierung möglich) 2 Wochen im Vorraus. Und Planungszeitraum vor Reservierungszeitraum beginn
+- neu erstellte Veranstaltungen können nur in min. 2 Wochen geplant werden
+- Änderungen werden auch in Reservierungszeitraum auf bestehende Reservierungen übernommen
+
+== Unit Tests
+- Wie testen wir die Controller Funktionen?
+- Logik muss in Service ausgelagert werden oder in extra Methoden
+
+
+== nächstes Meeting
+Mo 24.06 nach dem Review mit Karol

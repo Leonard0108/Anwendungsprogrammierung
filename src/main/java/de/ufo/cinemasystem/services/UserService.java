@@ -1,7 +1,6 @@
 package de.ufo.cinemasystem.services;
 
 
-import de.ufo.cinemasystem.additionalfiles.LoginForm;
 import de.ufo.cinemasystem.additionalfiles.RegistrationForm;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
@@ -27,7 +26,7 @@ public class UserService {
 	private final        UserAccountManagement userAccounts;
 	private static final List<String>          KNOWN_EMAIL_PROVIDERS = Arrays.asList(
 											   "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "aol.com",
-											   "icloud.com", "mail.com", "gmx.com", "yandex.com", "protonmail.com");
+											   "icloud.com", "mail.com", "gmx.de", "yandex.com", "protonmail.com");
 
 
 
@@ -43,7 +42,23 @@ public class UserService {
 
 
 	private boolean isKnownEmailProvider(String email) {
-		return KNOWN_EMAIL_PROVIDERS.stream().anyMatch(email::endsWith);
+		if (email != null && email.contains("@") && !email.endsWith("@"))
+		{
+			if (KNOWN_EMAIL_PROVIDERS.stream().anyMatch(email::endsWith)) {
+				return true;
+			}
+
+			String host = email.substring(email.lastIndexOf("@") + 1);
+
+			try {
+				java.net.InetAddress.getByName(host);
+				return true;
+			}
+			catch (java.net.UnknownHostException e) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 

@@ -29,7 +29,6 @@ public class UserService {
 											   "icloud.com", "mail.com", "gmx.de", "yandex.com", "protonmail.com");
 
 
-
 	UserService(UserRepository userRepository, UserAccountManagement userAccounts) {
 
 		Assert.notNull(userRepository, "CustomerRepository must not be null!");
@@ -38,8 +37,6 @@ public class UserService {
 		this.userRepository = userRepository;
 		this.userAccounts   = userAccounts;
 	}
-
-
 
 	private boolean isKnownEmailProvider(String email) {
 		if (email != null && email.contains("@") && !email.endsWith("@"))
@@ -60,8 +57,6 @@ public class UserService {
 		}
 		return false;
 	}
-
-
 
 	/**
 	 * Creates a new {@link UserEntry} using the information given in the {@link RegistrationForm}.
@@ -104,9 +99,6 @@ public class UserService {
 		return 0;
 	}
 
-
-
-
 	public UserEntry createUser(UserAccount userAccount, String firstName, String lastName, String eMail, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
 		return userRepository.save(new UserEntry(userAccount, firstName, lastName, eMail,  streetName, streetNumber, city, postalCode, state, country));
 	}
@@ -121,9 +113,6 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-
-
-
 	public void deleteEmployee(UserEntry user) {
 		UserAccount userAccount = user.getUserAccount();
 		userRepository.delete(user);
@@ -131,16 +120,9 @@ public class UserService {
 		userAccounts.delete(userAccount);
 	}
 
-
-
-
-
 	public UserEntry getEmployeeById(UserEntry.UserIdentifier id) {
 		return userRepository.findById(id).orElse(null);
 	}
-
-
-
 
 	public void removeAllRoles(UserAccount userAccount) {
 		for (Role role : userAccount.getRoles()) {

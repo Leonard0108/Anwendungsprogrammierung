@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @Controller
@@ -38,26 +39,23 @@ public class EmployeeManagementController {
 	}
 
 	//PreAuthorize ist eine Annotation, welche der automatischen Autorisationserkennung dient.
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee(Model m, EmployeeRegistrationForm form) {
 		return "EmployeeRegistration";
 	}
 
-
-
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
 		short creationResult;
 
-
 		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
+			//System.out.println(result.getAllErrors());
 			return "EmployeeRegistration";
 		}
 
-		System.out.println(form);
+		//System.out.println(form);
 
 		creationResult = employeeService.createEmployee(form);
 
@@ -74,10 +72,10 @@ public class EmployeeManagementController {
 			case 3: redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich oder wird zu schlecht bezahlt.");
 				break;
 			case 4:
-				redirectAttributes.addFlashAttribute("error", "E-mail provider could not be found.");
+				redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
 		}
 
-		System.out.println("createdUser: " + form);
+		//System.out.println("createdUser: " + form);
 
 		return "redirect:/manage/staff";
 	}
@@ -85,7 +83,7 @@ public class EmployeeManagementController {
 
 
 
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/staff")
 	public String showAllEmployees(Model m) {
 		List<EmployeeEntry> employees = employeeRepo.findAll();
@@ -105,7 +103,7 @@ public class EmployeeManagementController {
 
 
 
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/editUser")
 	String editUser(@RequestParam("id") UUID id, Model model) {
 		Optional<EmployeeEntry> employeeOpt = employeeRepo.findByIdIdentifier(id); //	.findAll().stream().toList();
@@ -133,7 +131,7 @@ public class EmployeeManagementController {
 
 
 
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping (path = "/editUser")
 	String editUser(@RequestParam("id") UserEntry.UserIdentifier id,
 					@RequestParam("firstName") String firstName,
@@ -143,7 +141,6 @@ public class EmployeeManagementController {
 					@RequestParam("salary") String salary,
 					@RequestParam("hours") String hours) {
 		employeeService.editEmployee(id, firstName, lastName, email, job, salary, hours);
-
 
 		return "redirect:/manage/staff";
 	}

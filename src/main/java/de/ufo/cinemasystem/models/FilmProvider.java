@@ -1,11 +1,7 @@
 package de.ufo.cinemasystem.models;
 
 import jakarta.persistence.*;
-import org.springframework.data.util.Streamable;
-
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "FILM_PROVIDERS")

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdditionalDateTimeWorker {
 	/**
+         * @param date
 	 * @return Ausgabe String: "Wochentag, Datum (dd.MM.yyyy)"
 	 */
 	public static String getDayFormat(LocalDate date) {
@@ -24,12 +25,15 @@ public class AdditionalDateTimeWorker {
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
 	 *                 siehe {@link #getWeekRangeFormat(int, int)}
+         * @return 
 	 */
 	public static String getWeekRangeFormat(LocalDateTime dateTime) {
 		return getWeekRangeFormat(dateTime.getYear(), getWeekOfYear(dateTime));
 	}
 
 	/**
+         * @param year
+         * @param week
 	 * @return Ausgabe String: "Woche-Von-Datum (dd.MM.yyyy) - Woche-Bis-Datum
 	 *         (dd.MM.yyyy)"
 	 */
@@ -45,6 +49,7 @@ public class AdditionalDateTimeWorker {
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
 	 *                 siehe {@link #getEndWeekDateTime(int, int)}
+         * @return 
 	 */
 	public static LocalDateTime getEndWeekDateTime(LocalDateTime dateTime) {
 		return getEndWeekDateTime(
@@ -69,6 +74,7 @@ public class AdditionalDateTimeWorker {
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
 	 *                 siehe {@link #getStartWeekDateTime(int, int)}
+         * @return 
 	 */
 	public static LocalDateTime getStartWeekDateTime(LocalDateTime dateTime) {
 		return getStartWeekDateTime(
@@ -93,6 +99,7 @@ public class AdditionalDateTimeWorker {
 	}
 
 	/**
+         * @param dateTime
 	 * @return aktuelle Kalenderwoche eines Jahres
 	 */
 	public static int getWeekOfYear(LocalDateTime dateTime) {
@@ -143,6 +150,7 @@ public class AdditionalDateTimeWorker {
 	}
 
 	/**
+         * @param year
 	 * @return max. Anzahl an Kalenderwochen, welches ein Jahr hat. (nach ISO 8601)
 	 */
 	public static int getMaxYearWeeks(int year) {

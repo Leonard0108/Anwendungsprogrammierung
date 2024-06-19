@@ -37,7 +37,6 @@ public class IndexController {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime end = AdditionalDateTimeWorker.getEndWeekDateTime(now.plusDays(7));
         List<CinemaShow> options = csRepo.findCinemaShowsInPeriodOfTime(now, end).toList();
-        long count = options.size();
         ArrayList<Film> defcopy = new ArrayList<>(3);
         for(CinemaShow c:options){
             if(!defcopy.contains(c.getFilm())){

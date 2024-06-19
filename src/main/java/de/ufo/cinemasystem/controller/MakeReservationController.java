@@ -227,8 +227,8 @@ public class MakeReservationController {
         if(work.getTickets().length == 10 && ! ((boolean) session.getAttribute(privilegedReservationKey))){
             errors.add("Es können nur maximal 10 Tickets im voraus reserviert werden. Sollten Sie legitimen Bedarf an einer größeren Reservierung haben, sprechen Sie bitte unser Kassenpersonal vor Ort an.");
         }
-        System.out.println("u: " + work.getReservingAccount().getUserAccount());
-        System.out.println("t: " + Arrays.toString(work.getTickets()));
+        //System.out.println("u: " + work.getReservingAccount().getUserAccount());
+        //System.out.println("t: " + Arrays.toString(work.getTickets()));
         
         if(errors.isEmpty()){
             //add ticket
@@ -274,8 +274,8 @@ public class MakeReservationController {
         if(work.getCinemaShow().getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
             m.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
         }
-        System.out.println("u: " + work.getReservingAccount().getUserAccount());
-        System.out.println("t: " + Arrays.toString(work.getTickets()));
+        //System.out.println("u: " + work.getReservingAccount().getUserAccount());
+        //System.out.println("t: " + Arrays.toString(work.getTickets()));
         work.removeTicket(ticket);
         this.inventory.delete(inventory.findByProduct(ticket).orElseThrow());
         if (showsRepo.findById(work.getCinemaShow().getId()).isPresent()) {
@@ -321,8 +321,8 @@ public class MakeReservationController {
         if(LocalDateTime.now().until(work.getCinemaShow().getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
             return "redirect:/reserve-spots/reserve/" + work.getCinemaShow().getId();
         }
-        System.out.println("u: " + work.getReservingAccount().getUserAccount());
-        System.out.println("t: " + Arrays.toString(work.getTickets()));
+        //System.out.println("u: " + work.getReservingAccount().getUserAccount());
+        //System.out.println("t: " + Arrays.toString(work.getTickets()));
         
         redir.addFlashAttribute("ok", "created");
         repo.save(work);
@@ -432,6 +432,6 @@ public class MakeReservationController {
         /**
          * pattern describing a theoretically valid seat.
          */
-        public static Pattern validSeat = Pattern.compile("[A-La-l]([0-9]|1[0-9])$",Pattern.CASE_INSENSITIVE);
+        public static Pattern validSeat = Pattern.compile("[A-Za-z]([0-9]|1[0-9])$",Pattern.CASE_INSENSITIVE);
     }
 }

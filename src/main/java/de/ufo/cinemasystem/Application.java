@@ -64,7 +64,6 @@ public class Application {
     static {
         monetaSilencer = java.util.logging.Logger.getLogger(org.javamoney.moneta.Money.class.getName());
         monetaSilencer.setLevel(java.util.logging.Level.WARNING);
-        monetaSilencer.setUseParentHandlers(false);
     }
 
     /**

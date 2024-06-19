@@ -39,6 +39,7 @@ public class DeleteReservationController {
      * view the reservations of the current user.
      * @param m model
      * @param currentUser logged-in user
+     * @param session current session.
      * @return 
      */
     @GetMapping("/my-reservations")

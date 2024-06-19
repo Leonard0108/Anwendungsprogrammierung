@@ -47,7 +47,7 @@ public class UserAccountInitializer implements DataInitializer {
 
 	@Override
 	public void initialize() {
-		if (userAccountManagement.findByUsername("boss").isPresent()) {
+		if (userAccountManagement.findAll().iterator().hasNext()) {
 			return;
 		}
 

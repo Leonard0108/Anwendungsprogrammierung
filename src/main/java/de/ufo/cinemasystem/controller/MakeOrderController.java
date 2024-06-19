@@ -212,11 +212,11 @@ public class MakeOrderController {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
-		Reservation reserve = new Reservation();
+		Reservation reserve;
 		try {
-			reserve = reservationRepo.findById(Long.parseLong(reservationId)).orElseThrow();
+			reserve = reservationRepo.findById(Long.valueOf(reservationId)).orElseThrow();
 			if (reserve.getCinemaShow().getId() == work.getCinemaShow().getId() && this.errors.isEmpty()){
-				Ticket[] tickets = reservationRepo.findById(Long.parseLong(reservationId)).get().getTickets();
+				Ticket[] tickets = reservationRepo.findById(Long.valueOf(reservationId)).get().getTickets();
 				for (Ticket ticket : tickets) {
 					cart.addOrUpdateItem(ticket, Quantity.of(1));
 					showService.update(work.getCinemaShow()).setSeatOccupancy(
@@ -228,6 +228,7 @@ public class MakeOrderController {
 				m.addAttribute("errors", this.errors);
 			}	
 		} catch (Exception e) {
+		    //TODO: Ist es wirklich nötig, hier Exception abzufangen?
 			this.errors.add(e.getMessage());
 			m.addAttribute("error", this.errors);
 		}
@@ -242,6 +243,7 @@ public class MakeOrderController {
 		
 		return "sell-items-1";
 	}
+	
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 		@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
@@ -296,7 +298,6 @@ public class MakeOrderController {
 
 	}
 
-
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
 		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") int amount , @ModelAttribute Cart cart) {
@@ -322,7 +323,6 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
-
 	@PostMapping("/buy")
 	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
@@ -353,9 +353,7 @@ public class MakeOrderController {
 		HttpSession session, @ModelAttribute Cart cart) {
 		return "redirect:/";
 	}
-
 	
-
 	private static int toRowID(String spot) {
 		char rowChar = spot.charAt(0);
 		return rowChar - 'A';
@@ -388,7 +386,7 @@ public class MakeOrderController {
 	}
 
 	private boolean checkSpecificCartSnacks(@ModelAttribute Cart cart, Snacks snack){
-		new ArrayList<>();
+		//new ArrayList<>();
 		for (CartItem cartItem :  cart.get().toList()) {
 			if(cartItem.getProductName().contentEquals(snack.getName()))return true;
 		}
@@ -429,7 +427,7 @@ public class MakeOrderController {
 
 	private static class PatternHolder {
 
-		public static Pattern validSeat = Pattern.compile("[A-La-l]([0-9]|1[0-9])$", Pattern.CASE_INSENSITIVE);
+		public static Pattern validSeat = Pattern.compile("[A-Za-z]([0-9]|1[0-9])$", Pattern.CASE_INSENSITIVE);
 	}
 
 

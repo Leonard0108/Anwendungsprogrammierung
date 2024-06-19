@@ -115,7 +115,7 @@ public class Reservation {
         if (this.tickets.contains(ticket)) {
             return;
         }
-        this.tickets.add(ticket);
+        this.tickets.add(Objects.requireNonNull(ticket));
     }
 
     /**

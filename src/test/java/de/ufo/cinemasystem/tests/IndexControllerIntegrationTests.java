@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.ufo.cinemasystem.welcome;
+package de.ufo.cinemasystem.tests;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -27,14 +27,15 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class WelcomeControllerIntegrationTests {
+class IndexControllerIntegrationTests {
 
 	@Autowired MockMvc mvc;
 
 	@Test
 	void showsWelcomeMessage() throws Exception {
-		/**
-                 * todo: 
-                 */
+            System.out.println("IntegrationTest: https://127.0.0.1:8080/");
+		mvc.perform(get("/")) //
+				.andExpect(status().isOk());
+                mvc.perform(post("/")).andExpect(status().isMethodNotAllowed());
 	}
 }

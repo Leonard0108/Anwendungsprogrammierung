@@ -115,7 +115,7 @@ public class DeleteReservationController {
      */
     @PostMapping("/cancel-reservation/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String deleteReservation(Model m,@PathVariable Reservation id, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
+    public String deleteReservation(Model m,@PathVariable(value = "id",required = false) Reservation id, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         if(id == null){
             session.setAttribute("error", "Reservierung existiert nicht oder gehört nicht ihnen! (ID: " + id + ")");
             return "redirect:/my-reservations";

@@ -262,11 +262,15 @@ public class MakeReservationController {
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/remove-ticket")
-    public String removeTicketFromReservation(Model m, HttpSession session, @RequestParam("deleteCartEntry") Ticket ticket){
+    public String removeTicketFromReservation(Model m, HttpSession session, @RequestParam(value = "deleteCartEntry",required = false) Ticket ticket){
         if(session.getAttribute(reservationSessionKey) == null){
             return "redirect:/reserve-spots/reserve";
         }
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
+        if(ticket == null){
+            //huh?
+            return "/reserve-spots/reserve/"+work.getCinemaShow().getId();
+        }
         if(work.getCinemaShow().getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
             m.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
         }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.ufo.cinemasystem.welcome;
+package de.ufo.cinemasystem.tests;
 
 import java.io.IOException;
 
@@ -36,14 +36,14 @@ class ModularityTests {
 	ApplicationModules modules = ApplicationModules.of(Application.class);
 
 	@Test
-	@Disabled
+        @Disabled
 	void verifyModularity() {
 		modules.verify();
 	}
 
 	@Test
-	@Disabled
 	void generateDocs() throws IOException {
+            System.out.println("Creating Spring Modulith docs...");
 
 		new Documenter(modules)
 				.writeDocumentation(DiagramOptions.defaults(), CanvasOptions.defaults());

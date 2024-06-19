@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import de.ufo.cinemasystem.models.Reservation;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Ticket;
+import de.ufo.cinemasystem.models.UserEntry;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
@@ -128,6 +129,49 @@ public class DeleteReservationController {
         deleteTickets(id);
         repo.delete(id);
         return "redirect:/my-reservations";
+    }
+    
+    /**
+     * Endpoint for staff to find reservations from a user.
+     * @param m
+     * @return 
+     */
+    @GetMapping("/reservations/find")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    public String getFindReservationForm(Model m){
+        m.addAttribute("title", "Reservierungen suchen");
+        m.addAttribute("hide", "1");
+        return "find-reservation";
+    }
+    
+    /**
+     * Query endpoint to find reservations.
+     * @param m
+     * @param query
+     * @return 
+     */
+    @PostMapping("/reservations/find")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    public String findReservations(Model m, @RequestParam(value = "query", required = false) String query){
+        m.addAttribute("title", "Reservierungen suchen");
+        m.addAttribute("query", query);
+        UserEntry toCheck = null;
+        if(toCheck == null){
+            toCheck = uRepo.findByUserAccountEmail(query);
+        }
+        if(toCheck == null){
+            toCheck = uRepo.findByUserAccountUsername(query);
+        }
+        if(toCheck == null){
+            toCheck = uRepo.findByeMail(query);
+        }
+        if(toCheck == null){
+            m.addAttribute("error", "Kein Benutzer gefunden.");
+            m.addAttribute("hide", "1");
+        }else{
+            m.addAttribute("reservations", repo.findAllByUser(toCheck));
+        }
+        return "find-reservation";
     }
     
     /**

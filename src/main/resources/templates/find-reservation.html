@@ -7,9 +7,16 @@
     </head>
     <body>
         <div class="main-wrapper" role="main" layout:fragment="content">
-            <h1>Meine Reservierungen</h1>
-            <p th:if="${reservations.isEmpty()}" class="info">Keine Reservierungen gefunden</p>
-            <div th:each="reservation:${reservations}" class="reservation">
+            <h1>Reservierungen suchen</h1>
+            <p th:if="${error}" th:text="${error}" class="error"></p>
+            <form method="post" action="/reservations/find">
+                        <label for="htmlUniqueID1">Nutzername oder Email</label>
+                        <input name="query" placeholder="Nutzername oder Email" required="" id="htmlUniqueID1" th:value="${query}">
+                        <button>Weiter</button>
+            </form>
+            <h2 th:unless="${hide}" th:text="'Reservierungen für ' + ${query}">Reservierungen für foo</h2>
+            <p th:unless="${hide}" th:if="${reservations} != null and ${reservations.isEmpty()}" class="info">Keine Reservierungen gefunden</p>
+            <div th:unless="${hide}" th:each="reservation:${reservations}" class="reservation">
                 <p>ID:&nbsp;&nbsp;<span th:text="${reservation.getId()}">...</span></p>
                 <p th:text="${reservation.getCinemaShow().getFilm().getTitle()}">foo</p>
                 <p th:text="'FSK ' + ${reservation.getCinemaShow().getFilm().getFskAge()}" th:class="'fsk-' + ${reservation.getCinemaShow().getFilm().getFskAge()}">0</p>
@@ -17,15 +24,9 @@
                 <ul>
                     <li th:each="ticket: ${reservation.getTickets()}" th:text="${ticket.getSeatString()} +' '+ ${ticket.categoryToLabel()} +' '+ ${ticket.getPrice()}"></li>
                 </ul>
-                <a th:href="'/cancel-reservation/' + ${reservation.getId()}" class="fakeButton" title="Reservierung stornieren | UFO Kinos">Stornieren</a>
+                <a th:href="'/sell-tickets/from-reservation/' + ${reservation.getId()}" class="fakeButton" title="Tickets verkaufen | UFO Kinos">Tickets verkaufen </a>
             </div>
-            <h2>Reservierung stornieren</h2>
-            <p th:if="${error}" th:text="${error}" class="error"></p>
-            <form method="post" action="/my-reservations/delete/">
-                        <label for="htmlUniqueID1">Reservierungsnummer</label>
-                        <input name="reserveNumber" placeholder="Reservierungsnummer" required="" id="htmlUniqueID1">
-                        <button>Weiter</button>
-                    </form>
+            
         </div>
         </body>
 </html>

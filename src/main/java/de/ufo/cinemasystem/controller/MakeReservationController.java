@@ -110,6 +110,10 @@ public class MakeReservationController {
             m.addAttribute("errors", new String[]{"Bitte wählen sie eine Veranstaltung aus der Liste!"});
             return startReservation(m);
         }
+        if(what.getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
+            m.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
+            return startReservation(m);
+        }
         if(session.getAttribute(reservationSessionKey) == null){
             session.setAttribute(reservationSessionKey, new Reservation(uRepo.findByUserAccountUsername(currentUser.getUsername()), what));
             session.setAttribute(privilegedReservationKey, currentUser.getAuthorities().toArray()[0] != UserService.USER_ROLE);
@@ -146,6 +150,10 @@ public class MakeReservationController {
     public String onShowSelected(Model m, @RequestParam(name = "event",required = false) CinemaShow what, @AuthenticationPrincipal UserDetails currentUser, HttpSession session){
         if(what == null){
             m.addAttribute("errors", new String[]{"Bitte wählen sie eine Veranstaltung aus der Liste!"});
+            return startReservation(m);
+        }
+        if(what.getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
+            m.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
             return startReservation(m);
         }
         //
@@ -191,6 +199,9 @@ public class MakeReservationController {
         spot = spot.trim().toUpperCase();
         List<String> errors = new ArrayList<>();
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
+        if(work.getCinemaShow().getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
+            m.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
+        }
         
         if(!PatternHolder.validSeat.matcher(spot).matches()){
             errors.add("Ungültiger Sitzplatz: " + spot);
@@ -256,6 +267,9 @@ public class MakeReservationController {
             return "redirect:/reserve-spots/reserve";
         }
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
+        if(work.getCinemaShow().getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
+            m.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
+        }
         System.out.println("u: " + work.getReservingAccount().getUserAccount());
         System.out.println("t: " + Arrays.toString(work.getTickets()));
         work.removeTicket(ticket);
@@ -290,6 +304,11 @@ public class MakeReservationController {
             return "redirect:/reserve-spots/reserve";
         }
         Reservation work = (Reservation) session.getAttribute(reservationSessionKey);
+        
+        if(work.getCinemaShow().getStartDateTime().isAfter(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)))){
+            redir.addAttribute("errors", new String[]{"Für diese Veranstaltung können noch keine Plätze reserviert werden!"});
+            return "redirect:/reserve-spots/reserve/" + work.getCinemaShow().getId();
+        }
         //No ticket? get out of here!
         if(work.getTickets().length == 0){
             return "redirect:/reserve-spots/reserve/" + work.getCinemaShow().getId();

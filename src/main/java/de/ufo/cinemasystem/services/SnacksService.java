@@ -3,18 +3,14 @@ package de.ufo.cinemasystem.services;
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.aspectj.apache.bcel.classfile.Module;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
 import org.salespointframework.quantity.Quantity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.money.MonetaryAmount;
-import javax.swing.text.html.Option;
 
 @Service
 public class SnacksService {

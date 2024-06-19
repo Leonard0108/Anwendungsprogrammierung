@@ -44,6 +44,7 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#getWeekRangeFormat(int, int)}
+         * @return 
 	 */
 	public String getWeekRangeFormat() {
 		return AdditionalDateTimeWorker.getWeekRangeFormat(this.year, this.week);
@@ -51,6 +52,7 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#getEndWeekDateTime(int, int)}
+         * @return 
 	 */
 	public LocalDateTime getEndWeekDateTime() {
 		return AdditionalDateTimeWorker.getEndWeekDateTime(this.year, this.week);
@@ -58,6 +60,7 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#getStartWeekDateTime(int, int)}
+         * @return 
 	 */
 	public LocalDateTime getStartWeekDateTime() {
 		return AdditionalDateTimeWorker.getStartWeekDateTime(this.year, this.week);
@@ -65,6 +68,7 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#nextWeekEntry(int, int)}
+         * @return 
 	 */
 	public YearWeekEntry nextWeek() {
 		return AdditionalDateTimeWorker.nextWeekEntry(this.year, this.week);
@@ -72,6 +76,7 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#lastWeekEntry(int, int)}
+         * @return 
 	 */
 	public YearWeekEntry lastWeek() {
 		return AdditionalDateTimeWorker.lastWeekEntry(this.year, this.week);
@@ -79,6 +84,7 @@ public class YearWeekEntry implements Comparable<YearWeekEntry>, Serializable {
 
 	/**
 	 * siehe {@link AdditionalDateTimeWorker#getMaxYearWeeks(int)}
+         * @return 
 	 */
 	public int getMaxYearWeeks() {
 		return AdditionalDateTimeWorker.getMaxYearWeeks(this.year);

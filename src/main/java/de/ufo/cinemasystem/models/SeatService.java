@@ -1,12 +1,9 @@
 package de.ufo.cinemasystem.models;
 
-import de.ufo.cinemasystem.models.CinemaHall;
-import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class SeatService {

@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Orders extends Order{
 
 
-    private Money TicketSumme;
+    private Money ticketSumme;
     private Money SnacksSumme;
     
     @ManyToOne
@@ -29,14 +29,14 @@ public class Orders extends Order{
 
     public Orders(UserAccountIdentifier useraccountidentifier, CinemaShow show) {
         super(useraccountidentifier);
-        this.TicketSumme = Money.of(0, "EUR");
+        this.ticketSumme = Money.of(0, "EUR");
         this.SnacksSumme = Money.of(0, "EUR");
         this.show = show;
 
     }
 
     public Money getTicketSumme() {
-        return TicketSumme;
+        return ticketSumme;
     }
 
     public Money getSnacksSumme() {
@@ -48,7 +48,7 @@ public class Orders extends Order{
     }
 
     public void addTickets(MonetaryAmount price) {
-        TicketSumme.add(price);
+        ticketSumme.add(price);
     }
 
     public void addSnacks(MonetaryAmount price) {

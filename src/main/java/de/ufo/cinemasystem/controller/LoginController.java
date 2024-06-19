@@ -37,8 +37,6 @@ public class LoginController {
 	}
 
 
-
-
 	@PostMapping("/registration")
 	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
 		short creationResult;
@@ -46,7 +44,7 @@ public class LoginController {
 
 
 		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
+			//System.out.println(result.getAllErrors());
 			return "registration";
 		}
 
@@ -60,16 +58,16 @@ public class LoginController {
 				redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
 				break;
 			case 1:
-				redirectAttributes.addFlashAttribute("error", "User creation failed. E-mail already exists.");
+				redirectAttributes.addFlashAttribute("error", "Diese E-Mail-Adresse wird bereits verwendet!.");
 				break;
 			case 2:
-				redirectAttributes.addFlashAttribute("error", "User name already exists.");
+				redirectAttributes.addFlashAttribute("error", "Dieser Benutzername ist bereits vergeben.");
 				break;
 			case 3:
-				redirectAttributes.addFlashAttribute("error", "E-mail provider could not be found");
+				redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
 				break;
 			case 4:
-				redirectAttributes.addFlashAttribute("error", "Invalid postal code");
+				redirectAttributes.addFlashAttribute("error", "Ungültige Postleitzahl!");
 				return "registration";
 		}
 
@@ -78,15 +76,11 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
-
 	@GetMapping("/registration")
 	String register(Model m, RegistrationForm form) {
             m.addAttribute("title", "Registrieren");
 		return "registration";
 	}
-
-
-
 
 	@GetMapping("/customers")
 	//@PreAuthorize("hasRole('BOSS')")
@@ -103,7 +97,6 @@ public class LoginController {
                 m.addAttribute("title", "Rollencheck");
 		return "roletest";
 	}
-
 
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpSession session) throws ServletException {

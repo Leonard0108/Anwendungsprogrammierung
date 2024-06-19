@@ -159,6 +159,9 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 
 	/**
 	 * Prüft, ob der Sitzplatz (Reihe, Position) in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
+         * @param row
+         * @param pos
+         * @return 
 	 */
 	public boolean containsSeat(int row, int pos) {
 		return getSeat(row, pos).isPresent();
@@ -166,6 +169,8 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 
 	/**
 	 * Prüft, ob der Sitzplatz in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
+         * @param seat
+         * @return 
 	 */
 	public boolean containsSeat(Seat seat) {
 		return this.seats.containsKey(seat);
@@ -179,6 +184,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
+         * @param occupancy
 	 * @return Anzahl an Plätzen in der Vorführung nach Belebtheit-Status
 	 */
 	public int getSeatCount(Seat.SeatOccupancy occupancy) {
@@ -186,6 +192,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
+         * @param occupancy
 	 * @return Anzahl an belegten PLätzen (Reserviert + gekauft)
 	 */
 	public int getSeatProvenCount(Seat.SeatOccupancy occupancy) {
@@ -193,6 +200,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
+         * @param occupancy
 	 * @return Prozentualer Belegten-Status-Anteil
 	 */
 	public double getPercentageSeatShare(Seat.SeatOccupancy occupancy) {

@@ -203,8 +203,8 @@ public class SpotsViewController {
             this.letter = SpotsViewController.getRowLetter(id);
         }
         
-        private int id;
-        private String letter;
+        private final int id;
+        private final String letter;
 
         public int getId() {
             return id;

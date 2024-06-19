@@ -50,13 +50,13 @@ public class AdjustPricingController {
 		String[] parts = changePriceOf.split("-", 2);
 		String type = parts[0]; // "film" oder "snack"
 		if(type.equals("film")){
-			Long id = Long.parseLong(parts[1]);
+			Long id = Long.valueOf(parts[1]);
 			m.addAttribute("selected", filmRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid film ID: " + id)));
 		}else if(type.equals("snack")){
 			Product.ProductIdentifier id = Product.ProductIdentifier.of(parts[1]);
 			m.addAttribute("selected", snacksRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid snack ID: " + id)));
 		}else{
-			System.out.println("Id des ausgewählten Objekts ist weder Film noch Snack");
+			throw new AssertionError("Id des ausgewählten Objekts ist weder Film noch Snack (war: " + type + ")", null);
 		}
 		return "adjust-pricing";
 	}
@@ -73,7 +73,7 @@ public class AdjustPricingController {
 		String[] parts = selectedId.split("-", 2);
 		String type = parts[0]; // "film" oder "snack"
 		if(type.equals("film")) {
-			Long id = Long.parseLong(parts[1]);
+			Long id = Long.valueOf(parts[1]);
 			Film filmToChangePriceOf = filmRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid film ID: " + id));
 			filmToChangePriceOf.setPrice(Money.of(newPrice, "EUR"));
 			filmRepository.save(filmToChangePriceOf);
@@ -83,11 +83,8 @@ public class AdjustPricingController {
 			snackToChangePriceOf.setPrice(Money.of(newPrice, "EUR"));
 			snacksRepository.save(snackToChangePriceOf);
 		}else{
-			System.out.println("Id des ausgewählten Objekts ist weder Film noch Snack");
+			throw new AssertionError("Id des ausgewählten Objekts ist weder Film noch Snack (war: " + type + ")", null);
 		}
-
-
-
 
 		return "redirect:/manage/pricing?ChangePriceOf=" + selectedId;
 	}

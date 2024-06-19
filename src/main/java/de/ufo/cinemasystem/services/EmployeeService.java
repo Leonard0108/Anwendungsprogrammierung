@@ -59,7 +59,6 @@ public class EmployeeService {
 		return false;
 	}
 
-
 		public short createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
 		{
 			Assert.notNull(employeeRegistrationForm, "Registration form must not be null!");
@@ -76,7 +75,7 @@ public class EmployeeService {
 
 			short hoursPerWeek = Short.parseShort(employeeRegistrationForm.getHoursPerWeek());
 			String salaryCleaned = employeeRegistrationForm.getSalary().replaceAll("[€,]", "");
-			Long salaryLong = Long.parseLong(salaryCleaned);
+			Long salaryLong = Long.valueOf(salaryCleaned);
 			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
 			CurrencyUnit currency = Monetary.getCurrency("EUR");
 			Money salary = Money.of(salaryAmount, currency);
@@ -107,11 +106,8 @@ public class EmployeeService {
 			EmployeeEntry employeeEntry = new EmployeeEntry(userEntry, salary, employeeRegistrationForm.getJobMail(), hoursPerWeek);
 			employeeRepository.save(employeeEntry);
 
-
 			return 0;
 		}
-
-
 
 
 	public void editEmployee(UserEntry.UserIdentifier id, String firstName, String lastName, String email, String job, String salary, String hours)
@@ -140,7 +136,7 @@ public class EmployeeService {
 		}
 		if (salary != null && !salary.isEmpty()) {
 			String salaryCleaned = salary.replaceAll("[€,]", "");
-			Long salaryLong = Long.parseLong(salaryCleaned);
+			Long salaryLong = Long.valueOf(salaryCleaned);
 			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
 			CurrencyUnit currency = Monetary.getCurrency("EUR");
 			Money finishedSalary = Money.of(salaryAmount, currency);
@@ -153,4 +149,3 @@ public class EmployeeService {
 		employeeRepository.save(employeeEntry);
 	}
 }
-

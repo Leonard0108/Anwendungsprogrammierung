@@ -238,6 +238,10 @@ label {
     z-index:0;
 }
 
+.tile-section>ul{
+    padding: 0 2em;
+}
+
 .logo{
     height:50px;
 }

@@ -10,13 +10,13 @@
             <h1>Reservierungen suchen</h1>
             <p th:if="${error}" th:text="${error}" class="error"></p>
             <form method="post" action="/reservations/find">
-                        <label for="htmlUniqueID1">Reservierungsnummer</label>
+                        <label for="htmlUniqueID1">Nutzername oder Email</label>
                         <input name="query" placeholder="Nutzername oder Email" required="" id="htmlUniqueID1" th:value="${query}">
                         <button>Weiter</button>
             </form>
-            <h2 th:text="'Reservierungen für ' + ${query}" th:unless="${hide}">Reservierungen für foo</h2>
-            <p th:if="${reservations.isEmpty()}" class="info" th:unless="${hide}">Keine Reservierungen gefunden</p>
-            <div th:each="reservation:${reservations}" class="reservation" th:unless="${hide}">
+            <h2 th:unless="${hide}" th:text="'Reservierungen für ' + ${query}">Reservierungen für foo</h2>
+            <p th:unless="${hide}" th:if="${reservations} != null and ${reservations.isEmpty()}" class="info">Keine Reservierungen gefunden</p>
+            <div th:unless="${hide}" th:each="reservation:${reservations}" class="reservation">
                 <p>ID:&nbsp;&nbsp;<span th:text="${reservation.getId()}">...</span></p>
                 <p th:text="${reservation.getCinemaShow().getFilm().getTitle()}">foo</p>
                 <p th:text="'FSK ' + ${reservation.getCinemaShow().getFilm().getFskAge()}" th:class="'fsk-' + ${reservation.getCinemaShow().getFilm().getFskAge()}">0</p>

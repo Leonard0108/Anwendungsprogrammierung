@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.*;
+import de.ufo.cinemasystem.services.CinemaShowService;
 import de.ufo.cinemasystem.services.ScheduledActivityService;
 import org.javamoney.moneta.Money;
 import org.springframework.data.domain.Sort;
@@ -40,7 +41,7 @@ public class ViewProgramController {
 
 	private CinemaShowRepository cinemaShowRepository;
 
-	private ScheduledActivity.CinemaShowService cinemaShowService;
+	private CinemaShowService cinemaShowService;
 
 	private CinemaHallRepository cinemaHallRepository;
 
@@ -56,7 +57,7 @@ public class ViewProgramController {
          * @param filmRepository
          * @param scheduledActivityService 
          */
-	public ViewProgramController(CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService,
+	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
 								 CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository,
 								 ScheduledActivityService scheduledActivityService) {
 		this.cinemaShowRepository = cinemaShowRepository;
@@ -227,9 +228,15 @@ public class ViewProgramController {
 
 		Film filmInst = optFilmInst.get();
 
-		if(editTime.isBefore(LocalDateTime.now().plusHours(24))) {
+		if(cinemaShow.getStartDateTime().isBefore(LocalDateTime.now().plusHours(1))) {
 			redirectAttributes.addFlashAttribute("errorMessage",
-				"Die Vorführung muss mind. 24 Stunden in der Zukunft liegen!");
+				"Die Vorführung liegt in der Vergangenheit oder beginnt in einer Stunde und kann daher nicht mehr geändert werden!");
+			return "redirect:/cinema-shows/{id}";
+		}
+
+		if(editTime.isBefore(LocalDateTime.now().plusHours(1))) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"Die Vorführung muss mind. 1 Stunde in der Zukunft liegen!");
 			return "redirect:/cinema-shows/{id}";
 		}
 

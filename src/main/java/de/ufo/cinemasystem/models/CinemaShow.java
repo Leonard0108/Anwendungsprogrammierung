@@ -57,7 +57,11 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	@JoinColumn(name = "cinema_hall_id")
 	private CinemaHall cinemaHall;
 
-	CinemaShow(LocalDateTime startDateTime, Money basePrice, Film film) {
+	/**
+	 * Do not use!
+	 * Use CinemaShowService to Update!
+	 */
+	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film film) {
 		this.startDateTime = startDateTime;
 		this.basePrice = basePrice;
 		this.film = film;
@@ -74,7 +78,11 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 		return film;
 	}
 
-	void setFilm(Film film) {
+	/**
+	 * Do not use!
+	 * Use CinemaShowService to Update!
+	 */
+	public void setFilm(Film film) {
 		this.film = film;
 	}
 
@@ -86,7 +94,11 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 		return startDateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
 	}
 
-	void setStartDateTime(LocalDateTime startDateTime) {
+	/**
+	 * Do not use!
+	 * Use CinemaShowService to Update!
+	 */
+	public void setStartDateTime(LocalDateTime startDateTime) {
 		this.startDateTime = startDateTime;
 	}
 
@@ -95,7 +107,11 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 
-	void setBasePrice(Money basePrice) {
+	/**
+	 * Do not use!
+	 * Use CinemaShowService to Update!
+	 */
+	public void setBasePrice(Money basePrice) {
 		this.basePrice = basePrice;
 	}
 
@@ -231,19 +247,25 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
+	 * Do not use!
+	 * Use CinemaShowService to Update!
 	 * Setzt neue Platzbelegung für die Kino-Vorführung
 	 * @param seat der zu ändernde Platz
 	 * @param occupancy Platzbelegung für den Platz
 	 * @throws EntityNotFoundException wenn der Sitzplatz in der Vorführung nicht vorhanden ist.
 	 */
-	void setOccupancy(Seat seat, Seat.SeatOccupancy occupancy) {
+	public void setOccupancy(Seat seat, Seat.SeatOccupancy occupancy) {
 		if(!seats.containsKey(seat))
 			throw new EntityNotFoundException("Seat ist in der Vorführung (Abhängig vom Kinosaal) nicht vorhanden!");
 
 		this.seats.put(seat, occupancy);
 	}
 
-	void initSeats(final Map<Seat, Seat.SeatOccupancy> seats) {
+	/**
+	 * Do not use!
+	 * Use CinemaShowService to Update!
+	 */
+	public void initSeats(final Map<Seat, Seat.SeatOccupancy> seats) {
 		this.seats.putAll(seats);
 	}
 

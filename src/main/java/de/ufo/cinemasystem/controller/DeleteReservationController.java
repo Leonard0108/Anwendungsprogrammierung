@@ -2,6 +2,7 @@
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.services.CinemaShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class DeleteReservationController {
     
     private @Autowired ReservationRepository repo;
     private @Autowired TicketRepository ticketRepo;
-    private @Autowired ScheduledActivity.CinemaShowService showService;
+    private @Autowired CinemaShowService showService;
     private @Autowired UserRepository uRepo;
     
     /**

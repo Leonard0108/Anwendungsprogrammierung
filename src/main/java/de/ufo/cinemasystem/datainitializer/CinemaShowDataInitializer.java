@@ -7,6 +7,7 @@ import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 
 
+import de.ufo.cinemasystem.services.CinemaShowService;
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -25,13 +26,13 @@ public class CinemaShowDataInitializer implements DataInitializer {
 
 	private final CinemaShowRepository cinemaShowRepository;
 
-	private final ScheduledActivity.CinemaShowService cinemaShowService;
+	private final CinemaShowService cinemaShowService;
 
 	private final CinemaHallRepository cinemaHallRepository;
 
 	private final FilmRepository filmRepository;
 
-	CinemaShowDataInitializer(CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService,
+	CinemaShowDataInitializer(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
 							  CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository) {
 		Assert.notNull(cinemaShowRepository, "CinemaShowRepository must not be null!");
 		Assert.notNull(cinemaShowService, "CinemaShowService must not be null!");

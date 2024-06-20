@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.services.CinemaShowService;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
@@ -28,13 +29,13 @@ public class TicketDataInitializer implements DataInitializer {
 	private static final Logger LOG = LoggerFactory.getLogger(TicketDataInitializer.class);
 	private TicketRepository ticketRepository;
 	private CinemaShowRepository cinemaShowRepository;
-	private ScheduledActivity.CinemaShowService cinemaShowService;
+	private CinemaShowService cinemaShowService;
 	private SeatRepository seatRepository;
 
 	private final UniqueInventory<UniqueInventoryItem> inventory;
 
 
-	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, ScheduledActivity.CinemaShowService cinemaShowService, SeatRepository seatRepository, UniqueInventory<UniqueInventoryItem> inventory) {
+	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService, SeatRepository seatRepository, UniqueInventory<UniqueInventoryItem> inventory) {
 
 		Assert.notNull(ticketRepository, "ticketRepository must not be null!");
 		Assert.notNull(cinemaShowRepository, "cinemaShowRepository must not be null!");
@@ -72,7 +73,7 @@ public class TicketDataInitializer implements DataInitializer {
 
 			//random TicketCategory und CinemaShow generieren
 			Seat seat = seatRepository.findByRowPos(random.nextInt(seatRowCount),random.nextInt(seatPositionCount)).orElseThrow(() -> new IllegalArgumentException("Invalid Seat ID generated in: TicketDataInitializer"));
-			ScheduledActivity.CinemaShowService.CinemaShowUpdater cinemaShowUpdater = cinemaShowService.update(allCinemaShow.get(random.nextInt(allCinemaShow.size())));
+			CinemaShowService.CinemaShowUpdater cinemaShowUpdater = cinemaShowService.update(allCinemaShow.get(random.nextInt(allCinemaShow.size())));
 			cinemaShowUpdater.setSeatOccupancy(seat,
 												Seat.SeatOccupancy.BOUGHT);
 			CinemaShow cinemaShow = cinemaShowUpdater.save();

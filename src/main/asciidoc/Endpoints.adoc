@@ -15,6 +15,7 @@
 - /statistics
 
 == DeleteReservationController
+
 - /my-reservations (GET)
 - /my-reservations/delete/ (POST)
 - /cancel-reservation/{id} (GET, POST)(id:Reservation)
@@ -23,11 +24,13 @@
 - / (GET)
 
 == MiscPagesController
+
 -/robots.txt (GET)
 -/imprint (GET)
 -/privacy (GET)
 
 == SpotsViewController
+
 -/include/spots-view/{which} (GET)(which:CinemaShow)
 
 == EventAdministrationController

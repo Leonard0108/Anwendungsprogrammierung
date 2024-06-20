@@ -1,4 +1,4 @@
-= Meeting 02.06.2024
+= 10. Meeting 02.06.2024
 
 == Aktuelle Aufgaben
 - grundlegende funktionalitäten Implementieren

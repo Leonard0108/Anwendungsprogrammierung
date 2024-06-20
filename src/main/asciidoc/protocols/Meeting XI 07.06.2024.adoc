@@ -1,4 +1,4 @@
-= 6. Meeting 07.06.2024
+= 11. Meeting 07.06.2024
 
 == Priorität
 - Überprüfung der Registrierung: E-Mail vergeben, Feld leer

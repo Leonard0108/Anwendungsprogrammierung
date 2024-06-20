@@ -1,4 +1,4 @@
-= Protokoll
+= 9. Meeting 30.05.2024 
 
 Datum: 30.5.2024
 
@@ -6,7 +6,7 @@ Anwesende: Lukas, Yannick, Jannik, Tobias, Simon
 
 Startzeit: 18.30 Uhr
 
-Endzeit: 1945
+Endzeit: 19:45 Uhr
 
 == Besprochen
 - FlexGrow und padding(top bottom) in HTML templates damit es nicht so gequetscht aussieht

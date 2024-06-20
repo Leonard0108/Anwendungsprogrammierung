@@ -1,4 +1,4 @@
-= 7. Meeting 18.06.2024
+= 12. Meeting 18.06.2024
 
 == Priorität
 - Rückmeldung von Karol implementieren

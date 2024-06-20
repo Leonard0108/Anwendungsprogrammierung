@@ -63,8 +63,9 @@ public class BusinessDataDashboardController {
 
 				// Ticket Preis hinzufügen
 				dailyIncomeData.add(new FinancialTransaction("Ticket: " + ((Orders) order).getCinemaShow().getFilm().getTitle(), ((Orders) order).getTicketSumme().with(Monetary.getDefaultRounding()).getNumber().doubleValue()));
-				System.out.println(((Orders) order).getTicketSumme());
+
 				List<OrderLine> orderLines = order.getOrderLines().get().toList();
+
 				for (OrderLine orderLine : orderLines) {
 
 					Product.ProductIdentifier productId = orderLine.getProductIdentifier();

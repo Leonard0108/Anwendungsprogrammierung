@@ -97,6 +97,10 @@ public class EventAdministrationController {
 			redirectAttributes.addFlashAttribute("errorMessage", "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.");
 
 			return "redirect:/manage/rooms";
+		}else if(from.isBefore(LocalDateTime.now())){
+			redirectAttributes.addFlashAttribute("errorMessage", "Das Event darf nicht in der Vergangenheit liegen.");
+
+			return "redirect:/manage/rooms";
 		}else if(!scheduledActivityService.isTimeSlotAvailable(from, to, room)){
 			redirectAttributes.addFlashAttribute("errorMessage", "Der ausgewählte Zeitslot ist bereits belegt.");
 

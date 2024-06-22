@@ -122,6 +122,10 @@ label {
     background-color: #28a745;
 }
 
+.btn-tertiary {
+    background-color: red;
+}
+
 .client-nojs .nojs-hide{
     display: none;
     padding: 0;
@@ -152,7 +156,7 @@ label {
 }
 
 /* messages */
-.info, .success, .error {
+.info, .success, .error, .warning {
     border-radius: 5px;
     padding: 10px 20px 10px 50px;
     margin-bottom: 10px;
@@ -179,6 +183,13 @@ label {
     background-color: #BDE5F8;
     background-image: url('https://i.imgur.com/ilgqWuX.png');
     border: 1px solid #00529B;
+}
+
+.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('https://imgur.com/vTGeSYw.png');
+    border: 1px solid #9F6000;
 }
 
 .deleteButton, button.destructive{

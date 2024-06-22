@@ -63,6 +63,15 @@
             <br><hr><br>
 
             <h2 id="addprogram">Neu hinzufügen</h2>
+            <div th:if="${errorMessage}" class="error">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <div th:if="${successMessage}" class="success">
+                <p th:text="${successMessage}"></p>
+            </div>
+            <div th:if="${infoMessage}" class="info">
+                <p th:text="${infoMessage}"></p>
+            </div>
             <div class="form-container">
                 <form method="post">
                     <div class="form-group">
@@ -83,15 +92,6 @@
                                 <option th:each="cinemaHall : ${allCinemaHalls}" value="Kinosaal"  th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Kinosaal</option>
                             </select>
                         </p>
-                    </div>
-                    <div th:if="${errorMessage}" class="error">
-                        <p th:text="${errorMessage}"></p>
-                    </div>
-                    <div th:if="${successMessage}" class="success">
-                        <p th:text="${successMessage}"></p>
-                    </div>
-                    <div th:if="${infoMessage}" class="info">
-                        <p th:text="${infoMessage}"></p>
                     </div>
                     <button name="addProgramPoint" class="btn btn-secondary">Hinzufügen</button>
                 </form>

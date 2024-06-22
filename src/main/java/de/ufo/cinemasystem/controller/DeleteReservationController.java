@@ -181,7 +181,7 @@ public class DeleteReservationController {
      * keep in sync with {@linkplain de.ufo.cinemasystem.controller.MakeReservationController#deleteTickets(de.ufo.cinemasystem.models.Reservation) }
      * @param rev the reservation
      */
-    private void deleteTickets(Reservation rev){
+	void deleteTickets(Reservation rev){
         Ticket[] tickets = rev.getTickets();
         for(Ticket t:tickets){
             rev.removeTicket(t);

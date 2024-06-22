@@ -3,9 +3,11 @@ package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.*;
+import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.services.CinemaShowService;
 import de.ufo.cinemasystem.services.ScheduledActivityService;
 import org.javamoney.moneta.Money;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Streamable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,6 +50,11 @@ public class ViewProgramController {
 	private FilmRepository filmRepository;
 
 	private ScheduledActivityService scheduledActivityService;
+
+	@Autowired
+	private DeleteReservationController deleteReservationController;
+	@Autowired
+	private ReservationRepository reservationRepository;
 
         /**
          * Construct a new ViewProgramController with the specified autowired dependencies.
@@ -152,9 +159,9 @@ public class ViewProgramController {
 		Film filmInst = optFilmInst.get();
 		CinemaHall cinemaHallInst = optRoomInst.get();
 
-		if(addTime.isBefore(LocalDateTime.now().plusHours(24))) {
+		if(addTime.isBefore(LocalDateTime.now().plusHours(1))) {
 			redirectAttributes.addFlashAttribute("errorMessage",
-				"Die Vorführung muss mind. 24 Stunden in der Zukunft liegen!");
+				"Die Vorführung muss mind. 1 Stunde in der Zukunft liegen!");
 			return "redirect:/current-films/{year}/{week}";
 		}
 
@@ -240,6 +247,12 @@ public class ViewProgramController {
 			return "redirect:/cinema-shows/{id}";
 		}
 
+		if(cinemaShow.hasBoughtSeats()) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"Die Vorführung kann nicht mehr geändert werden, da bereits verkaufte Tickets existieren!");
+			return "redirect:/cinema-shows/{id}";
+		}
+
 		if(!filmInst.isAvailableAt(editTime)) {
 			redirectAttributes.addFlashAttribute("errorMessage",
 				"Dieser Film wurde in der Zeit nicht ausgeliehen oder der Ticket-Preis wurde nicht gesetzt!");
@@ -270,13 +283,31 @@ public class ViewProgramController {
 
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/cinema-shows/{id}/delete")
-	public String deleteCinemaShow(@PathVariable Long id, Model m) {
+	public String deleteCinemaShow(RedirectAttributes redirectAttributes, @PathVariable Long id) {
 		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
 		if(optionalCinemaShow.isEmpty()) {
 			// TODO Fehlerbehandlung
 			return "redirect:/current-films";
 		}
 		CinemaShow cinemaShow = optionalCinemaShow.get();
+
+		if(cinemaShow.hasBoughtSeats()) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"Die Vorführung kann nicht mehr gelöscht werden, da bereits verkaufte Tickets existieren!");
+			return "redirect:/cinema-shows/{id}";
+		}
+
+		if(cinemaShow.getStartDateTime().isBefore(LocalDateTime.now().plusHours(1))) {
+			redirectAttributes.addFlashAttribute("errorMessage",
+				"Die Vorführung liegt in der Vergangenheit oder beginnt in einer Stunde und kann daher nicht mehr gelöscht werden!");
+			return "redirect:/cinema-shows/{id}";
+		}
+
+		for(Reservation reservation : reservationRepository.findAllByCinemaShow(cinemaShow)) {
+			deleteReservationController.deleteTickets(reservation);
+			reservationRepository.delete(reservation);
+		}
+
 		String redirectUrl = "redirect:/current-films/"
 			+ cinemaShow.getStartDateTime().getYear() + "/"
 			+ AdditionalDateTimeWorker.getWeekOfYear(cinemaShow.getStartDateTime());

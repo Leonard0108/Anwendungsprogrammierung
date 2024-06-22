@@ -174,6 +174,27 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
+	 * @return true, wenn mind. ein reservierter Platz in der Vorführung existiert
+	 */
+	public boolean hasReservedSeats() {
+		return this.seats.values().stream().anyMatch(o -> o == Seat.SeatOccupancy.RESERVED);
+	}
+
+	/**
+	 * @return true, wenn mind. ein verkaufter Platz in der Vorführung existiert
+	 */
+	public boolean hasBoughtSeats() {
+		return this.seats.values().stream().anyMatch(o -> o == Seat.SeatOccupancy.BOUGHT);
+	}
+
+	/**
+	 * @return true, wenn mind. ein reservierter oder verkaufter Platz in der Vorführung existiert
+	 */
+	public boolean hasReservedOrBoughtSeats() {
+		return this.seats.values().stream().anyMatch(o -> o == Seat.SeatOccupancy.BOUGHT || o == Seat.SeatOccupancy.RESERVED);
+	}
+
+	/**
 	 * Prüft, ob der Sitzplatz (Reihe, Position) in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
          * @param row
          * @param pos

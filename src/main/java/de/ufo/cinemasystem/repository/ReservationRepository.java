@@ -1,6 +1,7 @@
 
 package de.ufo.cinemasystem.repository;
 
+import de.ufo.cinemasystem.models.CinemaShow;
 import org.springframework.data.repository.CrudRepository;
 
 import de.ufo.cinemasystem.models.Reservation;
@@ -22,4 +23,7 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
      */
     @Query("SELECT r FROM Reservation r WHERE r.reservingAccount= :who")
     Streamable<Reservation> findAllByUser(UserEntry who);
+
+	@Query("SELECT r FROM Reservation r WHERE r.cinemaShow= :where")
+	Streamable<Reservation> findAllByCinemaShow(CinemaShow where);
 }

@@ -90,6 +90,7 @@ public class EmployeeService {
 
 
 
+
 		UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
 
 		if (userEntry == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {

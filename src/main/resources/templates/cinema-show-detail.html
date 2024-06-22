@@ -48,16 +48,16 @@
                 <br><hr><br>
 
                 <h2 id="edit-program">Vorführung ändern</h2>
+                <div th:if="${errorMessageEdit}" class="error">
+                    <p th:text="${errorMessageEdit}"></p>
+                </div>
+                <div th:if="${successMessageEdit}" class="success">
+                    <p th:text="${successMessageEdit}"></p>
+                </div>
+                <div th:if="${infoMessageEdit}" class="info">
+                    <p th:text="${infoMessageEdit}"></p>
+                </div>
                 <div class="form-container">
-                    <div th:if="${errorMessageEdit}" class="error">
-                        <p th:text="${errorMessageEdit}"></p>
-                    </div>
-                    <div th:if="${successMessageEdit}" class="success">
-                        <p th:text="${successMessageEdit}"></p>
-                    </div>
-                    <div th:if="${infoMessageEdit}" class="info">
-                        <p th:text="${infoMessageEdit}"></p>
-                    </div>
                     <form th:action="'/cinema-shows/' + ${cinemaShow.getId()} + '/edit'" action="/cinema-shows/{id}/edit" method="post">
                         <div class="form-group">
                             <p>Datum und Uhrzeit:

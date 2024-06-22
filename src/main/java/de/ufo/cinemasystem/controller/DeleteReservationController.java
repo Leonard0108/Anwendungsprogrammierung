@@ -18,6 +18,8 @@ import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.salespointframework.inventory.UniqueInventory;
+import org.salespointframework.inventory.UniqueInventoryItem;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +36,12 @@ public class DeleteReservationController {
     private @Autowired TicketRepository ticketRepo;
     private @Autowired ScheduledActivity.CinemaShowService showService;
     private @Autowired UserRepository uRepo;
+    private final UniqueInventory<UniqueInventoryItem> inventory;
+
+    public DeleteReservationController(UniqueInventory<UniqueInventoryItem> inventory) {
+        this.inventory = inventory;
+    }
+    
     
     /**
      * view the reservations of the current user.
@@ -183,6 +191,7 @@ public class DeleteReservationController {
     private void deleteTickets(Reservation rev){
         Ticket[] tickets = rev.getTickets();
         for(Ticket t:tickets){
+            this.inventory.delete(inventory.findByProduct(t).orElseThrow());
             rev.removeTicket(t);
             rev = repo.save(rev);
             showService.update(rev.getCinemaShow().getId()).setSeatOccupancy(new Seat((int) (t.getSeatID() / 100), (int) (t.getSeatID() % 100)), Seat.SeatOccupancy.FREE).save();

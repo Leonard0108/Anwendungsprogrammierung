@@ -45,17 +45,19 @@ public class EmployeeManagementController {
 		return "EmployeeRegistration";
 	}
 
+
+
+
 	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
-		short creationResult;
+		Short creationResult = null;
 
 		if (result.hasErrors()) {
 			//System.out.println(result.getAllErrors());
 			return "EmployeeRegistration";
 		}
 
-		//System.out.println(form);
 
 		creationResult = employeeService.createEmployee(form);
 
@@ -64,18 +66,23 @@ public class EmployeeManagementController {
 			case 0: redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
 				return "redirect:/login";
 			case 1:
-				redirectAttributes.addFlashAttribute("error", "Mitarbeiter existiert bereits: Job-Mail gefunden.");
+				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );
 				break;
 			case 2:
+				redirectAttributes.addFlashAttribute("error", "Mitarbeiter existiert bereits: Job-Mail gefunden.");
+				break;
+			case 3:
 				redirectAttributes.addFlashAttribute("error", "Leider ist die E-Mail-Endung fehlerhaft.");
 				break;
-			case 3: redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich oder wird zu schlecht bezahlt.");
+			case 4: redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich oder wird zu schlecht bezahlt.");
 				break;
-			case 4:
+			case 5:
 				redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
+				break;
+			default:
+				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );
+				break;
 		}
-
-		//System.out.println("createdUser: " + form);
 
 		return "redirect:/manage/staff";
 	}

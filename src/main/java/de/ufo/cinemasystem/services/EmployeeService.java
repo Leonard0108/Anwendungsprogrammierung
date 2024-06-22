@@ -59,54 +59,61 @@ public class EmployeeService {
 		return false;
 	}
 
+
+
+
 	public short createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
 	{
 		Assert.notNull(employeeRegistrationForm, "Registration form must not be null!");
 
-		if (!isKnownEmailProvider(employeeRegistrationForm.getEMail())) {
-			return 4;  // Return a new code for unknown email providers
+		try {
+			if (!isKnownEmailProvider(employeeRegistrationForm.getEMail())) {
+				return 4;  // Return a new code for unknown email providers
+			}
+
+
+			if (employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent()) {
+				return 2;
+			}
+
+			short hoursPerWeek = Short.parseShort(employeeRegistrationForm.getHoursPerWeek());
+			String salaryCleaned = employeeRegistrationForm.getSalary().replaceAll("[€,]", "");
+			Long salaryLong = Long.valueOf(salaryCleaned);
+			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
+			CurrencyUnit currency = Monetary.getCurrency("EUR");
+			Money salary = Money.of(salaryAmount, currency);
+
+			if (!employeeRegistrationForm.getJobMail().endsWith("@ufo-kino.de") || employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent()) {
+				return 3;
+			}
+
+			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero() || salary.divide(hoursPerWeek * 4).isLessThan(Money.of(12, salary.getCurrency()))) {
+				return 4;
+			}
+
+
+			UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
+
+			if (userEntry == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {
+				UserAccount userAccount = userAccountManagement.create(employeeRegistrationForm.getUsername(), Password.UnencryptedPassword.of(employeeRegistrationForm.getPassword()), Role.of("EMPLOYEE"));
+				userAccount.setFirstname(employeeRegistrationForm.getFirstName());
+				userAccount.setLastname(employeeRegistrationForm.getLastName());
+				userAccount.setEmail(employeeRegistrationForm.getEMail());
+
+				userEntry = new UserEntry(userAccount, employeeRegistrationForm.getFirstName(), employeeRegistrationForm.getLastName(), employeeRegistrationForm.getEMail(), employeeRegistrationForm.getStreetName(), employeeRegistrationForm.getHouseNumber(), employeeRegistrationForm.getCity(), employeeRegistrationForm.getPostalCode(), employeeRegistrationForm.getState(), employeeRegistrationForm.getCountry());
+
+				userRepository.save(userEntry);
+			}
+
+			EmployeeEntry employeeEntry = new EmployeeEntry(userEntry, salary, employeeRegistrationForm.getJobMail(), hoursPerWeek);
+			employeeRepository.save(employeeEntry);
+
+			return 0;
 		}
-
-
-		if (employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent())
+		catch (Exception e)
 		{
 			return 1;
 		}
-
-		short hoursPerWeek = Short.parseShort(employeeRegistrationForm.getHoursPerWeek());
-		String salaryCleaned = employeeRegistrationForm.getSalary().replaceAll("[€,]", "");
-		Long salaryLong = Long.valueOf(salaryCleaned);
-		BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
-		CurrencyUnit currency = Monetary.getCurrency("EUR");
-		Money salary = Money.of(salaryAmount, currency);
-
-		if (!employeeRegistrationForm.getJobMail().endsWith("@ufo-kino.de") || employeeRepository.findByJobMail(employeeRegistrationForm.getJobMail()).isPresent()) {
-			return 2;
-		}
-
-		if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero() || salary.divide(hoursPerWeek * 4).isLessThan(Money.of(12, salary.getCurrency()))) {
-			return 3;
-		}
-
-
-
-		UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
-
-		if (userEntry == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {
-			UserAccount userAccount = userAccountManagement.create(employeeRegistrationForm.getUsername(), Password.UnencryptedPassword.of(employeeRegistrationForm.getPassword()), Role.of("EMPLOYEE"));
-			userAccount.setFirstname(employeeRegistrationForm.getFirstName());
-			userAccount.setLastname(employeeRegistrationForm.getLastName());
-			userAccount.setEmail(employeeRegistrationForm.getEMail());
-
-			userEntry = new UserEntry(userAccount, employeeRegistrationForm.getFirstName(), employeeRegistrationForm.getLastName(), employeeRegistrationForm.getEMail(), employeeRegistrationForm.getStreetName(), employeeRegistrationForm.getHouseNumber(), employeeRegistrationForm.getCity(), employeeRegistrationForm.getPostalCode(), employeeRegistrationForm.getState(), employeeRegistrationForm.getCountry());
-
-			userRepository.save(userEntry);
-		}
-
-		EmployeeEntry employeeEntry = new EmployeeEntry(userEntry, salary, employeeRegistrationForm.getJobMail(), hoursPerWeek);
-		employeeRepository.save(employeeEntry);
-
-		return 0;
 	}
 
 

@@ -80,6 +80,7 @@ public class OrderDataInitializer implements DataInitializer{
 			for(Ticket ticket : allTickets){
 				if(allOrders[orderIndex].getCinemaShow().equals(ticket.getCinemaShow())){
 					allOrders[orderIndex].addOrderLine(ticket, Quantity.of(1));
+					allOrders[orderIndex].addTickets(ticket.getPrice());
 				}
 			}
 
@@ -87,6 +88,7 @@ public class OrderDataInitializer implements DataInitializer{
 			for(int i = 0; i < random.nextInt(5,16); i++){
 				Snacks snack = allSnacks.get(random.nextInt(allSnacks.size()));
 				allOrders[orderIndex].addOrderLine(snack, Quantity.of(1));
+				allOrders[orderIndex].addSnacks(snack.getPrice());
 			}
 		}
 

@@ -61,27 +61,23 @@ public class BusinessDataDashboardController {
 
 			if (order.getOrderStatus() == OrderStatus.COMPLETED) {
 
+				// Ticket Preis hinzufügen
+				dailyIncomeData.add(new FinancialTransaction("Ticket: " + ((Orders) order).getCinemaShow().getFilm().getTitle(), ((Orders) order).getTicketSumme().with(Monetary.getDefaultRounding()).getNumber().doubleValue()));
+
 				List<OrderLine> orderLines = order.getOrderLines().get().toList();
+
 				for (OrderLine orderLine : orderLines) {
 
 					Product.ProductIdentifier productId = orderLine.getProductIdentifier();
 
 					// Product kann Ticket oder Snack sein
-					Optional<Ticket> ticketOptional = ticketRepository.findById(productId);
 					Optional<Snacks> snackOptional = snacksRepository.findById(productId);
 
-					if (ticketOptional.isPresent()) {
 
-						Ticket ticket = ticketOptional.get();
-						dailyIncomeData.add(new FinancialTransaction("Ticket: " + ticket.getTicketShowName(), ticket.getPrice().with(Monetary.getDefaultRounding()).getNumber().doubleValue()));
-
-					} else if (snackOptional.isPresent()) {
+					  if (snackOptional.isPresent()) {
 
 						Snacks snack = snackOptional.get();
 						dailyIncomeData.add(new FinancialTransaction("Snack: " + snack.getName(), snack.getPrice().with(Monetary.getDefaultRounding())	.getNumber().doubleValue()));
-
-					} else {
-						throw new IllegalArgumentException("Invalid ProductIdentifier: " + productId);
 					}
 				}
 			}

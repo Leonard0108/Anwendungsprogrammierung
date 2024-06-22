@@ -48,10 +48,10 @@ public class Orders extends Order{
     }
 
     public void addTickets(MonetaryAmount price) {
-        ticketSumme.add(price);
+        this.ticketSumme = this.ticketSumme.add(price);
     }
 
     public void addSnacks(MonetaryAmount price) {
-        SnacksSumme.add(price);
+        this.SnacksSumme = this.SnacksSumme.add(price);
     }
 }

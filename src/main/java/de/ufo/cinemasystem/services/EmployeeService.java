@@ -171,35 +171,48 @@ public class EmployeeService {
 
 
 		if (hours != null && !hours.isEmpty()) {
-			short hoursPerWeek = Short.parseShort(hours);
-			if (hoursPerWeek < 0) {
-				return 1;
-			}
+			try {
+				short hoursPerWeek = Short.parseShort(hours);
+				if (hoursPerWeek < 1) {
+					return 1;
+				}
 
-			if (hoursPerWeek > 50)
+				if (hoursPerWeek > 50)
+				{
+					return 2;
+				}
+
+				employeeEntry.setHoursPerWeek(hoursPerWeek);
+			}
+			catch (Exception e)
 			{
-				return 2;
+				return 4;
 			}
-
-			employeeEntry.setHoursPerWeek(hoursPerWeek);
 		}
 
 
 		if (salary != null && !salary.isEmpty()) {
 			String salaryCleaned = salary.replaceAll("[€,]", "");
-			long salaryLong = Long.parseLong(salaryCleaned);
+			try {
+				long salaryLong = Long.parseLong(salaryCleaned);
 
-			if (salaryLong < 1 || (salaryLong / employeeEntry.getHoursPerWeek() < 12))
-			{
-				return 3 ;
+				if (salaryLong < 1 || (salaryLong / employeeEntry.getHoursPerWeek() < 12))
+				{
+					return 3;
+				}
+
+
+				BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
+				CurrencyUnit currency = Monetary.getCurrency("EUR");
+				Money finishedSalary = Money.of(salaryAmount, currency);
+
+				employeeEntry.setSalary(finishedSalary);
+
 			}
-
-
-			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
-			CurrencyUnit currency = Monetary.getCurrency("EUR");
-			Money finishedSalary = Money.of(salaryAmount, currency);
-
-			employeeEntry.setSalary(finishedSalary);
+			catch (Exception e)
+			{
+				return 5;
+			}
 		}
 
 		employeeRepository.save(employeeEntry);

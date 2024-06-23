@@ -91,7 +91,7 @@ public class EmployeeManagementController {
 				redirectAttributes.addFlashAttribute("error", "Ein undefinierter Fehler ist aufgetreten.");
 				break;
 			default:
-				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein undefinierter Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );
+				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein undefinierter Fehler eingeschlichen zu haben. Bitte achten Sie darauf nur ganzzahlige Gehälter einzugeben und auf jegliche Sonderzeichen zu verzichten, sofern möglich.." );
 				break;
 		}
 
@@ -151,10 +151,34 @@ public class EmployeeManagementController {
 					@RequestParam("email") String email,
 					@RequestParam("job") String job,
 					@RequestParam("salary") String salary,
-					@RequestParam("hours") String hours) {
-		employeeService.editEmployee(id, firstName, lastName, email, job, salary, hours);
+					@RequestParam("hours") String hours,
+					RedirectAttributes redirectAttributes) {
+		int result = employeeService.editEmployee(id, firstName, lastName, email, job, salary, hours);
 
-		return "redirect:/manage/staff";
+		switch (result)
+		{
+			case 0:
+				return "redirect:/manage/staff";
+			case 1:
+				redirectAttributes.addFlashAttribute("error", "Fehlerhafte Eingabe der Arbeitszeit.");
+				break;
+			case 2:
+				redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich.");
+				break;
+			case 3:
+				redirectAttributes.addFlashAttribute("error", "Das Gehalt ist zu niedrig.");
+				break;
+			case 4:
+				redirectAttributes.addFlashAttribute("error", "Ein Fehler ist ist bei der Stundeneingabe aufgetreten.");
+				break;
+			case 5:
+				redirectAttributes.addFlashAttribute("error", "Ein Fehler ist ist bei der Gehaltseingabe aufgetreten.");
+				break;
+		}
+
+
+
+		return "redirect:/manage/editUser";
 	}
 
 

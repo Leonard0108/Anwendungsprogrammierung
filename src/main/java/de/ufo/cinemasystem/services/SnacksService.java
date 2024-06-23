@@ -35,6 +35,16 @@ public class SnacksService {
 		return snack;
 	}
 
+	public Snacks createSnack(String name, Money money, Snacks.SnackType snackType, int stock, byte[] image) {
+		if(stock < 0)
+			throw new IllegalArgumentException("stock muss größer gleich null sein!");
+
+		Snacks snack = new Snacks(name, money, snackType, image);
+		this.snacksRepository.save(snack);
+		this.inventory.save(new UniqueInventoryItem(snack, Quantity.of(stock)));
+		return snack;
+	}
+
 	public void addStock(String id, int stock) {
 		addStock(Product.ProductIdentifier.of(id), stock);
 	}
@@ -54,6 +64,20 @@ public class SnacksService {
 				},
 				() -> inventory.save(new UniqueInventoryItem(snack, Quantity.of(stock)))
 			);
+	}
+
+	public void setStock(String id, int stock) {
+		int currentStock = getStock(id);
+		if(currentStock == stock) return;
+		if(stock > currentStock) addStock(id, stock - currentStock);
+		else addStock(id, currentStock - stock);
+	}
+
+	public void setStock(Product.ProductIdentifier id, int stock) {
+		int currentStock = getStock(id);
+		if(currentStock == stock) return;
+		if(stock > currentStock) addStock(id, stock - currentStock);
+		else removeStock(id, currentStock - stock);
 	}
 
 	public void removeStock(String id, int stock) {

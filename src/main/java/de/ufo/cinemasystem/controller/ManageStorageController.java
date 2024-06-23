@@ -1,9 +1,13 @@
 package de.ufo.cinemasystem.controller;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.javamoney.moneta.Money;
+import org.salespointframework.catalog.Product;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.ufo.cinemasystem.models.Snacks;
@@ -39,45 +45,52 @@ public class ManageStorageController {
 		model.addAttribute("snackTypes", Snacks.SnackType.values());
                 model.addAttribute("title", "Lagerverwaltung");
 
-		return "manage-storage";
+		return "manage_storage_new";
 	}
 
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/item/new")
-	public String newItem(@RequestParam("whatNew") String newSnack, @RequestParam("itemType") Snacks.SnackType snackType, RedirectAttributes redirectAttributes) {
+	public String newItem(@RequestParam("whatNew") String newSnack, @RequestParam("itemType") Snacks.SnackType snackType,
+						  @RequestPart("imageFile") MultipartFile file, RedirectAttributes redirectAttributes) {
 		if(snacksRepository.findAll().stream().anyMatch(e -> e.getName().equalsIgnoreCase(newSnack))) {
 			redirectAttributes.addFlashAttribute("errorMessageNew", "Item bereits vorhanden!");
 			return "redirect:/manage/storage";
 		}
+
+		if(!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				snacksService.createSnack(newSnack, Money.of(9.99, "EUR"), snackType, 0, bytes);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			snacksService.createSnack(newSnack, Money.of(9.99, "EUR"), snackType, 0);
+		}
+
 		// TODO: Behandlung von SnackType und Money (einfügen?)
-		snacksService.createSnack(newSnack, Money.of(9.99, "EUR"), snackType, 0);
 		redirectAttributes.addFlashAttribute("successMessageNew", "Neues Item erfolgreich angelegt!");
 
 		return "redirect:/manage/storage";
 	}
 
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
-	@PostMapping("/manage/storage/item/add")
-	public String addItem(@RequestParam("itemName") String snackId, @RequestParam("itemCount") int itemCount, RedirectAttributes redirectAttributes) {
-		try {
-			this.snacksService.addStock(snackId, itemCount);
-			redirectAttributes.addFlashAttribute("successMessageAdd", itemCount + " Items erfolgreich hinzugefügt!");
-		}catch (IllegalArgumentException ex) {
-			redirectAttributes.addFlashAttribute("errorMessageAdd", "Ungültige hinzuzufügende Item-Anzahl!");
+	@PostMapping("/manage/storage/save")
+	public String saveItems(@RequestParam("snack-objects") List<Product.ProductIdentifier> snackIds, @RequestParam("snack-counters") List<Integer> snackCounters, RedirectAttributes redirectAttributes) {
+		final int count = snackIds.size();
+		boolean error = false;
+		for(int i = 0; i < count; i++) {
+			try {
+				this.snacksService.setStock(snackIds.get(i), snackCounters.get(i));
+			}catch (IllegalArgumentException ex) {
+				error = true;
+			}
 		}
 
-		return "redirect:/manage/storage";
-	}
-
-	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
-	@PostMapping("/manage/storage/item/remove")
-	public String removeItem(@RequestParam("itemName") String snackId, @RequestParam("itemCount") int itemCount, RedirectAttributes redirectAttributes) {
-		try {
-			this.snacksService.removeStock(snackId, itemCount);
-			redirectAttributes.addFlashAttribute("successMessageRemove", itemCount + " Items erfolgreich entfernt!");
-		}catch (IllegalArgumentException ex) {
-			redirectAttributes.addFlashAttribute("errorMessageRemove", "Ungültige abzuziehende Item-Anzahl!");
-			redirectAttributes.addFlashAttribute("infoMessageRemove", "Es können max. so viele Items abgezogen werden, wie sich im Lager befinden!");
+		if(error) {
+			redirectAttributes.addFlashAttribute("errorMessageSave", "Fehler beim aktualisieren eines oder mehrerer Items!");
+		}else {
+			redirectAttributes.addFlashAttribute("successMessageSave", "Items wurden erfolgreich aktualisiert!");
 		}
 
 		return "redirect:/manage/storage";

@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.models;
 import javax.money.MonetaryAmount;
 
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
+import jakarta.persistence.Lob;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 
@@ -10,7 +11,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,6 +34,10 @@ public class Snacks extends Product implements PriceChange {
 	// private Metric metric;
 	private SnackType type;
 
+	// Binärdaten in der DB speichern
+	@Lob
+	private byte[] imageData;
+
 	@SuppressWarnings({ "unused", "deprecation" })
 	private Snacks() {
 	}
@@ -41,6 +50,13 @@ public class Snacks extends Product implements PriceChange {
         super(name, price);
         this.type = type;
     }
+
+	public Snacks(String name, MonetaryAmount price, SnackType type, byte[] imageData) {
+		super(name, price);
+		this.type = type;
+		this.imageData = imageData;
+	}
+
 
 	public String getSnackType() {
 		return this.type.toString();
@@ -62,5 +78,12 @@ public class Snacks extends Product implements PriceChange {
 
 	public boolean isInitialized(){
 		return super.getPrice().getNumber().intValue() != -1;
+	}
+
+	public String getImageBase64() {
+		if (imageData != null) {
+			return Base64.getEncoder().encodeToString(imageData);
+		}
+		return null;
 	}
 }

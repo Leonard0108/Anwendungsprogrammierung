@@ -37,6 +37,13 @@ public class LoginController {
 	}
 
 
+	@GetMapping("/register")
+	public String register()
+	{
+		return "redirect:/registration";
+	}
+
+
 	@PostMapping("/registration")
 	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
 		short creationResult;

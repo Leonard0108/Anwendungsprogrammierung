@@ -54,7 +54,6 @@ public class EmployeeManagementController {
 		Short creationResult;
 
 		if (result.hasErrors()) {
-			//System.out.println(result.getAllErrors());
 			return "EmployeeRegistration";
 		}
 
@@ -92,7 +91,7 @@ public class EmployeeManagementController {
 				redirectAttributes.addFlashAttribute("error", "Ein undefinierter Fehler ist aufgetreten.");
 				break;
 			default:
-				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );
+				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein undefinierter Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );
 				break;
 		}
 
@@ -112,12 +111,6 @@ public class EmployeeManagementController {
 		return "employees";
 	}
 
-
-
-	/*@PostMapping(path = "/showAllEmployees")
-	public String showAllEmployeesRedirect(Model m) {
-		return "redirect::/EmployeeControlling/showAllEmployees";
-	}*/
 
 
 

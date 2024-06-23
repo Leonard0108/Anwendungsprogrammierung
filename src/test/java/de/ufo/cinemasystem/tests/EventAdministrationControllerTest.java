@@ -38,14 +38,14 @@ public class EventAdministrationControllerTest {
 	@WithMockUser(username = "aem", roles = "AUTHORIZED_EMPLOYEE")
 	@Transactional
 	void testGetPageUnauthorized() throws Exception {
-		System.out.println("Testing EventAdministrationController getEvents() Unauthorized");
+		System.out.println("Testing EventAdministrationController Unauthorized");
 		mvc.perform(get("/manage/rooms"))
 			.andExpect(status().isForbidden());
 	}
 
 	@Test
 	void testGetPageNotAuthorized() throws Exception {
-		System.out.println("Testing EventAdministrationController getEvents() NotAuthorized");
+		System.out.println("Testing EventAdministrationController NotAuthorized");
 		mvc.perform(get("/manage/rooms"))
 			.andExpect(status().is3xxRedirection());
 	}
@@ -74,6 +74,7 @@ public class EventAdministrationControllerTest {
 				.param("eventname", "Test Event"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(flash().attribute("successMessage", "Das neue Event wurde erfolgreich angelegt"));
+		assert eventRepository.findByName("Test Event").isPresent();
 	}
 
 	@Test

@@ -9,6 +9,7 @@ import de.ufo.cinemasystem.models.Event;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 public interface EventRepository extends CrudRepository<Event, Long> {
@@ -25,4 +26,5 @@ public interface EventRepository extends CrudRepository<Event, Long> {
 
 
 	Streamable<Event> findAll();
+	Optional<Event> findByName(String name);
 }

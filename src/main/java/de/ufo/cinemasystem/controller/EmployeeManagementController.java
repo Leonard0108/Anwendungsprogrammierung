@@ -51,7 +51,7 @@ public class EmployeeManagementController {
 	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
-		Short creationResult = null;
+		Short creationResult;
 
 		if (result.hasErrors()) {
 			//System.out.println(result.getAllErrors());
@@ -74,10 +74,22 @@ public class EmployeeManagementController {
 			case 3:
 				redirectAttributes.addFlashAttribute("error", "Leider ist die E-Mail-Endung fehlerhaft.");
 				break;
-			case 4: redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich oder wird zu schlecht bezahlt.");
+			case 4: redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
 				break;
 			case 5:
-				redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
+				redirectAttributes.addFlashAttribute("error", "Leider ist die Eingabe nicht mit dem dem Arbeitszeitschutzgesetz vereinbar.");
+				break;
+			case 6:
+				redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter wird zu schlecht bezahlt");
+				break;
+			case 7:
+				redirectAttributes.addFlashAttribute("error", "Leider gab eis einen Fehler beim Einlesen der Stundenzahl.");
+				break;
+			case 8:
+				redirectAttributes.addFlashAttribute("error", "Leider gab es einen Fehler beim erstellen des Gehalts");
+				break;
+			case 9:
+				redirectAttributes.addFlashAttribute("error", "Ein undefinierter Fehler ist aufgetreten.");
 				break;
 			default:
 				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );

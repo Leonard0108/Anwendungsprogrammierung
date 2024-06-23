@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
+import javax.money.MonetaryException;
 
 import org.javamoney.moneta.Money;
 import org.salespointframework.useraccount.Password;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManagement;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -78,7 +80,7 @@ public class EmployeeService {
 
 			short hoursPerWeek = Short.parseShort(employeeRegistrationForm.getHoursPerWeek());
 			String salaryCleaned = employeeRegistrationForm.getSalary().replaceAll("[€,]", "");
-			Long salaryLong = Long.valueOf(salaryCleaned);
+			long salaryLong = Long.parseLong(salaryCleaned);
 			BigDecimal salaryAmount = BigDecimal.valueOf(salaryLong);
 			CurrencyUnit currency = Monetary.getCurrency("EUR");
 			Money salary = Money.of(salaryAmount, currency);
@@ -87,8 +89,13 @@ public class EmployeeService {
 				return 3;
 			}
 
-			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero() || salary.divide(hoursPerWeek * 4).isLessThan(Money.of(12, salary.getCurrency()))) {
-				return 4;
+			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero()) {
+				return 5;
+			}
+
+			if (salary.divide((hoursPerWeek << 2)).isLessThan(Money.of(12, salary.getCurrency())))
+			{
+				return 6;
 			}
 
 
@@ -110,12 +117,21 @@ public class EmployeeService {
 
 			return 0;
 		}
+		catch (NumberFormatException e) {
+			return 7;  // Code for number format exceptions
+		}
+		catch (MonetaryException e) {
+			return 8;  // Code for monetary exceptions
+		}
+		catch (DataIntegrityViolationException e) {
+			return 9;  // Code for data integrity violations
+		}
 		catch (Exception e)
 		{
 			return 1;
 		}
 	}
-
+ 
 
 	/**
 	 *

@@ -117,8 +117,7 @@ public class EmployeeManagementController {
 
 
 
-
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/editUser")
 	String editUser(@RequestParam("id") UUID id, Model model) {
 		Optional<EmployeeEntry> employeeOpt = employeeRepo.findByIdIdentifier(id); //	.findAll().stream().toList();

@@ -137,6 +137,24 @@ public class Reservation {
         }
         return total;
     }
+    
+    /**
+     * Check for tickets that are problematic FSK-Wise.
+     * @return true if any
+     */
+    public boolean hasProblematicTickets(){
+        if(this.getCinemaShow().getFilm().getFskAge() <= 14){
+            return false;
+        }
+        
+        for(Ticket t:tickets){
+            if(t.getCategory() == Ticket.TicketCategory.children){
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     /**
      * Generate a hash code for this film. Due to the equals contract, hashcode is

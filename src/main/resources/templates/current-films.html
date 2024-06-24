@@ -46,10 +46,10 @@
                                       th:text="${'FSK ' + cinemaShow.getFilm().getFskAge()}">FSK Y</span>
                                 <span th:text="${cinemaShow.getFilm().getTimePlaying() + 'min'}">Zmin</span>
                             </p>
-                            <p class="reserve-error">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
+                            <p class="reserve-error" th:unless="${cinemaShow.canReserveSpots()}">Online-Platzreservierungen sind nur bis 45min vor Beginn möglich</p>
                         </div>
                         <div class="film-card-reserve-section">
-                            <a th:href="@{/reserve-spots/reserve/{what}(what=${cinemaShow.getId()})}" href="/reserve-spots/reserve/">Plätze reservieren</a>
+                            <a th:href="@{/reserve-spots/reserve/{what}(what=${cinemaShow.getId()})}" href="/reserve-spots/reserve/" th:if="${cinemaShow.canReserveSpots()}">Plätze reservieren</a>
                             <!--<a href="/current-films?change=1&AMP;id=83490258902890890" style="display: block">ändern</a>
                             <a href="/current-films?delete=1&AMP;id=83490258902890890" style="display: block">löschen</a>-->
                         </div>

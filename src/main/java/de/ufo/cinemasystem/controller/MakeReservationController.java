@@ -132,6 +132,7 @@ public class MakeReservationController {
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotalPrice());
         m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
+        m.addAttribute("fskWarning", work.hasProblematicTickets());
         if(LocalDateTime.now().until(what.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(45).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 45 Minuten vor Vorstellungsbeginn möglich!");
         }
@@ -176,6 +177,7 @@ public class MakeReservationController {
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("fskWarning", work.hasProblematicTickets());
         m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         if(LocalDateTime.now().until(what.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(45).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 45 Minuten vor Vorstellungsbeginn möglich!");
@@ -250,6 +252,7 @@ public class MakeReservationController {
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("errors",errors);
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("fskWarning", work.hasProblematicTickets());
         m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         return "make-reservation-ticket-adder";
     }
@@ -289,6 +292,7 @@ public class MakeReservationController {
         m.addAttribute("tickets", work.getTickets());
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotalPrice());
+        m.addAttribute("fskWarning", work.hasProblematicTickets());
         m.addAttribute("isPrivileged", session.getAttribute(privilegedReservationKey));
         if(LocalDateTime.now().until(work.getCinemaShow().getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(45).toMillis()){
             m.addAttribute("errors", "Reservierungen sind nur bis 45 Minuten vor Vorstellungsbeginn möglich!");

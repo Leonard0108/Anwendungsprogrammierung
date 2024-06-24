@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.models;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -304,6 +305,22 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	public String getName(){
 		return film.getTitle();
 	}
+        
+        /**
+         * Check wether we can reserve spots for this cinema show.
+         * @return 
+         */
+        public boolean canReserveSpots(){
+            if(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)).isBefore(getStartDateTime())){
+                return false;
+            }
+            
+            if(LocalDateTime.now().until(getStartDateTime(), java.time.temporal.ChronoUnit.MINUTES) < 45){
+                return false;
+            }
+            
+            return true;
+        }
 
 	@Override
 	public int hashCode() {

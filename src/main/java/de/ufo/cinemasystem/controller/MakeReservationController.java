@@ -191,6 +191,7 @@ public class MakeReservationController {
      * @param m
      * @param session
      * @param ticketType
+     * @param spot
      * @return 
      */
     @PreAuthorize("isAuthenticated()")

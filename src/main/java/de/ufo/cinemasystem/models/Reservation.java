@@ -164,6 +164,10 @@ public class Reservation {
      */
     @Override
     public int hashCode() {
+        //mask null id
+        if(this.id == null){
+            return 0;
+        }
         int hash = 7;
         hash = 73 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;

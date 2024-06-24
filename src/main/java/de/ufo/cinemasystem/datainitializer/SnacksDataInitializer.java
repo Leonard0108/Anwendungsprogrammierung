@@ -1,5 +1,7 @@
 package de.ufo.cinemasystem.datainitializer;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Random;
 
 import org.javamoney.moneta.Money;
@@ -7,6 +9,7 @@ import org.salespointframework.core.DataInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import de.ufo.cinemasystem.models.Snacks;
@@ -36,16 +39,115 @@ public class SnacksDataInitializer implements DataInitializer {
         }
         Random random = new Random();
 
-        for (int i = 0; i < 10; i++) {
-            SnackType type = (i % 2 == 0) ? SnackType.Essen : SnackType.Getränk;
-            Snacks s = new Snacks(
-                "Snack " + i,
-                Money.of(random.nextDouble(3.5, 20), "EUR"),
-                type);
-            snacksrepository.save(s);
+		try {
+			Snacks s = new Snacks(
+				"Cola",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Getränk,
+				loadImageAsByteArray("cola.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
 
-            snacksService.addStock(s.getId(), 50);
-        }
+		try {
+			Snacks s = new Snacks(
+				"Fanta",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Getränk,
+				loadImageAsByteArray("fanta.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Eistee",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Getränk,
+				loadImageAsByteArray("eistee.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Slush",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Getränk,
+				loadImageAsByteArray("slush-getrank.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Eis",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("eis.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Gummibärchen",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("gummibarchen.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Nachos",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("nachos.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Popcorn (klein)",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("popcorn-smal.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Popcorn (mittel)",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("popcorn-mid.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Popcorn (groß)",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("popcorn-big.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
+
+		try {
+			Snacks s = new Snacks(
+				"Schokoladenriegel",
+				Money.of(random.nextDouble(3.5, 20), "EUR"),
+				SnackType.Essen,
+				loadImageAsByteArray("schokoladenriegel.png"));
+			snacksrepository.save(s);
+			snacksService.addStock(s.getId(), 50);
+		}catch (IOException ignored) {}
 
         snacksrepository.findAll().forEach(f -> {
 			System.out.println(f.toString());
@@ -54,5 +156,10 @@ public class SnacksDataInitializer implements DataInitializer {
 			System.out.println("=======================================");
 		});
     }
+
+	public byte[] loadImageAsByteArray(String filename) throws IOException {
+		ClassPathResource imgFile = new ClassPathResource("static/assets/snacks/" + filename);
+		return Files.readAllBytes(imgFile.getFile().toPath());
+	}
 
 }

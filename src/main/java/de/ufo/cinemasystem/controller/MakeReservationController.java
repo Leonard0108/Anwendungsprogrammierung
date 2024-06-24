@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
+import de.ufo.cinemasystem.services.CinemaShowService;
 import org.javamoney.moneta.Money;
 import org.salespointframework.inventory.UniqueInventory;
 import org.salespointframework.inventory.UniqueInventoryItem;
@@ -67,7 +68,7 @@ public class MakeReservationController {
     private @Autowired CinemaShowRepository showsRepo;
     private @Autowired UserRepository uRepo;
     private @Autowired TicketRepository ticketRepo;
-    private @Autowired ScheduledActivity.CinemaShowService showService;
+    private @Autowired CinemaShowService showService;
     
     /**
      * Entry point from the main nav menu.

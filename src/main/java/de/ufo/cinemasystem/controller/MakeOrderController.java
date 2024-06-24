@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import de.ufo.cinemasystem.services.CinemaShowService;
 import org.javamoney.moneta.Money;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.catalog.Product.ProductIdentifier;
@@ -39,7 +40,6 @@ import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Orders;
 import de.ufo.cinemasystem.models.Reservation;
-import de.ufo.cinemasystem.models.ScheduledActivity.CinemaShowService;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Ticket;

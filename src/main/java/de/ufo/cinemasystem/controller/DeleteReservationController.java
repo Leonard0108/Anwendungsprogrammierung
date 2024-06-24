@@ -2,6 +2,7 @@
 package de.ufo.cinemasystem.controller;
 
 import de.ufo.cinemasystem.models.ScheduledActivity;
+import de.ufo.cinemasystem.services.CinemaShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ public class DeleteReservationController {
     
     private @Autowired ReservationRepository repo;
     private @Autowired TicketRepository ticketRepo;
-    private @Autowired ScheduledActivity.CinemaShowService showService;
+    private @Autowired CinemaShowService showService;
     private @Autowired UserRepository uRepo;
     private final UniqueInventory<UniqueInventoryItem> inventory;
 
@@ -188,7 +189,7 @@ public class DeleteReservationController {
      * keep in sync with {@linkplain de.ufo.cinemasystem.controller.MakeReservationController#deleteTickets(de.ufo.cinemasystem.models.Reservation) }
      * @param rev the reservation
      */
-    private void deleteTickets(Reservation rev){
+	void deleteTickets(Reservation rev){
         Ticket[] tickets = rev.getTickets();
         for(Ticket t:tickets){
             this.inventory.delete(inventory.findByProduct(t).orElseThrow());

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+</head>
+<body>
+<div class="main-wrapper" role="main" layout:fragment="content">
+    <h1>Lagerverwaltung</h1>
+
+    <h2>Lager-Bestände bearbeiten</h2>
+    <div th:if="${errorMessageSave}" class="error">
+        <p th:text="${errorMessageSave}"></p>
+    </div>
+    <div th:if="${successMessageSave}" class="success">
+        <p th:text="${successMessageSave}"></p>
+    </div>
+    <div th:if="${infoMessageSave}" class="info">
+        <p th:text="${infoMessageSave}"></p>
+    </div>
+    <div class="form-container">
+        <form id="storageForm" th:action="'/manage/storage/save'" action="/manage/storage/save" method="post">
+            <div class="scroll-box">
+                <div class="grid-container">
+                    <div class="box" th:each="snack : ${allSnacks}">
+                        <div class="top-text" th:text="${snack.getValue()} + 'x ' + ${snack.getKey().getName()}">Anzahlx Snack</div>
+                        <div class="image-container">
+                            <div th:if="${snack.getKey().getImageBase64() != null}">
+                                <img th:src="'data:image/jpeg;base64,' + ${snack.getKey().getImageBase64()}" alt="Uploaded Image"/>
+                            </div>
+                            <div th:if="${snack.getKey().getImageBase64() == null}">
+                                <p>Bild nicht vorhanden</p>
+                            </div>
+                        </div>
+                        <div class="bottom-text">
+                            <div class="counter-container" th:data-id="${snack.getKey().getId()}">
+                                <button type="button" class="counter-button" th:id="'decrease-' + ${snack.getKey().getId()}">-</button>
+                                <input type="hidden" name="snack-objects" th:value="${snack.getKey().getId()}" />
+                                <input type="number" class="counter-input" th:id="'snack-counters-' + ${snack.getKey().getId()}" name="snack-counters" th:value="${snack.getValue()}" min="0" />
+                                <button type="button" class="counter-button" th:id="'increase-' + ${snack.getKey().getId()}">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="saveButton">Speichern</button>
+        </form>
+    </div>
+
+    <h2>Neues Item</h2>
+    <div th:if="${errorMessageNew}" class="error">
+        <p th:text="${errorMessageNew}"></p>
+    </div>
+    <div th:if="${successMessageNew}" class="success">
+        <p th:text="${successMessageNew}"></p>
+    </div>
+    <div th:if="${infoMessageNew}" class="info">
+        <p th:text="${infoMessageNew}"></p>
+    </div>
+    <div class="form-container">
+        <form action="/manage/storage/item/new" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <p>Name:
+                    <input name="whatNew" placeholder="Name" class="form-control">
+                </p>
+                <p>Typ:
+                    <select name="itemType" class="form-control">
+                        <option th:each="snackType : ${snackTypes}" value="Snack Type"  th:text="${snackType}" th:value="${snackType}">Snack Type</option>
+                    </select>
+                </p>
+                <p>Bild (Optional):
+                    <input type="file" name="imageFile" accept="image/*" class="form-control">
+                </p>
+            </div>
+            <button name="new" class="btn btn-secondary">Hinzufügen</button>
+        </form>
+    </div>
+
+    <style>
+        .scroll-box {
+            max-height: 500px;
+            border: 1px solid #000;
+            overflow: auto;
+            padding: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            background-color: #333333;
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            height: 200px;
+            box-sizing: border-box;
+        }
+
+        .box .top-text, .box .bottom-text {
+            flex: 0 0 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box .image-container {
+            flex: 0 0 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        .box .image-container::before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+
+        .box .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .counter-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .counter-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .counter-display {
+            font-size: 20px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .save-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const counters = /*[[${#lists.size(allSnacks)}]]*/ 0;
+            const counterElements = document.querySelectorAll('.counter-container');
+
+            counterElements.forEach(container => {
+                const id = container.getAttribute('data-id');
+                const countDisplay = document.getElementById(`snack-counters-${id}`);
+                let count = parseInt(countDisplay.value);
+
+                document.getElementById(`increase-${id}`).addEventListener("click", () => {
+                    count++;
+                    countDisplay.value = count;
+                });
+
+                document.getElementById(`decrease-${id}`).addEventListener("click", () => {
+                    if (count > 0) {
+                        count--;
+                    }
+                    countDisplay.value = count;
+                });
+            });
+
+            /*
+            document.getElementById("saveButton").addEventListener("click", () => {
+                let updatedCounters = [];
+                counterElements.forEach(container => {
+                    const id = container.getAttribute('data-id');
+                    const count = document.getElementById(`count-${id}`).textContent;
+                    updatedCounters.push({ id: id, count: parseInt(count) });
+                });
+
+                fetch('/saveCounters', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedCounters)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Zählerstände erfolgreich gespeichert!');
+                        } else {
+                            alert('Fehler beim Speichern der Zählerstände.');
+                        }
+                    });
+            });
+             */
+        });
+    </script>
+</div>
+
+</body>
+</html>

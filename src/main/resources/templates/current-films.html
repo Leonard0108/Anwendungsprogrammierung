@@ -72,17 +72,30 @@
             <div th:if="${infoMessage}" class="info">
                 <p th:text="${infoMessage}"></p>
             </div>
-            <form method="post">
-                <p>Datum und Uhrzeit: <input type="datetime-local" name="addTime" required=""></p>
-                <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
-                <p>Film: <select name="film">
-                    <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}">Film</option>
-                </select></p>
-                <select name="room">
-                    <option th:each="cinemaHall : ${allCinemaHalls}" value="Kinosaal"  th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Kinosaal</option>
-                </select>
-                <button name="addProgramPoint">Hinzufügen</button>
-            </form>
+            <div class="form-container">
+                <form method="post">
+                    <div class="form-group">
+                        <p>Datum und Uhrzeit:
+                            <div class="input-group">
+                                <input type="datetime-local" name="addTime" required="" class="form-control">
+                            </div>
+                        </p>
+                        <!--name="film" und name="room" in <select ...> dient hier als @RequestParam für den Controller-->
+                        <p>Film:
+                            <select name="film" class="form-control">
+                                <option th:each="film : ${allFilms}" value="Film" th:text="${film.getTitle()}" th:value="${film.getId()}">Film</option>
+                            </select>
+                        </p>
+
+                        <p>Saal:
+                            <select name="room" class="form-control">
+                                <option th:each="cinemaHall : ${allCinemaHalls}" value="Kinosaal"  th:text="${cinemaHall.getName()}" th:value="${cinemaHall.getId()}">Kinosaal</option>
+                            </select>
+                        </p>
+                    </div>
+                    <button name="addProgramPoint" class="btn btn-secondary">Hinzufügen</button>
+                </form>
+            </div>
         </div>
 
         <style>

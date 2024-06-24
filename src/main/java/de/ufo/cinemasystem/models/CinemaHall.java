@@ -25,7 +25,11 @@ public class CinemaHall {
 	@OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.ALL)
 	private final SortedSet<Event> events = new TreeSet<>();
 
-	CinemaHall(String name, final Map<Seat, Seat.PlaceGroup> seats) {
+	/**
+	 * Do not use!
+	 * Use CinemaHallService to Update!
+	 */
+	public CinemaHall(String name, final Map<Seat, Seat.PlaceGroup> seats) {
 		this.name = name;
 		this.numberOfPlaces = 0;/*seats.size();*/
 		this.seats.putAll(seats);

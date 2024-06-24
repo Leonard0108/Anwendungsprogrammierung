@@ -271,3 +271,7 @@ label {
 .fsk-18{
     color:#FF6666;
 }
+
+li ul{
+    padding: 0.5em 2em;
+}

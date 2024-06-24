@@ -11,10 +11,12 @@
             <p>"<span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span>", <span th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')}">Montag 22.04.2024, 10 Uhr</span>, Saal 2. <a href="/current-films" title="Filmplan | UFO Kinos">Ändern</a> <span class="fsk-label" th:text="'FSK ' + ${show.getFilm().getFskAge()}" th:class="'fsk-label fsk-' + ${show.getFilm().getFskAge()}">FSK 12</span></p>
                     <form id="reserve-spots-form-delete" action="/reserve-spots/remove-ticket" method="post">
                         <div class="already-in-cart">
+                            <p th:if="${fskWarning}" class="warning">Warnung: Es wurden Kindertickets gefunden, obwohl die FSK-Kennung keine Kinder zuläst.</p>
                             <div class="ticket" th:each="ticket : ${tickets}">
                                 <p th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')} +' '+ ${show.getFilm().getTitle()}"></p>
                                 <p th:text="${ticket.getSeatString()} + ' '+ ${ticket.categoryToLabel()}"></p>
                                 <p style="text-align: right" th:text="${ticket.getPrice()}"></p>
+                                <p th:if="${fskWarning} and ${ticket.categoryToLabel()} == 'Kind (Bis 14 Jahre)' " class="warning">Die Kassenmitarbeiter dürfen ihnen dieses Ticket nicht geben, da es die FSK-Bestimmungen verletzt.</p>
                                 <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${ticket.getId()}">Löschen</button>
                             </div>
                         </div>
@@ -33,6 +35,7 @@
                             <li th:text="'Platzgruppe 3: Erwachsener ' + ${p3n} + ', Kind (Bis 14 Jahre) ' + ${p3c} + ', Schwerbehinderter ' + ${p3r}">Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
                         </ul>
 
+                        <p th:if="${show.getFilm().getFskAge()} > 14" class="info">Hinweis: Für diesen Film sind aufgrund der FSK-Bestimmungen keine Kindertickets verfügbar.</p>
                         <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType" required="">
                                 <option value="" disabled="" selected="">(Bitte wählen)</option>
                                 <option value="adult">Erwachsender</option>

@@ -1,0 +1,16 @@
+== 7. Review - Vortrag
+
+== Anpassungen zur Implementation
+- kaufen von mehreren Filmen soll in einer Order möglich sein
+- bei ausslassen der Funktion: in Entwicklerdoku Offene Punkte eintragen
+- Hinweis bei Kinder Tickets in FSK 18 Filmen
+- Personalverwaltung: Fehlermeldungen im Registrierungs Form soll om Form angezeigt werden und Werte in Feldern sollen bestehen beiben + Jobmail Placeholder
+- title in jedem model festlegen
+- Datenschutz Seite Text einfügen
+
+== Vortrag
+- BonsuPunkte: Folien Layout wie auf Webseite machen mit Kino Logo
+
+
+
+== nächstes Meeting

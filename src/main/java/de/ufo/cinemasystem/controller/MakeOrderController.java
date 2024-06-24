@@ -59,7 +59,7 @@ public class MakeOrderController {
 
 	public static final String orderSessionKey = "current-order";
 
-	private final OrderManagement<Order> orderManagement;
+	private final OrderManagement<Orders> orderManagement;
 	private final UniqueInventory<UniqueInventoryItem> inventory;
 	private List<String> errors = new ArrayList<>();
 
@@ -79,7 +79,6 @@ public class MakeOrderController {
 	private @Autowired SnacksService snacksService;
 	private @Autowired CinemaShowRepository showsRepo;
 	private @Autowired TicketRepository ticketRepo;
-	private @Autowired UserRepository userRepo;
 	private @Autowired CinemaShowService showService;
 	
 
@@ -123,12 +122,16 @@ public class MakeOrderController {
 	}
 
 	@PostMapping("/sell-tickets")
-	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser,
+	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
 	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
 		this.errors = new ArrayList<>();
-//		if (session.getAttribute(orderSessionKey) == null) {
+		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
-//		}
+		}
+		if(!cart.isEmpty()){
+			m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+			m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);

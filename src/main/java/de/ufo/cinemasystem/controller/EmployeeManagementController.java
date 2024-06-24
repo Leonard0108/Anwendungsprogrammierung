@@ -39,7 +39,7 @@ public class EmployeeManagementController {
 	}
 
 	//PreAuthorize ist eine Annotation, welche der automatischen Autorisationserkennung dient.
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee(Model m, EmployeeRegistrationForm form) {
 		return "EmployeeRegistration";
@@ -50,7 +50,7 @@ public class EmployeeManagementController {
 
 	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
-	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
+	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes, Model model) {
 		Short creationResult;
 
 		if (result.hasErrors()) {
@@ -64,38 +64,41 @@ public class EmployeeManagementController {
 		switch (creationResult) {
 			case 0: redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
 				return "redirect:/login";
+
 			case 1:
-				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben." );
+				model.addAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben.");
 				break;
 			case 2:
-				redirectAttributes.addFlashAttribute("error", "Mitarbeiter existiert bereits: Job-Mail gefunden.");
+				model.addAttribute("error", "Mitarbeiter existiert bereits: Job-Mail gefunden.");
 				break;
 			case 3:
-				redirectAttributes.addFlashAttribute("error", "Leider ist die E-Mail-Endung fehlerhaft.");
+				model.addAttribute("error", "Leider ist die E-Mail-Endung fehlerhaft.");
 				break;
-			case 4: redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
+			case 4:
+				model.addAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
 				break;
 			case 5:
-				redirectAttributes.addFlashAttribute("error", "Leider ist die Eingabe nicht mit dem dem Arbeitszeitschutzgesetz vereinbar.");
+				model.addAttribute("error", "Leider ist die Eingabe nicht mit dem dem Arbeitszeitschutzgesetz vereinbar.");
 				break;
 			case 6:
-				redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter wird zu schlecht bezahlt");
+				model.addAttribute("error", "Ihr Mitarbeiter wird zu schlecht bezahlt");
 				break;
 			case 7:
-				redirectAttributes.addFlashAttribute("error", "Leider gab eis einen Fehler beim Einlesen der Stundenzahl.");
+				model.addAttribute("error", "Leider gab eis einen Fehler beim Einlesen der Stundenzahl.");
 				break;
 			case 8:
-				redirectAttributes.addFlashAttribute("error", "Leider gab es einen Fehler beim erstellen des Gehalts");
+				model.addAttribute("error", "Leider gab es einen Fehler beim erstellen des Gehalts");
 				break;
 			case 9:
-				redirectAttributes.addFlashAttribute("error", "Ein undefinierter Fehler ist aufgetreten.");
+				model.addAttribute("error", "Ein undefinierter Fehler ist aufgetreten.");
 				break;
 			default:
-				redirectAttributes.addFlashAttribute("error", "Leider scheint sich irgendwo ein undefinierter Fehler eingeschlichen zu haben. Bitte achten Sie darauf nur ganzzahlige Gehälter einzugeben und auf jegliche Sonderzeichen zu verzichten, sofern möglich.." );
+				model.addAttribute("error", "Leider scheint sich irgendwo ein undefinierter Fehler eingeschlichen zu haben. Bitte achten Sie darauf nur ganzzahlige Gehälter einzugeben und auf jegliche Sonderzeichen zu verzichten, sofern möglich.");
 				break;
 		}
 
-		return "redirect:/manage/staff";
+		model.addAttribute("employeeRegistrationForm", form);
+		return "EmployeeRegistration";
 	}
 
 
@@ -115,20 +118,12 @@ public class EmployeeManagementController {
 
 
 
-	@PreAuthorize("hasRole('BOSS')")
+	//@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/editUser")
 	String editUser(@RequestParam("id") UUID id, Model model) {
 		Optional<EmployeeEntry> employeeOpt = employeeRepo.findByIdIdentifier(id); //	.findAll().stream().toList();
 		Optional<UserEntry> userOpt = userRepo.findByIdIdentifier(id); // 		.findAll().stream().toList();
-		/*
-		for(EmployeeEntry employee : employeeOpt){
-			System.out.println("employee: " + employee.getId().getId());
-		}
-		for(UserEntry user : userOpt){
-			System.out.println("user: " + user.getId().getId());
-			System.out.println(user.getFirstName());
-		}
-		*/
+
 
 		if (employeeOpt.isPresent() && userOpt.isPresent()) {
 			model.addAttribute("employee", employeeOpt.get());

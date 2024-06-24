@@ -3,7 +3,6 @@ package de.ufo.cinemasystem.controller;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.javamoney.moneta.Money;
@@ -45,7 +44,7 @@ public class ManageStorageController {
 		model.addAttribute("snackTypes", Snacks.SnackType.values());
                 model.addAttribute("title", "Lagerverwaltung");
 
-		return "manage_storage_new";
+		return "manage_storage";
 	}
 
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")

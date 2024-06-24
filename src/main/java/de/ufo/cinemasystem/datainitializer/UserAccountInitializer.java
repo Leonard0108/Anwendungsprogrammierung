@@ -60,8 +60,8 @@ public class UserAccountInitializer implements DataInitializer {
 		UserAccount employee_account = userAccountManagement.create("em", Password.UnencryptedPassword.of("123"), Role.of("EMPLOYEE"));
 		UserAccount authorized_employee = userAccountManagement.create("aem", Password.UnencryptedPassword.of("123"), Role.of("AUTHORIZED_EMPLOYEE"));
 
-		UserEntry employee_entry = new UserEntry(employee_account, "Employee","Employee", "employee@ufo-cinema.de", "fdsffs","3","oedje", "11111", "dfsfffdf", "Deutschland");
-		UserEntry authorized_employee_entry = new UserEntry(authorized_employee, "Test Authorized", "Employee", "aemployee@ufo-cinema.de", "jhfdhjfdhj", "4", "jdjdj", "2222", "kjjkdfkje", "Deutschland");
+		UserEntry employee_entry = new UserEntry(employee_account, "Employee","Employee", "employee@ufo-kino.de", "fdsffs","3","oedje", "11111", "dfsfffdf", "Deutschland");
+		UserEntry authorized_employee_entry = new UserEntry(authorized_employee, "Test Authorized", "Employee", "aemployee@ufo-kino.de", "jhfdhjfdhj", "4", "jdjdj", "2222", "kjjkdfkje", "Deutschland");
 
 		EmployeeEntry employee_employeeEntry = new EmployeeEntry(employee_entry, Money.of(1200,"EUR"),"employee@ufo-cinema.de", (short) 40);
 		EmployeeEntry authorized_employee_employeeEntry = new EmployeeEntry(authorized_employee_entry, Money.of(1500,"EUR"),"aemployee@ufo-cinema.de", (short) 40);

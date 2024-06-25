@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1 class="error-title" th:text="${status + ' ' + statusDescription}">[Error Code]</h1>
+            <p class="error-desc" th:if="${errorMessage}" th:text="${errorMessage}">Error Message</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 400">Ein oder mehrere Anfrage-Parameter waren fehlerhaft oder - obwohl Pflicht - nicht vorhanden.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 401">Die Ressource <span th:text="${failedPath}"></span> ist nur mit Authentifizierung zugänglich. <a href="/login">Anmelden</a>.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 403">Zugriff auf <span th:text="${failedPath}"></span> verweigert.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 404">Die Ressource <span th:text="${failedPath}"></span> wurde nicht gefunden. Bitte Überprüfen Sie die Schreibweise.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 405">Die Ressource <span th:text="${failedPath}"></span> erlaubt diese HTTP-Methode nicht.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 406">Die Ressource <span th:text="${failedPath}"></span> steht nicht in der gewählten Art zur Verfügung.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 409">Die Ressource <span th:text="${failedPath}"></span> konnte aufgrund eines Bearbeitungskonfliktes nicht gespeichert werden.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 410">Die Ressource <span th:text="${failedPath}"></span> wurde gelöscht und ist nicht mehr verfügbar.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 415">Die Ressource <span th:text="${failedPath}"></span> unterstützt diesen Request-Body-Typ nicht.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 429">Sie haben ihr Abfrage-Limit erreicht.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 500">Der Server ist beim Bearbeiten auf ein Internes Problem gestoßen.</p>
+            <p class="error-desc" unless="${errorMessage}" th:if="${status} == 410">Die Ressource <span th:text="${failedPath}"></span> ist gerade nicht verfügbar. Bitte später erneut probieren.</p>
+            
+            <button th:if="${status} == 429 or ${status} == 503" class="nojs-hide" onclick="document.location.reload(true);">Neu Laden</button>
+            
+            <div class="stacktrace" sec:authorize="hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')">
+                <p>Stacktrace: </p>
+                <pre th:text="${stacktrace}"></pre>
+            </div>
+        </div>
+    </body>
+</html>

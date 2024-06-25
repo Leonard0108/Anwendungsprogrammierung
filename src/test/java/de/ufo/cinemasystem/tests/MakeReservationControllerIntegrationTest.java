@@ -1,7 +1,6 @@
 package de.ufo.cinemasystem.tests;
 
 import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

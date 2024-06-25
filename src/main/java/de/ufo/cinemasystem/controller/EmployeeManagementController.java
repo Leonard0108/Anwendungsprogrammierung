@@ -69,7 +69,7 @@ public class EmployeeManagementController {
 				model.addAttribute("error", "Leider scheint sich irgendwo ein Fehler eingeschlichen zu Haben. Bitte achten Sie darauf nur ganzzahlige Gehälter zu vergeben.");
 				break;
 			case 2:
-				model.addAttribute("error", "Mitarbeiter existiert bereits: Job-Mail gefunden.");
+				model.addAttribute("error", "Mitarbeiter existiert bereits. Job-Mail gefunden.");
 				break;
 			case 3:
 				model.addAttribute("error", "Leider ist die E-Mail-Endung fehlerhaft.");
@@ -78,7 +78,7 @@ public class EmployeeManagementController {
 				model.addAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
 				break;
 			case 5:
-				model.addAttribute("error", "Leider ist die Eingabe nicht mit dem dem Arbeitszeitschutzgesetz vereinbar.");
+				model.addAttribute("error", "Leider ist die Eingabe der Stunden nicht mit dem dem Arbeitszeitschutzgesetz vereinbar.");
 				break;
 			case 6:
 				model.addAttribute("error", "Ihr Mitarbeiter wird zu schlecht bezahlt");
@@ -154,7 +154,7 @@ public class EmployeeManagementController {
 			case 0:
 				return "redirect:/manage/staff";
 			case 1:
-				redirectAttributes.addFlashAttribute("error", "Fehlerhafte Eingabe der Arbeitszeit.");
+				redirectAttributes.addFlashAttribute("error", "Zu wenig Arbeitszeit.");
 				break;
 			case 2:
 				redirectAttributes.addFlashAttribute("error", "Ihr Mitarbeiter überarbeitet sich.");
@@ -174,11 +174,4 @@ public class EmployeeManagementController {
 
 		return "redirect:/manage/editUser";
 	}
-
-
-	/*@PreAuthorize("BOSS")
-	@PostMapping(path = "changeRole")
-	String changeRole(@RequestParam int employeeId, @RequestParam String role) {
-		return "redirect:/";
-	}*/
 }

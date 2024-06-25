@@ -35,11 +35,17 @@ public class EmployeeService {
 		"icloud.com", "mail.com", "gmx.com", "yandex.com", "protonmail.com"
 		);
 
+
+
+
 	public EmployeeService(EmployeeRepository employeeRepository, UserAccountManagement userAccountManagement, UserRepository userRepository) {
 		this.employeeRepository = employeeRepository;
 		this.userAccountManagement = userAccountManagement;
 		this.userRepository = userRepository;
 	}
+
+
+
 
 	private boolean isKnownEmailProvider(String email) {
 		if (email != null && email.contains("@") && !email.endsWith("@"))
@@ -89,15 +95,19 @@ public class EmployeeService {
 				return 3;
 			}
 
-			if (hoursPerWeek > 50 || salary.isNegative() || salary.isZero()) {
+			if (hoursPerWeek > 50) {
 				return 5;
 			}
 
-			if (salary.divide((hoursPerWeek << 2)).isLessThan(Money.of(12, salary.getCurrency())))
+			if (salary.divide((hoursPerWeek << 2)).isLessThan(Money.of(12, salary.getCurrency())) || salary.isNegative() || salary.isZero())
 			{
 				return 6;
 			}
 
+			if (salaryLong < 1 || (salaryLong / hoursPerWeek < 12))
+			{
+				return 6;
+			}
 
 			UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
 

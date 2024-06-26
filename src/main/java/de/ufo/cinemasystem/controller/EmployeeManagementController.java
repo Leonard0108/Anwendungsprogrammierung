@@ -172,6 +172,6 @@ public class EmployeeManagementController {
 
 
 
-		return "redirect:/manage/editUser";
+		return "redirect:/manage/editUser?id=" + id.getId();
 	}
 }

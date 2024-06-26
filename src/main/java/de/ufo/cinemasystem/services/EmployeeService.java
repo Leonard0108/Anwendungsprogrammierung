@@ -138,6 +138,7 @@ public class EmployeeService {
 		}
 		catch (Exception e)
 		{
+                        System.getLogger(EmployeeService.class.getName()).log(System.Logger.Level.ERROR, "Hit an unknown problem in createEmployee", e);
 			return 1;
 		}
 	}
@@ -194,7 +195,7 @@ public class EmployeeService {
 
 				employeeEntry.setHoursPerWeek(hoursPerWeek);
 			}
-			catch (Exception e)
+			catch (NumberFormatException e)
 			{
 				return 4;
 			}
@@ -219,7 +220,7 @@ public class EmployeeService {
 				employeeEntry.setSalary(finishedSalary);
 
 			}
-			catch (Exception e)
+			catch (NumberFormatException e)
 			{
 				return 5;
 			}

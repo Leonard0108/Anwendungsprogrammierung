@@ -61,6 +61,7 @@
 
     <!-- Edit User Form -->
     <h2>Mitarbeiter bearbeiten</h2>
+    <p th:if="${error}" th:text="${error}" class="error"></p>
     <form th:action="@{/manage/editUser}" method="post">
         <input type="hidden" name="id" th:value="${employee.getId().getId()}" required>
         <p>Vorname: <input type="text" name="firstName" th:value="${user.getFirstName()}"></p>

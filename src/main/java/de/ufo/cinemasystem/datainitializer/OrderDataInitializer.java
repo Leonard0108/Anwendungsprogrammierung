@@ -85,7 +85,12 @@ public class OrderDataInitializer implements DataInitializer{
 			}
 
 			//5-15 Snacks hinzufügen
+                        out:
 			for(int i = 0; i < random.nextInt(5,16); i++){
+                            if(allSnacks.isEmpty()){
+                                System.getLogger(OrderDataInitializer.class.getName()).log(System.Logger.Level.WARNING, "Found no Snacks!");
+                                break out;
+                            }
 				Snacks snack = allSnacks.get(random.nextInt(allSnacks.size()));
 				allOrders[orderIndex].addOrderLine(snack, Quantity.of(1));
 				allOrders[orderIndex].addSnacks(snack.getPrice());

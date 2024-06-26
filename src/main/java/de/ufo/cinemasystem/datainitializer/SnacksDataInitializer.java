@@ -16,6 +16,8 @@ import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.models.Snacks.SnackType;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import de.ufo.cinemasystem.services.SnacksService;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 @Component
 // Testdaten der Snacks werden nach Filmen und Kinosälen
@@ -47,7 +49,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("cola.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -57,7 +61,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("fanta.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -67,7 +73,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("eistee.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -77,7 +85,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("slush-getrank.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -87,7 +97,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("eis.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -97,7 +109,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("gummibarchen.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -107,7 +121,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("nachos.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -117,7 +133,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("popcorn-smal.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -127,7 +145,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("popcorn-mid.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -137,7 +157,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("popcorn-big.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
 		try {
 			Snacks s = new Snacks(
@@ -147,7 +169,9 @@ public class SnacksDataInitializer implements DataInitializer {
 				loadImageAsByteArray("schokoladenriegel.png"));
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
-		}catch (IOException ignored) {}
+		}catch (IOException ex) {
+                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                }
 
         snacksrepository.findAll().forEach(f -> {
 			System.out.println(f.toString());
@@ -155,11 +179,27 @@ public class SnacksDataInitializer implements DataInitializer {
 			System.out.println("Preis: " + f.getPrice());
 			System.out.println("=======================================");
 		});
+        System.out.println("Unterstützte Dateiformate: ");
+        String[] readerMIMETypes = javax.imageio.ImageIO.getReaderMIMETypes();
+        for(String type:readerMIMETypes){
+            System.out.println(type);
+        }
     }
 
+    /**
+     * get an image as a byte array
+     * @param filename internal filename under {@code static/assets/snacks/}
+     * @return byte array
+     * @throws IOException 
+     */
 	public byte[] loadImageAsByteArray(String filename) throws IOException {
 		ClassPathResource imgFile = new ClassPathResource("static/assets/snacks/" + filename);
-		return Files.readAllBytes(imgFile.getFile().toPath());
+		//inspired from https://stackoverflow.com/questions/1264709/convert-inputstream-to-byte-array-in-java
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (InputStream inputStream = imgFile.getInputStream()) {
+            inputStream.transferTo(out);
+        }
+                return out.toByteArray();
 	}
 
 }

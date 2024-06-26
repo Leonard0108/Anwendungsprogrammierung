@@ -19,7 +19,6 @@
             <p th:text="${error}"></p>
         </div>
 
-
         <div class="formfield">
             <label for="username">Nutzername</label>
             <input id="username" name="username" th:field="*{username}" th:errorclass="fieldError" type="text"
@@ -91,7 +90,7 @@
 
         <div class="formfield">
             <label for="jobMail">Job E-Mail</label>
-            <input id="jobMail" name="jobMail" th:field="*{jobMail}" th:errorclass="fieldError" type="text" required="required"/>
+            <input id="jobMail" name="jobMail" th:field="*{jobMail}" th:errorclass="fieldError" type="text" required="required" placeholder="example@ufo-kino.de"/>
             <p th:if="${#fields.hasErrors('jobMail')}" th:errors="*{jobMail}"></p>
         </div>
 

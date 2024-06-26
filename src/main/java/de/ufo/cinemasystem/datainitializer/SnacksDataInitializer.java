@@ -155,6 +155,11 @@ public class SnacksDataInitializer implements DataInitializer {
 			System.out.println("Preis: " + f.getPrice());
 			System.out.println("=======================================");
 		});
+        System.out.println("Unterstützte Dateiformate: ");
+        String[] readerMIMETypes = javax.imageio.ImageIO.getReaderMIMETypes();
+        for(String type:readerMIMETypes){
+            System.out.println(type);
+        }
     }
 
 	public byte[] loadImageAsByteArray(String filename) throws IOException {

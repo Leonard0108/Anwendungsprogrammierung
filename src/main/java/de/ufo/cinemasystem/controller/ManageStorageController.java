@@ -21,6 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import de.ufo.cinemasystem.services.SnacksService;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.util.Iterator;
+import javax.imageio.ImageReader;
+import org.springframework.web.client.HttpServerErrorException;
 
 @Controller
 public class ManageStorageController {
@@ -55,13 +60,66 @@ public class ManageStorageController {
 			redirectAttributes.addFlashAttribute("errorMessageNew", "Item bereits vorhanden!");
 			return "redirect:/manage/storage";
 		}
-
+                String ctype = file.getContentType();
+                if(!file.isEmpty() && ctype == null){
+                    redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
+                    return "redirect:/manage/storage";
+                }
+                if((!file.isEmpty()) && (!ctype.startsWith("image/")) ){
+                    redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
+                    return "redirect:/manage/storage";
+                }
+                
+                if(newSnack == null || newSnack.isBlank()){
+                    redirectAttributes.addFlashAttribute("errorMessageNew", "Bitte vergeben Sie einen Namen!");
+                    return "redirect:/manage/storage";
+                }
+                
 		if(!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
+                                //try reading it first, in case someone attempts to manipulate the content type header.
+                                boolean ok = false;
+                                boolean wasCached = javax.imageio.ImageIO.getUseCache();
+                                javax.imageio.ImageIO.setUseCache(false);
+                                ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+                                try {
+                                    BufferedImage read = javax.imageio.ImageIO.read(in);
+                                    ok = read != null;
+                                    if(ok == false && ctype.contains("svg")){
+                                        //expected. the way imageIO works doesn't mix with svgs.
+                                        // ideally, we could do a full parse here. for now, just do this rudimentary check.
+                                        String s = new String(bytes, "utf-8");
+                                        ok = s.contains("<svg") && s.contains("</svg>") && s.contains("xmlns=\"http://www.w3.org/2000/svg\"");
+                                    }
+                                } catch (IOException ex) {
+                                    System.getLogger(ManageStorageController.class.getName()).log(System.Logger.Level.INFO, "Bild konnte nicht geladen werden!", ex);
+                               }
+                                /*Iterator<ImageReader> imageReadersByMIMEType = javax.imageio.ImageIO.getImageReadersByMIMEType(ctype);
+                                if(!imageReadersByMIMEType.hasNext()){
+                                redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
+                                return "redirect:/manage/storage";
+                                }
+                                while(imageReadersByMIMEType.hasNext()){
+                                ImageReader next = imageReadersByMIMEType.next();
+                                try {
+                                next.re
+                                } catch (IOException ex) {
+                                System.getLogger(ManageStorageController.class.getName()).log(System.Logger.Level.INFO, "Bild konnte nicht mittels " + next.getClass().getName() + " geladen werden!", ex);
+                                }
+                                
+                                }*/
+                                if(wasCached){
+                                    javax.imageio.ImageIO.setUseCache(true);
+                                }
+                                if(!ok){
+                                    redirectAttributes.addFlashAttribute("errorMessageNew", "Bild nicht lesbar!");
+                                    return "redirect:/manage/storage";
+                                }
+                                
 				snacksService.createSnack(newSnack, Money.of(9.99, "EUR"), snackType, 0, bytes);
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new InternalError("Backing store failed", e);
 			}
 		}else {
 			snacksService.createSnack(newSnack, Money.of(9.99, "EUR"), snackType, 0);

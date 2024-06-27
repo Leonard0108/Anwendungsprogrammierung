@@ -45,7 +45,7 @@ public class LoginController {
 
 
 	@PostMapping("/registration")
-	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes) {
+	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes, Model model) {
 		short creationResult;
 
 
@@ -63,24 +63,23 @@ public class LoginController {
 		switch (creationResult) {
 			case 0:
 				redirectAttributes.addFlashAttribute("createdUser", "Ein neuer Nutzer wurde erfolgreich angelegt");
-				break;
+				return "redirect:/login";
 			case 1:
-				redirectAttributes.addFlashAttribute("error", "Diese E-Mail-Adresse wird bereits verwendet!.");
+				model.addAttribute("error", "Diese E-Mail-Adresse wird bereits verwendet!.");
 				break;
 			case 2:
-				redirectAttributes.addFlashAttribute("error", "Dieser Benutzername ist bereits vergeben.");
+				model.addAttribute("error", "Dieser Benutzername ist bereits vergeben.");
 				break;
 			case 3:
-				redirectAttributes.addFlashAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
+				model.addAttribute("error", "Unbekannter E-Mail-Provider. Bitte Schreibweise prüfen.");
 				break;
 			case 4:
-				redirectAttributes.addFlashAttribute("error", "Ungültige Postleitzahl!");
-				return "registration";
+				model.addAttribute("error", "Ungültige Postleitzahl!");
+				break;
 		}
 
-
-
-		return "redirect:/login";
+		model.addAttribute("employeeRegistrationForm", form);
+		return "registration";
 	}
 
 	@GetMapping("/registration")

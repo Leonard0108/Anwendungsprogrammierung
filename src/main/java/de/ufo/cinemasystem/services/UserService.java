@@ -81,9 +81,9 @@ public class UserService {
 			return 3;  // Return a new code for unknown email providers
 		}
 
-		long postalCode= Long.parseLong(form.getPostalCode());
 
-		if ((postalCode < 1067 && !form.getPostalCode().startsWith("0")) || postalCode > 99998)
+
+		if (!(form.getPostalCode().trim().length() == 5) || !form.getPostalCode().trim().matches("\\d{5}"))
 		{
 			return 4;
 		}

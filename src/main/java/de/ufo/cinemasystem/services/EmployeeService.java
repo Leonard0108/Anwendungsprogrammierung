@@ -109,6 +109,13 @@ public class EmployeeService {
 				return 6;
 			}
 
+
+			if (!(employeeRegistrationForm.getPostalCode().trim().length() == 5) || !employeeRegistrationForm.getPostalCode().trim().matches("\\d{5}"))
+			{
+				return 10;
+			}
+
+
 			UserEntry userEntry = userRepository.findByeMail(employeeRegistrationForm.getEMail());
 
 			if (userEntry == null /*&& userRepository.findByUserAccountEmail(employeeRegistrationForm.getEMail()) == null*/) {
@@ -138,7 +145,7 @@ public class EmployeeService {
 		}
 		catch (Exception e)
 		{
-                        System.getLogger(EmployeeService.class.getName()).log(System.Logger.Level.ERROR, "Hit an unknown problem in createEmployee", e);
+			System.getLogger(EmployeeService.class.getName()).log(System.Logger.Level.ERROR, "Hit an unknown problem in createEmployee", e);
 			return 1;
 		}
 	}
@@ -163,12 +170,18 @@ public class EmployeeService {
 		if (firstName != null && !firstName.isEmpty()) {
 			userEntry.setFirstName(firstName);
 		}
+
+
+
 		if (lastName != null && !lastName.isEmpty()) {
 			userEntry.setLastName(lastName);
 		}
 		if (email != null && !email.isEmpty()) {
 			userEntry.setEMail(email);
 		}
+
+
+
 		if (job.contains("EMPLOYEE") && !job.contains("AUTHORIZED_EMPLOYEE"))
 		{
 			userEntry.getUserAccount().add(Role.of("EMPLOYEE"));

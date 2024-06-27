@@ -92,6 +92,9 @@ public class EmployeeManagementController {
 			case 9:
 				model.addAttribute("error", "Ein undefinierter Fehler ist aufgetreten.");
 				break;
+			case 10:
+				model.addAttribute("error", "Ihre Postleitzahl scheint Fehler zu enthalten. Entweder ist die Länge oder der Inhalt fehlerhaft.");
+				break;
 			default:
 				model.addAttribute("error", "Leider scheint sich irgendwo ein undefinierter Fehler eingeschlichen zu haben. Bitte achten Sie darauf nur ganzzahlige Gehälter einzugeben und auf jegliche Sonderzeichen zu verzichten, sofern möglich.");
 				break;

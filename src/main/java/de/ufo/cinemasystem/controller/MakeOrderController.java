@@ -134,6 +134,7 @@ public class MakeOrderController {
 		m.addAttribute("snacks", getAvailableSnacks());
                 MakeReservationController.addPricesToModel(m, what);
                 m.addAttribute("errors", new ArrayList<String>());
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		return "sell-items-1";
 	}
@@ -176,6 +177,7 @@ public class MakeOrderController {
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("errors", this.errors);
                 MakeReservationController.addPricesToModel(m, what);
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		return "sell-items-1";
 	}
 
@@ -244,6 +246,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
         
         return "sell-items-1";
@@ -288,6 +291,7 @@ public class MakeOrderController {
 		m.addAttribute("errors", this.errors);
                 m.addAttribute("title", "Kassensystem");
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		
 		return "sell-items-1";
@@ -345,6 +349,7 @@ public class MakeOrderController {
 		m.addAttribute("errors", this.errors);
                 m.addAttribute("title", "Kassensystem");
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		
 		return "sell-items-1";
@@ -377,6 +382,7 @@ public class MakeOrderController {
 		m.addAttribute("errors", this.errors);
                 m.addAttribute("title", "Kassensystem");
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		return "sell-items-1";
 	}
 	
@@ -392,6 +398,7 @@ public class MakeOrderController {
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
                 m.addAttribute("title", "Kassensystem");
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		return currentUser.map(account -> {
 

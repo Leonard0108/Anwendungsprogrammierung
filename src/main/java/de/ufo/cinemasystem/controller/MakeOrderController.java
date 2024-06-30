@@ -400,7 +400,7 @@ public class MakeOrderController {
 	private List<CartItem> getCurrentCartSnacks(@ModelAttribute Cart cart){
 		List<CartItem>cartSnacks = new ArrayList<>();
 		for (CartItem cartItem :  cart.get().toList()) {
-			if(cartItem.getProductName().contains("Snack")){cartSnacks.add(cartItem);}
+			if(!cartItem.getProductName().contains("Ticket")){cartSnacks.add(cartItem);}
 		}
 		return cartSnacks;
 	}
@@ -415,7 +415,7 @@ public class MakeOrderController {
 		
 	private void sumFinalCartItems(@ModelAttribute Cart cart, Orders order){
 		for (CartItem cartItem :  cart.get().toList()) {
-			if(cartItem.getProductName().contains("Snack")){
+			if(!cartItem.getProductName().contains("Ticket")){
 				order.addSnacks(cartItem.getPrice());
 			}else{
 				order.addTickets(cartItem.getPrice());

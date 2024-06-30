@@ -202,7 +202,7 @@ label {
     opacity: 0.7;
 }
 
-.reservation li, .main-wrapper>ul>li{
+.reservation li, .main-wrapper>ul>li, .main-wrapper>.form-group ul{
     margin-left: 2em;
 }
 .reservation{

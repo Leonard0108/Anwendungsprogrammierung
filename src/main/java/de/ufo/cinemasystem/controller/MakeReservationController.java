@@ -383,7 +383,7 @@ public class MakeReservationController {
         };
     }
 
-    private static void addPricesToModel(Model m, CinemaShow theShow) {
+    static void addPricesToModel(Model m, CinemaShow theShow) {
         Money basePrice = theShow.getBasePrice();
         m.addAttribute("p1n", basePrice);
         if (basePrice.isGreaterThanOrEqualTo(Money.of(3, "EUR"))) {

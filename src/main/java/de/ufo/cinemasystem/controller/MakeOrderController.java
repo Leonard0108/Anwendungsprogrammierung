@@ -82,6 +82,7 @@ public class MakeOrderController {
 	private @Autowired CinemaShowService showService;
 	
 
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets")
 	public String onShowSelect(Model m) {
 		this.errors = new ArrayList<>();
@@ -106,6 +107,8 @@ public class MakeOrderController {
 	}
 
 // ToDo: Test einbauen auf übergebene Show oder rausnehmen(nicht über GUI erreichbar)
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets/{what}")
 	public String startOrder(Model m, @LoggedIn UserAccount currentUser,
 		@PathVariable CinemaShow what, HttpSession session) {
@@ -121,6 +124,8 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell-tickets")
 	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
 	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
@@ -140,6 +145,8 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/remove-ticket")
     public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier cartItemId, @ModelAttribute Cart cart){
 		this.errors = new ArrayList<>();
@@ -207,6 +214,8 @@ public class MakeOrderController {
         return "sell-items-1";
     }
 	
+    
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/add-reservation")
 	public String addTicketsperReservation(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 			@RequestParam("reserveNumber") String reservationId, @ModelAttribute Cart cart) {
@@ -247,6 +256,8 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 		@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
@@ -301,6 +312,8 @@ public class MakeOrderController {
 
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
 		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") int amount , @ModelAttribute Cart cart) {
@@ -326,6 +339,8 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/buy")
 	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
@@ -351,6 +366,8 @@ public class MakeOrderController {
 
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/checkout")
 	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {

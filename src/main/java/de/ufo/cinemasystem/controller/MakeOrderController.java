@@ -80,6 +80,7 @@ public class MakeOrderController {
 	private @Autowired CinemaShowService showService;
 	
 
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets")
 	public String onShowSelect(Model m, @ModelAttribute Cart cart) {
 		List<String> errors = new ArrayList<>();
@@ -93,16 +94,34 @@ public class MakeOrderController {
 		Iterator<CinemaShow> iterator = toOffer.iterator();
 		while(iterator.hasNext()){
 			CinemaShow cs= iterator.next();
-			if(LocalDateTime.now().until(cs.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
+			if(LocalDateTime.now().until(cs.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(1).toMillis()){
 				iterator.remove();
 			}
 		}
 		m.addAttribute("shows", toOffer);
 		m.addAttribute("errors", errors);
 		
-		return "sell-itmes-show-selection";
+                m.addAttribute("title", "Kassensystem");
+		return "sell-items-show-selection";
 	}
 
+// ToDo: Test einbauen auf übergebene Show oder rausnehmen(nicht über GUI erreichbar)
+	@GetMapping("/sell-tickets/{what}")
+	public String startOrder(Model m, @LoggedIn UserAccount currentUser,
+		@PathVariable CinemaShow what, HttpSession session) {
+		if (session.getAttribute(orderSessionKey) == null) {
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
+		}
+		Orders work = (Orders) session.getAttribute(orderSessionKey);
+		m.addAttribute("title", "Kassensystem");
+        m.addAttribute("show", work.getCinemaShow());
+        m.addAttribute("price",work.getTotal());
+		m.addAttribute("snacks", getAvailableSnacks());
+
+		return "sell-items-1";
+	}
+
+	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell-tickets")
 	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
 	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
@@ -123,10 +142,14 @@ public class MakeOrderController {
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);
 		m.addAttribute("snacks", getAvailableSnacks());
-		m.addAttribute("errors", errors);
+		m.addAttribute("errors", this.errors);
+                MakeReservationController.addPricesToModel(m, what);
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		return "sell-items-1";
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/remove-ticket")
     public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier cartItemId, @ModelAttribute Cart cart){
 		List<String> errors = new ArrayList<>();
@@ -190,6 +213,8 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", errors);
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
         
         return "sell-items-1";
     }
@@ -228,6 +253,8 @@ public class MakeOrderController {
 	}
 	
 
+    
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/add-reservation")
 	public String addTicketsperReservation(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 			@RequestParam("reserveNumber") String reservationId, @ModelAttribute Cart cart) {
@@ -249,12 +276,18 @@ public class MakeOrderController {
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+
+		m.addAttribute("title", "Kassensystem");
+		MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+		m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		m.addAttribute("errors", errors);
 
 		
 		return "sell-items-1";
 	}
 	
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 		@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
@@ -303,12 +336,17 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                m.addAttribute("title", "Kassensystem");
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		
 		return "sell-items-1";
 
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
 		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") int amount , @ModelAttribute Cart cart) {
@@ -331,9 +369,14 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                m.addAttribute("title", "Kassensystem");
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		return "sell-items-1";
 	}
 	
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/buy")
 	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
@@ -342,6 +385,9 @@ public class MakeOrderController {
 		
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("title", "Kassensystem");
+                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		return currentUser.map(account -> {
 
@@ -353,12 +399,15 @@ public class MakeOrderController {
 			orderManagement.completeOrder(work);
 
 			cart.clear();
+                        session.removeAttribute(orderSessionKey);
 			m.addAttribute("show", work.getCinemaShow());
 			return "checkout";
 		}).orElse("sell-items-1");
 
 	}
 
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/checkout")
 	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {

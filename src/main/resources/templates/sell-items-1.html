@@ -10,12 +10,13 @@
             <h1>Verkauf</h1>
 
 
-            <p><span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span> , <span th:text="${show.getShortStartDateTime()}">Montag 22.04.2024, 10 Uhr</span> , <span th:text="${show.getCinemaHall().getName()}">Saal 2.</span><span class="fsk-label" th:text=" ' FSK: ' + ${show.getFilm().getFskAge()}">FSK 12</span> <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a></p>
+            <p><span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span> , <span th:text="${show.getShortStartDateTime()}">Montag 22.04.2024, 10 Uhr</span> , <span th:text="${show.getCinemaHall().getName()}">Saal 2.</span>&nbsp;<span class="fsk-label" th:text="'FSK ' + ${show.getFilm().getFskAge()}" th:class="'fsk-label fsk-' + ${show.getFilm().getFskAge()}">FSK 12</span> <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a></p>
             <form id="sell-spots-form-delete" action="/sell/remove-ticket" method="post">
                 <div class="already-in-cart">
                     <div class="ticket" th:each="item : ${cartTickets}">
                         <p th:text="${item.getCinemaShow().getShortStartDateTime()} + ' ' + ${item.getCinemaShow().getFilm().getTitle()}"></p>
                         <p class="flex"><span th:text="${item.getName()} + ' Platz: ' + ${item.getSeatString()} + ' Tickettyp: ' + ${item.getCategory().toString()} " class="grow" ></span> <span style="text-align: right" th:text="${item.getPrice()}"></span></p>
+                        <p th:if="${fskWarning} and ${item.categoryToLabel()} == 'Kind (Bis 14 Jahre)' " class="error">Dieses Ticket verletzt die FSK-Bestimmungen!</p>
                         <button class="deleteButton" type="submit" name="deleteCartEntry" value="0" th:value="${item.getId()}">Löschen</button>
                     </div>
                     <div class="snacks" th:each="item : ${cartSnacks}">
@@ -45,10 +46,10 @@
                     
                     <h2>Ticket hinzufügen</h2>
                     <p>Preisliste:</p>
-                    <ul>
-                        <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
-                        <li>Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
-                        <li>Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
+                    <ul class="priceList">
+                            <li th:text="'Platzgruppe 1: Erwachsener ' + ${p1n} + ', Kind (Bis 14 Jahre) ' + ${p1c} + ', Schwerbehinderter ' + ${p1r}">Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
+                            <li th:text="'Platzgruppe 2: Erwachsener ' + ${p2n} + ', Kind (Bis 14 Jahre) ' + ${p2c} + ', Schwerbehinderter ' + ${p2r}">Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
+                            <li th:text="'Platzgruppe 3: Erwachsener ' + ${p3n} + ', Kind (Bis 14 Jahre) ' + ${p3c} + ', Schwerbehinderter ' + ${p3r}">Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
                     </ul>
                     <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType">
                             <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>
@@ -56,7 +57,7 @@
                             <option value="child">Kind (Bis 14 Jahre)</option>
                             <option value="disabled">Schwerbehinderter</option>
                         </select> </p>
-                    <p>Platz: <input name="spot" required="" pattern="[A-La-l]([0-9]|1[0-8])$"></p>
+                    <p>Platz: <input name="spot" required="" pattern="[A-Za-z]([0-9]|1[0-8])$"></p>
                     <button name="addTicket" value="1">Ticket hinzufügen</button>
                     <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
                 </form>

@@ -72,14 +72,20 @@ public class UserAccountInitializer implements DataInitializer {
 
 		var password = "123";
 
-		userService.createUser(boss_account,"TestBoss", "Boss", "boss@ufo-cinema.de", "aslkdjflaksdf", "2", "adfladksf", "0000", "ajdfakfd", "Deutschland");
+		userService.createUser(boss_account,"TestBoss", "Boss", "boss@ufo-cinema.de", "aslkdjflaksdf", "2", "adfladksf", "12345", "ajdfakfd", "Deutschland");
 
 
-		List.of(//
+		List<RegistrationForm> tmp = List.of(//
 			new RegistrationForm("hans", "nicht", "Test", "lukasd2000@gmx.de", password, "Lange Str.", "9", "Gutenberg", "06193", "Sachsen-Anhalt", "Germany"),
-			new RegistrationForm("Test", "User", "user", "user@email.com", password, "asdfasdf", "9", "asdfaf", "0000", "asdfasdf", "Deutschland")
+			new RegistrationForm("Test", "User", "user", "user@email.com", password, "asdfasdf", "9", "asdfaf", "54321", "asdfasdf", "Deutschland")
 			/*new RegistrationForm("mclovinfogell", "asdf@gmail.com", password, "Los Angeles", "asdfasdf", "asdfasdf", "sdfasdf", "sadfasdf", "asdfasdf")*/
-		).forEach(userService::createUser);
+		);
+                for(RegistrationForm form:tmp){
+                    int code = userService.createUser(form);
+                    if(code != 0){
+                        LOG.error("[UserAccountInitialiser] builtin account has invalid data");
+                    }
+                }
 
 
 		userRepository.findAll().forEach(tU -> {

@@ -84,7 +84,7 @@ public class MakeOrderController {
 
         @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets")
-	public String onShowSelect(Model m) {
+	public String onShowSelect(Model m, @ModelAttribute Cart cart, HttpSession session) {
 		this.errors = new ArrayList<>();
 		m.addAttribute("title", "Kassensystem");
 		LocalDateTime now = LocalDateTime.now();
@@ -102,28 +102,56 @@ public class MakeOrderController {
 		}
 		m.addAttribute("shows", toOffer);
 		m.addAttribute("errors", this.errors);
+                if(!cart.isEmpty()){
+                    Orders work = (Orders) session.getAttribute(orderSessionKey);
+                    m.addAttribute("startedCurrentShow",work.getCinemaShow());
+                }
 		
+                m.addAttribute("title", "Kassensystem");
 		return "sell-items-show-selection";
 	}
 
-// ToDo: Test einbauen auf übergebene Show oder rausnehmen(nicht über GUI erreichbar)
         
         @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets/{what}")
 	public String startOrder(Model m, @LoggedIn UserAccount currentUser,
-		@PathVariable CinemaShow what, HttpSession session) {
+		@PathVariable CinemaShow what, HttpSession session, @ModelAttribute Cart cart) {
 		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
+                if(!work.getCinemaShow().equals(what)){
+                    session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
+                    work = (Orders) session.getAttribute(orderSessionKey);
+                }
+                if(!cart.isEmpty()){
+			m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+			m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+		}
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotal());
 		m.addAttribute("snacks", getAvailableSnacks());
                 MakeReservationController.addPricesToModel(m, what);
+                m.addAttribute("errors", new ArrayList<String>());
 
 		return "sell-items-1";
 	}
+        
+        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+        @GetMapping("/sell-tickets/from-reservation/{toPull}")
+        public String insertReservation(Model m, @PathVariable Reservation toPull, @ModelAttribute Cart cart, @LoggedIn UserAccount currentUser, HttpSession session){
+            if (session.getAttribute(orderSessionKey) == null) {
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), toPull.getCinemaShow()));
+            }
+            Orders work = (Orders) session.getAttribute(orderSessionKey);
+                if(!work.getCinemaShow().equals(toPull.getCinemaShow())){
+                    session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), toPull.getCinemaShow()));
+                    work = (Orders) session.getAttribute(orderSessionKey);
+                }
+            
+            return this.addTicketsperReservation(m, currentUser, session, toPull.getId().toString(), cart);
+        }
 
         
         @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
@@ -139,6 +167,10 @@ public class MakeOrderController {
 			m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		}
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
+                if(!work.getCinemaShow().equals(what)){
+                    session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), what));
+                    work = (Orders) session.getAttribute(orderSessionKey);
+                }
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);
 		m.addAttribute("snacks", getAvailableSnacks());
@@ -254,6 +286,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                m.addAttribute("title", "Kassensystem");
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 
 		
@@ -310,6 +343,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                m.addAttribute("title", "Kassensystem");
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 
 		
@@ -341,6 +375,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                m.addAttribute("title", "Kassensystem");
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 		return "sell-items-1";
 	}
@@ -356,6 +391,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
                 MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+                m.addAttribute("title", "Kassensystem");
 
 		return currentUser.map(account -> {
 
@@ -367,6 +403,7 @@ public class MakeOrderController {
 			orderManagement.completeOrder(work);
 
 			cart.clear();
+                        session.removeAttribute(orderSessionKey);
 			m.addAttribute("show", work.getCinemaShow());
 			return "checkout";
 		}).orElse("sell-items-1");

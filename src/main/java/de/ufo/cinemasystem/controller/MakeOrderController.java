@@ -90,6 +90,7 @@ public class MakeOrderController {
 		List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList();
 		//unhinge any wannabe-unmodifyables by making a copy to a known-writable list type.
 		toOffer = new ArrayList<>(toOffer);
+		toOffer = new ArrayList<>(toOffer);
         toOffer.addAll(showsRepo.findCinemaShowsInWeek(next.getYear(), AdditionalDateTimeWorker.getWeekOfYear(next)).toList());
 		Iterator<CinemaShow> iterator = toOffer.iterator();
 		while(iterator.hasNext()){

@@ -10,7 +10,7 @@
             <h1>Verkauf</h1>
 
 
-            <p><span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span> , <span th:text="${show.getShortStartDateTime()}">Montag 22.04.2024, 10 Uhr</span> , <span th:text="${show.getCinemaHall().getName()}">Saal 2.</span><span class="fsk-label" th:text=" ' FSK: ' + ${show.getFilm().getFskAge()}">FSK 12</span> <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a></p>
+            <p><span th:text="${show.getFilm().getTitle()}">Bell im Märchenland</span> , <span th:text="${show.getShortStartDateTime()}">Montag 22.04.2024, 10 Uhr</span> , <span th:text="${show.getCinemaHall().getName()}">Saal 2.</span>&nbsp;<span class="fsk-label" th:text="'FSK ' + ${show.getFilm().getFskAge()}" th:class="'fsk-label fsk-' + ${show.getFilm().getFskAge()}">FSK 12</span> <a href="/sell-tickets" title="Filmplan | UFO Kinos">Ändern</a></p>
             <form id="sell-spots-form-delete" action="/sell/remove-ticket" method="post">
                 <div class="already-in-cart">
                     <div class="ticket" th:each="item : ${cartTickets}">
@@ -45,10 +45,10 @@
                     
                     <h2>Ticket hinzufügen</h2>
                     <p>Preisliste:</p>
-                    <ul>
-                        <li>Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
-                        <li>Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
-                        <li>Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
+                    <ul class="priceList">
+                            <li th:text="'Platzgruppe 1: Erwachsener ' + ${p1n} + ', Kind (Bis 14 Jahre) ' + ${p1c} + ', Schwerbehinderter ' + ${p1r}">Platzgruppe 1: Erwachsener 24.99€, Kind (Bis 14 Jahre) 18.99€, Schwerbehinderter 19.99€</li>
+                            <li th:text="'Platzgruppe 2: Erwachsener ' + ${p2n} + ', Kind (Bis 14 Jahre) ' + ${p2c} + ', Schwerbehinderter ' + ${p2r}">Platzgruppe 2: Erwachsener 19.99€, Kind (Bis 14 Jahre) 13.99€, Schwerbehinderter 14.99€</li>
+                            <li th:text="'Platzgruppe 3: Erwachsener ' + ${p3n} + ', Kind (Bis 14 Jahre) ' + ${p3c} + ', Schwerbehinderter ' + ${p3r}">Platzgruppe 3: Erwachsener 15.99€, Kind (Bis 14 Jahre) 9.99€, Schwerbehinderter 10.99€</li>
                     </ul>
                     <p> <label for="htmlUniqueID1">Tickettyp: </label> <select id="htmlUniqueID1" name="ticketType">
                             <option value="(Bitte wählen)" disabled="" selected="">(Bitte wählen)</option>

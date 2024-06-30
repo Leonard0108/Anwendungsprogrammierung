@@ -96,14 +96,14 @@ public class MakeOrderController {
 		Iterator<CinemaShow> iterator = toOffer.iterator();
 		while(iterator.hasNext()){
 			CinemaShow cs= iterator.next();
-			if(LocalDateTime.now().until(cs.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(30).toMillis()){
+			if(LocalDateTime.now().until(cs.getStartDateTime(), ChronoUnit.MILLIS) < Duration.ofMinutes(1).toMillis()){
 				iterator.remove();
 			}
 		}
 		m.addAttribute("shows", toOffer);
 		m.addAttribute("errors", this.errors);
 		
-		return "sell-itmes-show-selection";
+		return "sell-items-show-selection";
 	}
 
 // ToDo: Test einbauen auf übergebene Show oder rausnehmen(nicht über GUI erreichbar)
@@ -120,6 +120,7 @@ public class MakeOrderController {
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("price",work.getTotal());
 		m.addAttribute("snacks", getAvailableSnacks());
+                MakeReservationController.addPricesToModel(m, what);
 
 		return "sell-items-1";
 	}
@@ -142,6 +143,7 @@ public class MakeOrderController {
         m.addAttribute("show", what);
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("errors", this.errors);
+                MakeReservationController.addPricesToModel(m, what);
 		return "sell-items-1";
 	}
 
@@ -210,6 +212,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
         
         return "sell-items-1";
     }
@@ -251,6 +254,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 
 		
 		return "sell-items-1";
@@ -306,6 +310,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 
 		
 		return "sell-items-1";
@@ -336,6 +341,7 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", this.errors);
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 		return "sell-items-1";
 	}
 	
@@ -349,6 +355,7 @@ public class MakeOrderController {
 		
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
 
 		return currentUser.map(account -> {
 

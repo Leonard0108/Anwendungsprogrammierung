@@ -50,7 +50,7 @@
                         </div>
                         <div class="film-card-reserve-section">
                             <a th:href="@{/reserve-spots/reserve/{what}(what=${cinemaShow.getId()})}" href="/reserve-spots/reserve/" th:if="${cinemaShow.canReserveSpots()}">Plätze reservieren</a>
-                            <a th:href="@{/sell-tickets/{what}(what=${cinemaShow.getId()})}" href="/sell-tickets/1" th:if="${cinemaShow.canReserveSpots()}">Tickets verkaufen</a>
+                            <a th:href="@{/sell-tickets/{what}(what=${cinemaShow.getId()})}" href="/sell-tickets/1" th:if="${cinemaShow.canReserveSpots()}" sec:authorize="hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')">Tickets verkaufen</a>
                             <!--<a href="/current-films?change=1&AMP;id=83490258902890890" style="display: block">ändern</a>
                             <a href="/current-films?delete=1&AMP;id=83490258902890890" style="display: block">löschen</a>-->
                         </div>

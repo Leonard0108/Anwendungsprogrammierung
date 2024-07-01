@@ -1,22 +1,21 @@
 package de.ufo.cinemasystem.datainitializer;
 
 
-import de.ufo.cinemasystem.models.*;
-import de.ufo.cinemasystem.repository.CinemaHallRepository;
-import de.ufo.cinemasystem.repository.CinemaShowRepository;
-import de.ufo.cinemasystem.repository.FilmRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Random;
 
-
-import de.ufo.cinemasystem.services.CinemaShowService;
 import org.salespointframework.core.DataInitializer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
+import de.ufo.cinemasystem.models.CinemaHall;
+import de.ufo.cinemasystem.models.Film;
+import de.ufo.cinemasystem.repository.CinemaHallRepository;
+import de.ufo.cinemasystem.repository.CinemaShowRepository;
+import de.ufo.cinemasystem.repository.FilmRepository;
+import de.ufo.cinemasystem.services.CinemaShowService;
 
 
 @Component
@@ -70,6 +69,20 @@ public class CinemaShowDataInitializer implements DataInitializer {
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
 			);
 		}
+		//zwei Reservierungstests
+		Film film = allFilms.get(random.nextInt(allFilms.size()));
+		cinemaShowService.createCinemaShow(
+			LocalDateTime.now().plusMinutes(60),
+			film.getPrice(),
+			film,
+			allCinemaHalls.get(random.nextInt(allCinemaHalls.size())));
+		film = allFilms.get(random.nextInt(allFilms.size()));
+		cinemaShowService.createCinemaShow(
+			LocalDateTime.now().plusMinutes(50),
+			film.getPrice(),
+			film,
+			allCinemaHalls.get(random.nextInt(allCinemaHalls.size())));
+
 
 		// Gebe alle Veranstaltungen aus, welche aktuell in der Datenbank liegen:
 		System.out.println("films: " + allFilms.size());

@@ -80,7 +80,7 @@ public class MakeOrderController {
 	private @Autowired CinemaShowService showService;
 	
 
-        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets")
 	public String onShowSelect(Model m, @ModelAttribute Cart cart) {
 		List<String> errors = new ArrayList<>();
@@ -89,7 +89,6 @@ public class MakeOrderController {
         LocalDateTime next = now.plusDays(7);
 		List<CinemaShow> toOffer = showsRepo.findCinemaShowsInWeek(now.getYear(), AdditionalDateTimeWorker.getWeekOfYear(now)).toList();
 		//unhinge any wannabe-unmodifyables by making a copy to a known-writable list type.
-		toOffer = new ArrayList<>(toOffer);
 		toOffer = new ArrayList<>(toOffer);
         toOffer.addAll(showsRepo.findCinemaShowsInWeek(next.getYear(), AdditionalDateTimeWorker.getWeekOfYear(next)).toList());
 		Iterator<CinemaShow> iterator = toOffer.iterator();
@@ -105,10 +104,10 @@ public class MakeOrderController {
                 m.addAttribute("title", "Kassensystem");
 		return "sell-items-show-selection";
 	}
-
+	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell-tickets")
 	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
-	@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
+		@RequestParam("ticket-event") CinemaShow what, HttpSession session) {
 		Orders work;
 		List<String> errors = new ArrayList<>();
 		if (session.getAttribute(orderSessionKey) == null) {
@@ -126,14 +125,41 @@ public class MakeOrderController {
 		m.addAttribute("title", "Kassensystem");
         m.addAttribute("show", what);
 		m.addAttribute("snacks", getAvailableSnacks());
-                MakeReservationController.addPricesToModel(m, what);
-                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+        MakeReservationController.addPricesToModel(m, what);
+        m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+		m.addAttribute("errors", errors);
+		return "sell-items-1";
+	}
+
+	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+	@GetMapping("/sell-tickets/{what}")
+	public String fromShowPlan(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
+		@PathVariable Long what, HttpSession session) {
+		Orders work;
+		List<String> errors = new ArrayList<>();
+		if (session.getAttribute(orderSessionKey) == null) {
+			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), showsRepo.findById(what).orElseThrow()));
+			work = (Orders) session.getAttribute(orderSessionKey);
+		} else{
+			work = (Orders) session.getAttribute(orderSessionKey);
+			work.setCinemaShow(showsRepo.findById(what).orElseThrow());
+		}
+		if(!cart.isEmpty()){
+			m.addAttribute("cartTickets", getCurrentCartTickets(cart));
+			m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
+		}
+		
+		m.addAttribute("title", "Kassensystem");
+        m.addAttribute("show", work.getCinemaShow());
+		m.addAttribute("snacks", getAvailableSnacks());
+		MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+        m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		m.addAttribute("errors", errors);
 		return "sell-items-1";
 	}
 
         
-        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/remove-ticket")
     public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier cartItemId, @ModelAttribute Cart cart){
 		List<String> errors = new ArrayList<>();
@@ -203,9 +229,9 @@ public class MakeOrderController {
         return "sell-items-1";
     }
 	
-
+	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets/from-reservation/{reservationId}")
-	public String getMethodName(Model m, @PathVariable String reservationId, HttpSession session,
+	public String addReservationFromSearch(Model m, @PathVariable String reservationId, HttpSession session,
 			@LoggedIn UserAccount currentUser, @ModelAttribute Cart cart) {
 		Reservation reserve = reservationRepo.findById(Long.parseLong(reservationId)).orElseThrow();
 		List<String> errors = new ArrayList<>();
@@ -236,7 +262,7 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
-
+	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/add-reservation")
 	public String addTicketsperReservation(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 			@RequestParam("reserveNumber") String reservationId, @ModelAttribute Cart cart) {
@@ -259,20 +285,20 @@ public class MakeOrderController {
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
 		m.addAttribute("errors", errors);
-                m.addAttribute("title", "Kassensystem");
-                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
-                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+        m.addAttribute("title", "Kassensystem");
+        MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+        m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		
 		return "sell-items-1";
 	}
 	
         
-        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
 		@RequestParam("ticketType") String ticketType, @RequestParam("spot") String spot, @ModelAttribute Cart cart) {
-		this.errors = new ArrayList<>();
+		List<String> errors = new ArrayList<>();
 
 		if (session.getAttribute(orderSessionKey) == null) {
 			session.setAttribute(orderSessionKey, new Orders(currentUser.getId(), (CinemaShow) m.getAttribute("show")));
@@ -282,24 +308,24 @@ public class MakeOrderController {
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 
 		if (!PatternHolder.validSeat.matcher(spot).matches()) {
-			this.errors.add("Ungültiger Sitzplatz: " + spot);
+			errors.add("Ungültiger Sitzplatz: " + spot);
 		}
-		if (this.errors.isEmpty()
+		if (errors.isEmpty()
 				&& !work.getCinemaShow().containsSeat(toRowID(spot), Integer.parseInt(spot.substring(1)))) {
-					this.errors.add("Ungültiger Sitzplatz: " + spot);
+					errors.add("Ungültiger Sitzplatz: " + spot);
 		}
 		try {
-			if (this.errors.isEmpty() && showsRepo.findById(work.getCinemaShow().getId()).orElseThrow()
+			if (errors.isEmpty() && showsRepo.findById(work.getCinemaShow().getId()).orElseThrow()
 					.getOccupancy(toRowID(spot), Integer.parseInt(spot.substring(1)))
 					.orElseThrow() != Seat.SeatOccupancy.FREE) {
-						this.errors.add("Sitzplatz nicht mehr verfügbar: " + spot);
+						errors.add("Sitzplatz nicht mehr verfügbar: " + spot);
 			}
 		} catch (NoSuchElementException ex) {
 			// CinemaShow no longer exists.
-			this.errors.add("Diese Veranstaltung wurde abgesagt");
+			errors.add("Diese Veranstaltung wurde abgesagt");
 		}
 		
-		if (this.errors.isEmpty()) {
+		if (errors.isEmpty()) {
 			
 			// add ticket
 			Ticket t = new Ticket(toCategoryType(ticketType), work.getCinemaShow());
@@ -316,10 +342,10 @@ public class MakeOrderController {
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
-		m.addAttribute("errors", this.errors);
-                m.addAttribute("title", "Kassensystem");
-                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
-                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+		m.addAttribute("errors", errors);
+        m.addAttribute("title", "Kassensystem");
+        MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+        m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		
 		return "sell-items-1";
@@ -327,11 +353,11 @@ public class MakeOrderController {
 	}
 
         
-        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
 		HttpSession session, @RequestParam("snack-adder") Snacks snack, @RequestParam("amount") int amount , @ModelAttribute Cart cart) {
-		this.errors = new ArrayList<>();
+		List<String> errors = new ArrayList<>();
 		int check = amount;
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		if(checkSpecificCartSnacks(cart, snack)){
@@ -341,7 +367,7 @@ public class MakeOrderController {
 			cart.addOrUpdateItem(snack, Quantity.of(amount));
 			//snacksService.removeStock(snack.getId(), cart.getQuantity(snack).getAmount().intValue());
 		}else{
-			this.errors.add("Nicht genügend Snacks im Lager!");
+			errors.add("Nicht genügend Snacks im Lager!");
 		}
 		
 		
@@ -349,26 +375,26 @@ public class MakeOrderController {
 		m.addAttribute("snacks", getAvailableSnacks());
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
-		m.addAttribute("errors", this.errors);
-                m.addAttribute("title", "Kassensystem");
-                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
-                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+		m.addAttribute("errors", errors);
+        m.addAttribute("title", "Kassensystem");
+        MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+        m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 		return "sell-items-1";
 	}
 	
         
-        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/buy")
 	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
-		this.errors = new ArrayList<>();
+		List<String> errors = new ArrayList<>();
 		Orders work = (Orders) session.getAttribute(orderSessionKey);
 		
 		m.addAttribute("cartTickets", getCurrentCartTickets(cart));
 		m.addAttribute("cartSnacks", getCurrentCartSnacks(cart));
-                MakeReservationController.addPricesToModel(m, work.getCinemaShow());
-                m.addAttribute("title", "Kassensystem");
-                m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
+        MakeReservationController.addPricesToModel(m, work.getCinemaShow());
+        m.addAttribute("title", "Kassensystem");
+        m.addAttribute("fskWarning", work.getCinemaShow().getFilm().getFskAge() > 14);
 
 		return currentUser.map(account -> {
 
@@ -388,7 +414,7 @@ public class MakeOrderController {
 	}
 
         
-        @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/checkout")
 	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 
 		HttpSession session, @ModelAttribute Cart cart) {
@@ -477,7 +503,14 @@ public class MakeOrderController {
 			}
 			reservationRepo.delete(reserve);
 		} else {
-			m.addAttribute("errors", "Reservierung für einen anderen Film! Bitte Film wechseln oder passende Reservierung nehmen.");
+			work.setCinemaShow(reserve.getCinemaShow());
+			Ticket[] tickets = reserve.getTickets();
+			for (Ticket ticket : tickets) {
+				cart.addOrUpdateItem(ticket, Quantity.of(1));
+				showService.update(work.getCinemaShow()).setSeatOccupancy(
+					new Seat(toRowID(ticket.getSeatString()), Integer.parseInt(ticket.getSeatString().substring(1))), Seat.SeatOccupancy.BOUGHT).save();
+			}
+			reservationRepo.delete(reserve);
 		}
 		
 	}

@@ -54,4 +54,10 @@ public class Orders extends Order{
     public void addSnacks(MonetaryAmount price) {
         this.SnacksSumme = this.SnacksSumme.add(price);
     }
+
+    public void setCinemaShow(CinemaShow what) {
+        if (what != null) {
+            this.show = what;
+        }
+    }
 }

@@ -11,11 +11,9 @@
             <form id="sell-items-form" action="/sell-tickets" method="post">
                         <p><label for="htmlUniqueID6">Film:</label></p>
                         <select id="htmlUniqueID6" name="ticket-event">
-                            <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${#temporals.format(show.getStartDateTime(), 'dd.MM.yyyy HH:mm')} +' '+ ${show.getFilm().getTitle()}"></option>
+                            <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getShortStartDateTime()} + ${show.getFilm().getTitle()}"></option>
                         </select>
                         <button name="next" value="1">Weiter</button>
                     </form>
-            <h2 th:if="${startedCurrentShow}">Aktueller Verkauf</h2>
-            <a th:if="${startedCurrentShow}" href="/sell-tickets/1"´th:if="${startedCurrentShow}" th:href="'/sell-tickets/' + ${startedCurrentShow.getId()}" title="Zurück zum Warenkorb | UFO Kinos">Zurück zum Warenkorb</a>
         </div>
 </html>

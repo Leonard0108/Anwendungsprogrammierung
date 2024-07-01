@@ -56,6 +56,10 @@ nav li,.footer li{
     flex-grow:1;
     margin-left: 1em;
 }
+.main-welcome{
+    flex-grow:1;
+    font-size: larger;
+}
 .footer li{
     display: inline-block;
     padding: 0em 1em;

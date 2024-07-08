@@ -32,7 +32,7 @@ public class Film implements Comparable<Film>, PriceChange {
     //in minutes
     private int timePlaying;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private final Set<YearWeekEntry> rentWeeks = new TreeSet<>();
 
     @ManyToOne

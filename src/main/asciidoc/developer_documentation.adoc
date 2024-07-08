@@ -9,9 +9,10 @@
 [cols="1, 3, 3"]
 |===
 |Version | Bearbeitungsdatum   | Autor 
-| 0.2    | 05.05.2024          | Jannik
-| 0.3    | 13.05.2025          | Jannik, Yannick, Tobias
+| 0.2    | 05.05.2024          | Jannik Schwaß
+| 0.3    | 13.05.2025          | Jannik Schwaß, Yannick Harnisch, Tobias
 | 1.0    | 19.05.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll
+| 1.1    | 08.07.2024          | Jannik Schwaß
 |===
 
 
@@ -205,6 +206,12 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 |Thymeleaf|UserInterface|Darstellungshilfe für HTML 
 |Google Charts|UserInterface|Diagrammtool für das Statistikdashboard
 |===
+
+==== Offene Punkte
+
+* [F0112]  Ticket-Tausch (Kann-Kriterium)
+* Datenschutzrichtlinie: Aktuell nur ein Arbeitshinweis, währe vor Inbetriebnahme zu ersetzen
+* Ungelöstes Problem: `SpotsViewController` gibt keinen korrekten `Content-Type`-Header zurück
 
 
 == Bausteinsicht

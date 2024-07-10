@@ -18,9 +18,16 @@ import java.util.Arrays;
 import java.util.List;
 
 
+/**
+ * additional Service for User Accounts.
+ * @author Lukas Dietrich
+ */
 @Service
 @Transactional
 public class UserService {
+    /**
+     * role of new, regular users
+     */
 	public static final  Role                  USER_ROLE = Role.of("USER"); //Im Original Customer
 	private final        UserRepository        userRepository;
 	private final        UserAccountManagement userAccounts;
@@ -29,6 +36,11 @@ public class UserService {
 											   "icloud.com", "mail.com", "gmx.de", "yandex.com", "protonmail.com");
 
 
+        /**
+         * Create a new service with the specified dependencies.
+         * @param userRepository Implementation User-Repository
+         * @param userAccounts User-Account Management
+         */
 	UserService(UserRepository userRepository, UserAccountManagement userAccounts) {
 
 		Assert.notNull(userRepository, "CustomerRepository must not be null!");
@@ -99,6 +111,20 @@ public class UserService {
 		return 0;
 	}
 
+        /**
+         * Create a new user.
+         * @param userAccount salespoint user account
+         * @param firstName first name(s)
+         * @param lastName last name
+         * @param eMail e-mail
+         * @param streetName street
+         * @param streetNumber street number
+         * @param city city 
+         * @param postalCode postal code
+         * @param state state
+         * @param country country
+         * @return the new UserEntry.
+         */
 	public UserEntry createUser(UserAccount userAccount, String firstName, String lastName, String eMail, String streetName, String streetNumber, String city, String postalCode, String state, String country) {
 		return userRepository.save(new UserEntry(userAccount, firstName, lastName, eMail,  streetName, streetNumber, city, postalCode, state, country));
 	}
@@ -113,6 +139,10 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+        /**
+         * Delete an employee.
+         * @param user the account to be made gone.
+         */
 	public void deleteEmployee(UserEntry user) {
 		UserAccount userAccount = user.getUserAccount();
 		userRepository.delete(user);
@@ -120,10 +150,19 @@ public class UserService {
 		userAccounts.delete(userAccount);
 	}
 
+        /**
+         * Get the UserEntry of an employee
+         * @param id the id
+         * @return UserEntry, or {@code null} if there is no employee with that id
+         */
 	public UserEntry getEmployeeById(UserEntry.UserIdentifier id) {
 		return userRepository.findById(id).orElse(null);
 	}
 
+        /**
+         * Remove all roles from someone.
+         * @param userAccount the account to remove all roles from.
+         */
 	public void removeAllRoles(UserAccount userAccount) {
 		for (Role role : userAccount.getRoles()) {
 			userAccount.remove(role);

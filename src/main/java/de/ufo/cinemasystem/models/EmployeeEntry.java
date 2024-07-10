@@ -28,6 +28,13 @@ public class EmployeeEntry {
 
 
 
+        /**
+         * Erstellt einen neuen Mitarbeiter mit den angegebenen Parametern.
+         * @param userEntry Nutzerkonto
+         * @param salary Monatsgehalt
+         * @param jobMail Job-Email
+         * @param hoursPerWeek Wochenstunden
+         */
 	public EmployeeEntry(UserEntry userEntry, Money salary, String jobMail, short hoursPerWeek)
 	{
 		this.id            = userEntry.getId();
@@ -38,11 +45,18 @@ public class EmployeeEntry {
 		this.shift         = "0800 - 1700";
 	}
 
+        /**
+         * Hibernate-Konstruktor. Bitte nicht benutzen, da die Instanzvariablen nicht gesetzt werden.
+         */
 	public EmployeeEntry() {
 
 	}
 
 
+        /**
+         * Monatzgehalt setzen.
+         * @param salary Monatsgehalt
+         */
 	@PreAuthorize("BOSS")
 	public void setSalary(Money salary) {
 		this.salary = salary;
@@ -50,6 +64,10 @@ public class EmployeeEntry {
 
 
 
+        /**
+         * Erhalte das Monatsgehalt.
+         * @return Monatsgehalt
+         */
 	@PreAuthorize("BOSS")
 	public Money getSalary() {
 		return salary;

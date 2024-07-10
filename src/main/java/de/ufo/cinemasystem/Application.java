@@ -113,9 +113,11 @@ public class Application {
     }
 
     /**
-     * https://stackoverflow.com/questions/31025467/thymeleaf-second-resolver-for-svg-in-spring-boot
+     * Second template resolver for loading svg templates.
+     * Code copied from 
+     * <a href="https://stackoverflow.com/questions/31025467/thymeleaf-second-resolver-for-svg-in-spring-boot">https://stackoverflow.com/questions/31025467/thymeleaf-second-resolver-for-svg-in-spring-boot</a>
      *
-     * @return
+     * @return a template resolver for svg files
      */
     @Bean
     public ITemplateResolver svgTemplateResolver() {

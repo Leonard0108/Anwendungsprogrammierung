@@ -7,6 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Modellklasse für Besondere Events
+ * @author Tobias Knoll
+ */
 @Entity
 @Table(name = "EVENTS")
 public class Event implements Comparable<Event>, ScheduledActivity {
@@ -20,14 +24,27 @@ public class Event implements Comparable<Event>, ScheduledActivity {
 	@JoinColumn(name = "cinema_hall_id")
 	private CinemaHall cinemaHall;
 
+        /**
+         * Erstelle ein neues Event.
+         * @param name Name
+         * @param startDateTime Startzeitpunkt
+         * @param duration Laufzeit
+         */
 	public Event(String name, LocalDateTime startDateTime, int duration) {
 		this.name = name;
 		this.startDateTime = startDateTime;
 		this.duration = duration;
 	}
 
+        /**
+         * Hibernate-Konstruktor. Bitte nicht benutzen, da die Instanzvariablen nicht gesetzt werden.
+         */
 	public Event() {}
 
+        /**
+         * Erhalte die Event-ID.
+         * @return Event-ID
+         */
 	@Override
 	public long getId() {
 		return id;
@@ -48,11 +65,19 @@ public class Event implements Comparable<Event>, ScheduledActivity {
 		return duration;
 	}
 
+        /**
+         * Erhalte den Kinosaal
+         * @return Kinosaal
+         */
 	@Override
 	public CinemaHall getCinemaHall() {
 		return cinemaHall;
 	}
 
+        /**
+         * Kinosaal setzen.
+         * @param cinemaHall neuer Kinosaal
+         */
 	public void setCinemaHall(CinemaHall cinemaHall) {
 		this.cinemaHall = cinemaHall;
 	}

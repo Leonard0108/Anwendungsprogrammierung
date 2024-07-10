@@ -17,17 +17,31 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
+/**
+ * Spring MVC-Controller des Filmverleihs
+ * @author Yannick Harnisch
+ */
 @Controller
 public class RentFilmController {
 
 	private FilmRepository filmRepository;
 	private CinemaShowRepository cinemaShowRepository;
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param filmRepository Implementierung Film-Repository
+         * @param cinemaShowRepository Implementierung CinemaShow-Repository
+         */
 	public RentFilmController(FilmRepository filmRepository, CinemaShowRepository cinemaShowRepository) {
 		this.filmRepository = filmRepository;
 		this.cinemaShowRepository = cinemaShowRepository;
 	}
 
+        /**
+         * GET-Endpunkt: Verleih-Status anzeigen
+         * @param model Modell
+         * @return "films-rental"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/rent-films")
 	public String getRentFilms(Model model) {
@@ -37,6 +51,12 @@ public class RentFilmController {
 		return "films-rental";
 	}
 
+        /**
+         * GET-Endpunkt: Detailansicht eines Films
+         * @param model Modell
+         * @param film anzuzeigender Film
+         * @return "film-detail"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/films/{film}")
 	public String getRentFilm(Model model, @PathVariable Film film) {
@@ -80,6 +100,14 @@ public class RentFilmController {
 		return "film-detail";
 	}
 
+        /**
+         * POST-Endpunkt: Verleihstatus ändern
+         * @param redirectAttributes Redirect-Modell
+         * @param film zu ändernder Film
+         * @param newSelectedRentWeeks auszuleihende Wochen (Checkbox-Verhalten)
+         * @param newDisabledCheckedRentWeeks deaktivierte Wochen
+         * @return "redirect:/films/{film}"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/films/{film}")
 	public String postRentFilm(RedirectAttributes redirectAttributes, @PathVariable Film film,

@@ -57,7 +57,7 @@ public class Reservation {
     /**
      * Get the id of this reservation
      * 
-     * @return
+     * @return the id
      */
     public Long getId() {
         return id;
@@ -89,7 +89,7 @@ public class Reservation {
 
     /**
      * set the cinema show.
-     * @param cinemaShow 
+     * @param cinemaShow the cinema show
      */
     public void setCinemaShow(CinemaShow cinemaShow) {
         this.cinemaShow = Objects.requireNonNull(cinemaShow);
@@ -160,7 +160,7 @@ public class Reservation {
      * Generate a hash code for this film. Due to the equals contract, hashcode is
      * calculated from the id only.
      * 
-     * @return
+     * @return the hashcode
      */
     @Override
     public int hashCode() {
@@ -177,8 +177,8 @@ public class Reservation {
      * Checks wether {@code this} and the passed object are identical.
      * Two reservations are considered identical when they have the same id.
      * 
-     * @param obj
-     * @return
+     * @param obj object to check
+     * @return true if equal
      */
     @Override
     public boolean equals(Object obj) {

@@ -29,7 +29,7 @@ public class IndexController {
     
     /**
      * index.html
-     * @param m
+     * @param m model
      * @return "welcome"
      */
     @GetMapping("/")

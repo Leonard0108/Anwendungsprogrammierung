@@ -12,6 +12,10 @@ import de.ufo.cinemasystem.repository.CinemaHallRepository;
 
 import java.util.AbstractMap;
 
+/**
+ * DataInitialiser für Kinosäle
+ * @author Yannick Harnisch
+ */
 @Component
 @Order(3)
 public class CinemaHallDataInitializer implements DataInitializer {
@@ -19,6 +23,11 @@ public class CinemaHallDataInitializer implements DataInitializer {
 	private final CinemaHallRepository cinemaHallRepository;
 	private final CinemaHallService cinemaHallService;
 
+        /**
+         * Erstelle einen neuen DataInitialiser mit den angegebenen Abhängigkeiten.
+         * @param cinemaHallService Instanz des Saalservices
+         * @param cinemaHallRepository Implementierung des Kinosaal-Repositories
+         */
 	public CinemaHallDataInitializer(CinemaHallService cinemaHallService, CinemaHallRepository cinemaHallRepository) {
 		Assert.notNull(cinemaHallService, "cinemaHallService must not be null!");
 		Assert.notNull(cinemaHallRepository, "cinemaHallRepository must not be null!");

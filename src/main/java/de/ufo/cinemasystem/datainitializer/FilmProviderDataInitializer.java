@@ -9,12 +9,20 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+/**
+ * DataInitialiser for film providers.
+ * @author Yannick Harnisch
+ */
 @Component
 @Order(1)
 public class FilmProviderDataInitializer implements DataInitializer {
 
 	private final FilmProviderRepository filmProviderRepository;
 
+        /**
+         * Erstelle einen neuen Initialiser mit den angegebenen Abhängigkeiten.
+         * @param filmProviderRepository Implementierung Film-Provider-Repository.
+         */
 	FilmProviderDataInitializer(FilmProviderRepository filmProviderRepository) {
 		Assert.notNull(filmProviderRepository, "FilmProviderRepository must not be null!");
 

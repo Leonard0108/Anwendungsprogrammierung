@@ -26,6 +26,10 @@ import java.util.List;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+/**
+ * Spring MVC-Controller der Saalverwaltung.
+ * @author Tobias Knoll
+ */
 @Controller
 public class EventAdministrationController {
 
@@ -33,6 +37,12 @@ public class EventAdministrationController {
 	private CinemaHallRepository cinemaHallRepository;
 	private ScheduledActivityService scheduledActivityService;
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param eventRepository Implementierung des Event-Repositories
+         * @param cinemaHallRepository Implementierung des CinemaHall-Repositories
+         * @param cinemaShowRepository Implementierung des CinemaShow-Repositories
+         */
 	public EventAdministrationController(EventRepository eventRepository, CinemaHallRepository cinemaHallRepository, CinemaShowRepository cinemaShowRepository) {
 		this.eventRepository = eventRepository;
 		this.cinemaHallRepository = cinemaHallRepository;
@@ -40,6 +50,13 @@ public class EventAdministrationController {
 	}
 
 
+        /**
+         * GET-Endpunkt der Saalverwaltung
+         * @param m Spring MVC-Modell
+         * @param room Saal-ID
+         * @param date Datum
+         * @return "manage-rooms"
+         */
 	@GetMapping(value = "/manage/rooms", params = {"room", "date"})
 	@PreAuthorize("hasRole('BOSS')")
 	public String getEvents(Model m, @RequestParam("room") Long room,
@@ -67,6 +84,11 @@ public class EventAdministrationController {
 	}
 
 
+        /**
+         * GET-Endpunkt der Saalverwaltung im Navigationsmenü.
+         * @param m Spring MVC-Modell
+         * @return "manage-rooms"
+         */
 	@GetMapping(value = "/manage/rooms")
 	@PreAuthorize("hasRole('BOSS')")
 	public String getEventPage(Model m){
@@ -80,6 +102,15 @@ public class EventAdministrationController {
 	}
 
 
+        /**
+         * Event hinzufügen
+         * @param redirectAttributes Redirect-Modell
+         * @param from Startzeitpunkt
+         * @param to Endzeitpunkt
+         * @param room Raumnummer
+         * @param eventname Name des Events
+         * @return Redirect-View
+         */
 	@PostMapping("/manage/rooms")
 	@PreAuthorize("hasRole('BOSS')")
 	public String addEvent(RedirectAttributes redirectAttributes,

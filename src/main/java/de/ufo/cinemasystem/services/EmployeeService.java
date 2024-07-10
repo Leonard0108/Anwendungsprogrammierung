@@ -24,7 +24,10 @@ import de.ufo.cinemasystem.repository.EmployeeRepository;
 import de.ufo.cinemasystem.repository.UserRepository;
 
 
-
+/**
+ * Zusatzservice für Mitarbeiter.
+ * @author Lukas Dietrich
+ */
 @Service
 public class EmployeeService {
 		EmployeeRepository employeeRepository;
@@ -38,6 +41,12 @@ public class EmployeeService {
 
 
 
+                /**
+                 * Erstelle einen neuen EmployeeService mit den angegebenen Abhängigkeiten.
+                 * @param employeeRepository Implementierung Mitarbeiter-Repository
+                 * @param userAccountManagement Nutzermanagement
+                 * @param userRepository  Implementierung Nutzer-Repository
+                 */
 	public EmployeeService(EmployeeRepository employeeRepository, UserAccountManagement userAccountManagement, UserRepository userRepository) {
 		this.employeeRepository = employeeRepository;
 		this.userAccountManagement = userAccountManagement;
@@ -47,6 +56,11 @@ public class EmployeeService {
 
 
 
+        /**
+         * Überprüfe, obein E-Mail-Provider existiert.
+         * @param email E-Mail
+         * @return true, falls er existiert, sonst false
+         */
 	private boolean isKnownEmailProvider(String email) {
 		if (email != null && email.contains("@") && !email.endsWith("@"))
 		{
@@ -70,6 +84,11 @@ public class EmployeeService {
 
 
 
+        /**
+         * Erstelle einen neuen Mitarbeiter anhand des Formulars.
+         * @param employeeRegistrationForm Formular
+         * @return 0, wenn ok, x &gt; 0 wenn Fehler
+         */
 	public short createEmployee(EmployeeRegistrationForm employeeRegistrationForm)
 	{
 		Assert.notNull(employeeRegistrationForm, "Registration form must not be null!");

@@ -49,11 +49,11 @@ public class Film implements Comparable<Film>, PriceChange {
      * Creates a new film object, with the specified title, (short) description,
      * timePlaying &amp; FSK age restriction
      *
-     * @param title
-     * @param desc
+     * @param title film title
+     * @param desc short description
      * @param timePlaying time this film plays in minutes
-     * @param fskAge
-     * @param filmProvider
+     * @param fskAge FSK age restriction
+     * @param filmProvider provider
      * @throws NullPointerException if title or desc are null
      * @throws IllegalArgumentException if timePlaying &lt;= 0, or fskAge &lt;0
      */
@@ -67,6 +67,19 @@ public class Film implements Comparable<Film>, PriceChange {
 	this.basicRentFee = 1000;
     }
 
+    /**
+     * Creates a new film object, with the specified title, (short) description,
+     * timePlaying &amp; FSK age restriction
+     *
+     * @param title film title
+     * @param desc short description
+     * @param timePlaying time this film plays in minutes
+     * @param fskAge FSK age restriction
+     * @param filmProvider provider
+     * @param basicRentFee basis rent price, in € (per Week)
+     * @throws NullPointerException if title or desc are null
+     * @throws IllegalArgumentException if timePlaying &lt;= 0, or fskAge &lt;0
+     */
     public Film(String title, String desc, int timePlaying, int fskAge, FilmProvider filmProvider, int basicRentFee) {
 	this.title = title;
 	this.desc = desc;
@@ -78,14 +91,19 @@ public class Film implements Comparable<Film>, PriceChange {
     }
 
     /**
-     * @param title
-     * @param desc
+     * Creates a new film object, with the specified title, (short) description,
+     * timePlaying &amp; FSK age restriction
+     *
+     * @param title film title
+     * @param desc short description
+     * @param timePlaying time this film plays in minutes
+     * @param fskAge FSK age restriction
+     * @param filmProvider provider
+     * @param basicRentFee basis rent price, in € (per Week)
      * @param imageSource Name und Dateiende des Bildes in
      * "/assets/film-posters/"
-     * @param fskAge
-     * @param filmProvider
-     * @param basicRentFee
-     * @param timePlaying
+     * @throws NullPointerException if title or desc are null
+     * @throws IllegalArgumentException if timePlaying &lt;= 0, or fskAge &lt;0
      */
     public Film(String title, String desc, int timePlaying, int fskAge, FilmProvider filmProvider, int basicRentFee, String imageSource) {
 	this.title = title;
@@ -107,12 +125,16 @@ public class Film implements Comparable<Film>, PriceChange {
     /**
      * Get the internal id of this film
      *
-     * @return
+     * @return internal id
      */
     public Long getId() {
 	return id;
     }
 
+    /**
+     * Get the ID string of the film object.
+     * @return ID string
+     */
     public String getIdString() {
 	return "film-" + id.toString();
     }
@@ -120,7 +142,7 @@ public class Film implements Comparable<Film>, PriceChange {
     /**
      * get the title this film represents.
      *
-     * @return
+     * @return title
      */
     public String getTitle() {
 	return title;
@@ -129,7 +151,7 @@ public class Film implements Comparable<Film>, PriceChange {
     /**
      * Anpassung an Snacks für Preisänderungen PriceChange Interface
      *
-     * @return
+     * @return film title
      */
     public String getName() {
 	return title;
@@ -138,7 +160,7 @@ public class Film implements Comparable<Film>, PriceChange {
     /**
      * Get a short description of this film
      *
-     * @return
+     * @return short description
      */
     public String getDesc() {
 	return desc;
@@ -147,7 +169,7 @@ public class Film implements Comparable<Film>, PriceChange {
     /**
      * get the time this film is playing, in minutes
      *
-     * @return
+     * @return time playing
      */
     public int getTimePlaying() {
 	return timePlaying;
@@ -156,16 +178,24 @@ public class Film implements Comparable<Film>, PriceChange {
     /**
      * Get the FSK age restriction of this film, in years
      *
-     * @return
+     * @return FSK age restriction
      */
     public int getFskAge() {
 	return fskAge;
     }
 
+    /**
+     * get the film provider
+     * @return film providder
+     */
     public FilmProvider getFilmProvider() {
 	return filmProvider;
     }
 
+    /**
+     * Get the rent fee base price
+     * @return fee base price
+     */
     public int getBasicRentFee() {
 	return basicRentFee;
     }
@@ -178,48 +208,93 @@ public class Film implements Comparable<Film>, PriceChange {
 	return (int) (getReducedBasicRentFee(week) * this.basicRentFee);
     }
 
+    /**
+     * set the base rent price
+     * @param basicRentFee base rent price
+     */
     public void setBasicRentFee(int basicRentFee) {
 	this.basicRentFee = basicRentFee;
     }
 
+    /**
+     * rent this film
+     * @param entry week to rent
+     * @return true if anything changed
+     */
     public boolean addRentWeek(YearWeekEntry entry) {
 	return this.rentWeeks.add(entry);
     }
 
+    /**
+     * return this film
+     * @param entry week to return
+     * @return true if anything changed
+     */
     public boolean removeRentWeek(YearWeekEntry entry) {
 	return this.rentWeeks.remove(entry);
     }
 
+    /**
+     * Get the weeks this film has been rent
+     * @return week streamable
+     */
     public Streamable<YearWeekEntry> getRentWeeks() {
 	return Streamable.of(this.rentWeeks);
     }
 
+    /**
+     * get the first week this film was rent, if such a week exist
+     * @return optional with week object or null
+     */
     public Optional<YearWeekEntry> getFirstRentWeek() {
 	return this.rentWeeks.stream().min(Comparator.naturalOrder());
     }
 
+    /**
+     * get the last week this film was rent, if such a week exist
+     * @return optional with week object or null
+     */
     public Optional<YearWeekEntry> getLastRentWeek() {
 	return this.rentWeeks.stream().max(Comparator.naturalOrder());
     }
 
+    /**
+     * Check wether the film is rent on a date
+     * @param dateTime the date
+     * @return true if it is
+     */
     public boolean isRent(LocalDateTime dateTime) {
 	return this.rentWeeks.stream()
 		.anyMatch(e -> e.isInYearWeek(dateTime));
     }
 
+    /**
+     * Check wether the film is rent in a week
+     * @param entry the week
+     * @return true if it is
+     */
     public boolean isRent(YearWeekEntry entry) {
 	return this.rentWeeks.contains(entry);
     }
 
+    /**
+     * Get the number of weeks this film has been rented
+     * @return count
+     */
     public int getRentWeekCount() {
 	return this.rentWeeks.size();
     }
 
+    /**
+     * Check wether the film is rent right now
+     * @return true if it is
+     */
     public boolean isRentNow() {
 	return isRent(LocalDateTime.now());
     }
 
     /**
+     * Get the image name of the film poster.
      * @return erhalte "Dateiname.Endung als Quelle im Ordner
      * "/assets/film-posters/", wenn kein Bild gesetzt ist erhalte
      * "no_image.png" Vorlage
@@ -254,8 +329,8 @@ public class Film implements Comparable<Film>, PriceChange {
      * gibt die prozentuale Reduzierung des Basis-Leihpreis für die n.Woche
        zurück.Alle nicht gesetzten weiteren Wochen verwenden den letzten Wert. Beispiel: 1.0, 1.0, 0.9, 0.8, 0.7 Leihpreis 2. Woche: 1.0 Leihpreis 4.
         Woche: 0.8 Leihpreis 5. Woche: 0.7 Leihpreis 7. Woche: 0.7
-     * @param week
-     * @return 
+     * @param week the week
+     * @return reduced rent fee
      */
     public double getReducedBasicRentFee(int week) {
 	if (week <= 0) {
@@ -270,14 +345,26 @@ public class Film implements Comparable<Film>, PriceChange {
 	return this.reducedBasicRentFee.get(this.reducedBasicRentFee.size() - 1);
     }
 
+    /**
+     * base price of a ticket (adult in place group 1)
+     * @return base price
+     */
     public Money getPrice() {
 	return basePrice;
     }
 
+    /**
+     * set the base price
+     * @param basePrice new base price
+     */
     public void setPrice(Money basePrice) {
 	this.basePrice = basePrice;
     }
 
+    /**
+     * check wether the price has been set
+     * @return true if it was
+     */
     public boolean isInitialized() {
 	return basePrice.getNumber().intValue() != -1;
     }
@@ -309,7 +396,7 @@ public class Film implements Comparable<Film>, PriceChange {
      * Generate a hash code for this film. Due to the equals contract, hashcode
      * is calculated from the id only.
      *
-     * @return
+     * @return the hash code
      */
     @Override
     public int hashCode() {
@@ -322,8 +409,8 @@ public class Film implements Comparable<Film>, PriceChange {
      * Checks wether {@code this} and the passed object are identical. Two films
      * are considered identical when they have the same id.
      *
-     * @param obj
-     * @return
+     * @param obj other obj
+     * @return true if they are, false otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -345,8 +432,8 @@ public class Film implements Comparable<Film>, PriceChange {
      * according to their titles with the semantics of
      * {@link String#compareTo(java.lang.String) String#compareTo(java.lang.String)}.
      *
-     * @param o
-     * @return
+     * @param o the other object
+     * @return an integer according to compareTo spec
      */
     @Override
     public int compareTo(Film o) {

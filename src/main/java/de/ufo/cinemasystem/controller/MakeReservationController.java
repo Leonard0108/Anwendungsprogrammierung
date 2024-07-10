@@ -59,6 +59,10 @@ public class MakeReservationController {
     
 	private final UniqueInventory<UniqueInventoryItem> inventory;
     
+        /**
+         * Create a new controller with the specified dependencies.
+         * @param inventory Inventory
+         */
     public MakeReservationController(UniqueInventory<UniqueInventoryItem> inventory){        
 		this.inventory = inventory;
     }
@@ -71,8 +75,8 @@ public class MakeReservationController {
     
     /**
      * Entry point from the main nav menu.
-     * @param m
-     * @return 
+     * @param m Model
+     * @return "make-reservation-cinema-show-selection"
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reserve-spots/reserve")
@@ -97,11 +101,11 @@ public class MakeReservationController {
     
     /**
      * Reservation entry point when the links on current-films are clicked.
-     * @param m
-     * @param what
-     * @param currentUser
-     * @param session
-     * @return 
+     * @param m Model
+     * @param what CinemaShow to reserve for
+     * @param currentUser current user account
+     * @param session current session
+     * @return "make-reservation-ticket-adder"
      */
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/reserve-spots/reserve/{what}")
@@ -140,10 +144,10 @@ public class MakeReservationController {
     
     /**
      * Form submit of the film selection form.
-     * @param m
-     * @param what 
-     * @param currentUser 
-     * @param session 
+     * @param m Model
+     * @param what CinemaShow to reserve for
+     * @param currentUser current user account
+     * @param session current session
      * @return the view name
      */
     @PreAuthorize("isAuthenticated()")
@@ -187,11 +191,11 @@ public class MakeReservationController {
     
     /**
      * Form submit of the addTicket form.
-     * @param m
-     * @param session
-     * @param ticketType
-     * @param spot
-     * @return 
+     * @param m model
+     * @param session current session
+     * @param ticketType ticket type
+     * @param spot seat name
+     * @return "make-reservation-ticket-adder"
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/add-ticket")
@@ -259,9 +263,9 @@ public class MakeReservationController {
     
     /**
      * Form submit of the removeTicket form.
-     * @param m
-     * @param session
-     * @param ticket
+     * @param m Model
+     * @param session current session
+     * @param ticket ticket to remove
      * @return model name or redirect url
      */
     @PreAuthorize("isAuthenticated()")
@@ -302,9 +306,9 @@ public class MakeReservationController {
     
     /**
      * form submit of the commit button.
-     * @param redir
-     * @param session
-     * @return 
+     * @param redir redirect model
+     * @param session current session
+     * @return redirect view name
      */
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/reserve-spots/commit")

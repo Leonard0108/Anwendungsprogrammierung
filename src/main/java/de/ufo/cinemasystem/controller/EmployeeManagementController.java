@@ -23,6 +23,10 @@ import java.util.UUID;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 
+/**
+ * Spring MVC-Controller der Personalverwaltung.
+ * @author Lukas Dietrich
+ */
 @Controller
 @RequestMapping(path = "/manage")
 public class EmployeeManagementController {
@@ -32,6 +36,12 @@ public class EmployeeManagementController {
 	EmployeeService employeeService;
 
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param employeeService Mitarbeiterservice
+         * @param employeeRepo Implementierung Employee-Repository
+         * @param userRepo Implementierung Nutzerrepository.
+         */
 	EmployeeManagementController(EmployeeService employeeService, EmployeeRepository employeeRepo, UserRepository userRepo) {
 		this.employeeService = employeeService;
 		this.employeeRepo = employeeRepo;
@@ -39,6 +49,12 @@ public class EmployeeManagementController {
 	}
 
 	//PreAuthorize ist eine Annotation, welche der automatischen Autorisationserkennung dient.
+        /**
+         * GET-Endpunkt des Erstellungsformulars.
+         * @param m model
+         * @param form Erstellungsformular
+         * @return "EmployeeRegistration"
+         */
 	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee(Model m, EmployeeRegistrationForm form) {
@@ -48,6 +64,14 @@ public class EmployeeManagementController {
 
 
 
+        /**
+         * POST-Endpunkt des Erstellungsformulars
+         * @param form Erstellungsformular
+         * @param result Spring Fehlerliste
+         * @param redirectAttributes Redirect-Model
+         * @param model model
+         * @return template-name des nächsten Schrittes
+         */
 	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping(path = "/createEmployee")
 	String createEmployee(@Valid EmployeeRegistrationForm form, Errors result, RedirectAttributes redirectAttributes, Model model) {
@@ -107,6 +131,11 @@ public class EmployeeManagementController {
 
 
 
+        /**
+         * GET-Endpunkt: Alle Mitarbeiter Anzeigen
+         * @param m model
+         * @return "employees"
+         */
 	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/staff")
 	public String showAllEmployees(Model m) {
@@ -120,6 +149,12 @@ public class EmployeeManagementController {
 
 
 
+        /**
+         * GET-Endpunkt: Mitarbeiter bearbeiten.
+         * @param id Mitarbeiter-ID
+         * @param model MVC-Model
+         * @return Template-Name
+         */
 	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/editUser")
 	String editUser(@RequestParam("id") UUID id, Model model) {
@@ -140,6 +175,18 @@ public class EmployeeManagementController {
 
 
 
+        /**
+         * POST-Endpunkt: Mitarbeiter bearbeiten
+         * @param id id
+         * @param firstName Vorname
+         * @param lastName Nachname
+         * @param email E-Mail
+         * @param job Job
+         * @param salary Gehalt
+         * @param hours Wochenstunden
+         * @param redirectAttributes Redirect-Model
+         * @return Redirect-Template des nächsten Schritts
+         */
 	@PreAuthorize("hasRole('BOSS')")
 	@PostMapping (path = "/editUser")
 	String editUser(@RequestParam("id") UserEntry.UserIdentifier id,

@@ -22,6 +22,11 @@ public interface FilmRepository extends CrudRepository<Film, Long>{
          */
 	@Override
 	Streamable<Film> findAll();
+        /**
+         * Find all films available at a date.
+         * @param dateTime the date.
+         * @return all films meeting the criteria.
+         */
 	default Streamable<Film> findAvailableAt(LocalDateTime dateTime) {
 		return findAll().filter(f -> f.isAvailableAt(dateTime));
 	}

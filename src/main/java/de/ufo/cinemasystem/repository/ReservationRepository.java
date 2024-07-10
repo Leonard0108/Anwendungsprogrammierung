@@ -24,6 +24,11 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
     @Query("SELECT r FROM Reservation r WHERE r.reservingAccount= :who")
     Streamable<Reservation> findAllByUser(UserEntry who);
 
+    /**
+     * Find all reservations for a given cinema show
+     * @param where CinemaShow to check
+     * @return Streamable of matching reservations
+     */
 	@Query("SELECT r FROM Reservation r WHERE r.cinemaShow= :where")
 	Streamable<Reservation> findAllByCinemaShow(CinemaShow where);
 }

@@ -27,17 +27,32 @@ import java.util.Iterator;
 import javax.imageio.ImageReader;
 import org.springframework.web.client.HttpServerErrorException;
 
+/**
+ * Spring MVC-Controller der Lagerverwaltung
+ * @author Yannick Harnisch
+ * @author Jannik Schwaß
+ */
 @Controller
 public class ManageStorageController {
 
 	private SnacksRepository snacksRepository;
 	private SnacksService snacksService;
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param snacksRepository Implementierung Snack-Repository
+         * @param snacksService Snack-Service
+         */
 	ManageStorageController(SnacksRepository snacksRepository, SnacksService snacksService) {
 		this.snacksRepository = snacksRepository;
 		this.snacksService = snacksService;
 	}
 
+        /**
+         * GET-Endpunkt: Lagerbestand anzeigen
+         * @param model Modell
+         * @return "manage_storage"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/manage/storage")
 	public String showStorage(Model model) {
@@ -52,6 +67,14 @@ public class ManageStorageController {
 		return "manage_storage";
 	}
 
+        /**
+         * POST-Endpunkt: Neues Item anlegen
+         * @param newSnack Snack-Name
+         * @param snackType Snack-Typ
+         * @param file Bild (optional)
+         * @param redirectAttributes Redirect-Modell
+         * @return "redirect:/manage/storage"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/item/new")
 	public String newItem(@RequestParam("whatNew") String newSnack, @RequestParam("itemType") Snacks.SnackType snackType,
@@ -126,6 +149,13 @@ public class ManageStorageController {
 		return "redirect:/manage/storage";
 	}
 
+        /**
+         * POST-Endpunkt: Lagerbestände aktualisieren
+         * @param snackIds Snack Item-IDs
+         * @param snackCounters neue Bestände
+         * @param redirectAttributes Redirect-Modell
+         * @return "redirect:/manage/storage"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/save")
 	public String saveItems(@RequestParam("snack-objects") List<Product.ProductIdentifier> snackIds, @RequestParam("snack-counters") List<Integer> snackCounters, RedirectAttributes redirectAttributes) {

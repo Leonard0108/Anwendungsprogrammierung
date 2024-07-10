@@ -19,6 +19,11 @@ import de.ufo.cinemasystem.services.SnacksService;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+/**
+ * DataInitialiser for Snacks.
+ * @author Yannick Harnisch
+ * @author Simon Liepe
+ */
 @Component
 // Testdaten der Snacks werden nach Filmen und Kinosälen
 // erstellt (deshalb: Order = 5)
@@ -29,6 +34,11 @@ public class SnacksDataInitializer implements DataInitializer {
     private SnacksService snacksService;
     private static final Logger LOG = LoggerFactory.getLogger(SnacksDataInitializer.class);
 
+    /**
+     * Create a new initaliser using the specified dependencies.
+     * @param snacksRepository Implementation of SnacksRepository
+     * @param snacksService Snack Service.
+     */
     SnacksDataInitializer(SnacksRepository snacksRepository, SnacksService snacksService) {
         this.snacksrepository = snacksRepository;
         this.snacksService = snacksService;
@@ -190,7 +200,7 @@ public class SnacksDataInitializer implements DataInitializer {
      * get an image as a byte array
      * @param filename internal filename under {@code static/assets/snacks/}
      * @return byte array
-     * @throws IOException 
+     * @throws IOException if the file can't be read.
      */
 	public byte[] loadImageAsByteArray(String filename) throws IOException {
 		ClassPathResource imgFile = new ClassPathResource("static/assets/snacks/" + filename);

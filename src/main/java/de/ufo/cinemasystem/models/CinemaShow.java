@@ -23,6 +23,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Modellklasse von Kinovorführungen
+ * @author Yannick Harnisch
+ */
 @Entity
 @Table(name = "CINEMA_SHOWS")
 public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
@@ -61,6 +65,9 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	/**
 	 * Do not use!
 	 * Use CinemaShowService to Update!
+     * @param startDateTime Startzeitpunkt
+     * @param basePrice Basispreis für Tickets
+     * @param film Kinofilm
 	 */
 	public CinemaShow(LocalDateTime startDateTime, Money basePrice, Film film) {
 		this.startDateTime = startDateTime;
@@ -68,13 +75,24 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 		this.film = film;
 	}
 
+        /**
+         * Hibernate-Konstruktor. Bitte nicht benutzen, da die Instanzvariablen nicht gesetzt werden.
+         */
 	public CinemaShow() {}
 
+        /**
+         * Erhalte die ID dieser CinemaShow
+         * @return ID
+         */
 	@Override
 	public long getId() {
 		return this.id;
 	}
 
+        /**
+         * Erhalte den Kinofilm
+         * @return Kinofilm
+         */
 	public Film getFilm() {
 		return film;
 	}
@@ -82,15 +100,25 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	/**
 	 * Do not use!
 	 * Use CinemaShowService to Update!
+     * @param film neuer Kinofilm
 	 */
 	public void setFilm(Film film) {
 		this.film = film;
 	}
 
+        /**
+         * Erhalte die Startzeit
+         * @return Startzeit
+         */
 	@Override
 	public LocalDateTime getStartDateTime() {
 		return this.startDateTime;
 	}
+        
+        /**
+         * Formatiere die Startzeit als {@linkplain java.time.format.FormatStyle#SHORT}
+         * @return Formattierte Startzeit
+         */
 	public String getShortStartDateTime(){
 		return startDateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
 	}
@@ -98,11 +126,16 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	/**
 	 * Do not use!
 	 * Use CinemaShowService to Update!
+     * @param startDateTime neuer Startzeitpunkt
 	 */
 	public void setStartDateTime(LocalDateTime startDateTime) {
 		this.startDateTime = startDateTime;
 	}
 
+        /**
+         * Erhalte den Basispreis
+         * @return Basispreis
+         */
 	public Money getBasePrice() {
 		return this.basePrice;
 	}
@@ -111,11 +144,16 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	/**
 	 * Do not use!
 	 * Use CinemaShowService to Update!
+     * @param basePrice neuer Basispreis
 	 */
 	public void setBasePrice(Money basePrice) {
 		this.basePrice = basePrice;
 	}
 
+        /**
+         * Erhalte den Kinosaal
+         * @return Kinosaal
+         */
 	@Override
 	public CinemaHall getCinemaHall() {
 		return this.cinemaHall;
@@ -197,9 +235,9 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 
 	/**
 	 * Prüft, ob der Sitzplatz (Reihe, Position) in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
-         * @param row
-         * @param pos
-         * @return 
+         * @param row Reihe
+         * @param pos Platznummer
+         * @return true, wenn vorhanden
 	 */
 	public boolean containsSeat(int row, int pos) {
 		return getSeat(row, pos).isPresent();
@@ -207,8 +245,8 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 
 	/**
 	 * Prüft, ob der Sitzplatz in der Vorführung vorhanden ist (indirekt abhänig vom Kinosaal)
-         * @param seat
-         * @return 
+         * @param seat Sitzplatz
+         * @return true, wenn vorhanden
 	 */
 	public boolean containsSeat(Seat seat) {
 		return this.seats.containsKey(seat);
@@ -222,7 +260,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
-         * @param occupancy
+         * @param occupancy Zu verwendende Platzverfügbarkeit
 	 * @return Anzahl an Plätzen in der Vorführung nach Belebtheit-Status
 	 */
 	public int getSeatCount(Seat.SeatOccupancy occupancy) {
@@ -230,7 +268,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
-         * @param occupancy
+         * @param occupancy Zu verwendende Platzverfügbarkeit
 	 * @return Anzahl an belegten PLätzen (Reserviert + gekauft)
 	 */
 	public int getSeatProvenCount(Seat.SeatOccupancy occupancy) {
@@ -238,7 +276,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	}
 
 	/**
-         * @param occupancy
+         * @param occupancy Zu verwendende Platzverfügbarkeit
 	 * @return Prozentualer Belegten-Status-Anteil
 	 */
 	public double getPercentageSeatShare(Seat.SeatOccupancy occupancy) {
@@ -286,6 +324,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	/**
 	 * Do not use!
 	 * Use CinemaShowService to Update!
+     * @param seats Mapping von Sitzplätzen
 	 */
 	public void initSeats(final Map<Seat, Seat.SeatOccupancy> seats) {
 		this.seats.putAll(seats);
@@ -308,7 +347,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
         
         /**
          * Check wether we can reserve spots for this cinema show.
-         * @return 
+         * @return true if we can
          */
         public boolean canReserveSpots(){
             if(AdditionalDateTimeWorker.getEndWeekDateTime(LocalDateTime.now().plusDays(7)).isBefore(getStartDateTime())){

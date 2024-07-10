@@ -11,12 +11,20 @@ import org.salespointframework.quantity.Quantity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-
+/**
+ * Zusatzservice für Snacks.
+ * @author Yannick Harnisch
+ */
 @Service
 public class SnacksService {
 	private final UniqueInventory<UniqueInventoryItem> inventory;
 	private final SnacksRepository snacksRepository;
 
+        /**
+         * Erstelle einen neuen Service, mit gegebenen Abhängigkeiten.
+         * @param inventory Inventar
+         * @param snacksRepository Implementierung Snack-Repository
+         */
 	public SnacksService(UniqueInventory<UniqueInventoryItem> inventory, SnacksRepository snacksRepository) {
 		Assert.notNull(inventory, "Inventory darf nicht null sein!");
 		Assert.notNull(inventory, "SnacksRepository darf nicht null sein!");
@@ -25,6 +33,15 @@ public class SnacksService {
 		this.snacksRepository = snacksRepository;
 	}
 
+        /**
+         * Erstelle einen neuen Snack.
+         * @param name Name
+         * @param money Einzelpreis
+         * @param snackType Snacktyp
+         * @param stock Initialer Lagerbestand
+         * @return neuer Snack
+         * @throws IllegalArgumentException falls stock &lt; 0
+         */
 	public Snacks createSnack(String name, Money money, Snacks.SnackType snackType, int stock) {
 		if(stock < 0)
 			throw new IllegalArgumentException("stock muss größer gleich null sein!");
@@ -35,6 +52,16 @@ public class SnacksService {
 		return snack;
 	}
 
+        /**
+         * Erstelle einen neuen Snack.
+         * @param name Name
+         * @param money Einzelpreis
+         * @param snackType Snacktyp
+         * @param stock Initialer Lagerbestand
+     * @param image Bilddaten
+         * @return neuer Snack
+         * @throws IllegalArgumentException falls stock &lt; 0
+         */
 	public Snacks createSnack(String name, Money money, Snacks.SnackType snackType, int stock, byte[] image) {
 		if(stock < 0)
 			throw new IllegalArgumentException("stock muss größer gleich null sein!");
@@ -45,10 +72,22 @@ public class SnacksService {
 		return snack;
 	}
 
+        /**
+         * Füge einem Snack Lagerbestand hinzu.
+         * @param id Snack-ID
+         * @param stock Lagerbestand
+         * @throws IllegalArgumentException falls stock &lt;= 0
+         */
 	public void addStock(String id, int stock) {
 		addStock(Product.ProductIdentifier.of(id), stock);
 	}
 
+        /**
+         * Füge einem Snack Lagerbestand hinzu.
+         * @param id Snack-ID
+         * @param stock Lagerbestand
+         * @throws IllegalArgumentException falls stock &lt;= 0
+         */
 	public void addStock(Product.ProductIdentifier id, int stock) {
 		if(stock <= 0)
 			throw new IllegalArgumentException("stock muss größer null sein!");
@@ -66,6 +105,12 @@ public class SnacksService {
 			);
 	}
 
+        /**
+         * Aktualisiere den Lagerbestand.
+         * @param id Snack-ID
+         * @param stock Lagerbestand
+         * @throws IllegalArgumentException falls stock &lt; 0
+         */
 	public void setStock(String id, int stock) {
 		int currentStock = getStock(id);
 		if(currentStock == stock) return;
@@ -73,6 +118,12 @@ public class SnacksService {
 		else addStock(id, currentStock - stock);
 	}
 
+        /**
+         * Aktualisiere den Lagerbestand.
+         * @param id Snack-ID
+         * @param stock Lagerbestand
+         * @throws IllegalArgumentException falls stock &lt; 0
+         */
 	public void setStock(Product.ProductIdentifier id, int stock) {
 		int currentStock = getStock(id);
 		if(currentStock == stock) return;
@@ -80,10 +131,22 @@ public class SnacksService {
 		else removeStock(id, currentStock - stock);
 	}
 
+        /**
+         * Entferne einem Snack Lagerbestand.
+         * @param id Snack-ID
+         * @param stock Lagerbestand
+         * @throws IllegalArgumentException falls stock &lt; 0
+         */
 	public void removeStock(String id, int stock) {
 		removeStock(Product.ProductIdentifier.of(id), stock);
 	}
 
+        /**
+         * Entferne einem Snack Lagerbestand.
+         * @param id Snack-ID
+         * @param stock Lagerbestand
+         * @throws IllegalArgumentException falls stock &lt; 0
+         */
 	public void removeStock(Product.ProductIdentifier id, int stock) {
 		if(stock <= 0)
 			throw new IllegalArgumentException("stock muss größer null sein!");
@@ -120,8 +183,8 @@ public class SnacksService {
 	 */
 
 	/**
-	 *
-	 * @param id
+	 * Lagerbestand ermitteln.
+	 * @param id Snack-Id
 	 * @return Wenn Snack nicht vorhanden oder nicht im Lager, so wird 0 zurückgegeben, sonst die Anzahl im Lager
 	 */
 	public int getStock(Product.ProductIdentifier id) {
@@ -131,6 +194,11 @@ public class SnacksService {
         return optItem.map(item -> item.getQuantity().getAmount().intValue()).orElse(0);
     }
 
+        /**
+	 * Lagerbestand ermitteln.
+	 * @param id Snack-Id
+	 * @return Wenn Snack nicht vorhanden oder nicht im Lager, so wird 0 zurückgegeben, sonst die Anzahl im Lager
+	 */
 	public int getStock(String id) {
 		return getStock(Product.ProductIdentifier.of(id));
 	}

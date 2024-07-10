@@ -13,19 +13,28 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Zusatzservice für alle ScheduledActivity's.
+ * @author Tobias Knoll
+ */
 @Service
 public class ScheduledActivityService {
 
 	private EventRepository eventRepository;
 	private CinemaShowRepository cinemaShowRepository;
 
+        /**
+         * Erstelle einen neuen Service, mit gegebenen Abhängigkeiten.
+         * @param eventRepository Implementierung Event-Repository
+         * @param cinemaShowRepository Implementierung CinemaShow-Repository
+         */
 	public ScheduledActivityService(EventRepository eventRepository, CinemaShowRepository cinemaShowRepository) {
 		this.eventRepository = eventRepository;
 		this.cinemaShowRepository = cinemaShowRepository;
 	}
 
 	/**
-	 *
+	 * Erfrage alle ScheduledActivity-Objekte.
 	 * @return Alle ScheduledActivity Objekte aus der Datenbank, in einer geordneten List
 	 */
 	public List<ScheduledActivity> getAllActivitys() {

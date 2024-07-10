@@ -19,7 +19,7 @@ import org.salespointframework.useraccount.UserAccount;
 
 
 /**
- * Entry, der die Daten des Nutzers speichert. Name und E-Mail könnte noch in UserAccount gepackt werden. Variablen sind< dort
+ * Entry, der die Daten des Nutzers speichert. Name und E-Mail könnte noch in UserAccount gepackt werden. Variablen sind dort
  * bereits vorhanden.
  * Weitere enthaltene Variablen:
  * streetName, houseNumber, city, state, postalCode und country, alles Strings, da so auch die Korrektheit besser überprüft werden
@@ -45,6 +45,19 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	@OneToOne //
 	private UserAccount userAccount;
 
+        /**
+         * Erstelle einen neuen Nutzer.
+         * @param userAccount Salespoint-Konto
+         * @param firstName Vorname
+         * @param lastName Nachname
+         * @param eMail E-Mail
+         * @param streetName Straße
+         * @param houseNumber Hausnummer
+         * @param city Stadt
+         * @param postalCode PLZ
+         * @param state Bundesland (oder vergleichbar)
+         * @param country Staat
+         */
 	public UserEntry(UserAccount userAccount, String firstName, String lastName, String eMail, String streetName, String houseNumber, String city, String postalCode, String state, String country) {
 
 		this.userAccount = userAccount;
@@ -60,11 +73,17 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 	}
 
 
+        /**
+         * Identifiziert einen Nutzer.
+         */
 	@Embeddable
 	public static final class UserIdentifier implements Identifier, Serializable {
 
 		private static final long serialVersionUID = 7740660930809051850L;
 
+                /**
+                 * internal id
+                 */
 		private final UUID identifier;
 
 		/**
@@ -83,6 +102,10 @@ public class UserEntry extends AbstractAggregateRoot<UserEntry.UserIdentifier>  
 			this.identifier = identifier;
 		}
 
+                /**
+                 * Get the UUID.
+                 * @return the UUId.
+                 */
 		public UUID getId() {
 			return this.identifier;
 		}

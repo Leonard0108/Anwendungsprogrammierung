@@ -49,18 +49,29 @@ import de.ufo.cinemasystem.services.CinemaShowService;
 import de.ufo.cinemasystem.services.SnacksService;
 import jakarta.servlet.http.HttpSession;
 
-
+/**
+ * Spring MVC-Controller des Kassensystems.
+ * @author Simon Liepe
+ */
 @Controller
 @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 @SessionAttributes("cart")
 public class MakeOrderController {
 
+    /**
+     * Session key der aktuellen Bestellung ({@linkplain de.ufo.cinemasystem.models.Orders}-Objekt)
+     */
 	public static final String orderSessionKey = "current-order";
 
 	private final OrderManagement<Orders> orderManagement;
 	private final UniqueInventory<UniqueInventoryItem> inventory;
 	private List<String> errors = new ArrayList<>();
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param orderManagement Order Management
+         * @param inventory Inventar
+         */
 	public MakeOrderController(OrderManagement orderManagement, UniqueInventory<UniqueInventoryItem> inventory) {
 		Assert.notNull(orderManagement, "Order cant be Zero!");
 		this.orderManagement = orderManagement;
@@ -80,6 +91,12 @@ public class MakeOrderController {
 	private @Autowired CinemaShowService showService;
 	
 
+        /**
+         * GET-Endpunkt des Kassensystems im Navigationsmenü.
+         * @param m Modell
+         * @param cart Warenkorb
+         * @return "sell-items-show-selection"
+         */
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets")
 	public String onShowSelect(Model m, @ModelAttribute Cart cart) {
@@ -104,6 +121,15 @@ public class MakeOrderController {
                 m.addAttribute("title", "Kassensystem");
 		return "sell-items-show-selection";
 	}
+        /**
+         * POST-Endpunkt der Veranstaltungswahl
+         * @param m Modell
+         * @param currentUser eingeloggter Mitarbeiter
+         * @param cart Warenkorb
+         * @param what Ausgewählte Veranstaltung
+         * @param session HTTP-Session
+         * @return "sell-items-1"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell-tickets")
 	public String onShowSelectLanding(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
@@ -131,6 +157,15 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 
+        /**
+         * GET-Endpunkt: Auswahl eines Filmes im Filmplan
+         * @param m Modell
+         * @param currentUser eingeloggter Mitarbeiter
+         * @param cart Warenkorb
+         * @param what Ausgewählte Veranstaltung
+         * @param session HTTP-Session
+         * @return "sell-items-1"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets/{what}")
 	public String fromShowPlan(Model m, @LoggedIn UserAccount currentUser, @ModelAttribute Cart cart,
@@ -158,7 +193,14 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 
-        
+        /**
+         * POST-Endpunkt: Item entfernen
+         * @param m Modell
+         * @param session HTTP-Session
+         * @param cartItemId Item
+         * @param cart Warenkorb
+         * @return "sell-items-1"
+         */
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/remove-ticket")
     public String removeTicketFromOrder(Model m, HttpSession session, @RequestParam("deleteCartEntry") ProductIdentifier cartItemId, @ModelAttribute Cart cart){
@@ -229,6 +271,15 @@ public class MakeOrderController {
         return "sell-items-1";
     }
 	
+    /**
+     * GET-Endpunkt: Nach Reservierungssuche Tickets laden
+     * @param m Model
+     * @param reservationId Reservierungs-ID
+     * @param session HTTP-Session
+     * @param currentUser eingeloggter Mitarbeiter
+     * @param cart Warenkorb
+     * @return "sell-items-1"
+     */
 	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/sell-tickets/from-reservation/{reservationId}")
 	public String addReservationFromSearch(Model m, @PathVariable String reservationId, HttpSession session,
@@ -262,6 +313,15 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
+        /**
+         * POST-Endpunkt: Reservierung laden
+     * @param m Model
+     * @param reservationId Reservierungs-ID
+     * @param session HTTP-Session
+     * @param currentUser eingeloggter Mitarbeiter
+     * @param cart Warenkorb
+     * @return "sell-items-1"
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/add-reservation")
 	public String addTicketsperReservation(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
@@ -293,7 +353,16 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
-        
+        /**
+         * POST-Endpunkt: Ticket hinzufügen
+         * @param m Modell
+         * @param currentUser eingeloggter Mitarbeiter
+         * @param session HTTP-Session
+         * @param ticketType Ticket-Typ
+         * @param spot Sitzplatz (Label)
+         * @param cart Warenkorb
+         * @return "sell-items-1"
+         */
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/ticket")
 	public String addTickets(Model m, @LoggedIn UserAccount currentUser, HttpSession session,
@@ -352,7 +421,16 @@ public class MakeOrderController {
 
 	}
 
-        
+        /**
+         * POST-Endpunkt: Snack hinzufügen
+         * @param m Modell 
+         * @param currentUser eingeloggter Mitarbeiter
+         * @param session HTTP-Session
+         * @param snack Welcher Snack?
+         * @param amount Anzahl
+         * @param cart Warenkorb
+         * @return "sell-items-1"
+         */
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/sell/snacks")
 	public String addSnacks(Model m, @LoggedIn UserAccount currentUser, 
@@ -382,7 +460,14 @@ public class MakeOrderController {
 		return "sell-items-1";
 	}
 	
-        
+        /**
+         * POST-Endpunkt: Checkout
+         * @param m Modell 
+         * @param currentUser eingeloggter Mitarbeiter
+         * @param session HTTP-Session
+         * @param cart Warenkorb
+         * @return Template-Name
+         */
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/buy")
 	public String buy(Model m, @LoggedIn Optional<UserAccount> currentUser, 
@@ -413,7 +498,14 @@ public class MakeOrderController {
 
 	}
 
-        
+        /**
+         * Weiter nach der Abschluss-Übersicht eines Kaufs.
+         * @param m Modell 
+         * @param currentUser eingeloggter Mitarbeiter
+         * @param session HTTP-Session
+         * @param cart Warenkorb
+         * @return "redirect:/"
+         */
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
 	@GetMapping("/checkout")
 	public String checkout(Model m, @LoggedIn Optional<UserAccount> currentUser, 

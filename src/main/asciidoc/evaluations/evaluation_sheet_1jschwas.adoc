@@ -3,24 +3,42 @@
 // Sowohl positive als auch negative Anmerkungen werden gern gesehen und zur stetigen Verbesserung genutzt.
 // Versuchen Sie in dieser Auswertung also stets sowohl Positives wie auch Negatives zu erwähnen.
 
-**Von:**
+**Von:** Jannik Schwaß (BAIN)
 
-**Gruppe:**
+**Gruppe:** 2024/4: UFO Kinos
 
 == Was habe ich gelernt / was habe ich nicht gelernt?
 // Ausführung der positiven und negativen Erfahrungen, die im Softwarepraktikum gesammelt wurden
 
+* gelernt:
+** Zeiteinteilung langwiriger Projekte
+** Projektdokumentation deutlich konkreter als in anderen Modulen - war häufig sowohl Fluch als auch Segen
+** Verbesserungen im Umgang mit Komplexen Frameworks
+* nicht gelernt
+** Wie man Leute dazu bringt, ihre Teilergebnisse vor dem merge auf main zu Testen, ohne das Technisch zu erzwingen
+
 == Welche Erfahrungen habe ich mit der Zusammenarbeit im Team gemacht?
 // Kurze Beschreibung der Zusammenarbeit im Team. Was lief gut? Was war verbesserungswürdig? Was würden Sie das nächste Mal anders machen?
+
+* vgl. auch Abschlusspräsentation
+* Kommunikation und Hilfestellung untereinander insg. relativ gut
+* teilw. zu lange Mergezeiten zurück auf main wegen komplex aufzulösender Rückstände (teilw. minus 3xx Committs hinter main)
 
 == Welche Erfahrungen habe ich bei der Wiederverwendung von Bibliotheken/Frameworks (insbesondere SalesPoint) gemacht?
 // Einschätzung der Arbeit mit den bereitgestellten und zusätzlich genutzten Frameworks. Was War gut? Was war verbesserungswürdig?
 
+* SpringBoot sehr hilfreich, nimmt vieles ab
+* jedoch: debugging aufgrund von komplexen Filterhirarchien schlecht möglich, ellenlange Stacktraces mit vergleichsweise wenig Informationsgehalt
+* zu wenig Berührungspunkte mit Salespoint
+
 == Welche Vorschläge zur weiteren Verbesserung des Softwarepraktikums gibt es?
 // Möglichst mit Beschreibung, warum die Umsetzung des von Ihnen angebrachten Vorschlages nötig ist.
+* Zeitplan zwischen Meilensteinen Prototyp und Entwicklerdoku knapp bemessen
 
 == Feedback für den Tutor
 // Fühlten Sie sich durch den vom Lehrstuhl bereitgestellten Tutor gut betreut? Was war positiv? Was war verbesserungswürdig?
 
 == Sonstiges und Anmerkungen
 // Welche Aspekte fanden in den oben genannten Punkten keine Erwähnung?
+
+* Videoshop: PlantUML-Fails in der Entwicklerdoku (u.a. https://github.com/HOME-programming-pub/videoshop/blob/main/src/main/asciidoc/developer_documentation.adoc#42-software-architecture ) müsste Rausgeekelt werden

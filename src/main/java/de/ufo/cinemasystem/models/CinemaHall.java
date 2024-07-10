@@ -8,6 +8,10 @@ import java.util.*;
 import java.util.stream.Stream;
 
 // https://www.baeldung.com/hibernate-one-to-many
+/**
+ * Modellklasse eines Kinosaals
+ * @author Yannick Harnisch
+ */
 @Entity
 @Table(name = "CINEMA_HALLS")
 public class CinemaHall {
@@ -28,6 +32,8 @@ public class CinemaHall {
 	/**
 	 * Do not use!
 	 * Use CinemaHallService to Update!
+     * @param name Name
+     * @param seats Sitzplätze
 	 */
 	public CinemaHall(String name, final Map<Seat, Seat.PlaceGroup> seats) {
 		this.name = name;
@@ -36,16 +42,31 @@ public class CinemaHall {
 		//this.seats = new TreeMap<>(seats);
 	}
 
+        /**
+         * Hibernate-Konstruktor. Bitte nicht benutzen, da die Instanzvariablen nicht gesetzt werden.
+         */
 	public CinemaHall() {}
 
+        /**
+         * Erhalte die ID dieses Kinosaals.
+         * @return ID dieses Kinosaals.
+         */
 	public Long getId() {
 		return id;
 	}
 
+        /**
+         * Erhalte den Namen dieses Kinosaals
+         * @return Namen dieses Kinosaals
+         */
 	public String getName() {
 		return this.name;
 	}
 
+        /**
+         * Erhalte die Anzahl an Sitzplätzen im Kinosaal.
+         * @return Anzahl an Sitzplätzen
+         */
 	public int getNumberOfPlaces() { return this.numberOfPlaces; }
 
 	/**
@@ -101,16 +122,30 @@ public class CinemaHall {
 		return Optional.ofNullable(seats.get(seat));
 	}
 
-	// siehe: https://www.tabnine.com/code/java/methods/org.springframework.data.util.Streamable/of
+	/**
+         * Erhalte eine Liste aller Vorführungen in diesem Saal.
+         * 
+         *  siehe: https://www.tabnine.com/code/java/methods/org.springframework.data.util.Streamable/of
+         * @return Liste
+         */
 	public Streamable<CinemaShow> getCinemaShows() {
 		return Streamable.of(this.cinemaShows);
 	}
 
+        /**
+         * Erhalte eine Liste aller Events in diesem Saal.
+         * 
+         * @return Liste
+         */
 	public Streamable<Event> getEvents() {
 		return Streamable.of(this.events);
 	}
 
 
+        /**
+         * Füge eine neue Vorführung hinzu.
+         * @param newCinemaShow die neue Vorführung
+         */
 	public void addCinemaShow(CinemaShow newCinemaShow) {
 		if(cinemaShows.contains(newCinemaShow)) return;
 
@@ -118,6 +153,10 @@ public class CinemaHall {
 		newCinemaShow.setCinemaHall(this);
 	}
 
+        /**
+         * Entferne eine Vorführung
+         * @param cinemaShow zu entfernende Vorführung
+         */
 	public void removeCinemaShow(CinemaShow cinemaShow) {
 		if(!cinemaShows.contains(cinemaShow)) return;
 
@@ -125,6 +164,10 @@ public class CinemaHall {
 		cinemaShow.setCinemaHall(null);
 	}
 
+        /**
+         * Füge ein Event hinzu
+         * @param newEvent hinzuzufügendes Event
+         */
 	public void addEvent(Event newEvent) {
 		if(events.contains(newEvent)) return;
 

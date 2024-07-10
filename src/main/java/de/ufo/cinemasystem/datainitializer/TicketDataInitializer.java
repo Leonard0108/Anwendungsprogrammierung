@@ -22,6 +22,10 @@ import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.SeatRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
 
+/**
+ * Initialiser für Tickets
+ * @author Tobias Knoll
+ */
 @Component
 @Order(9)
 public class TicketDataInitializer implements DataInitializer {
@@ -35,6 +39,14 @@ public class TicketDataInitializer implements DataInitializer {
 	private final UniqueInventory<UniqueInventoryItem> inventory;
 
 
+        /**
+         * Erstelle einen neuen Initialiser mit den angegebenen Abhängigkeiten.
+         * @param ticketRepository Implementierung Ticket-Repository
+         * @param cinemaShowRepository Implementierung CinemaShow-Repository
+         * @param cinemaShowService CinemaShowService
+         * @param seatRepository Implementierung Seat-Repository
+         * @param inventory Inventar
+         */
 	public TicketDataInitializer(TicketRepository ticketRepository, CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService, SeatRepository seatRepository, UniqueInventory<UniqueInventoryItem> inventory) {
 
 		Assert.notNull(ticketRepository, "ticketRepository must not be null!");

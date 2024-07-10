@@ -17,7 +17,10 @@ import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 import de.ufo.cinemasystem.services.CinemaShowService;
 
-
+/**
+ * DataInitialiser für Kinovorführungen
+ * @author Yannick Harnisch
+ */
 @Component
 // Testdaten der Kinoveranstaltungen werden nach den Testdaten für die Filme und der Kinosäle erstellt (deshalb: Order = 3)
 @Order(4)

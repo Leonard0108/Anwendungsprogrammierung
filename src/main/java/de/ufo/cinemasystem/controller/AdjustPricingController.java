@@ -16,11 +16,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+/**
+ * Spring MVC-Controller für die Preisgestaltung
+ * @author Tobias Knoll
+ */
 @Controller
 public class AdjustPricingController {
 	private FilmRepository filmRepository;
 	private SnacksRepository snacksRepository;
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param filmRepository Implementierung des Film-Repositories
+         * @param snacksRepository Implementierung des Snack-Repositories
+         */
 	public AdjustPricingController(FilmRepository filmRepository, SnacksRepository snacksRepository) {
 		this.filmRepository = filmRepository;
 		this.snacksRepository = snacksRepository;

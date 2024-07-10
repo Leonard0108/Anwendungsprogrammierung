@@ -9,9 +9,10 @@
 [cols="1, 3, 3"]
 |===
 |Version | Bearbeitungsdatum   | Autor 
-| 0.2    | 05.05.2024          | Jannik
-| 0.3    | 13.05.2025          | Jannik, Yannick, Tobias
+| 0.2    | 05.05.2024          | Jannik Schwaß
+| 0.3    | 13.05.2025          | Jannik Schwaß, Yannick Harnisch, Tobias
 | 1.0    | 19.05.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll
+| 1.1    | 08.07.2024          | Jannik Schwaß
 |===
 
 
@@ -189,7 +190,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 ** `adjust-pricing.html`: Preise anpassen
 ** `manage-storage.html`: Elemente dem Lager hinzufügen, Elemente aus dem Lager entfernen
 ** `tickets-change.html`: Ticket umtauschen
-** `tickets-return.html`: Ticket zurückgeben
+** `find-reservation.html`: Suche Durchführen
 ** `manage-staff.html`: Mitarbeiter einstellen, Mitarbeiter ändern, Mitarbeiter entlassen
 ** `buissness-data-dashboard.html`: Betrachtungszeitraum ändern
 
@@ -206,6 +207,12 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 |Google Charts|UserInterface|Diagrammtool für das Statistikdashboard
 |===
 
+=== Offene Punkte
+
+* [F0112]  Ticket-Tausch (Kann-Kriterium)
+* Datenschutzrichtlinie: Aktuell nur ein Arbeitshinweis, währe vor Inbetriebnahme zu ersetzen
+* Ungelöstes Problem: `SpotsViewController` gibt keinen korrekten `Content-Type`-Header zurück
+
 
 == Bausteinsicht
 === Package-Diagramm
@@ -213,6 +220,9 @@ image::./models/design/packagediagramm/PackageDiagram.drawio.svg[Package-Diagram
 
 
 === Entwurfsklassendiagramme der einzelnen Packages
+
+** Hinweis:** Um unnötige Dupliktionen zu vermeiden, werden Klassen nur in dem Teilsystem in die erläuternde Tabelle mit aufgenommen, in dem sie angesiedelt wurden.
+
 ==== Kassensubsystem
 
 image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagram", align=center]
@@ -240,11 +250,14 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 |===
 |Klasse/Enumeration |Beschreibung
 | DeleteReservationController | Spring MVC-Controller für das Anzeigen und Löschen von Reservierungen
+| ErrorController | Spring MVC-Controller für HTTP-Fehlermeldungen
 | Film | Modellklasse für Filme
 | FilmDataInitialiser | Eine Implementierung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
 | FilmRepository | Repository-Interface zum Verwalten von Filmen
 | IndexController | Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
 | MakeReservationController | Spring MVC-Controller für das Erstellen von Reservierungen
+| MiscPagesController | Spring MVC-Controller für diverse statische Seiten
+| SpotsViewController | Spring MVC-Controller für automatisch generierte SVG-Grafiken der Platzverfügbarkeit.
 | Reservation | Datenklasse für Reservierungen
 | ReservationRepository | Repository-Interface zum Verwalten von Reservierungen
 | ViewProgramController | Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und Ändern des Programms
@@ -263,15 +276,13 @@ image::./models/design/Verwaltungssystem/verwaltung_klasse.drawio.svg[Class diag
 | CinemaShow | Modellklasse für Kino-Vorführungen
 | CinemaShowDayEntry | Meta-Klasse, welche alle Veranstaltungen einer Spielwoche im Kino beinhaltet
 | CinemaShowRepository | Repository-Interface zum Verwalten von Kino-Vorführungen
-| Film | Modellklasse für Filme
 | FilmProvider | Modellklasse für Film-Anbieter
 | FilmProviderRepository | Repository-Interface zum Verwalten von Film-Anbietern
-| FilmRepository | Repository-Interface zum Verwalten von Filmen
 | ManageStorageController | SpringMVC Controller für das Anzeigen, Anlegen und Bearbeiten (hinzufügen und entfernen) von Items (aktuell nur Snacks) im Lager des Kinos
 | RentFilmController | SpringMVC Controller für das Anzeigen von aktuell geliehenen Filmen, die Verlängerung der Film-Leihe, Anzeigen von neuen verfügbaren Filmen und die Möglichkeit diese auszuleihen.
 | Seat | Modellklasse für Plätze
 | SnacksRepository | Repository-Interface zum Verwalten von Snacks
-| ViewProgramController | SpringMVC Controller für das Anzeigen des (aktuellen) Kinoprogramms (wochenweise) und das Hinzufügen von neuen Kino-Vorführungen
+| ViewProgramController | Gemeinsamer SpringMVC Controller mit dem Kundenportal für das Anzeigen des (aktuellen) Kinoprogramms (wochenweise) und das Hinzufügen von neuen Kino-Vorführungen
 |===
 
 

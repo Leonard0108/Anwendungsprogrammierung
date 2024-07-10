@@ -36,7 +36,8 @@ import static org.salespointframework.core.Currencies.EURO;
 
 /**
  *Spring MVC Controller for viewing and altering the current program.
- * @author Jannik Schwaß, Yannick Harnisch
+ * @author Jannik Schwaß
+ * @author Yannick Harnisch
  */
 @Controller
 public class ViewProgramController {
@@ -58,11 +59,11 @@ public class ViewProgramController {
 
         /**
          * Construct a new ViewProgramController with the specified autowired dependencies.
-         * @param cinemaShowRepository
-         * @param cinemaShowService
-         * @param cinemaHallRepository
-         * @param filmRepository
-         * @param scheduledActivityService 
+         * @param cinemaShowRepository Implementation of the CinemaShow-Repository
+         * @param cinemaShowService CinemaShowService
+         * @param cinemaHallRepository Implementation of the CinemaHall-Repository
+         * @param filmRepository Implementation of the Film-Repository
+         * @param scheduledActivityService ScheduledActivityService
          */
 	public ViewProgramController(CinemaShowRepository cinemaShowRepository, CinemaShowService cinemaShowService,
 								 CinemaHallRepository cinemaHallRepository, FilmRepository filmRepository,
@@ -76,7 +77,7 @@ public class ViewProgramController {
         
         /**
          * GET-Mapping redirecting to the current week.
-         * @param m
+         * @param m model
          * @return a string describing the redirect.
          */
         @GetMapping("/current-films")
@@ -88,10 +89,10 @@ public class ViewProgramController {
     /**
      * GET-Endpoint for viewing the program in the specified year and week.
      * todo: where rights check?
-     * @param year
-     * @param week
-     * @param m 
-     * @return  
+     * @param year anzuzeigendes Jahr
+     * @param week anzuzeigende Jahreswoche
+     * @param m Modell
+     * @return "current-films"
      */
     @GetMapping("/current-films/{year}/{week}")
     public String getCurrentProgram(@PathVariable int year, @PathVariable int week , Model m) {
@@ -134,6 +135,16 @@ public class ViewProgramController {
 		return "current-films";
 	}
 
+    /**
+     * POST-Endpunkt: neue Vorführung
+     * @param redirectAttributes Redirect-Modell
+     * @param year Jahr
+     * @param week Jahreswoche
+     * @param film Kinofilm
+     * @param room Saal
+     * @param addTime Startzeit
+     * @return redirect-View
+     */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/current-films/{year}/{week}")
 	public String postNewProgram(RedirectAttributes redirectAttributes,
@@ -193,6 +204,12 @@ public class ViewProgramController {
 			+ AdditionalDateTimeWorker.getWeekOfYear(cinemaShow.getStartDateTime());
 	}
 
+        /**
+         * GET-Endpunkt: Veranstaltungsdetails
+         * @param id Vorführungs-ID
+         * @param m Modell
+         * @return "cinema-show-detail"
+         */
 	@GetMapping("/cinema-shows/{id}")
 	public String detailCinemaShow(@PathVariable Long id, Model m) {
 		Optional<CinemaShow> optionalCinemaShow = cinemaShowRepository.findById(id);
@@ -209,6 +226,14 @@ public class ViewProgramController {
 		return "cinema-show-detail";
 	}
 
+        /**
+         * POST-Endpunkt: Veranstaltung ändern
+         * @param redirectAttributes Redirect-Modell
+         * @param id Vorführungs-ID
+         * @param film Film
+         * @param editTime neue Startzeit
+         * @return redirect-View
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/cinema-shows/{id}/edit")
 	public String editCinemaShow(RedirectAttributes redirectAttributes,
@@ -282,6 +307,12 @@ public class ViewProgramController {
 		return "redirect:/cinema-shows/{id}";
 	}
 
+        /**
+         * POST-Endpunkt: Veranstaltung löschen
+         * @param redirectAttributes Redirect-Moddell
+         * @param id Vorführungs-ID
+         * @return Redirect-View
+         */
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/cinema-shows/{id}/delete")
 	public String deleteCinemaShow(RedirectAttributes redirectAttributes, @PathVariable Long id) {
@@ -319,12 +350,15 @@ public class ViewProgramController {
 		return redirectUrl;
 	}
 
+        /**
+         * Interne View-Klasse der Programmansicht zur Speicherung von Programm je Tag
+         */
 	public static class CinemaShowDayEntry {
 		private Streamable<CinemaShow> cinemaShows;
 		private String dayDateHeadline;
 
 		/**
-		 *
+		 *Erstelle einen neuen Tageseintrag
 		 * @param dayDate Datum, für alle Veranstaltungen welche an dem Tag laufen (Startzeit).
 		 * @param cinemaShows alle Veranstaltungen an einem Tag
 		 */
@@ -335,11 +369,16 @@ public class ViewProgramController {
 			this.dayDateHeadline = AdditionalDateTimeWorker.getDayFormat(dayDate);
 		}
 
+                /**
+                 * Erhalte ein Streamable aller bekannten Einträge
+                 * @return Streamable
+                 */
 		public Streamable<CinemaShow> getCinemaShows() {
 			return this.cinemaShows;
 		}
 
 		/**
+                 * Erhalte Datums-Überschrift-Eintrag
 		 * @return Erhalte Datums-Überschrift-Eintrag
 		 */
 		public String getDayDateHeadline() {

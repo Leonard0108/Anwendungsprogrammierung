@@ -16,6 +16,10 @@ import org.springframework.core.annotation.Order;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * DataInitialiser für Events
+ * @author Tobias Knoll
+ */
 @Component
 @Order(5)
 public class EventDataInitializer implements DataInitializer {
@@ -25,6 +29,11 @@ public class EventDataInitializer implements DataInitializer {
 	private final EventRepository eventRepository;
 	private final CinemaHallRepository cinemaHallRepository;
 
+        /**
+         * Erstelle einen neuen Initialiser mit den angegebenen Abhängigkeiten.
+         * @param eventRepository Implementierung Event-Repository
+         * @param cinemaHallRepository Implementierung CinemaHall-Repository
+         */
 	EventDataInitializer(EventRepository eventRepository, CinemaHallRepository cinemaHallRepository) {
 		Assert.notNull(eventRepository, "EventRepository must not be null!");
 		Assert.notNull(cinemaHallRepository, "cinemaHallRepository must not be null!");

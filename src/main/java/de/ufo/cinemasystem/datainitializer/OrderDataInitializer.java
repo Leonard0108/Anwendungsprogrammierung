@@ -21,6 +21,10 @@ import java.util.List;
 import java.util.Random;
 
 
+/**
+ * DataInitialiser für Verkäufe
+ * @author Tobias Knoll
+ */
 @Component
 @org.springframework.core.annotation.Order(11)
 public class OrderDataInitializer implements DataInitializer{
@@ -35,6 +39,13 @@ public class OrderDataInitializer implements DataInitializer{
 	@Autowired
 	private CinemaShowRepository cinemaShowRepository;
 
+        /**
+         * Erstelle einen neuen Initialiser mit den angegebenen Abhängigkeiten.
+         * @param orderManagement Order Management
+         * @param userAccountManagement Nutzerverwaltung
+         * @param ticketRepository Implementierung Ticket-Repository
+         * @param snacksRepository Implementierung Snack-Repository
+         */
 	public OrderDataInitializer(OrderManagement orderManagement, UserAccountManagement userAccountManagement, TicketRepository ticketRepository, SnacksRepository snacksRepository) {
 
         Assert.notNull(ticketRepository, "ticketRepository must not be null!");

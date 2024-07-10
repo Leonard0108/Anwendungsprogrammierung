@@ -19,6 +19,7 @@ import de.ufo.cinemasystem.repository.UserRepository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -31,12 +32,21 @@ public class LoginController {
 	                                //Rückgabewert liefert.
 
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param userRepository Implementierung Nutzerrepository
+         * @param userService Nutzerservice.
+         */
 	public LoginController(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
 		this.userService = userService;
 	}
 
 
+        /**
+         * GET-Endpunkt der Registrierung.
+         * @return "redirect:/registration"
+         */
 	@GetMapping("/register")
 	public String register()
 	{
@@ -44,6 +54,14 @@ public class LoginController {
 	}
 
 
+        /**
+         * POST-Endpunkt der Registrierung.
+         * @param form Ausgefülltes Formular
+         * @param result Ergebnis der Fehlerprüfung
+         * @param redirectAttributes Redirect-Modell
+         * @param model Modell
+         * @return Template-Name
+         */
 	@PostMapping("/registration")
 	String register(@Valid RegistrationForm form, Errors result, RedirectAttributes redirectAttributes, Model model) {
 		short creationResult;
@@ -82,14 +100,25 @@ public class LoginController {
 		return "registration";
 	}
 
+        /**
+         * GET-Endpunkt der Registrierung.
+         * @param m Modell
+         * @param form Formular
+         * @return "redirect:/registration"
+         */
 	@GetMapping("/registration")
 	String register(Model m, RegistrationForm form) {
             m.addAttribute("title", "Registrieren");
 		return "registration";
 	}
 
+        /**
+         * GET-Endpunkt: Liste alle Nutzer auf.
+         * @param model Modell
+         * @return "welcome"
+         */
 	@GetMapping("/customers")
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	String customers(Model model) {
 		List<UserEntry> userEntries = userService.findAll().toList();
 		System.out.println(userEntries);
@@ -98,12 +127,24 @@ public class LoginController {
 		return "welcome";
 	}
 
+        /**
+         * Rollentest-Endpunkt
+         * @param m Modell
+         * @return "roletest"
+         */
 	@GetMapping("/role")
 	String getRole(Model m) {
                 m.addAttribute("title", "Rollencheck");
 		return "roletest";
 	}
 
+        /**
+         * GET-Endpunkt: logout
+         * @param request request
+         * @param session aktuelle sitzung
+         * @return "redirect:/"
+         * @throws ServletException wenn der logout fehlschlägt
+         */
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpSession session) throws ServletException {
 		request.logout();

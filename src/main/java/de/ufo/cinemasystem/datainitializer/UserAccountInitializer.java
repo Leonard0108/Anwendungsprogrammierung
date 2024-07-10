@@ -21,7 +21,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 
-
+/**
+ * Initialiser für Nutzerkonten
+ * @author Lukas Dietrich
+ */
 @Component
 @Order(10)
 public class UserAccountInitializer implements DataInitializer {
@@ -32,6 +35,13 @@ public class UserAccountInitializer implements DataInitializer {
 	private final UserRepository userRepository;
 
 
+        /**
+         * Erstelle einen neuen Initialiser mit den angegebenen Abhängigkeiten
+         * @param userAccountManagement Nutzerverwaltung
+         * @param employeeRepository Implementierung Employee-Repository
+         * @param userService Nutzer-Service
+         * @param userRepository Implementierung Nutzer-Repository
+         */
 	public UserAccountInitializer(UserAccountManagement userAccountManagement, EmployeeRepository employeeRepository, UserService userService, UserRepository userRepository) {
 		Assert.notNull(userAccountManagement, "userAccountManagement must not be null");
 		Assert.notNull(userService, "userService must not be null");
@@ -83,7 +93,7 @@ public class UserAccountInitializer implements DataInitializer {
                 for(RegistrationForm form:tmp){
                     int code = userService.createUser(form);
                     if(code != 0){
-                        LOG.error("[UserAccountInitialiser] builtin account has invalid data");
+                        LOG.error("[UserAccountInitialiser] builtin account has invalid data: " + form.getEMail());
                     }
                 }
 

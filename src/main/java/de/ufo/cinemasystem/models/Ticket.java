@@ -10,13 +10,30 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Modellklasse für Tickets
+ * @author Jannik Schwaß
+ * @author Simon Liepe
+ */
 @Entity
 @Table(name = "TICKETS")
 public class Ticket extends Product {
 
+    /**
+     * Represents the ticket categories available.
+     */
     public static enum TicketCategory {
+        /**
+         * Everyone who doesn't fall under the below.
+         */
         normal,
+        /**
+         * Reduced price for disabled people.
+         */
         reduced,
+        /**
+         * chhildren (until 14th birthday)
+         */
         children
     }
 
@@ -29,6 +46,11 @@ public class Ticket extends Product {
     private int seatID;
     
 
+    /**
+     * Create a new ticket and apply category reduction.
+     * @param Category ticket category
+     * @param cinemaShow cinema show
+     */
     public Ticket(TicketCategory Category, CinemaShow cinemaShow) {
 
         super("Ticket", Money.of(0, "EUR"));
@@ -55,22 +77,42 @@ public class Ticket extends Product {
 
     }
 
+    /**
+     * get the ticket category.
+     * @return ticket category
+     */
     public TicketCategory getCategory() {
         return category;
     }
 
+    /**
+     * get the cinema show.
+     * @return the cinema show
+     */
     public CinemaShow getCinemaShow(){
         return show;
     }
 
+    /**
+     * Get the film title.
+     * @return film title
+     */
     public String getTicketShowName() {
         return show.getFilm().getTitle();
     }
 
+    /**
+     * Get the raw seat id
+     * @return seat id
+     */
     public int getSeatID() {
         return seatID;
     }
 
+    /**
+     * set the seat id of this ticket and apply place group reduction.
+     * @param seatID the seat id
+     */
     public void setSeatID(int seatID) {
         this.seatID = seatID;
         this.setName(getName() +" "+ String.valueOf(seatID));
@@ -97,10 +139,18 @@ public class Ticket extends Product {
         }
     }
 
+    /**
+     * Get the seat spot in string form
+     * @return seat spot
+     */
     public String getSeatString() {
         return ((char) ('A' + this.seatID / 100)) + ("" + this.seatID % 100);
     }
 
+    /**
+     * Returns the UI Label for our ticket category.
+     * @return UI Label
+     */
     public String categoryToLabel() {
         return switch (this.category) {
             case normal -> "Erwachsener";

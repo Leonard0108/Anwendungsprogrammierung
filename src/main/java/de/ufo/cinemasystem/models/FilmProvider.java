@@ -3,6 +3,10 @@ package de.ufo.cinemasystem.models;
 import jakarta.persistence.*;
 import java.util.Objects;
 
+/**
+ * Modell-Klasse für Film-Provider.
+ * @author Yannick Harnisch
+ */
 @Entity
 @Table(name = "FILM_PROVIDERS")
 public class FilmProvider{
@@ -15,11 +19,17 @@ public class FilmProvider{
 	//private final Set<Film> films = new HashSet<>();
 	private String name;
 
+        /**
+         * Neuen Provider erstellen.
+         * @param name Name des Providers.
+         */
 	public FilmProvider(String name) {
 		this.name = name;
 	}
 
-	// Default Construktor, nicht benutzen!
+	/**
+         * Hibernate-Konstruktor. Bitte nicht benutzen, da die Instanzvariablen nicht gesetzt werden.
+         */
 	public FilmProvider() {}
 
 	/*
@@ -31,10 +41,18 @@ public class FilmProvider{
 	}
 	 */
 
+        /**
+         * Erhalte die ID.
+         * @return ID
+         */
 	public Long getId() {
 		return id;
 	}
 
+        /**
+         * Erhalte den Namen
+         * @return Name
+         */
 	public String getName() {
 		return this.name;
 	}

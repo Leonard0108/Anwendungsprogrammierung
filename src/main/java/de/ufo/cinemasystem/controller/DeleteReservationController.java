@@ -39,6 +39,10 @@ public class DeleteReservationController {
     private @Autowired UserRepository uRepo;
     private final UniqueInventory<UniqueInventoryItem> inventory;
 
+    /**
+     * Create a new Controller with the specified dependencies
+     * @param inventory Inventory
+     */
     public DeleteReservationController(UniqueInventory<UniqueInventoryItem> inventory) {
         this.inventory = inventory;
     }
@@ -49,7 +53,7 @@ public class DeleteReservationController {
      * @param m model
      * @param currentUser logged-in user
      * @param session current session.
-     * @return 
+     * @return "reservation-list"
      */
     @GetMapping("/my-reservations")
     @PreAuthorize("isAuthenticated()")
@@ -65,11 +69,11 @@ public class DeleteReservationController {
     
     /**
      * Post endpoint targeted by the cancel form on the reservation list.
-     * @param m
-     * @param id
-     * @param currentUser
-     * @param session
-     * @return 
+     * @param m model
+     * @param id reservation id
+     * @param currentUser current user object, non-null
+     * @param session current session object
+     * @return "cancel-reservation"
      */
     @PostMapping("/my-reservations/delete/")
     @PreAuthorize("isAuthenticated()")
@@ -91,11 +95,11 @@ public class DeleteReservationController {
     
     /**
      * Get mapping targeted by links in the reservation list.
-     * @param m
-     * @param id
-     * @param currentUser
-     * @param session
-     * @return 
+     * @param m model 
+     * @param id reservation id
+     * @param currentUser current user object, non-null
+     * @param session current session object
+     * @return "cancel-reservation"
      */
     @GetMapping("/cancel-reservation/{id}")
     @PreAuthorize("isAuthenticated()")
@@ -117,11 +121,11 @@ public class DeleteReservationController {
     
     /**
      * post mapping to actually delete a reservation.
-     * @param m
-     * @param id
-     * @param currentUser
-     * @param session
-     * @return 
+     * @param m model 
+     * @param id reservation id
+     * @param currentUser current user object, non-null
+     * @param session current session object
+     * @return "redirect:/my-reservations"
      */
     @PostMapping("/cancel-reservation/{id}")
     @PreAuthorize("isAuthenticated()")
@@ -143,8 +147,8 @@ public class DeleteReservationController {
     
     /**
      * Endpoint for staff to find reservations from a user.
-     * @param m
-     * @return 
+     * @param m model
+     * @return "find-reservation"
      */
     @GetMapping("/reservations/find")
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")
@@ -156,9 +160,9 @@ public class DeleteReservationController {
     
     /**
      * Query endpoint to find reservations.
-     * @param m
-     * @param query
-     * @return 
+     * @param m model
+     * @param query search query
+     * @return "find-reservation"
      */
     @PostMapping("/reservations/find")
     @PreAuthorize("hasAnyRole('BOSS', 'EMPLOYEE', 'AUTHORIZED_EMPLOYEE')")

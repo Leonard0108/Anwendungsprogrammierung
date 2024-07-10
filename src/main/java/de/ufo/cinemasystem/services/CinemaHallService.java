@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Zusatz-Service für Kinosäle
+ * @author Yannick Harnisch
+ */
 @Service
 public class CinemaHallService {
 
@@ -34,9 +38,11 @@ public class CinemaHallService {
 	/**
 	 * Bessere und einfachere Erstellungsmethode für Kinosäle, in Bezug auf Sitzplätze
 	 * siehe {@link #createCinemaHall(String, Map)}
+     * @param name Kinosaal-Name
 	 * @param seatRaws Einträge beginnend mit der obersten ersten Reihe (Entry0 -> Reihe 0, Entry1 -> Reihe 1, ...)
 	 *                 Ein Eintrag (welcher eine Reihe repräsentiert) beinhaltet an erster Stelle
 	 *                 die Anzahl der Plätze in der Reihe und an zweiter Stelle die Platzgruppe in der Reihe
+     * @return Neuer Kinosaal
 	 */
 	@SafeVarargs
 	public final CinemaHall createCinemaHall(String name, Map.Entry<Integer, Seat.PlaceGroup>... seatRaws) {

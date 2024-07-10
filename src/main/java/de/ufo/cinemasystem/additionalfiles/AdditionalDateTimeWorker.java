@@ -10,10 +10,14 @@ import java.util.Locale;
 import de.ufo.cinemasystem.models.YearWeekEntry;
 import org.springframework.stereotype.Component;
 
+/**
+ * Utility class for various datetime-related operations
+ * @author Yannick Harnisch
+ */
 @Component
 public class AdditionalDateTimeWorker {
 	/**
-         * @param date
+         * @param date Zu formatierender Wochentag
 	 * @return Ausgabe String: "Wochentag, Datum (dd.MM.yyyy)"
 	 */
 	public static String getDayFormat(LocalDate date) {
@@ -25,15 +29,15 @@ public class AdditionalDateTimeWorker {
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
 	 *                 siehe {@link #getWeekRangeFormat(int, int)}
-         * @return 
+         * @return Formatierte Wochenangabe
 	 */
 	public static String getWeekRangeFormat(LocalDateTime dateTime) {
 		return getWeekRangeFormat(dateTime.getYear(), getWeekOfYear(dateTime));
 	}
 
 	/**
-         * @param year
-         * @param week
+         * @param year Zu verwendendes Jahr
+         * @param week zu verwendende Jahreswoche
 	 * @return Ausgabe String: "Woche-Von-Datum (dd.MM.yyyy) - Woche-Bis-Datum
 	 *         (dd.MM.yyyy)"
 	 */
@@ -49,7 +53,7 @@ public class AdditionalDateTimeWorker {
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
 	 *                 siehe {@link #getEndWeekDateTime(int, int)}
-         * @return 
+         * @return Endzeitpunkt der Woche (Sonntag 23:59)
 	 */
 	public static LocalDateTime getEndWeekDateTime(LocalDateTime dateTime) {
 		return getEndWeekDateTime(
@@ -74,7 +78,7 @@ public class AdditionalDateTimeWorker {
 	/**
 	 * @param dateTime beliebiges Datum (+ Zeitpunk)
 	 *                 siehe {@link #getStartWeekDateTime(int, int)}
-         * @return 
+         * @return Startdatum der Woche (Montag 00:00 Uhr)
 	 */
 	public static LocalDateTime getStartWeekDateTime(LocalDateTime dateTime) {
 		return getStartWeekDateTime(
@@ -99,7 +103,7 @@ public class AdditionalDateTimeWorker {
 	}
 
 	/**
-         * @param dateTime
+         * @param dateTime Datum, für dass die Jahreswoche ermittelt werden soll
 	 * @return aktuelle Kalenderwoche eines Jahres
 	 */
 	public static int getWeekOfYear(LocalDateTime dateTime) {
@@ -123,6 +127,12 @@ public class AdditionalDateTimeWorker {
 		return new int[] { (week == 1 ? year - 1 : year), (week == 1 ? getMaxYearWeeks(year - 1) : week - 1) };
 	}
 
+        /**
+         * Gib ein YearWeek-Objekt für die vorherige Woche zurück.
+         * @param year Jahr der "aktuellen" Woche
+         * @param week Wochenzahl der aktuellen Woche
+         * @return YearWeek-Objekt
+         */
 	public static YearWeekEntry lastWeekEntry(int year, int week) {
 		int[] lastWeek = lastWeek(year, week);
 		return new YearWeekEntry(lastWeek[0], lastWeek[1]);
@@ -144,13 +154,19 @@ public class AdditionalDateTimeWorker {
 		return new int[] { ((week % maxYearWeeks == 0) ? year + 1 : year), (week % maxYearWeeks) + 1 };
 	}
 
+        /**
+         * Erhalte ein YearWeek-Objekt für die Woche danach.
+         * @param year Jahr der "aktuellen" Woche
+         * @param week Wochenzahl der aktuellen Woche
+         * @return YearWeek-Objekt
+         */
 	public static YearWeekEntry nextWeekEntry(int year, int week) {
 		int[] nextWeek = nextWeek(year, week);
 		return new YearWeekEntry(nextWeek[0], nextWeek[1]);
 	}
 
 	/**
-         * @param year
+         * @param year Jahr, für dass die Anzah Kalenderwochen bestimmt werden soll
 	 * @return max. Anzahl an Kalenderwochen, welches ein Jahr hat. (nach ISO 8601)
 	 */
 	public static int getMaxYearWeeks(int year) {

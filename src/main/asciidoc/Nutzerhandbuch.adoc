@@ -40,6 +40,14 @@ Kopieren Sie das Jar in einen neuen Ordner, zu dem Sie Schreibrechte besitzen. �
 
 Der Erststart dauert eventuell etwas länger, weil die Anwendung zusätzliche Bibliotheken herunterlädt.
 
+Sobald die Anwendung gestartet ist, ist sie unter http://127.0.0.1:8080 erreichbar.
+
+=== Datenbank-Administration
+
+* ** Nutzername: 6c49af08a96d4b60bfcf57116182bb3a ** 
+* ** Passwort: ecec3832a23246ed968480c2be0577e4**
+* ** Admin-Zugangspasswort: ccff8eeeba824e5aa76b3646dab391b4 **
+
 == Funktionen
 
 Im nachfolgenden werden die wichtigsten Funktionen erläutert.
@@ -60,8 +68,9 @@ Um sich als Kunde zu registrieren gehen sie auf http://127.0.0.1:8080/registrati
 
 [options="header"]
 |===
-|Name                 | Zugewiesene Rechte  
-| Customer            | Reservierung anlegen, eigene Reservierung löschen, eigene Reservierungen anzeigen.
+|Name                 | Zugewiesene Rechte
+| __Jeder__           | Startseite einsehen, Impressum einsehen, Datenschutzrichtlinie einsehen, Filmplan einsehen, anmelden, registrieren 
+| Customer            | Zusätzlich zu __Jeder__: Reservierung anlegen, eigene Reservierung löschen, eigene Reservierungen anzeigen.
 | EMPLOYEE            | Zusätzlich zum Customer: Tickets/Snacks verkaufen
 | AUTHORIZED_EMPLOYEE | Zusätzlich zu EMPLOYEE: Programm verwalten, Filme ausleihen, Lager verwalten
 | BOSS                | Zusätzlich zu AUTHORIZED_EMPLOYEE: Wirtschaftsstatistik einsehen, Saalverwaltung benutzen, Preise anpassen, Personal verwalten
@@ -103,7 +112,9 @@ Sobald Sie alle gewünschten Tickets ausgewählt haben, drücken Sie auf "Jetzt 
 
 ==== Reservierung anzeigen
 
-Um Reservierungen anzeigen zu können, müssen Sie im fraglichen Account eingeloggt sein. Sie sehen dann alle Reservierungen unter http://127.0.0.1:8080/my-reservations Es gibt keine URL zum Anzeigen von Reservierungen anderer Konten.
+Um Reservierungen anzeigen zu können, müssen Sie im fraglichen Account eingeloggt sein. Sie sehen dann alle Reservierungen unter http://127.0.0.1:8080/my-reservations 
+
+Um Reservierungen von anderen einsehen zu können, müssen sie als EMPLOYEE, AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Sie können dann auf 127.0.0.1:8080/reservations/find nach Reservierungen eines Nutzernamens oder E-Mail suchen.
 
 ==== Reservierung löschen
 
@@ -122,7 +133,7 @@ Um das aktuelle Programm einzusehen, gehen Sie auf http://127.0.0.1:8080/current
 
 Um das Programm verwalten zu können, müssen sie als AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Gehen sie zum hinzufügen von Programmpunkten auf http://127.0.0.1:8080/current-films
 Um Programmpunkte zu ändern oder zu löschen, gehen sie auf obiger Seite auf den fraglichen Programmpunkt. Der Saal kann nur durch löschen und neuanlegen geändert werden, damit die Platzzuordnung funktioniert.
-Wenn sie einen Programmpunkt löschen, beachten sie bitte, dass dadurch jegliche Reservierungen und gekaufte Tickets unwiederufflich gelöscht werden. Sie können erst dann Veranstaltungen für einen
+Wenn sie einen Programmpunkt löschen, beachten sie bitte, dass dadurch jegliche Reservierungen unwiederufflich gelöscht werden. Sie können keine Veranstaltung löschen, für die Tickets verkauft wurden. Sie können erst dann Veranstaltungen für einen
 Film anlegen, wenn der Ticketpreis festgelegt wurde. Veranstaltungen dürfen sich einschließlich eines 10 min. Puffers davor und danach nicht überschneiden. Sie können keine 
 Vorführung anlegen, wenn der Film im Fraglichen Zeitpunkt nicht entliehen wurde.
 

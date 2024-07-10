@@ -9,8 +9,9 @@ import org.salespointframework.catalog.Catalog;
 import de.ufo.cinemasystem.models.Ticket;
 
 /**
- *
- * @author Jannik
+ * Repository for tickets.
+ * @author Jannik Schwaß
+ * @author Simon Liepe
  */
 public interface TicketRepository extends Catalog<Ticket> {
 

@@ -25,13 +25,13 @@
 
 == MiscPagesController
 
--/robots.txt (GET)
--/imprint (GET)
--/privacy (GET)
+- /robots.txt (GET)
+- /imprint (GET)
+- /privacy (GET)
 
 == SpotsViewController
 
--/include/spots-view/{which} (GET)(which:CinemaShow)
+- /include/spots-view/{which} (GET)(which:CinemaShow)
 
 == EventAdministrationController
 === Hauptreferenz

@@ -16,6 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Zusatzservice für Kinovorführungen
+ * @author Yannick Harnisch
+ */
 @Service
 public class CinemaShowService {
 
@@ -161,7 +165,7 @@ public class CinemaShowService {
 	 * die Datenbank und das CinmaShow-Objekt aktualisiert wírd.
 	 * Voraussetzung: Die Kino-Vorführung liegt mind 1/2 Stunde in der Zukunft
 	 * @param cinemaShow die zu verändernde Kino-Vorführung
-	 * @throws RuntimeException, wenn die CinemaShow nicht im cinemaShowRepository existiert
+	 * @throws RuntimeException wenn die CinemaShow nicht im cinemaShowRepository existiert
 	 * @return Builder zum Setzen von Daten.
 	 */
 	public CinemaShowUpdater update(CinemaShow cinemaShow) {
@@ -175,7 +179,7 @@ public class CinemaShowService {
 	 * die Datenbank und das CinmaShow-Objekt aktualisiert wírd.
 	 * Voraussetzung: Die Kino-Vorführung liegt mind 1/2 Stunde in der Zukunft
 	 * @param id Referenz zur Kino-Vorführung
-	 * @throws RuntimeException, wenn die CinemaShow nicht im cinemaShowRepository existiert
+	 * @throws RuntimeException wenn die CinemaShow nicht im cinemaShowRepository existiert
 	 * @return Builder zum Setzen von Daten.
 	 */
 	public CinemaShowUpdater update(Long id) {

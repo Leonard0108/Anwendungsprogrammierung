@@ -24,7 +24,12 @@ import java.util.List;
 import java.util.Optional;
 
 
-//benötigte Klassen: Bestellung, (Ausgaben für Personalkosten, Ausgaben für momentan geliehene Filme)
+/**
+ * Spring MVC-Controller für die Wirtschaftsansicht.
+ * 
+ * benötigte Klassen: Bestellung, (Ausgaben für Personalkosten, Ausgaben für momentan geliehene Filme)
+ * @author Tobias Knoll
+ */
 @Controller
 public class BusinessDataDashboardController {
 
@@ -43,13 +48,21 @@ public class BusinessDataDashboardController {
 	private final OrderManagement<Order> orderManagement;
 
 
+        /**
+         * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
+         * @param orderManagement Order-Management-Klasse von Salespoint
+         */
 	public BusinessDataDashboardController(OrderManagement<Order> orderManagement) {
 		Assert.notNull(orderManagement, "Order darf nicht Null sein!");
 		this.orderManagement = orderManagement;
 	}
 
 
-	//Anzeigen von Tageseinnahmen Diagramm, darunter Monatsumsatz Diagramm
+	/**
+         * GET-Endpunkt für das Wirtschaftsdashboard
+         * @param m Spring-Modell des aktuellen Requests
+         * @return Template-Name
+         */
 	@GetMapping("/statistics")
 	@PreAuthorize("hasRole('BOSS')")
 	public String getDashboard(Model m) {
@@ -147,10 +160,18 @@ public class BusinessDataDashboardController {
 			this.amount = amount;
 		}
 
+                /**
+                 * Erhalte die Transaktionsquelle
+                 * @return Transaktionsquelle
+                 */
 		public String getSource() {
 			return sourceOfTransaction;
 		}
 
+                /**
+                 * Der Betrag der Transaktion
+                 * @return Betrag der Transaktion
+                 */
 		public double getAmount() {
 			return amount;
 		}
@@ -163,15 +184,28 @@ public class BusinessDataDashboardController {
 		private double revenue;
 		private LocalDate date;
 
+                /**
+                 * 
+                 * @param revenue Umsatz
+                 * @param date Repräsentiertes Datum
+                 */
 		public RevenueData(double revenue, LocalDate date) {
 			this.revenue = revenue;
 			this.date = date;
 		}
 
+                /**
+                 * Umsatz
+                 * @return Umsatz
+                 */
 		public double getRevenue() {
 			return revenue;
 		}
 
+                /**
+                 * Repräsentiertes Datum
+                 * @return Repräsentiertes Datum
+                 */
 		public LocalDate getDate() {
 			return date;
 		}

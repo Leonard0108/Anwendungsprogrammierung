@@ -40,6 +40,14 @@ Kopieren Sie das Jar in einen neuen Ordner, zu dem Sie Schreibrechte besitzen. �
 
 Der Erststart dauert eventuell etwas länger, weil die Anwendung zusätzliche Bibliotheken herunterlädt.
 
+Sobald die Anwendung gestartet ist, ist sie unter http://127.0.0.1:8080 erreichbar.
+
+=== Datenbank-Administration
+
+* ** Nutzername: 6c49af08a96d4b60bfcf57116182bb3a ** 
+* ** Passwort: ecec3832a23246ed968480c2be0577e4**
+* ** Admin-Zugangspasswort: ccff8eeeba824e5aa76b3646dab391b4 **
+
 == Funktionen
 
 Im nachfolgenden werden die wichtigsten Funktionen erläutert.

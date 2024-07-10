@@ -44,7 +44,7 @@ public class CinemaShow implements Comparable<CinemaShow>, ScheduledActivity {
 	private Money basePrice;
 
 	/* Chat GPT 3.5
-   	Promt: Wie fÃ¼ge ich andere Entity Klassen in eine Entity Klasse als Attribute ein?
+   	Promt: Wie füge ich andere Entity Klassen in eine Entity Klasse als Attribute ein?
  	*/
 	// Jede Veranstaltung-Instanz verweist auf eine bestimmte Film-Instanz
 	@ManyToOne

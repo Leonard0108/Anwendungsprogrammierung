@@ -20,7 +20,8 @@ import java.util.Random;
 
 /**
  * Initialises Film Data.
- * @author Jannik Schwaß, Yannick Harnisch
+ * @author Jannik Schwaß
+ * @author Yannick Harnisch
  * @version 1.0
  */
 @Component

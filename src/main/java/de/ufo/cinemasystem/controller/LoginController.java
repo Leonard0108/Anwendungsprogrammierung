@@ -19,6 +19,7 @@ import de.ufo.cinemasystem.repository.UserRepository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -89,7 +90,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/customers")
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	String customers(Model model) {
 		List<UserEntry> userEntries = userService.findAll().toList();
 		System.out.println(userEntries);

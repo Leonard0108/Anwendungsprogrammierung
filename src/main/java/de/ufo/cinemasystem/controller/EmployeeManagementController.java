@@ -39,7 +39,7 @@ public class EmployeeManagementController {
 	}
 
 	//PreAuthorize ist eine Annotation, welche der automatischen Autorisationserkennung dient.
-	//@PreAuthorize("hasRole('BOSS')")
+	@PreAuthorize("hasRole('BOSS')")
 	@GetMapping(path = "/createEmployee")
 	public String createEmployee(Model m, EmployeeRegistrationForm form) {
 		return "EmployeeRegistration";

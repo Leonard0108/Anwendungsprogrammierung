@@ -19,7 +19,7 @@ import org.salespointframework.useraccount.UserAccount;
 
 
 /**
- * Entry, der die Daten des Nutzers speichert. Name und E-Mail könnte noch in UserAccount gepackt werden. Variablen sind< dort
+ * Entry, der die Daten des Nutzers speichert. Name und E-Mail könnte noch in UserAccount gepackt werden. Variablen sind dort
  * bereits vorhanden.
  * Weitere enthaltene Variablen:
  * streetName, houseNumber, city, state, postalCode und country, alles Strings, da so auch die Korrektheit besser überprüft werden

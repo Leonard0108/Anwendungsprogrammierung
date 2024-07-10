@@ -16,6 +16,7 @@ import java.util.*;
  * Represents a film.
  *
  * @author Jannik Schwaß
+ * @author Yannik Harnisch
  */
 @Entity
 @Table(name = "FILMS")

@@ -181,7 +181,7 @@ public class SpotsViewController {
                 case GROUP_3 -> {
                     return "#ffff00";
                 }
-                default -> throw new AssertionError("seat with bad occupancy: "+occupancy);
+                default -> throw new AssertionError("seat with bad placeGroup: "+occupancy);
             }
         }
 

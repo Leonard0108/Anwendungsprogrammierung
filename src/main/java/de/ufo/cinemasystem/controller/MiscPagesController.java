@@ -33,7 +33,7 @@ public class MiscPagesController {
         LocalDateTime nextNow = now.plusDays(7);
         int nextWeek = AdditionalDateTimeWorker.getWeekOfYear(nextNow);
         m.addAttribute("year", now.getYear());
-        m.addAttribute("nextYear", now.getYear());
+        m.addAttribute("nextYear", nextNow.getYear());
         m.addAttribute("week", week);
         m.addAttribute("nextWeek", nextWeek);
         //end of week

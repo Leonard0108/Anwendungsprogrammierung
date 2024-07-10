@@ -86,12 +86,7 @@ public class ManageStorageController {
                                 try {
                                     BufferedImage read = javax.imageio.ImageIO.read(in);
                                     ok = read != null;
-                                    if(ok == false && ctype.contains("svg")){
-                                        //expected. the way imageIO works doesn't mix with svgs.
-                                        // ideally, we could do a full parse here. for now, just do this rudimentary check.
-                                        String s = new String(bytes, "utf-8");
-                                        ok = s.contains("<svg") && s.contains("</svg>") && s.contains("xmlns=\"http://www.w3.org/2000/svg\"");
-                                    }
+                                    
                                 } catch (IOException ex) {
                                     System.getLogger(ManageStorageController.class.getName()).log(System.Logger.Level.INFO, "Bild konnte nicht geladen werden!", ex);
                                }
@@ -113,7 +108,7 @@ public class ManageStorageController {
                                     javax.imageio.ImageIO.setUseCache(true);
                                 }
                                 if(!ok){
-                                    redirectAttributes.addFlashAttribute("errorMessageNew", "Bild nicht lesbar!");
+                                    redirectAttributes.addFlashAttribute("errorMessageNew", "Bild nicht lesbar oder nicht unterstützter Dateityp!");
                                     return "redirect:/manage/storage";
                                 }
                                 

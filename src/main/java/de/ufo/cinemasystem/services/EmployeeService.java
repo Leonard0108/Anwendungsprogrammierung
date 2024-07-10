@@ -32,7 +32,7 @@ public class EmployeeService {
 		UserRepository userRepository;
 		private static final List<String> KNOWN_EMAIL_PROVIDERS = Arrays.asList(
 		"gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "aol.com",
-		"icloud.com", "mail.com", "gmx.com", "yandex.com", "protonmail.com"
+		"icloud.com", "mail.com", "gmx.de", "yandex.com", "protonmail.com"
 		);
 
 

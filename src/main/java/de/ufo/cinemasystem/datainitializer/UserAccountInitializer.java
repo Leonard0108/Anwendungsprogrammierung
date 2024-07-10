@@ -83,7 +83,7 @@ public class UserAccountInitializer implements DataInitializer {
                 for(RegistrationForm form:tmp){
                     int code = userService.createUser(form);
                     if(code != 0){
-                        LOG.error("[UserAccountInitialiser] builtin account has invalid data");
+                        LOG.error("[UserAccountInitialiser] builtin account has invalid data: " + form.getEMail());
                     }
                 }
 

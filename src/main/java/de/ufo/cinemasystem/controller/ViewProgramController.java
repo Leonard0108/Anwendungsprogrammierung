@@ -36,7 +36,8 @@ import static org.salespointframework.core.Currencies.EURO;
 
 /**
  *Spring MVC Controller for viewing and altering the current program.
- * @author Jannik Schwaß, Yannick Harnisch
+ * @author Jannik Schwaß
+ * @author Yannick Harnisch
  */
 @Controller
 public class ViewProgramController {

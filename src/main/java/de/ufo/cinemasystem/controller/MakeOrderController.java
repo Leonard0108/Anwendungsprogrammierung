@@ -118,7 +118,6 @@ public class MakeOrderController {
 		m.addAttribute("shows", toOffer);
 		m.addAttribute("errors", errors);
 		
-                m.addAttribute("title", "Kassensystem");
 		return "sell-items-show-selection";
 	}
         /**

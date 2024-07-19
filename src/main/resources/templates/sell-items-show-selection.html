@@ -14,6 +14,6 @@
                             <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getShortStartDateTime()} + ${show.getFilm().getTitle()}"></option>
                         </select>
                         <button name="next" value="1">Weiter</button>
-                    </form>
+            </form>
         </div>
 </html>

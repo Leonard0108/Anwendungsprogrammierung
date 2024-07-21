@@ -1012,6 +1012,7 @@ Der unregistrierte Nutzer drückt auf "Registrieren" auf der Webseiten Oberfläs
 - *Nutzername:* hans
 - *Passwort:* passwort123
 - *E-Mail:* hans_paswort123@mail.com
+- sowie den vollständigen Namen und Adresse
 
 Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und senden damit die Informationen an das Loginsystem.
 |Ergebnis(se)     a|
@@ -1049,14 +1050,14 @@ Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit
 |Use Case      |<<UC0120>> Online reservieren
 |Voraussetzung(en)      a|Ein angemeldeter Nutzer nutzt das Kundenportal.
 |Ablauf      a|
-Der Kunde drückt auf "Plätze Reservieren" auf der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. +
+Der Kunde drückt auf "Plätze Reservieren" auf der Webseiten Oberfläsche und fügt eine neue Reservierung zu "Meine Reservierungen" hinzu. +
 Im Reservierungsformular wählt er zunächst die Vorführung aus. Unter dem Reiter "Ticket hinzufügen" wählt der Kunde "Erwachsener" als Ticketart aus. Auf dem Sitzplan sieht er wo noch freie Plätze sind und trägt die Platznummer "B4" in das Platz Feld ein. Dann drückt er auf Ticket hinzufügen. +
 Dies wiederholt er für eine Ticketreservierung mit der Ticketart "Kind" und Platz "B5". +
 Um die Reservierung abzuschließen drückt der Kunde zum Schluss auf "Jetzt reservieren".
 |Ergebnis(se)     a|
 - Es wird überprüft ob die Plätze noch verfügbar sind
 - Da die Plätze verfügbar sind werden sie geschlossen als reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
-- Der Kunde wird auf eine Reservierungsbestätigung-Seite weitergeleitet, auf der er deutlich seine Reservierungsnummer sehen kann
+- Der Kunde wird auf "Meine Reservierungen", dort kann er alle seine bislang getätigten Reservierungen mit der jeweiligen Reservierungsnummer sehen
 - Mit der Reservierungsnummer kann der Mitarbeiter an der Kasse die reservierten Tickets aufrufen und nach Bezahlung dem Kunden ausstellen
 |===
 
@@ -1067,13 +1068,13 @@ Um die Reservierung abzuschließen drückt der Kunde zum Schluss auf "Jetzt rese
 |Use Case      |<<UC0230>> Karten verkaufen
 |Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Der Mitarbeiter drückt auf "Kartenverkauf" auf der Webseiten Oberfläche. Der Mitarbeiter wählt nun unter "Ticket hinzufügen" eine der heutigen Vorstellungen, die der Kunde besuchen möchte. +
-Um nun den Sitzplan der Vorstellung angezeigt zu bekommen, drückt der Mitarbeiter auf "Plätze laden" Der Mitarbeiter wählt "Erwachsener" unter Ticketart und trägt "B4" unter Platz ein. Anschließend drückt der Mitarbeiter auf Ticket hinzufügen. +
+Der Mitarbeiter drückt auf "Kassensystem" auf der Webseiten Oberfläche. Der Mitarbeiter wählt nun eine der heutigen Vorstellungen, die der Kunde besuchen möchte. +
+Der Mitarbeiter wählt "Erwachsener" unter Ticketart und trägt "B4" unter Platz ein. Anschließend drückt der Mitarbeiter auf Ticket hinzufügen. +
 Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
-Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt wird. +
-Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Zahlungsvorgang abschließen".
+Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt werden. +
+Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Ok".
 |Ergebnis(se)     a|
-- Da die Plätze verfügbar sind werden sie geschlossen als reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
+- Da die Plätze verfügbar sind werden sie geschlossen als belegt im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
 - Es werden die Daten im System für die Filmstatistik und Umsatzstatistiken aktualisiert
 - Der Kunde erhält sein Ticket vom Mitarbeiter und kann damit die Vorstellung besuchen
 |===
@@ -1085,10 +1086,10 @@ Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der M
 |Use Case      |<<UC0240>> Snacks verkaufen
 |Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Der Mitarbeiter drückt auf "Kartenverkauf" auf der Webseiten Oberfläche. Unter dem Sitzplan drückt der Mitarbeiter auf "Snacks hinzufügen". Dann wählt der Mitarbeiter aus dem Lagerbestand "Popcorn Groß", im Popup-Menü für die Anzahl wählt er "1". Dazu wählt der Mitarbeiter "Cola Groß" aus und drückt erneut "1". +
-Der Mitarbeiter speichert die Snacks im Warenkorb durch das Drücken auf den Button "Snacks fertig ausgewählt". Die ausgewählten Snacks sind jetzt darunter aufgelistet. Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
-Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt wird.
-Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Zahlungsvorgang abschließen".
+Der Mitarbeiter drückt auf "Kassensystem" auf der Webseiten Oberfläche. Unter dem Sitzplan im Abschnitt "Snacks hinzufügen" wählt der Mitarbeiter aus dem Lagerbestand "Popcorn Groß" und gibt "1" für die Menge ein. Dazu wählt der Mitarbeiter "Cola Groß" und gibt erneut "1" ein. +
+Die ausgewählten Snacks sind jetzt im Warenkorb aufgelistet. Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
+Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt werden.
+Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Ok".
 |Ergebnis(se)     a|
 - Es werden die Daten im System für den Lagerbestand und Umsatzstatistiken aktualisiert
 - Nach kurzer Zubereitungszeit erhält der Kunde seine Snacks

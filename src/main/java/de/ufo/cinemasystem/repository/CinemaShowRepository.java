@@ -1,6 +1,7 @@
 package de.ufo.cinemasystem.repository;
 
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
+import de.ufo.cinemasystem.models.CinemaHall;
 import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.Snacks;
 import org.springframework.data.domain.Sort;
@@ -66,6 +67,52 @@ public interface CinemaShowRepository extends CrudRepository<CinemaShow, Long> {
          */
 	default Streamable<CinemaShow> findCinemaShowsInPeriodOfTime(LocalDateTime fromDateTime, LocalDateTime toDateTime, Film film) {
 		return findCinemaShowsInPeriodOfTime(fromDateTime, toDateTime, film, DEFAULT_SORT);
+	}
+
+	/**
+	 * Finde Alle Kinovorführungen eines Films in einer bestimmten Zeit
+	 * @param fromDateTime Startzeitpunkt
+	 * @param toDateTime Endzeitpunkt
+	 * @param film Kinofilm
+	 * @param cinemaHall Kinosaal
+	 * @param sort Sortierung
+	 * @return Den Kriterien Entsprechende Kinovorführungen
+	 */
+	@Query("SELECT cs FROM CinemaShow cs WHERE cs.startDateTime BETWEEN :fromDateTime AND :toDateTime AND cs.film = :film AND cs.cinemaHall = :cinemaHall")
+	Streamable<CinemaShow> findCinemaShowsInPeriodOfTime(LocalDateTime fromDateTime, LocalDateTime toDateTime, Film film, CinemaHall cinemaHall, Sort sort);
+
+	/**
+	 * Finde Alle Kinovorführungen eines Films in einer bestimmten Zeit
+	 * @param fromDateTime Startzeitpunkt
+	 * @param toDateTime Endzeitpunkt
+	 * @param film Kinofilm
+	 * @param cinemaHall Kinosaal
+	 * @return Den Kriterien Entsprechende Kinovorführungen
+	 */
+	default Streamable<CinemaShow> findCinemaShowsInPeriodOfTime(LocalDateTime fromDateTime, LocalDateTime toDateTime, Film film, CinemaHall cinemaHall) {
+		return findCinemaShowsInPeriodOfTime(fromDateTime, toDateTime, film, cinemaHall, DEFAULT_SORT);
+	}
+
+	/**
+	 * Finde Alle Kinovorführungen eines Films in einer bestimmten Zeit
+	 * @param fromDateTime Startzeitpunkt
+	 * @param toDateTime Endzeitpunkt
+	 * @param cinemaHall Kinosaal
+	 * @param sort Sortierung
+	 * @return Den Kriterien Entsprechende Kinovorführungen
+	 */
+	@Query("SELECT cs FROM CinemaShow cs WHERE cs.startDateTime BETWEEN :fromDateTime AND :toDateTime AND cs.cinemaHall = :cinemaHall")
+	Streamable<CinemaShow> findCinemaShowsInPeriodOfTime(LocalDateTime fromDateTime, LocalDateTime toDateTime, CinemaHall cinemaHall, Sort sort);
+
+	/**
+	 * Finde Alle Kinovorführungen eines Films in einer bestimmten Zeit
+	 * @param fromDateTime Startzeitpunkt
+	 * @param toDateTime Endzeitpunkt
+	 * @param cinemaHall Kinosaal
+	 * @return Den Kriterien Entsprechende Kinovorführungen
+	 */
+	default Streamable<CinemaShow> findCinemaShowsInPeriodOfTime(LocalDateTime fromDateTime, LocalDateTime toDateTime, CinemaHall cinemaHall) {
+		return findCinemaShowsInPeriodOfTime(fromDateTime, toDateTime, cinemaHall, DEFAULT_SORT);
 	}
 
         /**

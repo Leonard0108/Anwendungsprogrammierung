@@ -71,7 +71,8 @@ public class TicketDataInitializer implements DataInitializer {
 		LOG.info("Creating default ticket entries.");
 
 		Random random = new Random();
-		List<CinemaShow> allCinemaShow = cinemaShowRepository.findAll().toList();
+		// All CinemaShows, without CinemaShows with Film-ID = 2, for remove and edit Cinema-Show Tests
+		List<CinemaShow> allCinemaShow = cinemaShowRepository.findAll().filter(cs -> cs.getFilm().getId() != 2).toList();
 		int seatRowCount = 12;
 		int seatPositionCount = 18;
 		for(int i = 0; i < 100; i++) {

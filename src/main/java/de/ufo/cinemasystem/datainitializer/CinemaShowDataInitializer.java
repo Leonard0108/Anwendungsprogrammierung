@@ -74,7 +74,7 @@ public class CinemaShowDataInitializer implements DataInitializer {
 			);
 		}
 
-		// garantierte 2 CinemaShows mit Film Id = 2, ViewCinemaShowController Test
+		// garantierte 3 CinemaShows mit Film Id = 2 und 2 mit Id = 1, ViewCinemaShowController Test
 		Optional<Film> film2 = filmRepository.findById(2L);
 		if(film2.isPresent()) {
 			Film film = film2.get();
@@ -84,11 +84,42 @@ public class CinemaShowDataInitializer implements DataInitializer {
 				film,
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
 			);
-		}
-		if(film2.isPresent()) {
-			Film film = film2.get();
 			cinemaShowService.createCinemaShow(
 				LocalDateTime.now().plusDays(6).plusHours(10),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().minusHours(3).minusMinutes(45),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(5).plusHours(14),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(5).plusHours(18),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+		}
+		Optional<Film> film1 = filmRepository.findById(1L);
+		if(film1.isPresent()) {
+			Film film = film1.get();
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(13).plusHours(8),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(14).plusHours(12),
 				film.getPrice(),
 				film,
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))

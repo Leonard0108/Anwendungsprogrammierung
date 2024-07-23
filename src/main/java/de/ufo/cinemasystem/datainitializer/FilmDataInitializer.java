@@ -85,7 +85,7 @@ public class FilmDataInitializer implements DataInitializer {
 			);
 
 			LocalDateTime date = LocalDateTime.now().minusWeeks(2);
-			final int max = i >= 5 ? 3 : 5;
+			final int max = i >= 5 ? 4 : 6;
 			for(int j = 0; j < max; j++) {
 				film.addRentWeek(new YearWeekEntry(date.getYear(), AdditionalDateTimeWorker.getWeekOfYear(date)));
 				date = date.plusWeeks(1);

@@ -117,7 +117,7 @@ Für die Ausführung der Anwendung ist die folgende (oder neuere) Java-Version e
 Zur Verwendung der Anwendung sind die folgenden (oder neuere) Browser-Versionen erforderlich:
 
 - Edge 124.0
-- Firefox 126.0
+- Firefox 128.0
 - Google Chrome 126.0
 - Opera 109.0
 
@@ -195,6 +195,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 ** `buissness-data-dashboard.html`: Betrachtungszeitraum ändern
 
 
+
 === Verwendung externer Frameworks
 
 [options="header"]
@@ -210,6 +211,7 @@ Weiße Kästen geben Links oder Knöpfe an, mit denen die Seite gewechselt werde
 === Offene Punkte
 
 * [F0112]  Ticket-Tausch (Kann-Kriterium)
+* Ticket-Rückgabe
 * Datenschutzrichtlinie: Aktuell nur ein Arbeitshinweis, währe vor Inbetriebnahme zu ersetzen
 * Ungelöstes Problem: `SpotsViewController` gibt keinen korrekten `Content-Type`-Header zurück
 
@@ -308,30 +310,27 @@ image::./models/design/LoginSystem/Klassendiagramm.drawio.svg[Class diagram, 100
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung
-|DeleteReservationController |Spring MVC-Controller für das Anzeigen und Löschen von Reservierungen
 
-|Film |Modellklasse für Filme
+|LoginController
+|Spring MVC-Controller für Login und Registrierung
 
-|FilmDataInitialiser
-|Eine Implementieruung des DataInitialiser-Interfaces, um automatisch bei Programmstart Dummy-Daten zu erzeugen
+|LoginForm
+|Repräsentiert das Loginformular im Modell
 
-|FilmRepository
-|Repository-Interface zum Verwalten von Filmen
+|RegistrationForm
+|Repräsentiert das Registrierungsformular im Modell
 
-|IndexController
-|Spring MVC-Controller für die Startseite (URL-Pfad / ) der Anwendung
+|UserEntry
+|Zusätzliche Repräsentation von Nutzerkonten
 
-|MakeReservationController
-|Spring MVC-Controller für das Erstellen von Reservierungen
+|UserIdentifier
+|Primärschlüssel von Nutzerkonten basierend auf UUID's
 
-|Reservation
-|Datenklasse für Reservierungen
+| UserRepository
+| CRUD-Repository für Nutzereinträge
 
-|ReservationRepository
-|Repository-Interface zum Verwalten von Reservierungen
-
-|ViewProgramController
-|Gemeinsamer Spring MVC-Controller mit dem Operativsystem zum Anzeigen und ändern des Programms
+|UserService
+|Service für die Erstellung von Nutzerkonten
 |===
 
 

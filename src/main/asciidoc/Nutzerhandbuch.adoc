@@ -6,7 +6,7 @@
 
 == Einleitung
 
-...
+Dieses Dokument dient als Nutzerhandbuch für das Kinosystem der UFO Kinos und soll ihnen dabei helfen, das System zu benutzen.
 
 == Systemanforderungen
 
@@ -54,7 +54,6 @@ Im nachfolgenden werden die wichtigsten Funktionen erläutert.
 
 === Loginsystem
 
-...
 
 ==== Anmelden
 
@@ -89,7 +88,6 @@ Um sich als Kunde zu registrieren gehen sie auf http://127.0.0.1:8080/registrati
 
 === Kundenportal
 
-...
 
 
 ==== Plätze Reservieren
@@ -127,12 +125,11 @@ Um das aktuelle Programm einzusehen, gehen Sie auf http://127.0.0.1:8080/current
 
 === Verwaltungssystem
 
-...
 
 ==== Programm verwalten
 
 Um das Programm verwalten zu können, müssen sie als AUTHORIZED_EMPLOYEE oder BOSS eingeloggt sein. Gehen sie zum hinzufügen von Programmpunkten auf http://127.0.0.1:8080/current-films
-Um Programmpunkte zu ändern oder zu löschen, gehen sie auf obiger Seite auf den fraglichen Programmpunkt. Der Saal kann nur durch löschen und neuanlegen geändert werden, damit die Platzzuordnung funktioniert.
+Um Programmpunkte zu ändern oder zu löschen, gehen sie auf obiger Seite auf den fraglichen Programmpunkt. Der Saal kann nur durch löschen und neuanlegen der Veranstaltung geändert werden, damit die Platzzuordnung funktioniert.
 Wenn sie einen Programmpunkt löschen, beachten sie bitte, dass dadurch jegliche Reservierungen unwiederufflich gelöscht werden. Sie können keine Veranstaltung löschen, für die Tickets verkauft wurden. Sie können erst dann Veranstaltungen für einen
 Film anlegen, wenn der Ticketpreis festgelegt wurde. Veranstaltungen dürfen sich einschließlich eines 10 min. Puffers davor und danach nicht überschneiden. Sie können keine 
 Vorführung anlegen, wenn der Film im Fraglichen Zeitpunkt nicht entliehen wurde.
@@ -148,8 +145,6 @@ Um das Lager verwalten zu können, müssen sie als AUTHORIZED_EMPLOYEE oder BOSS
 
 === Operativsystem
 
-...
-
 ==== Saalverwaltung 
 
 Um Säle verwalten zu können, müssen sie als BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/manage/rooms
@@ -163,6 +158,7 @@ Um die Wirtschaftsstatistik einsehen, müssen sie als BOSS eingeloggt sein. Gehe
 ==== Preise anpassen
 
 Um die Preise anpassen zu können, müssen sie als BOSS eingeloggt sein. Gehen sie dann auf http://127.0.0.1:8080/manage/pricing
+Beachten Sie, dass autorisierte Mitarbeiter ab dem Zeitpunkt, da der Preis gesetzt wurde, Veranstaltungen für diesen Film erstellen können.
 
 
 ==== Personalverwaltung 
@@ -171,7 +167,6 @@ Um das Personal zu verwalten, müssen sie als BOSS eingeloggt sein. Gehen sie da
 
 === Kassensubsystem
 
-...
 
 ==== Tickets verkaufen
 

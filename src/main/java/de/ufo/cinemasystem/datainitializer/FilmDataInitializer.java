@@ -16,6 +16,8 @@ import org.springframework.util.Assert;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,6 +30,8 @@ import java.util.Random;
 // Testdaten für die Filme werden als erstes erzeugt (Order = 1)
 @Order(2)
 public class FilmDataInitializer implements DataInitializer {
+    
+        private static final Logger LOG = LoggerFactory.getLogger(CinemaHallDataInitializer.class);
 
 	private final FilmRepository filmRepository;
 
@@ -56,6 +60,8 @@ public class FilmDataInitializer implements DataInitializer {
 		if(filmRepository.findAll().iterator().hasNext()) {
 			return;
 		}
+                
+                LOG.info("Erstelle Film-Enträge...");
 
 		Random random = new Random();
 		List<Integer> fsks = List.of(0,6,12,16,18);

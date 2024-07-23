@@ -61,7 +61,7 @@ Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genu
 
 Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
 
-Mozilla Firefox, Version 125.0.2+
+Mozilla Firefox, Version 128.0+
 
 Google Chrome, Version 126.0.6439+
 

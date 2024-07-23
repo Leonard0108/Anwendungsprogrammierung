@@ -4,7 +4,6 @@ image:https://github.com/HOME-programming-lab/SP2024-G4-Kinobetreiber/actions/wo
 == Wichtige Dokumente
 
 * link:src/main/asciidoc/protocols[Meeting-Protokolle]: Meeting- und Reviewprotokolle.
-* link:src/main/asciidoc/time_recording.adoc[Zeiterfassung]: eine Hilfestellung mit der Sie Ihre individuellen Arbeitszeiten erfassen können.
 * link:src/main/asciidoc/pflichtenheft.adoc[Anforderungsspezifikation (Pflichtenheft)]
 * link:src/main/asciidoc/developer_documentation.adoc[Entwicklerdokumentation (Software-Entwurf)]
 * link:src/main/asciidoc/Endpoints.adoc[Endpunkte-Übersicht]

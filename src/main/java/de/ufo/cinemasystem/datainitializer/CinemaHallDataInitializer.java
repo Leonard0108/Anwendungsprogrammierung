@@ -11,6 +11,8 @@ import org.springframework.util.Assert;
 import de.ufo.cinemasystem.repository.CinemaHallRepository;
 
 import java.util.AbstractMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * DataInitialiser für Kinosäle
@@ -19,6 +21,8 @@ import java.util.AbstractMap;
 @Component
 @Order(3)
 public class CinemaHallDataInitializer implements DataInitializer {
+    
+        private static final Logger LOG = LoggerFactory.getLogger(CinemaHallDataInitializer.class);
 
 	private final CinemaHallRepository cinemaHallRepository;
 	private final CinemaHallService cinemaHallService;
@@ -43,6 +47,7 @@ public class CinemaHallDataInitializer implements DataInitializer {
 		if(cinemaHallRepository.findAll().iterator().hasNext()) {
 			return;
 		}
+                LOG.info("Erstelle Kinosäle...");
 
 		// Erstelle 6 Kinosäle:
 		for(int i = 0; i < 6; i++) {

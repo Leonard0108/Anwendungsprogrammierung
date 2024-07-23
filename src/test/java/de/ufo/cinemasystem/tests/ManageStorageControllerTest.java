@@ -1,26 +1,20 @@
 package de.ufo.cinemasystem.tests;
 
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.Snacks;
 import de.ufo.cinemasystem.repository.SnacksRepository;
 import de.ufo.cinemasystem.services.SnacksService;
-import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.CollectionUtils;
 import org.salespointframework.catalog.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.util.Streamable;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -168,7 +162,7 @@ public class ManageStorageControllerTest {
 		Snacks snack = snackOpt.get();
 
 		// Prüft, ob Name, SnackType richtig gesetzt wurden und kein Bild existiert
-		assert (snack.getName().equals(snackName) && snack.getSnackType() == snackType && snack.getImageBase64() == null);
+		assert (snack.getName().equals(snackName) && snack.getSnackType().equals(snackType.toString()) && snack.getImageBase64() == null);
 	}
 
 	@Test
@@ -199,7 +193,7 @@ public class ManageStorageControllerTest {
 		Snacks snack = snackOpt.get();
 
 		// Prüft, ob Name, SnackType richtig gesetzt wurden und kein Bild existiert
-		assert (snack.getName().equals(snackName) && snack.getSnackType() == snackType &&
+		assert (snack.getName().equals(snackName) && snack.getSnackType().equals(snackType.toString()) &&
 			snack.getImageBase64().equals(Base64.getEncoder().encodeToString(snackImage.getBytes())));
 	}
 

@@ -78,19 +78,21 @@ public class ManageStorageController {
 	@PreAuthorize("hasAnyRole('BOSS', 'AUTHORIZED_EMPLOYEE')")
 	@PostMapping("/manage/storage/item/new")
 	public String newItem(@RequestParam("whatNew") String newSnack, @RequestParam("itemType") Snacks.SnackType snackType,
-						  @RequestPart("imageFile") MultipartFile file, RedirectAttributes redirectAttributes) {
+						  @RequestPart(value = "imageFile", required = false) MultipartFile file, RedirectAttributes redirectAttributes) {
 		if(snacksRepository.findAll().stream().anyMatch(e -> e.getName().equalsIgnoreCase(newSnack))) {
 			redirectAttributes.addFlashAttribute("errorMessageNew", "Item bereits vorhanden!");
 			return "redirect:/manage/storage";
 		}
-                String ctype = file.getContentType();
-                if(!file.isEmpty() && ctype == null){
-                    redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
-                    return "redirect:/manage/storage";
-                }
-                if((!file.isEmpty()) && (!ctype.startsWith("image/")) ){
-                    redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
-                    return "redirect:/manage/storage";
+                if(file != null && !file.isEmpty()){
+					String ctype = file.getContentType();
+					if(ctype == null) {
+						redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
+						return "redirect:/manage/storage";
+					}
+					//if((!ctype.startsWith("images/"))) {
+					//	redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
+					//	return "redirect:/manage/storage";
+					//}
                 }
                 
                 if(newSnack == null || newSnack.isBlank()){
@@ -98,7 +100,7 @@ public class ManageStorageController {
                     return "redirect:/manage/storage";
                 }
                 
-		if(!file.isEmpty()) {
+		if(file != null && !file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
                                 //try reading it first, in case someone attempts to manipulate the content type header.
@@ -163,7 +165,7 @@ public class ManageStorageController {
 		boolean error = false;
 		for(int i = 0; i < count; i++) {
 			try {
-				this.snacksService.setStock(snackIds.get(i), snackCounters.get(i));
+				this.snacksService.setStock(snackIds.get(i), snackCounters.get(i) > 0 ? snackCounters.get(i) : 0);
 			}catch (IllegalArgumentException ex) {
 				error = true;
 			}

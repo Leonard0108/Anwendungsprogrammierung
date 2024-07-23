@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.datainitializer;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.salespointframework.core.DataInitializer;
@@ -67,6 +68,27 @@ public class CinemaShowDataInitializer implements DataInitializer {
 			Film film = allFilms.get(random.nextInt(allFilms.size()));
 			cinemaShowService.createCinemaShow(
 				LocalDateTime.now().plusDays(i),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+		}
+
+		// garantierte 2 CinemaShows mit Film Id = 2, ViewCinemaShowController Test
+		Optional<Film> film2 = filmRepository.findById(2L);
+		if(film2.isPresent()) {
+			Film film = film2.get();
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(5).plusHours(8),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+		}
+		if(film2.isPresent()) {
+			Film film = film2.get();
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(6).plusHours(10),
 				film.getPrice(),
 				film,
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))

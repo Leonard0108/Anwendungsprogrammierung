@@ -55,8 +55,10 @@ class DeleteReservationControllerIntegrationTests {
     @Test
     @WithMockUser(username = "user", roles = "USER")
     void testDeleteReservation() throws Exception {
+        System.out.println("IntegrationTest: DeleteReservationController: check delete");
         mvc.perform(get("/my-reservations"))
                 .andExpect(status().isOk());
+        System.out.println("IntegrationTest: DeleteReservationController: creating dummy reservation");
         //create a dummy reservation
         Reservation work = new Reservation(uRepo.findByUserAccountUsername("user"), cinemaShowRepository.findById(5L).orElseThrow());
 
@@ -89,6 +91,7 @@ class DeleteReservationControllerIntegrationTests {
         mvc.perform(post("/reserve-spots/commit")
                 .sessionAttr("current-reservation", work)
         ).andExpect(status().is3xxRedirection());
+        System.out.println("IntegrationTest: DeleteReservationController: actual check delete ");
         //check the list once more
         mvc.perform(get("/my-reservations"))
                 .andExpect(status().isOk());
@@ -107,6 +110,7 @@ class DeleteReservationControllerIntegrationTests {
     @Test
     @WithMockUser(username = "boss", roles = "BOSS")
     void testFindReservation() throws Exception {
+        System.out.println("IntegrationTest: DeleteReservationController: find reservation");
         mvc.perform(get("/reservations/find"))
                 .andExpect(status().isOk());
 

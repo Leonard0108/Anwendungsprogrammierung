@@ -89,6 +89,7 @@ class MakeReservationControllerIntegrationTest {
     @Test
     @WithMockUser(username = "user", roles = "USER")
     void testReservationFlow() throws Exception {
+        System.out.println("IntegrationTest: MakeReservationController: Flow-Test");
         CinemaShow toTest = null;
         List<CinemaShow> toList = showsRepo.findAll().toList();
         for (CinemaShow c : toList) {
@@ -100,6 +101,7 @@ class MakeReservationControllerIntegrationTest {
         if (toTest == null) {
             throw new InternalError("Couldn't find a cinemaShow to reserve spots in!");
         }
+        System.out.println("MakeReservationController: Testing on " + toTest.getId());
 
         MvcResult rv = mvc.perform(get("/reserve-spots/reserve/" + toTest.getId())) //
                 .andExpect(status().isOk()).andReturn();
@@ -280,7 +282,7 @@ class MakeReservationControllerIntegrationTest {
                     break out;
                 }
                 count +=1;
-                
+                System.out.println("MakeReservationController: (" + count + "/11)");
             }
         }
         

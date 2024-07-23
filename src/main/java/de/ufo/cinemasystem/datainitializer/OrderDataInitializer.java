@@ -70,11 +70,14 @@ public class OrderDataInitializer implements DataInitializer{
 
 		Random random = new Random();
 		List<Ticket> allTickets = ticketRepository.findAll().toList();
+                LOG.info("(" + allTickets.size() + " tickets)");
 		List<Snacks> allSnacks = snacksRepository.findAll().toList();
+                LOG.info("(" + allSnacks.size() + " snack types)");
 		List<CinemaShow> allShows = cinemaShowRepository.findAll().toList();
 		UserAccount.UserAccountIdentifier userId = userAccountManagement.findAll().toList().get(3).getId();
 
 		int generatedOrderCount = allShows.size();
+                LOG.info("(" + generatedOrderCount + " orders)");
 		Orders[] allOrders = new Orders[generatedOrderCount];
 
 		//Orders[] initialisieren: jede Order hat eine unterschiedliche CinemaShow
@@ -107,8 +110,8 @@ public class OrderDataInitializer implements DataInitializer{
 				allOrders[orderIndex].addSnacks(snack.getPrice());
 			}
 		}
-
-
+                
+                LOG.info("Almost done...");
 
 		//Order abschließen
 		for( int orderIndex = 0; orderIndex < generatedOrderCount; orderIndex++){

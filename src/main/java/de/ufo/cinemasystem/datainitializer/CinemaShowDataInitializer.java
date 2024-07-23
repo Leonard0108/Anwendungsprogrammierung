@@ -16,6 +16,8 @@ import de.ufo.cinemasystem.repository.CinemaHallRepository;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
 import de.ufo.cinemasystem.services.CinemaShowService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * DataInitialiser für Kinovorführungen
@@ -25,6 +27,8 @@ import de.ufo.cinemasystem.services.CinemaShowService;
 // Testdaten der Kinoveranstaltungen werden nach den Testdaten für die Filme und der Kinosäle erstellt (deshalb: Order = 3)
 @Order(4)
 public class CinemaShowDataInitializer implements DataInitializer {
+    
+        private static final Logger LOG = LoggerFactory.getLogger(CinemaShowDataInitializer.class);
 
 	private final CinemaShowRepository cinemaShowRepository;
 
@@ -54,6 +58,7 @@ public class CinemaShowDataInitializer implements DataInitializer {
 		if(cinemaShowRepository.findAll().iterator().hasNext()) {
 			return;
 		}
+                LOG.info("Erstelle Kinoveranstaltungen...");
 
 		Random random = new Random();
 		List<Film> allFilms = filmRepository.findAll().toList();

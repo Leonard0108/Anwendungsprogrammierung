@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-07-24T09:17:12.427Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.4 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="_TmaiiyF7UqO2QJ2kHX9" version="24.6.4" type="device">
+<mxfile host="Electron" modified="2024-07-24T09:57:51.500Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.4 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="MMDYE_0rP_PDjYfh2fPj" version="24.6.4" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1348" dy="709" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2175" dy="709" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -1221,6 +1221,135 @@
         </mxCell>
         <mxCell id="f6jFOahU2R-Q090BEiEr-153" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-149">
           <mxGeometry y="70" width="200" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-163" value="ViewProgramController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-1260" y="125" width="340" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-164" value="- cinemaShowRepository : CinemaShowRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="26" width="340" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-165" value="- cinemaShowService : CinemaShowService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="50" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-176" value="- cinemaHallRepository : CinemaHallRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="70" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-166" value="- filmRepository : FilmRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="90" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-178" value="- scheduledActivityService : ScheduledActivityService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="110" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-177" value="- deleteReservationController : DeleteReservationController" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="130" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-179" value="- reservationRepository : ReservationRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="150" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-167" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="170" width="340" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-169" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ ViewProgramController(&lt;/span&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;cinemaShowRepository : CinemaShowRepository,&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;cinemaShowService : CinemaShowService&lt;/div&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;cinemaHallRepository : CinemaHallRepository,&lt;/div&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;filmRepository : FilmRepository,&lt;/div&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;&lt;span style=&quot;background-color: initial; text-wrap: wrap;&quot;&gt;scheduledActivityService : ScheduledActivityService&lt;/span&gt;)&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="178" width="340" height="92" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-170" value="+ getCurrentWeekProgram(m : Model) : String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="270" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-171" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ getCurrentProgram(year : int,&amp;nbsp;&lt;/span&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;week : int, m : Model) : String&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="290" width="340" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-172" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ postNewProgram(redirectAttributes : RedirectAttributes,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;&amp;nbsp;year : int, week : int,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;text-wrap: nowrap; background-color: initial;&quot;&gt;film : Long,&lt;/span&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;room : Long, addTime : LocalDateTime) : String&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="330" width="340" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-173" value="+ detailCinemaShow(id : Long, m : Model) : String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="380" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-182" value="+ editCinemaShow(&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;redirectAttributes : RedirectAttributes,&lt;/span&gt;&lt;div&gt;id : Long, film : Long, editTime : LocalDateTime) : String&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="400" width="340" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-174" value="+ deleteCinemaShow(&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;redirectAttributes : RedirectAttributes,&lt;/span&gt;&lt;div&gt;id : Long) : String&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-163">
+          <mxGeometry y="440" width="340" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-189" value="ViewProgramController.CinemaShowDayEntry" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-1260" y="640" width="340" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-195" value="- dayDateHeadline : String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-189">
+          <mxGeometry y="26" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-197" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-189">
+          <mxGeometry y="46" width="340" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-198" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ CinemaShowDayEntry(dayDate : LocalDate,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;&amp;nbsp;cinemaShows : Streamable&amp;lt;CinemaShow&amp;gt;)&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-189">
+          <mxGeometry y="54" width="340" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-199" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ getCinemaShows() : Streamable&amp;lt;CinemaShow&amp;gt;&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-189">
+          <mxGeometry y="90" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-200" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ getDayDateHeadline() : String&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-189">
+          <mxGeometry y="110" width="340" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-205" value="RentFilmController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-1260" y="800" width="340" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-206" value="- cinemaShowRepository : CinemaShowRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="26" width="340" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-209" value="- filmRepository : FilmRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="50" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-213" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="70" width="340" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-214" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ RentFilmController(&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;filmRepository : FilmRepository&lt;/span&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;div style=&quot;text-wrap: nowrap;&quot;&gt;cinemaShowRepository : CinemaShowRepository&lt;span style=&quot;background-color: initial;&quot;&gt;)&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="78" width="340" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-215" value="+ getRentFilms(model : Model) : String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="130" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-216" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ getRentFilm(model : Model, film : Film) : String&lt;/span&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="150" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-217" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ postRentFilm(&lt;/span&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;redirectAttributes : RedirectAttributes,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;newSelectedRentWeeks : List&amp;lt;Long&amp;gt;,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;newDisabledCheckedRentWeeks : List&amp;lt;Long&amp;gt;)&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="170" width="340" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-218" value="+ addDetailNowAndPastWeeks(f&lt;span style=&quot;background-color: initial;&quot;&gt;ilm : Film,&amp;nbsp;&lt;/span&gt;allRangeYearWeeks :&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;List&amp;lt;YearWeekEntry&amp;gt;,&amp;nbsp;&lt;/span&gt;reservedWeeks :&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;HashMap&amp;lt;YearWeekEntry, Integer[]&amp;gt; ,&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;nowAndPastWeeks :&amp;nbsp;&lt;span style=&quot;white-space: normal;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;HashSet&amp;lt;YearWeekEntry&amp;gt;&lt;/span&gt;&lt;/span&gt;)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="220" width="340" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-219" value="+ getDetailStartYearWeekEntry(film : film) : YearWeekEntry" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="300" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-220" value="+ getDetailEndYearWeekEntry() : YearWeekEntry" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="320" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-221" value="&lt;div&gt;+ addDetailFutureWeeks(film : Film,&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;allRangeYearWeeks :&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;List&amp;lt;YearWeekEntry&amp;gt;,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;reservedWeeks :&amp;nbsp;&lt;/span&gt;HashMap&amp;lt;YearWeekEntry, Integer[]&amp;gt;,&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;blockedReservedWeeks :&amp;nbsp;&lt;/span&gt;HashSet&amp;lt;YearWeekEntry&amp;gt;)&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="340" width="340" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-222" value="+&amp;nbsp;getTotalSeatOccupancyValues(film : Film) : int[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-205">
+          <mxGeometry y="410" width="340" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-223" value="ManageStorageController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-1260" y="1270" width="340" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-224" value="- snacksRepository : SnacksRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="26" width="340" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-225" value="- snacksService : SnacksService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="50" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-226" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="70" width="340" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-227" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ ManageStorageController(&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;snacksRepository : SnacksRepository,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;snacksService, SnacksService)&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="78" width="340" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-228" value="+ showStorage(model : Model) : String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="130" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-230" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ newItem(newSnack : String,&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;snackType : Snacks.SnackType,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; text-wrap: nowrap;&quot;&gt;file : MultipartFile,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial; text-wrap: nowrap;&quot;&gt;redirectAttributes : RedirectAttributes&lt;/span&gt;&lt;span style=&quot;background-color: initial; text-wrap: nowrap;&quot;&gt;)&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="150" width="340" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f6jFOahU2R-Q090BEiEr-236" value="&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;+ saveItems(snackIds : List&amp;lt;Product.ProductIdentifier&amp;gt;,&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial; text-wrap: nowrap;&quot;&gt;snackCounters : List&amp;lt;Integer&amp;gt;,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial; text-wrap: nowrap;&quot;&gt;redirectAttributes : RedirectAttributes&lt;/span&gt;&lt;span style=&quot;background-color: initial; text-wrap: nowrap;&quot;&gt;)&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="f6jFOahU2R-Q090BEiEr-223">
+          <mxGeometry y="200" width="340" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.salespointframework.order.Cart;
+import org.salespointframework.order.OrderLine;
 import org.salespointframework.order.OrderManagement;
 import org.salespointframework.order.OrderStatus;
 import org.salespointframework.useraccount.UserAccount;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Orders;
+import de.ufo.cinemasystem.models.Ticket;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.ReservationRepository;
 import de.ufo.cinemasystem.repository.TicketRepository;
@@ -89,6 +91,7 @@ public class SwapTicketsController {
 			}
 		}
 		m.addAttribute("shows", toOffer);
+        m.addAttribute("active", null);
 		m.addAttribute("errors", errors);
         return "swap-tickets";
     }
@@ -101,10 +104,17 @@ public class SwapTicketsController {
         List<String> errors = new ArrayList<>();
         String ticketName = "Ticket " + String.valueOf(100 * toRowID(oldspot.toUpperCase()) + Integer.parseInt(oldspot.substring(1)));
         Orders work = getOrderbyShow(show, ticketName);
-        if (session.getAttribute(orderSessionKey) == null) {
-			session.setAttribute(orderSessionKey, work);
-		}
+        
         if (work != null) {
+            if (session.getAttribute(orderSessionKey) == null) {
+                session.setAttribute(orderSessionKey, work);
+            }
+            List<Ticket> tickets = new ArrayList<>();
+            List<OrderLine> products = work.getOrderLines().toList();
+            for (OrderLine product : products) {
+                ticketRepo.findByName(product.getProductName()).stream().forEachOrdered(ticket -> tickets.add(ticket));
+            }
+            m.addAttribute("oldTickets", tickets);
             work.isOpen();
         }else{
             errors.add("Keine passende Bestellung zu dem Ticket gefunden!");
@@ -128,6 +138,7 @@ public class SwapTicketsController {
         m.addAttribute("ticketNeu",ticketNeu);
         m.addAttribute("show", work.getCinemaShow());
         m.addAttribute("activeOrder", work);
+        m.addAttribute("active", work);
 		m.addAttribute("errors", errors);
         return "swap-tickets";
     }

@@ -210,8 +210,8 @@ public class Film implements Comparable<Film>, PriceChange {
 
 	public int getBasicRentFee(YearWeekEntry yearWeekEntry) {
 		List<YearWeekEntry> yearWeekEntries = this.getRentWeeks().stream().toList();
-		for(int i = 0; i < yearWeekEntries.size(); i++) {
-			if(yearWeekEntries.get(i).equals(yearWeekEntry)) {
+		for(int i = 1; i <= yearWeekEntries.size(); i++) {
+			if(yearWeekEntries.get(i - 1).equals(yearWeekEntry)) {
 				return getBasicRentFee(i);
 			}
 		}

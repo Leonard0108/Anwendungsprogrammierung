@@ -86,13 +86,13 @@ public class ManageStorageController {
                 if(file != null && !file.isEmpty()){
 					String ctype = file.getContentType();
 					if(ctype == null) {
-						redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
+						redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstütztes Dateiformat!");
 						return "redirect:/manage/storage";
 					}
-					//if((!ctype.startsWith("images/"))) {
-					//	redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstüztes Dateiformat!");
-					//	return "redirect:/manage/storage";
-					//}
+					if((!ctype.startsWith("images/"))) {
+						redirectAttributes.addFlashAttribute("errorMessageNew", "Nicht unterstütztes Dateiformat!");
+						return "redirect:/manage/storage";
+					}
                 }
                 
                 if(newSnack == null || newSnack.isBlank()){

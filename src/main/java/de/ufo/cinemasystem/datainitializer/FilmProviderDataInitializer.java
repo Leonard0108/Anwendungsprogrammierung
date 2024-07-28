@@ -31,6 +31,10 @@ public class FilmProviderDataInitializer implements DataInitializer {
 
 	@Override
 	public void initialize() {
+
+		if(filmProviderRepository.findAll().iterator().hasNext()) {
+			return;
+		}
 		for(int i = 1; i <= 3; i++) {
 			this.filmProviderRepository.save(new FilmProvider("Film-Anbieter " + i));
 		}

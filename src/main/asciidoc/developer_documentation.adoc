@@ -266,23 +266,42 @@ image::./models/design/Kundenportal/kundenportal_entwurfsklassendiagram.drawio.s
 
 ==== Verwaltungssystem
 
-image::./models/design/Verwaltungssystem/verwaltung_klasse.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Verwaltungssystem", align=center]
+image::./models/design/Verwaltungssystem/verwaltung_klasse_v2.drawio.svg[Class diagram, 100%, 100%, pdfwidth=100%, title= "Entwurfsklassendiagramm des Verwaltungssystem", align=center]
 
 [options="header"]
 |===
 |Klasse/Enumeration |Beschreibung
 | CinemaHall | Modellklasse für Kino-Säle
-| CinemaHallRepository | Repository-Interface zum Verwalten von Kino-Sälen
+| CinemaHallRepository | Repository-Interface zum Verwalten von Kino-Sälen auf Speicherebene
+| CinemaHallService | Extra-Klasse, welche weitere Verwaltungsmethoden für CinemaHall-Objekte bereitstellt
 | CinemaShow | Modellklasse für Kino-Vorführungen
 | CinemaShowDayEntry | Meta-Klasse, welche alle Veranstaltungen einer Spielwoche im Kino beinhaltet
-| CinemaShowRepository | Repository-Interface zum Verwalten von Kino-Vorführungen
+| CinemaShowRepository | Repository-Interface zum Verwalten von Kino-Vorführungen auf Speicherebene
+| CinemaShowService | Extra-Klasse, welche weitere Verwaltungsmethoden für CinemaShow-Objekte bereitstellt
+| CinemaShowUpdater | Extra-Klasse, zum effizienten Updaten von bestehenden CinemaShow-Objekten
+| CinemaShowDayEntry | Datenklasse, zur temporären Speicherung von allen CinemaShows an einem Tag für Thymeleaf
+| DeleteReservationController | SpringMVC Controller zum Löschen von Reservierungen
+| Event | Modellklasse für Events
+| EventRepository | Repository-Interface zum Verwalten von Events auf Speicherebene
+| Film | Modellklasse für Filme
 | FilmProvider | Modellklasse für Film-Anbieter
-| FilmProviderRepository | Repository-Interface zum Verwalten von Film-Anbietern
+| FilmProviderRepository | Repository-Interface zum Verwalten von Film-Anbietern auf Speicherebene
+| FilmRepository | Repository-Interface zum Verwalten von Filmen auf Speicherebene
 | ManageStorageController | SpringMVC Controller für das Anzeigen, Anlegen und Bearbeiten (hinzufügen und entfernen) von Items (aktuell nur Snacks) im Lager des Kinos
-| RentFilmController | SpringMVC Controller für das Anzeigen von aktuell geliehenen Filmen, die Verlängerung der Film-Leihe, Anzeigen von neuen verfügbaren Filmen und die Möglichkeit diese auszuleihen.
+| PlaceGroup | Enumeration für verschiedene Platzgruppen in einem Kinosaal, welche sich auf den Ticket-Preis auswirkt
+| RentFilmController | SpringMVC Controller für das Anzeigen von aktuell geliehenen Filmen, die Verlängerung der Film-Leihe, Anzeigen von neuen verfügbaren Filmen und die Möglichkeit diese auszuleihen oder geliehene Filme zu stornieren.
+| ReservationRepository | Repository-Interface zum Verwalten von Reservierungen auf Speicherebene
+| ScheduledActivity | Interface für die Event- und CinemaShow Klassen
+| ScheduledActivityService | Extra-Klasse, welche weitere Verwaltungsmethoden für ScheduledActivity nutzende Objekte bereitstellt
 | Seat | Modellklasse für Plätze
-| SnacksRepository | Repository-Interface zum Verwalten von Snacks
-| ViewProgramController | Gemeinsamer SpringMVC Controller mit dem Kundenportal für das Anzeigen des (aktuellen) Kinoprogramms (wochenweise) und das Hinzufügen von neuen Kino-Vorführungen
+| SeatOccupancy | Enumeration für verschiedene Personengruppen, welche sich auf den Ticket-Preis auswirkt
+| SeatRepository | Repository-Interface zum Verwalten von Seats auf Speicherebene
+| SeatService | Extra-Klasse, welche weitere Verwaltungsmethoden für Seat-Objekte bereitstellt
+| Snacks | Modellklasse für Snacks
+| SnackService | Extra-Klasse, welche weitere Verwaltungsmethoden für Snack-Objekte bereitstellt
+| SnackType | Enumeration, für die Unterscheidung von Snacks in Essen und Getränke
+| SnacksRepository | Repository-Interface zum Verwalten von Snacks auf Speicherebene
+| ViewProgramController | Gemeinsamer SpringMVC Controller mit dem Kundenportal für das Anzeigen des (aktuellen) Kinoprogramms (wochenweise) und das Hinzufügen, Bearbeiten und Entfernen von neuen Kino-Vorführungen mit der Verwaltungskomponente
 |===
 
 
@@ -366,9 +385,11 @@ image::./models/design/Kassensubsystem/SequenzDiagramm_Kassensubsystem.svg[Seque
 image::./models/design/Kundenportal/kundenportal_sequenzdiagram.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Kundenportals für die MakeReservationController-Funktionen", align=center]
 
 === Verwaltungssystem
-image::./models/design/Verwaltungssystem/verwaltung_sequenz_program.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen", align=center]
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_program_v2.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ViewProgramController-Funktionen (Programm anzeigen & Programm hinzugfügen)", align=center]
 
-image::./models/design/Verwaltungssystem/verwaltung_sequenz_verleih.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die RentFilmController-Funktionen", align=center]
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_verleih_v2.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die RentFilmController-Funktionen", align=center]
+
+image::./models/design/Verwaltungssystem/verwaltung_sequenz_storage_v1.drawio.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Verwaltungssystems für die ManageStorageController-Funktionen", align=center]
 
 === Operativsystem
 image::./models/design/Operativsystem/Sequenzdiagramm/Operativsystem_Sequenzdiagramm.svg[Sequenz diagram, 100%, 100%, pdfwidth=100%, title= "Sequenzdiagramm des Operativsystems für die Event Controller Funktionen", align=center]

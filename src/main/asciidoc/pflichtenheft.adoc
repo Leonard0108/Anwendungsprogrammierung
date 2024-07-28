@@ -309,10 +309,10 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 |Name                       |vor Ort/telefonisch reservieren
 |Beschreibung               |Ein Mitarbeiter legt für eine Person eine Reservierung an.
 |Rollen                     |Mitarbeiter, Person
-|Auslöser                   |Die Person will den Mitarbeiter persönlich nach einer Reservierung fragen. Der Mitarbeiter muss dann auf "Mitarbeiter reserviert für Kunde"-Button klicken.
+|Auslöser                   |Die Person will den Mitarbeiter persönlich nach einer Reservierung fragen. Der Mitarbeiter muss dann auf "Plätze Reservieren"-Button klicken.
 |Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
 |grundlegende Schritte     a|
-1. Person fragt den Mitarbeiter (vor Ort oder telefonisch) nach einer Reservierung. Der Mitarbeiter klickt auf den "Mitarbeiter reserviert für Kunde"-Button. Das System öffnet ein Untermenü, welches ein Formular für eine neue Reservierung bereitstellt.
+1. Person fragt den Mitarbeiter (vor Ort oder telefonisch) nach einer Reservierung. Der Mitarbeiter klickt auf den "Plätze Reservieren"-Button. Das System öffnet ein Untermenü, welches ein Formular für eine neue Reservierung bereitstellt.
 2. Der Mitarbeiter sucht im aktuellen Kinoprogramm nach der gewünschten Vorführung (Film, Datum und/oder Uhrzeit) und wählt die gewünschte Vorführung der Person aus.
 3. Der Mitarbeiter gibt den Kundennamen ein.
 4. Der Mitarbeiter fügt Tickets hinzu, durch das Klicken auf den Button "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Durch das Drücken auf den "Ticket hinzufügen"-Button:
@@ -331,10 +331,10 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 |Name                       |vor Ort/telefonisch stornieren
 |Beschreibung               |Ein Mitarbeiter storniert für eine Person eine Reservierung.
 |Rollen                     |Mitarbeiter, Person
-|Auslöser                   |Die Person will das der Mitarbeiter persönlich eine getätigte Reservierung storniert. Der Mitarbeiter muss dann auf "Mitarbeiter storniert für Kunde"-Button klicken.
+|Auslöser                   |Die Person will das der Mitarbeiter persönlich eine getätigte Reservierung storniert. Der Mitarbeiter muss dann auf "Stornieren"-Button klicken.
 |Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Und es muss eine passende Reservierung bereits vorliegen.
 |grundlegende Schritte     a|
-1. Person gibt den Auftrag an den Mitarbeiter (vor Ort oder telefonisch) eine Reservierung zu stornieren. Der Mitarbeiter klickt auf den "Mitarbeiter storniert für Kunde"-Button. Das System öffnet ein Untermenü, in welchem der Mitarbeiter eine Reservierung suchen kann.
+1. Person gibt den Auftrag an den Mitarbeiter (vor Ort oder telefonisch) eine Reservierung zu stornieren. Der Mitarbeiter klickt auf den "Stornieren"-Button. Das System öffnet ein Untermenü, in welchem der Mitarbeiter eine Reservierung suchen kann.
 2. Der Mitarbeiter sucht nach einer passenden Reservierung (Name des Kundes, Reservierungsnummer oder Nutzeraccount (Benutzername, E-Mail)).
 . Wenn Mitarbeiter die Reservierung findet: Mitarbeiter klickt auf diese. Das System öffnet den Reservierungs-Eintrag.
 . sonst: Fehlermeldung
@@ -484,7 +484,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 |Auslöser                   |Autorisierter Mitarbeiter will aktuelle Filmstatistik einsehen. Er drückt auf den "Filmstatistik einsehen"-Button.
 |Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
 |grundlegende Schritte     a|
-1. Autorisierter Mitarbeiter drückt auf den "Filmstatistik einsehen"-Button. Das System öffnet eine Unteransicht. Das System zeigt aktuell laufenden Filme an. Dabei wird für jeden Film die Gesamtauslastung der Kinosäle angezeigt.
+1. Autorisierter Mitarbeiter drückt auf den "Filme-Verleih"-Button und anschließend auf einen bestimmten Film. Das System öffnet eine Unteransicht. Dabei wird für den Film die Gesamtauslastung der Kinosäle aller Vorführungen angezeigt.
 
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0351>>
@@ -546,14 +546,15 @@ _Mitarbeiter_
 |===
 |ID                         |**<<UC0430>>**
 |Name                       |Preisgestaltung
-|Beschreibung               |Der Boss ordnet einer Veranstaltung einen Preis zu.
+|Beschreibung               |Der Boss ordnet eines Films oder einem Snack einen Preis zu.
 |Rollen                     |Boss
-|Auslöser                   |Boss will Vorführung-Ticket-Preise festlegen oder bearbeiten.
+|Auslöser                   |Boss will Film-Ticket-Preise oder Snack-Preise festlegen oder bearbeiten.
 |Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Es existieren bereits Vorführungen.
 |grundlegende Schritte     a|
 Boss drückt auf den "Preisgestaltung"-Button. Das System öffnet eine Unteransicht.
-1. Der Boss wählt eine Veranstaltung und einen Kinosaal
-2. Der Boss legt alle Preiskategorien preislich fest.
+1. Optional: Der Boss sucht nach bereits vorhandenen Film- oder Snack-Preisen.
+2. Der Boss wählt einen Film oder einen Snack aus.
+2. Der Boss gibt den neuen Preis ein.
 3. Der Boss bestätigt die Eingabe durch den "Preise ändern"-Button.
 . Wenn Preiszuordnung bereits vorhanden: System überschreibt aktuelle Preise.
 . Sonst: System legt neue Preiszuordnung an.

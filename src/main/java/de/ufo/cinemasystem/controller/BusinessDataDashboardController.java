@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.controller;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.*;
 import de.ufo.cinemasystem.repository.*;
 import org.javamoney.moneta.Money;
@@ -114,7 +115,8 @@ public class BusinessDataDashboardController {
 			//FilmLeih Kosten
 			for (Film film : filmRepository.findAll()) {
 				if (film.isRent(day.atStartOfDay())) {
-					Money filmRentCost = Money.of(film.getBasicRentFee() / 7.0, "EUR");
+					YearWeekEntry yearWeekEntry = new YearWeekEntry(day.getYear(), AdditionalDateTimeWorker.getWeekOfYear(day));
+					Money filmRentCost = Money.of(film.getBasicRentFee(yearWeekEntry) / 7.0, "EUR");
 					dailyExpenses = dailyExpenses.add(filmRentCost);
 				}
 			}
@@ -125,7 +127,10 @@ public class BusinessDataDashboardController {
 			List<Order> ordersAtDay = orderManagement.findBy(wholeDay).toList();
 
 			for (Order order : ordersAtDay) {
-				dailyIncome = dailyIncome.add(order.getTotal());
+				if(order instanceof Orders orders)
+					dailyIncome = dailyIncome.add(orders.getSnacksSumme()).add(orders.getSnacksSumme().multiply(0.7));
+				else
+					dailyIncome = dailyIncome.add(order.getTotal());
 			}
 
 			Money dailyRevenue = dailyIncome.subtract(dailyExpenses);

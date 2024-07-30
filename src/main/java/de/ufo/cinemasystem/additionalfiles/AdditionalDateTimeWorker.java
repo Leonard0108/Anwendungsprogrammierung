@@ -112,6 +112,15 @@ public class AdditionalDateTimeWorker {
 	}
 
 	/**
+	 * @param date Datum, für dass die Jahreswoche ermittelt werden soll
+	 * @return aktuelle Kalenderwoche eines Jahres
+	 */
+	public static int getWeekOfYear(LocalDate date) {
+		return date
+			.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear());
+	}
+
+	/**
 	 * Erhalte letzte Woche anhand von Jahr und aktueller Woche nach ISO 8601
 	 * 
 	 * @param year aktuelles Jahr

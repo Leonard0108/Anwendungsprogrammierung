@@ -3,6 +3,7 @@ package de.ufo.cinemasystem.datainitializer;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.salespointframework.core.DataInitializer;
@@ -72,6 +73,58 @@ public class CinemaShowDataInitializer implements DataInitializer {
 			Film film = allFilms.get(random.nextInt(allFilms.size()));
 			cinemaShowService.createCinemaShow(
 				LocalDateTime.now().plusDays(i),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+		}
+
+		// garantierte 3 CinemaShows mit Film Id = 2 und 2 mit Id = 1, ViewCinemaShowController Test
+		Optional<Film> film2 = filmRepository.findById(2L);
+		if(film2.isPresent()) {
+			Film film = film2.get();
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(5).plusHours(8),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(6).plusHours(10),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().minusHours(3).minusMinutes(45),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(5).plusHours(14),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(5).plusHours(18),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+		}
+		Optional<Film> film1 = filmRepository.findById(1L);
+		if(film1.isPresent()) {
+			Film film = film1.get();
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(13).plusHours(8),
+				film.getPrice(),
+				film,
+				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))
+			);
+			cinemaShowService.createCinemaShow(
+				LocalDateTime.now().plusDays(14).plusHours(12),
 				film.getPrice(),
 				film,
 				allCinemaHalls.get(random.nextInt(allCinemaHalls.size()))

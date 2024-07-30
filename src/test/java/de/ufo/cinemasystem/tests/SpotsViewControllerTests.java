@@ -44,6 +44,7 @@ public class SpotsViewControllerTests {
         System.out.println("(" + toList.size() + " shows)");
         
         for(CinemaShow c:toList){
+            System.out.println("(" + c.getId() + ", " + c.getName() + ")");
             mvc.perform(get("/include/spots-view/" + c.getId())) //
                 .andExpect(status().isOk());
         }

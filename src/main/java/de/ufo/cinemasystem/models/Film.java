@@ -208,6 +208,16 @@ public class Film implements Comparable<Film>, PriceChange {
 	return (int) (getReducedBasicRentFee(week) * this.basicRentFee);
     }
 
+	public int getBasicRentFee(YearWeekEntry yearWeekEntry) {
+		List<YearWeekEntry> yearWeekEntries = this.getRentWeeks().stream().toList();
+		for(int i = 1; i <= yearWeekEntries.size(); i++) {
+			if(yearWeekEntries.get(i - 1).equals(yearWeekEntry)) {
+				return getBasicRentFee(i);
+			}
+		}
+		return getBasicRentFee(yearWeekEntries.size());
+	}
+
     /**
      * set the base rent price
      * @param basicRentFee base rent price

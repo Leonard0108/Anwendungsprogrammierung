@@ -49,6 +49,7 @@ public class SnacksDataInitializer implements DataInitializer {
         if (snacksrepository.findAll().iterator().hasNext()) {
             return;
         }
+        LOG.info("Creating default snacks...");
         Random random = new Random();
 
 		try {
@@ -60,7 +61,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -72,7 +73,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -84,7 +85,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -96,7 +97,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -108,7 +109,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -120,7 +121,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -132,7 +133,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -144,7 +145,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -156,7 +157,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -168,7 +169,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
 		try {
@@ -180,7 +181,7 @@ public class SnacksDataInitializer implements DataInitializer {
 			snacksrepository.save(s);
 			snacksService.addStock(s.getId(), 50);
 		}catch (IOException ex) {
-                    System.getLogger(SnacksDataInitializer.class.getName()).log(System.Logger.Level.ERROR, "I/O issiue setting up default snacks", ex);
+                    LOG.error("I/O issiue setting up default snacks", ex);
                 }
 
         snacksrepository.findAll().forEach(f -> {

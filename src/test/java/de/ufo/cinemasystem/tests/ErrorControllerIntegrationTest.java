@@ -39,6 +39,7 @@ public class ErrorControllerIntegrationTest {
     @Test
     @WithMockUser(username = "user" , roles = "USER")
     void testSampleErrorCase() throws Exception{
+        System.out.println("ErrorController: HTTP 403");
         mvc.perform(get("/sell-tickets")) 
 				.andExpect(status().isForbidden());
     }

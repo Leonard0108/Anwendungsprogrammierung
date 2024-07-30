@@ -1,5 +1,6 @@
 package de.ufo.cinemasystem.datainitializer;
 
+import de.ufo.cinemasystem.additionalfiles.AdditionalDateTimeWorker;
 import de.ufo.cinemasystem.models.YearWeekEntry;
 import de.ufo.cinemasystem.models.CinemaShow;
 import de.ufo.cinemasystem.models.Film;
@@ -13,9 +14,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,6 +33,8 @@ import java.util.Random;
 // Testdaten für die Filme werden als erstes erzeugt (Order = 1)
 @Order(2)
 public class FilmDataInitializer implements DataInitializer {
+    
+        private static final Logger LOG = LoggerFactory.getLogger(CinemaHallDataInitializer.class);
 
 	private final FilmRepository filmRepository;
 
@@ -56,6 +63,8 @@ public class FilmDataInitializer implements DataInitializer {
 		if(filmRepository.findAll().iterator().hasNext()) {
 			return;
 		}
+                
+                LOG.info("Erstelle Film-Enträge...");
 
 		Random random = new Random();
 		List<Integer> fsks = List.of(0,6,12,16,18);
@@ -80,19 +89,12 @@ public class FilmDataInitializer implements DataInitializer {
 				random.nextInt(1000, 2000),
 				filmPostersSource.get(random.nextInt(filmPostersSource.size()))
 			);
-			film.addRentWeek(new YearWeekEntry(2024, 20));
-			film.addRentWeek(new YearWeekEntry(2024, 21));
-			film.addRentWeek(new YearWeekEntry(2024, 22));
-			film.addRentWeek(new YearWeekEntry(2024, 23));
-			film.addRentWeek(new YearWeekEntry(2024, 24));
-			film.addRentWeek(new YearWeekEntry(2024, 25));
-			if(i <= 5) {
-				film.addRentWeek(new YearWeekEntry(2024, 27));
-				film.addRentWeek(new YearWeekEntry(2024, 28));
-				film.addRentWeek(new YearWeekEntry(2024, 29));
-				film.setReducedBasicRentFee(1.0, 1.0, 1.0, 1.0, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5);
-			}else {
-				film.setReducedBasicRentFee(1.0, 1.0, 1.0, 1.0, 0.8, 0.75, 0.75, 0.6);
+
+			LocalDateTime date = LocalDateTime.now().minusWeeks(2);
+			final int max = i >= 5 ? 4 : 6;
+			for(int j = 0; j < max; j++) {
+				film.addRentWeek(new YearWeekEntry(date.getYear(), AdditionalDateTimeWorker.getWeekOfYear(date)));
+				date = date.plusWeeks(1);
 			}
 
 			//Initialisierte Filme bereits mit Preis festlegt durch den Boss

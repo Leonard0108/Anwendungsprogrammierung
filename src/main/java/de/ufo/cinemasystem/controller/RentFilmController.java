@@ -6,6 +6,7 @@ import de.ufo.cinemasystem.models.Film;
 import de.ufo.cinemasystem.models.Seat;
 import de.ufo.cinemasystem.repository.CinemaShowRepository;
 import de.ufo.cinemasystem.repository.FilmRepository;
+import de.ufo.cinemasystem.services.FilmService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,15 +27,17 @@ public class RentFilmController {
 
 	private FilmRepository filmRepository;
 	private CinemaShowRepository cinemaShowRepository;
+	private FilmService filmService;
 
         /**
          * Erstelle einen neuen Controller mit den angegebenen Abhängigkeiten.
          * @param filmRepository Implementierung Film-Repository
          * @param cinemaShowRepository Implementierung CinemaShow-Repository
          */
-	public RentFilmController(FilmRepository filmRepository, CinemaShowRepository cinemaShowRepository) {
+	public RentFilmController(FilmRepository filmRepository, CinemaShowRepository cinemaShowRepository, FilmService filmService) {
 		this.filmRepository = filmRepository;
 		this.cinemaShowRepository = cinemaShowRepository;
+		this.filmService = filmService;
 	}
 
         /**
@@ -193,7 +196,7 @@ public class RentFilmController {
 				reservedWeeks.put(
 					currentWeek,
 					new Integer[]{
-						film.getBasicRentFee(reservedWeeks.size() + 1),
+						filmService.getFullRentFee(film, reservedWeeks.size() + 1).getNumber().intValue(),
 						0
 					}
 				);
@@ -260,7 +263,7 @@ public class RentFilmController {
 				reservedWeeks.put(
 					currentWeek,
 					new Integer[]{
-						film.getBasicRentFee(reservedWeeks.size() + 1),
+						filmService.getFullRentFee(film, reservedWeeks.size() + 1).getNumber().intValue(),
 						0
 					}
 				);

@@ -61,7 +61,7 @@ Das System wird als eine Komplettlösung für eine Kinobetriebsgesellschaft genu
 
 Das System wird mit folgenden Browsern erreichbar und visuell optimiert sein:
 
-Mozilla Firefox, Version 125.0.2+
+Mozilla Firefox, Version 128.0+
 
 Google Chrome, Version 126.0.6439+
 
@@ -309,10 +309,10 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 |Name                       |vor Ort/telefonisch reservieren
 |Beschreibung               |Ein Mitarbeiter legt für eine Person eine Reservierung an.
 |Rollen                     |Mitarbeiter, Person
-|Auslöser                   |Die Person will den Mitarbeiter persönlich nach einer Reservierung fragen. Der Mitarbeiter muss dann auf "Mitarbeiter reserviert für Kunde"-Button klicken.
+|Auslöser                   |Die Person will den Mitarbeiter persönlich nach einer Reservierung fragen. Der Mitarbeiter muss dann auf "Plätze Reservieren"-Button klicken.
 |Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
 |grundlegende Schritte     a|
-1. Person fragt den Mitarbeiter (vor Ort oder telefonisch) nach einer Reservierung. Der Mitarbeiter klickt auf den "Mitarbeiter reserviert für Kunde"-Button. Das System öffnet ein Untermenü, welches ein Formular für eine neue Reservierung bereitstellt.
+1. Person fragt den Mitarbeiter (vor Ort oder telefonisch) nach einer Reservierung. Der Mitarbeiter klickt auf den "Plätze Reservieren"-Button. Das System öffnet ein Untermenü, welches ein Formular für eine neue Reservierung bereitstellt.
 2. Der Mitarbeiter sucht im aktuellen Kinoprogramm nach der gewünschten Vorführung (Film, Datum und/oder Uhrzeit) und wählt die gewünschte Vorführung der Person aus.
 3. Der Mitarbeiter gibt den Kundennamen ein.
 4. Der Mitarbeiter fügt Tickets hinzu, durch das Klicken auf den Button "Ticket hinzufügen". Der Mitarbeiter wählt pro Ticket den gewünschten Platz und wählt die Art des Tickets aus. Durch das Drücken auf den "Ticket hinzufügen"-Button:
@@ -331,10 +331,10 @@ image::./models/analysis/Sequenz/sequenz_reservieren.drawio.svg[Use Case diagram
 |Name                       |vor Ort/telefonisch stornieren
 |Beschreibung               |Ein Mitarbeiter storniert für eine Person eine Reservierung.
 |Rollen                     |Mitarbeiter, Person
-|Auslöser                   |Die Person will das der Mitarbeiter persönlich eine getätigte Reservierung storniert. Der Mitarbeiter muss dann auf "Mitarbeiter storniert für Kunde"-Button klicken.
+|Auslöser                   |Die Person will das der Mitarbeiter persönlich eine getätigte Reservierung storniert. Der Mitarbeiter muss dann auf "Stornieren"-Button klicken.
 |Voraussetzungen           a|Die Person fragt persönlich beim Mitarbeiter an (vor Ort oder telefonisch). Der Mitarbeiter muss im System die Rolle des Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Und es muss eine passende Reservierung bereits vorliegen.
 |grundlegende Schritte     a|
-1. Person gibt den Auftrag an den Mitarbeiter (vor Ort oder telefonisch) eine Reservierung zu stornieren. Der Mitarbeiter klickt auf den "Mitarbeiter storniert für Kunde"-Button. Das System öffnet ein Untermenü, in welchem der Mitarbeiter eine Reservierung suchen kann.
+1. Person gibt den Auftrag an den Mitarbeiter (vor Ort oder telefonisch) eine Reservierung zu stornieren. Der Mitarbeiter klickt auf den "Stornieren"-Button. Das System öffnet ein Untermenü, in welchem der Mitarbeiter eine Reservierung suchen kann.
 2. Der Mitarbeiter sucht nach einer passenden Reservierung (Name des Kundes, Reservierungsnummer oder Nutzeraccount (Benutzername, E-Mail)).
 . Wenn Mitarbeiter die Reservierung findet: Mitarbeiter klickt auf diese. Das System öffnet den Reservierungs-Eintrag.
 . sonst: Fehlermeldung
@@ -484,7 +484,7 @@ image::./models/analysis/Sequenz/sequenz_kaufen_ohne_reservieren.drawio.svg[Use 
 |Auslöser                   |Autorisierter Mitarbeiter will aktuelle Filmstatistik einsehen. Er drückt auf den "Filmstatistik einsehen"-Button.
 |Voraussetzungen           a|Der Mitarbeiter muss im System die Rolle des autorisierten Mitarbeiters besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer).
 |grundlegende Schritte     a|
-1. Autorisierter Mitarbeiter drückt auf den "Filmstatistik einsehen"-Button. Das System öffnet eine Unteransicht. Das System zeigt aktuell laufenden Filme an. Dabei wird für jeden Film die Gesamtauslastung der Kinosäle angezeigt.
+1. Autorisierter Mitarbeiter drückt auf den "Filme-Verleih"-Button und anschließend auf einen bestimmten Film. Das System öffnet eine Unteransicht. Dabei wird für den Film die Gesamtauslastung der Kinosäle aller Vorführungen angezeigt.
 
 |Erweiterungen              |-
 |Funktionale Anforderungen  |<<F0351>>
@@ -546,14 +546,15 @@ _Mitarbeiter_
 |===
 |ID                         |**<<UC0430>>**
 |Name                       |Preisgestaltung
-|Beschreibung               |Der Boss ordnet einer Veranstaltung einen Preis zu.
+|Beschreibung               |Der Boss ordnet eines Films oder einem Snack einen Preis zu.
 |Rollen                     |Boss
-|Auslöser                   |Boss will Vorführung-Ticket-Preise festlegen oder bearbeiten.
+|Auslöser                   |Boss will Film-Ticket-Preise oder Snack-Preise festlegen oder bearbeiten.
 |Voraussetzungen           a|Der Boss muss im System die Rolle des Bosses besitzen (durch vorheriges entsprechendes Login, wenn aktuell unangemeldeter Nutzer). Es existieren bereits Vorführungen.
 |grundlegende Schritte     a|
 Boss drückt auf den "Preisgestaltung"-Button. Das System öffnet eine Unteransicht.
-1. Der Boss wählt eine Veranstaltung und einen Kinosaal
-2. Der Boss legt alle Preiskategorien preislich fest.
+1. Optional: Der Boss sucht nach bereits vorhandenen Film- oder Snack-Preisen.
+2. Der Boss wählt einen Film oder einen Snack aus.
+2. Der Boss gibt den neuen Preis ein.
 3. Der Boss bestätigt die Eingabe durch den "Preise ändern"-Button.
 . Wenn Preiszuordnung bereits vorhanden: System überschreibt aktuelle Preise.
 . Sonst: System legt neue Preiszuordnung an.
@@ -1012,6 +1013,7 @@ Der unregistrierte Nutzer drückt auf "Registrieren" auf der Webseiten Oberfläs
 - *Nutzername:* hans
 - *Passwort:* passwort123
 - *E-Mail:* hans_paswort123@mail.com
+- sowie den vollständigen Namen und Adresse
 
 Anschließend drückt der Nutzer auf "Registrieren" unter dem Formular und senden damit die Informationen an das Loginsystem.
 |Ergebnis(se)     a|
@@ -1049,14 +1051,14 @@ Anschließend drückt der Nutzer auf "Login" unter dem Formular und senden damit
 |Use Case      |<<UC0120>> Online reservieren
 |Voraussetzung(en)      a|Ein angemeldeter Nutzer nutzt das Kundenportal.
 |Ablauf      a|
-Der Kunde drückt auf "Plätze Reservieren" auf der Webseiten Oberfläsche und fügt eine neue Reservierung zum "ReservierungsDashboard" hinzu. +
+Der Kunde drückt auf "Plätze Reservieren" auf der Webseiten Oberfläsche und fügt eine neue Reservierung zu "Meine Reservierungen" hinzu. +
 Im Reservierungsformular wählt er zunächst die Vorführung aus. Unter dem Reiter "Ticket hinzufügen" wählt der Kunde "Erwachsener" als Ticketart aus. Auf dem Sitzplan sieht er wo noch freie Plätze sind und trägt die Platznummer "B4" in das Platz Feld ein. Dann drückt er auf Ticket hinzufügen. +
 Dies wiederholt er für eine Ticketreservierung mit der Ticketart "Kind" und Platz "B5". +
 Um die Reservierung abzuschließen drückt der Kunde zum Schluss auf "Jetzt reservieren".
 |Ergebnis(se)     a|
 - Es wird überprüft ob die Plätze noch verfügbar sind
 - Da die Plätze verfügbar sind werden sie geschlossen als reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
-- Der Kunde wird auf eine Reservierungsbestätigung-Seite weitergeleitet, auf der er deutlich seine Reservierungsnummer sehen kann
+- Der Kunde wird auf "Meine Reservierungen", dort kann er alle seine bislang getätigten Reservierungen mit der jeweiligen Reservierungsnummer sehen
 - Mit der Reservierungsnummer kann der Mitarbeiter an der Kasse die reservierten Tickets aufrufen und nach Bezahlung dem Kunden ausstellen
 |===
 
@@ -1067,13 +1069,13 @@ Um die Reservierung abzuschließen drückt der Kunde zum Schluss auf "Jetzt rese
 |Use Case      |<<UC0230>> Karten verkaufen
 |Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Der Mitarbeiter drückt auf "Kartenverkauf" auf der Webseiten Oberfläche. Der Mitarbeiter wählt nun unter "Ticket hinzufügen" eine der heutigen Vorstellungen, die der Kunde besuchen möchte. +
-Um nun den Sitzplan der Vorstellung angezeigt zu bekommen, drückt der Mitarbeiter auf "Plätze laden" Der Mitarbeiter wählt "Erwachsener" unter Ticketart und trägt "B4" unter Platz ein. Anschließend drückt der Mitarbeiter auf Ticket hinzufügen. +
+Der Mitarbeiter drückt auf "Kassensystem" auf der Webseiten Oberfläche. Der Mitarbeiter wählt nun eine der heutigen Vorstellungen, die der Kunde besuchen möchte. +
+Der Mitarbeiter wählt "Erwachsener" unter Ticketart und trägt "B4" unter Platz ein. Anschließend drückt der Mitarbeiter auf Ticket hinzufügen. +
 Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
-Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt wird. +
-Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Zahlungsvorgang abschließen".
+Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt werden. +
+Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Ok".
 |Ergebnis(se)     a|
-- Da die Plätze verfügbar sind werden sie geschlossen als reserviert im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
+- Da die Plätze verfügbar sind werden sie geschlossen als belegt im System eingetragen und können nun nicht mehr von anderen Kunden gebucht werden
 - Es werden die Daten im System für die Filmstatistik und Umsatzstatistiken aktualisiert
 - Der Kunde erhält sein Ticket vom Mitarbeiter und kann damit die Vorstellung besuchen
 |===
@@ -1085,10 +1087,10 @@ Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der M
 |Use Case      |<<UC0240>> Snacks verkaufen
 |Voraussetzung(en)      a|Ein angemeldeter Mitarbeiter nutzt das Kassensubsystem
 |Ablauf      a|
-Der Mitarbeiter drückt auf "Kartenverkauf" auf der Webseiten Oberfläche. Unter dem Sitzplan drückt der Mitarbeiter auf "Snacks hinzufügen". Dann wählt der Mitarbeiter aus dem Lagerbestand "Popcorn Groß", im Popup-Menü für die Anzahl wählt er "1". Dazu wählt der Mitarbeiter "Cola Groß" aus und drückt erneut "1". +
-Der Mitarbeiter speichert die Snacks im Warenkorb durch das Drücken auf den Button "Snacks fertig ausgewählt". Die ausgewählten Snacks sind jetzt darunter aufgelistet. Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
-Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt wird.
-Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Zahlungsvorgang abschließen".
+Der Mitarbeiter drückt auf "Kassensystem" auf der Webseiten Oberfläche. Unter dem Sitzplan im Abschnitt "Snacks hinzufügen" wählt der Mitarbeiter aus dem Lagerbestand "Popcorn Groß" und gibt "1" für die Menge ein. Dazu wählt der Mitarbeiter "Cola Groß" und gibt erneut "1" ein. +
+Die ausgewählten Snacks sind jetzt im Warenkorb aufgelistet. Zuletzt beendet er den Kaufprozess mit "Kaufvorgang abschließen". +
+Daraufhin öffnet sich eine finale Ansicht, in der nochmal alle Kaufinformationen und der Preis angezeigt werden.
+Der Kunde kann nun bezahlen und bei erfolgreichem Bezahlvorgang bestätigt der Mitarbeiter mit "Ok".
 |Ergebnis(se)     a|
 - Es werden die Daten im System für den Lagerbestand und Umsatzstatistiken aktualisiert
 - Nach kurzer Zubereitungszeit erhält der Kunde seine Snacks

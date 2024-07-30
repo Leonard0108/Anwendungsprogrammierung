@@ -13,6 +13,7 @@
 | 0.3    | 13.05.2025          | Jannik Schwaß, Yannick Harnisch, Tobias
 | 1.0    | 19.05.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll
 | 1.1    | 08.07.2024          | Jannik Schwaß
+| 1.2    | 30.07.2024          | Simon Liepe
 |===
 
 
@@ -234,13 +235,15 @@ image::./models/design/Kassensubsystem/KlassenDiagramm_Kassensubsystem.svg[Class
 |Klasse/Enumeration |Beschreibung
 | MakeOrderController | SpringMVC Controller für das Anlegen von Bestellungen und Hinzufügen von Tickets und Snacks
 | DeleteOrderController | SpringMVC Controller für das Löschen von Bestellungen 
-| Order | Modelklasse für Bestellungen
+| Orders | Modelklasse für Bestellungen
 | Ticket | Modellklasse für Tickets
 | Snacks |  Modellklasse für Snacks
 | Reservation |  Modellklasse für Reservierungen
 | SnacksRepository | Repository-Interface zum Verwalten von Snacks
+| TicketRepository | Repository-Interface zum Verwalten von Tickets
 | ReservationRepository | Repository-Interface zum Verwalten von Reservierungen 
 | SnackDataInitializer | Implementierung des DataInititializer Interfaces, zum erzeugen von Dummy/Testdaten
+| TicketDataInitializer | Implementierung des DataInititializer Interfaces, zum erzeugen von Dummy/Testdaten
 |===
 
 

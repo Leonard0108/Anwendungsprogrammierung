@@ -242,7 +242,20 @@ class MakeReservationControllerIntegrationTest {
         }
 
         if (!ok) {
-            throw new InternalError("couldn't find a spot");
+            //just pick one
+            mvc.perform(post("/reserve-spots/add-ticket")
+                        .param("ticketType", "adult")
+                        .param("spot", "B0")
+                        .sessionAttr("current-reservation", work)
+                        .sessionAttr("current-reservation-privileged", false)
+                ).andExpect(status().isOk());
+            mvc.perform(post("/reserve-spots/add-ticket")
+                        .param("ticketType", "adult")
+                        .param("spot", "B0")
+                        .sessionAttr("current-reservation", work)
+                        .sessionAttr("current-reservation-privileged", false)
+                ).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Sitzplatz nicht mehr verfügbar")));
         }
         System.out.println("IntegrationTest: MakeReservationController: RemoveTicket invalid params");
         

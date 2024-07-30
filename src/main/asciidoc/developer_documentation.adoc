@@ -14,6 +14,7 @@
 | 1.0    | 19.05.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll
 | 1.1    | 08.07.2024          | Jannik Schwaß
 | 1.2    | 30.07.2024          | Simon Liepe
+| 2.0    | 30.07.2024          | Lukas Diettrich, Yannick Harnisch, Simon Liepe, Jannik Schwaß, Tobias Knoll
 |===
 
 

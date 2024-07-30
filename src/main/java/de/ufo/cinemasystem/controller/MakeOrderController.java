@@ -118,7 +118,6 @@ public class MakeOrderController {
 		m.addAttribute("shows", toOffer);
 		m.addAttribute("errors", errors);
 		
-                m.addAttribute("title", "Kassensystem");
 		return "sell-items-show-selection";
 	}
         /**
@@ -539,7 +538,9 @@ public class MakeOrderController {
 	private List<CartItem> getCurrentCartSnacks(@ModelAttribute Cart cart){
 		List<CartItem>cartSnacks = new ArrayList<>();
 		for (CartItem cartItem :  cart.get().toList()) {
-			if(!cartItem.getProductName().contains("Ticket")){cartSnacks.add(cartItem);}
+			if(!cartItem.getProductName().contains("Ticket")){
+				cartSnacks.add(cartItem);
+			}
 		}
 		return cartSnacks;
 	}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+    <head>
+    </head>
+    <body>
+        <div class="main-wrapper" role="main" layout:fragment="content">
+            <h1>Kartentausch</h1>
+            <div class="ticket" th:if="${activeOrder} != null">
+                <p th:text="${show.getShortStartDateTime()} + ' ' + ${show.getFilm().getTitle()} + ' ' + ${ticketName}"></p>
+            </div>
+            <form id="swap-tickets-form" action="/swap-tickets-old" method="post" th:if="${activeOrder} == null">
+                <div>
+                    <p><label for="htmlUniqueID6">Film:</label></p>
+                    <select id="htmlUniqueID6" name="ticket-event">
+                        <option th:each="show: ${shows}" th:value="${show.getId()}" th:text="${show.getShortStartDateTime()} + ${show.getFilm().getTitle()}"></option>
+                    </select>
+                    <p><input name="old-spot" required="" pattern="[A-Za-z]([0-9]|1[0-8])$"></p>
+                    <button name="next" value="1">Weiter</button>
+                </div>
+            </form>
+            <form id="swap-tickets-form" action="/swap-tickets-new" method="post" th:if="${activeOrder} != null">
+                <div th:if="${activeOrder.getCinemaShow()} == ${show}">
+                    <div class="ticket" th:each="item : ${oldTickets}">
+                        <p class="flex"><span th:text="${item.getName()} + ' Platz: ' + ${item.getSeatString()} + ' Tickettyp: ' + ${item.getCategory().toString()} " class="grow" ></span> <span style="text-align: right" th:text="${item.getPrice()}"></span></p>
+                        <p th:if="${fskWarning} and ${item.categoryToLabel()} == 'Kind (Bis 14 Jahre)' " class="error">Dieses Ticket verletzt die FSK-Bestimmungen!</p>
+                        <input name="new-spot" required="" pattern="[A-Za-z]([0-9]|1[0-8])$">
+                    </div>
+                    <button class="swapButton" type="submit" name="SwapTickets" value="0">Tauschen</button>
+                    <br>
+                    <iframe src="spots-view-2.png" title="Saalansicht" th:src="'/include/spots-view/' + ${show.getId()}" style="width: 100%;height: calc(100vh * 1.1);border: none;min-height: 130pt;min-width: 190pt;"></iframe><br>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

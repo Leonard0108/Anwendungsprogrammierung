@@ -1,18 +1,20 @@
 
 package de.ufo.cinemasystem.tests;
 
-import de.ufo.cinemasystem.models.CinemaShow;
-import de.ufo.cinemasystem.repository.CinemaShowRepository;
-import java.util.List;
-import static org.hamcrest.CoreMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.StopWatch;
+
+import de.ufo.cinemasystem.models.CinemaShow;
+import de.ufo.cinemasystem.repository.CinemaShowRepository;
 
 /**
  *
@@ -34,8 +36,11 @@ public class SpotsViewControllerTests {
      */
     @Test
     void testDefaultCinemaShows() throws Exception{
+        StopWatch test = new StopWatch();
         System.out.println("Testing SpotsViewController");
+        test.start("Repoabfrage");
         List<CinemaShow> toList = showsRepo.findAll().toList();
+        test.stop();
         System.out.println("(" + toList.size() + " shows)");
         
         for(CinemaShow c:toList){

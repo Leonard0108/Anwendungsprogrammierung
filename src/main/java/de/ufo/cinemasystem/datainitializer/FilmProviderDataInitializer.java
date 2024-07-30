@@ -34,11 +34,12 @@ public class FilmProviderDataInitializer implements DataInitializer {
 
 	@Override
 	public void initialize() {
-                if(filmProviderRepository.findAll().iterator().hasNext()){
-                    //leak unbenutzer einträge verhindern
-                    return;
-                }
-                LOG.info("Creating film providers...");
+
+    if(filmProviderRepository.findAll().iterator().hasNext()){
+        //leak unbenutzer einträge verhindern
+        return;
+    }
+    LOG.info("Creating film providers...");
 		for(int i = 1; i <= 3; i++) {
 			this.filmProviderRepository.save(new FilmProvider("Film-Anbieter " + i));
 		}

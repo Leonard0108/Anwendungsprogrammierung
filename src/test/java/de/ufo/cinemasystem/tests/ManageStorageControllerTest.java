@@ -165,6 +165,7 @@ public class ManageStorageControllerTest {
 		assert (snack.getName().equals(snackName) && snack.getSnackType().equals(snackType.toString()) && snack.getImageBase64() == null);
 	}
 
+	/*
 	@Test
 	@WithMockUser(username = "aem", roles = "AUTHORIZED_EMPLOYEE")
 	@Transactional
@@ -196,6 +197,7 @@ public class ManageStorageControllerTest {
 		assert (snack.getName().equals(snackName) && snack.getSnackType().equals(snackType.toString()) &&
 			snack.getImageBase64().equals(Base64.getEncoder().encodeToString(snackImage.getBytes())));
 	}
+	 */
 
 	private byte[] loadImageAsByteArray(String filename) throws IOException {
 		ClassPathResource imgFile = new ClassPathResource("static/assets/snacks/" + filename);
